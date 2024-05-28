@@ -136,13 +136,13 @@
   }
 
   @keyframes modal-in {
-    from {opacity: 0}
-    to {opacity: 1}
+    from {opacity: 0; backdrop-filter: blur(6px);}
+    to {opacity: 1; backdrop-filter: blur(0px);}
   }
 
   @keyframes modal-out {
-    from {opacity: 1}
-    to {opacity: 0}
+    from {opacity: 1; backdrop-filter: blur(0px);}
+    to {opacity: 0; backdrop-filter: blur(6px);}
   }
 
   .class-add-modal {
@@ -153,10 +153,10 @@
     transform: translate(-50%, -50%);
     border-radius:40px;
     background-color: white;
-    box-shadow: 0px 0px 30px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 30px 20px rgba(0, 0, 0, 0.05);
     z-index: 1;
     display:block;
-    text-align: center;
+    padding: 20px;
     position: relative;
     animation: modal-in 0.1s ease-in-out;
     animation-fill-mode: forwards;
@@ -169,12 +169,28 @@
     animation-fill-mode: forwards;
   }
 
-  .class-add-modal-inner-title {
+  .class-add-modal-content {
     font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-    color:#138999;
-    font-size: 40px;
+    color:#09393f;
+    font-size: 30px;
     text-align: center;
+    padding-top: 5px;
+    padding-left: 10px;
+    position: absolute;
+  }
+
+  .class-add-modal-close {
+    color:#9fa5a6;
+    font-size: 30px;
+    position: absolute;
+    text-align:right;
+    right: 30px;
+    cursor: pointer;
+    transition: 0.1s;
+  }
+
+  .class-add-modal-close:hover {
+    color:#1d2424
   }
 
   @keyframes underlay-in {
@@ -211,6 +227,113 @@
     /* background-color: rgb(0, 0, 0, 0.05); */
     animation: underlay-in 0.2s ease-in-out;
     animation-fill-mode: forwards;
+  }
+
+  .modal-text-input {
+    text-align: center;
+  }
+
+  .modal-text-input input[type="text"] {
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #09393f;
+    background-color: #f2f4f5;
+    font-size: 18px;
+    width: 450px;
+    height: 50px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: #c2d2da;
+    transition: 0.1s;
+  }
+
+  .modal-text-input input[type="text"]:focus {
+    background-color: #f7f9fa;
+    border-color: #9eb5c2 !important;
+    border: 2px solid;
+    outline: none;
+    width: 460px;
+    padding-left: 15px;
+  }
+
+  .modal-text-input input[type="text"]:hover {
+    background-color: #f5f6f8;
+    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
+    width: 460px;
+    padding-left: 15px;
+  }
+
+  .modal-text-input select {
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #09393f;
+    background-color: #f2f4f5;
+    font-size: 15px;
+    width: 150px;
+    height: 40px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: #c2d2da;
+    transition: 0.1s;
+  }
+
+  .modal-text-input select:hover {
+    background-color: #f5f6f8;
+    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
+    width: 160px;
+    padding-left: 12px;
+  }
+
+  .modal-text-input select:focus {
+    background-color: #f5f6f8;
+    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
+    width: 160px;
+    padding-left: 12px;
+    border-color: #9eb5c2 !important;
+  }
+
+  .modal-text-input-invalid {
+    border-color: #ac0000 !important;
+  }
+
+  .modal-submit {
+    text-align: center;
+  }
+
+  .modal-submit input[type="submit"] {
+    text-align: center;
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #5d7073;
+    background-color: #f2f4f5;
+    font-size: 16px;
+    width: 100px;
+    height: 40px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: #c2d2da;
+    transition: 0.1s;
+  }
+
+  .modal-submit input[type="submit"]:focus {
+    color: #09393f;
+    border-color: #4083b0 !important;
+    border: 2px solid;
+    outline: none;
+    width: 100px;
+  }
+
+  .modal-submit input[type="submit"]:hover {
+    color: #09393f;
+    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
+    width: 105px;
+    background-color: #f5f6f8;
   }
 
   .main {

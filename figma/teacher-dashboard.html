@@ -16,6 +16,90 @@
   <body>
     <div class="modal-underlay" onClick="CloseClassAddModal()">
       <div class="class-add-modal" onClick="event.stopPropagation()">
+        <span class="class-add-modal-content">Create New Class</span>
+        <span class="class-add-modal-close" title="Cancel" onClick="CloseClassAddModal()">&times</span>
+        <br>
+        <span class="class-add-modal-content" style="color:#70878a; font-size: 20px; margin-top: 20px;">Fill out the following fields to add a new class.</span>
+        <br>
+        <span style="display:block; margin-bottom:1em"></span>
+        <div id="modal-root"></div>
+        <script type="text/babel">
+
+          function ClassNameInput() {
+            return (
+              <div class="modal-text-input">
+                <input placeholder="Class Name" title="Class Name" type="text" id="class-name" required/>
+              </div>
+            )
+          }
+
+          function OtherSectionInput() {
+            return (
+              <div class="modal-text-input">
+                <input placeholder="Other Section" title="Other Section" type="text" id="other-section" required/>
+              </div>
+            )
+          }
+
+          function GradeLevelDropdown() {
+            return (
+              <div class="modal-text-input">
+                <select title="Grade Level" id="grade-level" name="grade-level" required>
+                  <option value="" disabled selected>Grade Level</option>
+                  <optgroup label="Kindergarten">
+                  <option>Kindergarten 1</option>
+                  <option>Kindergarten 2</option>
+                  </optgroup>
+                  <optgroup label="Primary">
+                  <option>Primary 1</option>
+                  <option>Primary 2</option>
+                  <option>Primary 3</option>
+                  <option>Primary 4</option>
+                  <option>Primary 5</option>
+                  <option>Primary 6</option>
+                  </optgroup>
+                  <optgroup label="Junior High">
+                  <option>Junior High 1</option>
+                  <option>Junior High 2</option>
+                  <option>Junior High 3</option>
+                  </optgroup>
+                </select>
+              </div>
+            )
+          }
+
+          function SubmitButton() {
+            return (
+              <div class="modal-submit">
+                <input type="submit" />
+              </div>
+            );
+          }
+
+          function Input() {
+            const handleSubmit = (event) => {
+              event.preventDefault();
+              CloseClassAddModal();
+
+            }
+
+            return (
+              <section style={{ margin: '130px' }}>
+                <form id="class-modal-form" onSubmit={handleSubmit}>
+                  <ClassNameInput />
+                  <br/>
+                  <OtherSectionInput />
+                  <br />
+                  <GradeLevelDropdown />
+                  <br/><br/><br/>
+                  <SubmitButton />
+                </form>
+              </section>
+            )
+          }
+
+          ReactDOM.render(<Input />, document.getElementById("modal-root"));
+        </script>
       </div>
     </div>
     <div class="sidebar">
@@ -66,6 +150,15 @@
           modal[0].classList.remove("blurred-modal-underlay");
           modal[0].classList.remove("displayed-modal");
           await pause(200);
+          
+          let classNameText = document.getElementById("class-name");
+          let otherSectionText = document.getElementById("other-section");
+          let gradeLevelDropdown = document.getElementById("grade-level");
+
+          classNameText.value = "";
+          otherSectionText.value = "";
+          gradeLevelDropdown.value = "";
+          
           modal[0].style.display = "none";
         }
       </script>
@@ -75,7 +168,7 @@
       <!-- sidebar classes -->
       <div id="classes-root" class="sidebar-classes"></div>
       <script type="text/babel">
-        let classInfo = [
+        var classInfo = [
           {className: "Class 1", numStudents: 5},
           {className: "Class 2", numStudents: 4},
           {className: "Class 3", numStudents: 2},
