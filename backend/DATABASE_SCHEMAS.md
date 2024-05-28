@@ -37,7 +37,7 @@ classes_<year>:
 
 ---PERMANENT DATABASES---
 
-There will be 1 permanent student database. When a teacher adds a returning student to their roster they will be adding students from this database (they will not have access to this database directly, but through past years in their school's database). When a student transfers, a reference to a student here will be added to the transfer portal.
+There will be 1 permanent student database. When a teacher adds a returning student to their roster they will be adding students from this database (they will not have access to this database directly, but through past years in their school's database). When a student transfers, a reference to a student here will be added to the transfer portal. 
 
 students:
     {
@@ -49,6 +49,7 @@ students:
     "current_class_id": "class_id",
     "current_grade_level": "Grade Level",
     "current_school_id": "school_id",
+    "current_inactive": false, //Whether student is active in the current term. If inactive, don't add current term to student's history.
     "history": [
         {
         "year": "2023-2024",
