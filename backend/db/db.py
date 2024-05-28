@@ -6,7 +6,7 @@ import os
 mongo = PyMongo()
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv('../config.env')
 
 # MongoDB connection setup for standalone checks or utilities
 uri = os.getenv("ATLAS_URI")

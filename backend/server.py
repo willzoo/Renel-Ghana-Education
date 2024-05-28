@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 def create_app():
     app = Flask(__name__)
-    load_dotenv()
+    load_dotenv('config.env')
 
     # Set up MongoDB configuration
     app.config["MONGO_URI"] = os.getenv("ATLAS_URI")
