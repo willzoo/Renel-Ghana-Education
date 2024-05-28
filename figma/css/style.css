@@ -135,17 +135,38 @@
     overflow-y: auto;
   }
 
-  .class-add-modal {
-    border-radius:40px;
-    background-color: black;
-    box-shadow: 0px 0px 30px 20px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    transition: opacity 0.1s;
-    display:block;
+  @keyframes modal-in {
+    from {opacity: 0}
+    to {opacity: 1}
   }
 
-  .class-add-modal-closed {
-    opacity:0.5;
+  @keyframes modal-out {
+    from {opacity: 1}
+    to {opacity: 0}
+  }
+
+  .class-add-modal {
+    top:50%;
+    right:-50%;
+    width: 800px;
+    height: 500px;
+    transform: translate(-50%, -50%);
+    border-radius:40px;
+    background-color: white;
+    box-shadow: 0px 0px 30px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    display:block;
+    text-align: center;
+    position: relative;
+    animation: modal-in 0.1s ease-in-out;
+    animation-fill-mode: forwards;
+  }
+
+  .displayed-modal {
+    /* backdrop-filter: blur(6px); */
+    /* background-color: rgb(0, 0, 0, 0.05); */
+    animation: modal-out 0.1s ease-in-out;
+    animation-fill-mode: forwards;
   }
 
   .class-add-modal-inner-title {
@@ -156,16 +177,43 @@
     text-align: center;
   }
 
+  @keyframes underlay-in {
+    from {background-color: rgb(0, 0, 0, 0);
+          backdrop-filter: blur(0px)}
+    to {background-color: rgb(0, 0, 0, 0.05);
+      backdrop-filter: blur(6px)}
+  }
+
+  @keyframes underlay-out {
+    from {background-color: rgb(0, 0, 0, 0.05);
+      backdrop-filter: blur(6px)}
+      to {background-color: rgb(0, 0, 0, 0);
+            backdrop-filter: blur(0px)}
+  }
+
   .modal-underlay {
     width:100%;
     height:100%;
-    background-color: rgb(0, 0, 0, 0.1);
+    top: -2px;
+    left: -2px;
+    background-color: rgb(0, 0, 0, 0);
     z-index: 1;
-    backdrop-filter: blur(50px);
+    position: fixed;
+    /* transition: backdrop-filter 2s; */
+    display: none;
+    margin: 0px;
+    animation: underlay-out 0.2s ease-in-out;
+    animation-fill-mode: forwards;
+  }
+
+  .blurred-modal-underlay {
+    /* backdrop-filter: blur(6px); */
+    /* background-color: rgb(0, 0, 0, 0.05); */
+    animation: underlay-in 0.2s ease-in-out;
+    animation-fill-mode: forwards;
   }
 
   .main {
     margin-left: 400px;
     font-size: 28px;
-    padding: 0px 10px;
   }

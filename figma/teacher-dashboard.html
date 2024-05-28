@@ -14,8 +14,8 @@
   </head>
 
   <body>
-    <div class="modal-underlay">
-      <div class="class-add-modal class-add-modal-closed" >
+    <div class="modal-underlay" onClick="CloseClassAddModal()">
+      <div class="class-add-modal" onClick="event.stopPropagation()">
       </div>
     </div>
     <div class="sidebar">
@@ -53,16 +53,21 @@
         <i class="fa fa-plus"></i> &nbsp; Create New Class
       </div>
       <script>
+        const pause = (time) => new Promise(resolve => setTimeout(resolve, time));
+
         function OpenClassAddModal() {
-          let modal = document.getElementsByClassName("class-add-modal");
-          
-          modal.classList.remove("class-add-modal-closed");
-          alert(1);
+          let modal = document.getElementsByClassName("modal-underlay");
+          modal[0].classList.add("blurred-modal-underlay");
+          modal[0].classList.add("displayed-modal");
+          modal[0].style.display = "block";
         }
-        function CloseClassAddModal() {
-          document.getElementsByClassName("class-add-modal").style.opacity = "0";
+        async function CloseClassAddModal() {
+          let modal = document.getElementsByClassName("modal-underlay");
+          modal[0].classList.remove("blurred-modal-underlay");
+          modal[0].classList.remove("displayed-modal");
+          await pause(200);
+          modal[0].style.display = "none";
         }
-        document.getElementsByClassName("create-class-button").addEventListener('click', OpenClassAddModal);
       </script>
 
       <span style="display:block; margin-bottom:1.5em"></span>
