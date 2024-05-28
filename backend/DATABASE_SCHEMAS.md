@@ -30,25 +30,27 @@ classes_<year>:
     "teacher_id": "teacher_id",
     "grade_level": "Grade Level",
     "school_id": "school_id",
-    "terms": [
-        {
-        "term": "1",
-        "students": ["student_id1", "student_id2", ...]
-        },
-        ...
-    ]
+    "students": ["student_id1", "student_id2", ...]
+    ...
     }
 
 
----PERMANANENT DATABASES---
+---PERMANENT DATABASES---
+
+There will be 1 permanent student database. When a teacher adds a returning student to their roster they will be adding students from this database (they will not have access to this database directly, but through past years in their school's database). When a student transfers, a reference to a student here will be added to the transfer portal. 
 
 students:
     {
     "_id": "student_id",
     "name": "Student Name",
+    "parent_contact": "7777-777-777",
+    "disabled": true,
+    "health_conditions": "Diabetes",
+    "misc_info": "This student blah blah blah", 
     "current_class_id": "class_id",
     "current_grade_level": "Grade Level",
     "current_school_id": "school_id",
+    "current_inactive": false, //Whether student is active in the current term. If inactive, don't add current term to student's history.
     "history": [
         {
         "year": "2023-2024",
@@ -56,17 +58,42 @@ students:
         "class_id": "class_id_2023",
         "teacher_id": "teacher_id",
         "grade_level": "Grade Level",
-        "school_id": "school_id_2023"
+        "school_id": "school_id_2023",
+        "health_info": "Old health info"
+        "misc_info": "Old misc info"
         },
         ...
     ]
     }
 
 
-The transfers_<year> collection stores all the transfer students in the system. When a student transfers, Renel admins can add students to this portal. The teacher sees this transfer portal and can add the transfer student into their class (upon which they are removed from this collection).
+There will be 1 permanent teacher database. Teachers have email and password. And list of classes they teach currently, they do not store a history of their classes.
 
-transfers_<year>:
+teachers:
     {
-    "_id": "class_id",
+    "_id": "teacher_id",
+    "name": "Teacher Name",
+    "email": "Teacher Email",
+    "password": "Teacher Password",
+    "current_school_id": "school_id",
+    "current_classes": ["class_id1", "class_id2", ...]
+    }
+
+
+Simple admin collection for renel ghana to login.
+
+admin:
+    {
+    "_id": "admin_id",
+    "email": "Admin Email",
+    "password": "Admin Password"
+    }
+
+
+The transfers collection stores all the transfer students in the system. When a student transfers, Renel admins can add students to this portal. The teacher sees this transfer portal and can add the transfer student into their class (upon which they are removed from this collection).
+
+transfers:
+    {
+    "_id": "transfer_id",
     "students": ["student_id1", "student_id2", ...]
     }
