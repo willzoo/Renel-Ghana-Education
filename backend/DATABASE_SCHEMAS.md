@@ -30,22 +30,22 @@ classes_<year>:
     "teacher_id": "teacher_id",
     "grade_level": "Grade Level",
     "school_id": "school_id",
-    "terms": [
-        {
-        "term": "1",
-        "students": ["student_id1", "student_id2", ...]
-        },
-        ...
-    ]
+    "students": ["student_id1", "student_id2", ...]
+    ...
     }
 
 
----PERMANANENT DATABASES---
+---PERMANENT DATABASES---
+
+There will be 1 permanent student database. When a teacher adds a returning student to their roster they will be adding students from this database (they will not have access to this database directly, but through past years in their school's database). When a student transfers, a reference to a student here will be added to the transfer portal.
 
 students:
     {
     "_id": "student_id",
     "name": "Student Name",
+    "parent_contact": "7777-777-777",
+    "disabled": true,
+    "health_conditions": "Diabetes",
     "current_class_id": "class_id",
     "current_grade_level": "Grade Level",
     "current_school_id": "school_id",
@@ -63,9 +63,9 @@ students:
     }
 
 
-The transfers_<year> collection stores all the transfer students in the system. When a student transfers, Renel admins can add students to this portal. The teacher sees this transfer portal and can add the transfer student into their class (upon which they are removed from this collection).
+The transfers collection stores all the transfer students in the system. When a student transfers, Renel admins can add students to this portal. The teacher sees this transfer portal and can add the transfer student into their class (upon which they are removed from this collection).
 
-transfers_<year>:
+transfers:
     {
     "_id": "class_id",
     "students": ["student_id1", "student_id2", ...]
