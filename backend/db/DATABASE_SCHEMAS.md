@@ -55,7 +55,6 @@ students:
         "year": "2023-2024",
         "term": "3",
         "class_id": "class_id_2023",
-        "teacher_id": "teacher_id",
         "grade_level": "Grade Level",
         "school_id": "school_id_2023",
         "health_info": "Old health info"
@@ -94,5 +93,11 @@ The transfers collection stores all the transfer students in the system. When a 
 transfers:
     {
     "_id": "transfer_id",
-    "students": ["student_id1", "student_id2", ...]
+    "students": [
+        {
+            "student": "student_id1",
+            "verified_teacher": "teacher_id1"
+        },
+        ...
+    ]
     }
