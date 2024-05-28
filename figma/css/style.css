@@ -47,18 +47,27 @@
 }
 
 
-.create-class-icon {
-    font-size: 15px;
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
-    color: white;
+  .create-class-button {
+      font-size: 15px;
+      font-family: 'Open Sans', sans-serif;
+      text-align: center;
+      color: white;
 
-    margin: auto;
+      user-select: none;
+      cursor: pointer;
+      margin: auto;
+      background-color: #457B9D;
+      width:75%;
+      border-radius: 10px;
+      padding: 10px;
+      
+      transition: background-color 0.1s, width 0.1s;
+  }
+
+  .create-class-button:hover {
     background-color: #457B9D;
-    width:75%;
-    border-radius: 5px;
-    padding: 10px;
-}
+    width: 78%;
+  }
 
     .sidebar-classes {
         border-radius: 20px;
@@ -78,11 +87,33 @@
         background-color: white;
         box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
         padding: 10px;
+        transition: background-color 0.2s;
+    }
+
+    .sidebar-class:hover {
+      background-color: #fff0d2;
     }
 
     .nobullet, .nobullet li {
         list-style-type: none;
         padding-left: 0;
+    }
+
+    .classes-title {
+      font-family: 'Open Sans', sans-serif;
+      color:#138999;
+      font-weight: bolder;
+      font-size: 20px;
+      margin-left: 23px;
+      margin-bottom: 0px;
+    }
+
+    .classes-memo {
+      font-family: 'Open Sans', sans-serif;
+      color:#88a2a5;
+      font-size: 15px;
+      margin-left: 23px;
+      margin-top: 0px;
     }
 
     .class-info {
@@ -98,11 +129,40 @@
         font-size: 14px;
 
         margin: 0px;
-    }
+  }
 
-    #classes-root {
-        overflow-y: auto;
-    }
+  #classes-root {
+    overflow-y: auto;
+  }
+
+  .class-add-modal {
+    border-radius:40px;
+    background-color: black;
+    box-shadow: 0px 0px 30px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    transition: opacity 0.1s;
+    display:block;
+  }
+
+  .class-add-modal-closed {
+    opacity:0.5;
+  }
+
+  .class-add-modal-inner-title {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    color:#138999;
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .modal-underlay {
+    width:100%;
+    height:100%;
+    background-color: rgb(0, 0, 0, 0.1);
+    z-index: 1;
+    backdrop-filter: blur(50px);
+  }
 
   .main {
     margin-left: 400px;

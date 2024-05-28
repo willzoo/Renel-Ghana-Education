@@ -14,6 +14,10 @@
   </head>
 
   <body>
+    <div class="modal-underlay">
+      <div class="class-add-modal class-add-modal-closed" >
+      </div>
+    </div>
     <div class="sidebar">
       <span style="display:block; margin-bottom:4em"></span>
 
@@ -45,9 +49,22 @@
 
       <br>
 
-      <div class="create-class-icon">
+      <div class="create-class-button" onClick="OpenClassAddModal()">
         <i class="fa fa-plus"></i> &nbsp; Create New Class
       </div>
+      <script>
+        function OpenClassAddModal() {
+          let modal = document.getElementsByClassName("class-add-modal");
+          
+          modal.classList.remove("class-add-modal-closed");
+          alert(1);
+        }
+        function CloseClassAddModal() {
+          document.getElementsByClassName("class-add-modal").style.opacity = "0";
+        }
+        document.getElementsByClassName("create-class-button").addEventListener('click', OpenClassAddModal);
+      </script>
+
       <span style="display:block; margin-bottom:1.5em"></span>
 
       <!-- sidebar classes -->
@@ -84,8 +101,8 @@
 
           return (
             <div>
-              <h1>List of Classes</h1>
-              <p>Teacher's list of currrent classes</p>
+              <h1 class="classes-title">List of Classes</h1>
+              <p class="classes-memo">Teacher's list of currrent classes</p>
 
               <ul class="nobullet">
                 {classList}
@@ -101,6 +118,7 @@
 
     <div class="main">
     </div>
+
 
   </body>
 </html>
