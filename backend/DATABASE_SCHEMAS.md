@@ -46,6 +46,7 @@ students:
     "parent_contact": "7777-777-777",
     "disabled": true,
     "health_conditions": "Diabetes",
+    "misc_info": "This student blah blah blah", 
     "current_class_id": "class_id",
     "current_grade_level": "Grade Level",
     "current_school_id": "school_id",
@@ -57,10 +58,35 @@ students:
         "class_id": "class_id_2023",
         "teacher_id": "teacher_id",
         "grade_level": "Grade Level",
-        "school_id": "school_id_2023"
+        "school_id": "school_id_2023",
+        "health_info": "Old health info"
+        "misc_info": "Old misc info"
         },
         ...
     ]
+    }
+
+
+There will be 1 permanent teacher database. Teachers have email and password. And list of classes they teach currently, they do not store a history of their classes.
+
+teachers:
+    {
+    "_id": "teacher_id",
+    "name": "Teacher Name",
+    "email": "Teacher Email",
+    "password": "Teacher Password",
+    "current_school_id": "school_id",
+    "current_classes": ["class_id1", "class_id2", ...]
+    }
+
+
+Simple admin collection for renel ghana to login.
+
+admin:
+    {
+    "_id": "admin_id",
+    "email": "Admin Email",
+    "password": "Admin Password"
     }
 
 
@@ -68,6 +94,6 @@ The transfers collection stores all the transfer students in the system. When a 
 
 transfers:
     {
-    "_id": "class_id",
+    "_id": "transfer_id",
     "students": ["student_id1", "student_id2", ...]
     }
