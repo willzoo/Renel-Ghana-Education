@@ -1,13 +1,16 @@
-from pymongo import MongoClient
+from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import os
 
-#Load environment variables from .env file
+# Initialize PyMongo
+mongo = PyMongo()
+
+# Load environment variables from .env file
 load_dotenv()
 
-#MongoDB connection
+# MongoDB connection setup for standalone checks or utilities
 uri = os.getenv("ATLAS_URI")
-client = MongoClient(uri)
+client = mongo.cx
 
 try:
     # Connect the client to the server
@@ -16,5 +19,5 @@ try:
 except Exception as e:
     print(f"Error: {e}")
 
+# Accessing the database for standalone checks or utilities
 db = client["EduTracker"]
-
