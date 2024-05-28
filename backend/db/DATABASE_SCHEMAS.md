@@ -31,7 +31,6 @@ classes_<year>:
     "grade_level": "Grade Level",
     "school_id": "school_id",
     "students": ["student_id1", "student_id2", ...]
-    ...
     }
 
 
