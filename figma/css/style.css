@@ -1,0 +1,111 @@
+.sidebar {
+    height: 100%;
+    width: 400px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-top-right-radius: 40px;
+    background-color: #DCE8F5;
+  }
+
+  .shape {
+    margin: auto;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background-color: rgb(118, 118, 118);
+  }
+
+  .profile-name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    color:#138999;
+    text-align: center;
+    margin: 0px;
+  }
+
+  .profile-info {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    color:#144047;
+    text-align: center;
+    margin: 0px;
+  }
+
+  .dashboard-icon {
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    color: white;
+
+    margin: auto;
+    background-color: #457B9D;
+    width:75%;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
+.create-class-icon {
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    color: white;
+
+    margin: auto;
+    background-color: #457B9D;
+    width:75%;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+    .sidebar-classes {
+        border-radius: 20px;
+        width:85%;
+        background-color:#eef5fa;
+        height: calc(100% - 480px);
+        margin: auto;
+        box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .sidebar-class {
+        border-radius: 10px;
+        margin: 15px;
+        height: 50px;
+        /*background-color: #e9f2f8;*/
+        background-color: white;
+        box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+    }
+
+    .nobullet, .nobullet li {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .class-info {
+        font-family: 'Open Sans', sans-serif;
+        color:#457B9D;
+
+        margin: 0px;
+    }
+
+    .class-info-body {
+        font-family: 'Open Sans', sans-serif;
+        color:#457B9D;
+        font-size: 14px;
+
+        margin: 0px;
+    }
+
+    #classes-root {
+        overflow-y: auto;
+    }
+
+  .main {
+    margin-left: 400px;
+    font-size: 28px;
+    padding: 0px 10px;
+  }
