@@ -4,23 +4,107 @@
     <title>Teacher Dashboard - EduTracker</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="css/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
     <!-- React Components -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
   </head>
 
   <body>
     <div class="sidebar">
-      <div class="image">
+      <span style="display:block; margin-bottom:4em"></span>
 
+      <!-- add picture -->
+      <div class="shape"></div>
+      <span style="display:block; margin-bottom:1em"></span>
+
+      <!-- add profile info -->
+      <p class="profile-name">First Last</p>
+      <p class="profile-info">School Name</p>
+      <br>
+      <p class="profile-info" style="font-size: 15px;">emailaddress@renelglobal.org</p>
+      <br>
+
+      <!-- section line -->
+      <hr style="width: 75%;
+      text-align:center; 
+      height: 2px;
+      background-color:rgb(41, 41, 41)">
+      <!-- <br>
+
+      <!-- dashboard icon 
+      <div class="dashboard-icon">
+        <i class="fa fa-home" style="text-align: left;"></i> &nbsp; Dashboard
       </div>
+      <br> -->
+
+      <!-- create new school button -->
+
+      <br>
+
+      <div class="create-class-icon">
+        <i class="fa fa-plus"></i> &nbsp; Create New Class
+      </div>
+      <span style="display:block; margin-bottom:1.5em"></span>
+
+      <!-- sidebar classes -->
+      <div id="classes-root" class="sidebar-classes"></div>
+      <script type="text/babel">
+        let classInfo = [
+          {className: "Class 1", numStudents: 5},
+          {className: "Class 2", numStudents: 4},
+          {className: "Class 3", numStudents: 2},
+          {className: "Class 4", numStudents: 7},
+          {className: "Class 5", numStudents: 9},
+          {className: "Class 6", numStudents: 3},
+          {className: "Class 7", numStudents: 6},
+          {className: "Class 8", numStudents: 1},
+        ];
+
+        function ClassItem(props) {
+          return (
+            <li>
+              <div class="sidebar-class">
+                <p class="class-info">{props.data.className}</p>
+                <p class="class-info-body">Total Number of Students: {props.data.numStudents}</p>
+              </div>
+            </li>
+          );
+        }
+
+        function AddClasses(props) {
+          let items = [];
+          for (let i = 0; i < props.classes.length; i++) {
+            items.push((<ClassItem data={props.classes[i]} />));
+          }
+          const classList = items;
+
+          return (
+            <div>
+              <h1>List of Classes</h1>
+              <p>Teacher's list of currrent classes</p>
+
+              <ul class="nobullet">
+                {classList}
+              </ul>
+            </div>
+          );
+        }
+
+        ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
+      </script>
+
     </div>
 
-    <div class="image">
-
+    <div class="main">
     </div>
+
+  </body>
+</html>
+
 
     <!-- <div class="sideview">
       <div class="sidebar">
@@ -185,5 +269,3 @@
         </div>
       </div>
     </div> -->
-  </body>
-</html>
