@@ -4,7 +4,7 @@ Necessary CRUD routes for each user action:
 	- Teacher collection: UPDATE function for password, READ if email and access code match
 	- Teacher collection: READ function for login, only check password and email
 
-	Teacher view: create new class info
+	Teacher view: create new class
 	- Class collection: CREATE function that makes new class with class name, teacher id, grade level, and school id
 
 	Teacher view: create brand new student button (if teacher teaches k1, if its the schools first year in the system, or if the a student transferred from outside the system)
