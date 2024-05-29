@@ -1,0 +1,81 @@
+#citation: chatgpt
+from flask import Blueprint, request, jsonify
+from bson.objectid import ObjectId
+from db import mongo
+
+student_bp = Blueprint('student', __name__)
+
+# Create a new student
+@student_bp.route('/students', methods=['POST'])
+def create_student():
+    data = request.get_json()
+    name = data.get('name')
+    parent_contact = data.get('parent_contact')
+    disabled = data.get('disabled', False)
+    health_conditions = data.get('health_conditions', '')
+    misc_info = data.get('misc_info', '')
+    class_id = data.get('class_id')
+    grade_level = data.get('grade_level')
+    school_id = data.get('school_id')
+
+    if not name or not parent_contact or not class_id or not grade_level or not school_id:
+        return jsonify({"error": "Missing required fields"}), 400
+
+    new_student = {
+        'name': name,
+        'parent_contact': parent_contact,
+        'disabled': disabled,
+        'health_conditions': health_conditions,
+        'misc_info': misc_info,
+        'class_id': class_id,
+        'grade_level': grade_level,
+        'school_id': school_id,
+        'history': []
+    }
+
+    try:
+        result = mongo.db.students.insert_one(new_student)
+        student_id = str(result.inserted_id)
+        return jsonify({"message": "Student created successfully", "student_id": student_id}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Read student information
+@student_bp.route('/students/<student_id>', methods=['GET'])
+def get_student(student_id):
+    try:
+        student = mongo.db.students.find_one({"_id": ObjectId(student_id)})
+        if not student:
+            return jsonify({"error": "Student not found"}), 404
+
+        student['_id'] = str(student['_id'])
+        return jsonify(student), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Update student information
+@student_bp.route('/students/<student_id>', methods=['PUT'])
+def update_student(student_id):
+    data = request.get_json()
+    update_data = {key: value for key, value in data.items() if value is not None}
+
+    try:
+        result = mongo.db.students.update_one({"_id": ObjectId(student_id)}, {"$set": update_data})
+        if result.matched_count == 0:
+            return jsonify({"error": "Student not found"}), 404
+
+        return jsonify({"message": "Student updated successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Delete a student (if needed)
+@student_bp.route('/students/<student_id>', methods=['DELETE'])
+def delete_student(student_id):
+    try:
+        result = mongo.db.students.delete_one({"_id": ObjectId(student_id)})
+        if result.deleted_count == 0:
+            return jsonify({"error": "Student not found"}), 404
+
+        return jsonify({"message": "Student deleted successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
