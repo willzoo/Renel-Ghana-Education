@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 # Import the blueprint from their respective modules
 from school import school_bp 
 from student import student_bp 
+from teacher import teacher_bp
+
 
 def create_app():
     app = Flask(__name__)
@@ -30,6 +32,9 @@ def create_app():
 
     # Register the student blueprint
     app.register_blueprint(student_bp, url_prefix='/students')
+
+    # Register the teacher blueprint
+    app.register_blueprint(teacher_bp, url_prefix='/teachers')
 
     return app
 

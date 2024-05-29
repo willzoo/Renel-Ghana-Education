@@ -14,6 +14,10 @@
   </head>
 
   <body>
+    <!-- add light grey background -->
+    <div class="background">
+    <section>
+      <!-- add modal base -->
     <div class="modal-underlay" onClick="CloseClassAddModal()">
       <div class="class-add-modal" onClick="event.stopPropagation()">
         <span class="class-add-modal-content">Create New Class</span>
@@ -24,7 +28,9 @@
         <span style="display:block; margin-bottom:1em"></span>
         <div id="modal-root"></div>
         <script type="text/babel">
+          // functions for class add tool
 
+          // first text box
           function ClassNameInput() {
             return (
               <div class="modal-text-input">
@@ -33,6 +39,7 @@
             )
           }
 
+          // second text box
           function OtherSectionInput() {
             return (
               <div class="modal-text-input">
@@ -41,6 +48,7 @@
             )
           }
 
+          // grade dropdown list
           function GradeLevelDropdown() {
             return (
               <div class="modal-text-input">
@@ -68,6 +76,7 @@
             )
           }
 
+          // submission button
           function SubmitButton() {
             return (
               <div class="modal-submit">
@@ -76,6 +85,7 @@
             );
           }
 
+          // build html and handle submission
           function Input() {
             const handleSubmit = (event) => {
               event.preventDefault();
@@ -121,15 +131,8 @@
       text-align:center; 
       height: 2px;
       background-color:rgb(41, 41, 41)">
-      <!-- <br>
 
-      <!-- dashboard icon 
-      <div class="dashboard-icon">
-        <i class="fa fa-home" style="text-align: left;"></i> &nbsp; Dashboard
-      </div>
-      <br> -->
-
-      <!-- create new school button -->
+      <!-- create new class button -->
 
       <br>
 
@@ -140,14 +143,19 @@
         const pause = (time) => new Promise(resolve => setTimeout(resolve, time));
 
         function OpenClassAddModal() {
-          let modal = document.getElementsByClassName("modal-underlay");
-          modal[0].classList.add("blurred-modal-underlay");
+          let underlay = document.getElementsByClassName("modal-underlay");
+          underlay[0].classList.add("blurred-modal-underlay");
+
+          let modal = document.getElementsByClassName("class-add-modal");
           modal[0].classList.add("displayed-modal");
-          modal[0].style.display = "block";
+
+          underlay[0].style.display = "block";
         }
         async function CloseClassAddModal() {
-          let modal = document.getElementsByClassName("modal-underlay");
-          modal[0].classList.remove("blurred-modal-underlay");
+          let underlay = document.getElementsByClassName("modal-underlay");
+          underlay[0].classList.remove("blurred-modal-underlay");
+
+          let modal = document.getElementsByClassName("class-add-modal");
           modal[0].classList.remove("displayed-modal");
           await pause(200);
           
@@ -159,7 +167,7 @@
           otherSectionText.value = "";
           gradeLevelDropdown.value = "";
           
-          modal[0].style.display = "none";
+          underlay[0].style.display = "none";
         }
       </script>
 
@@ -179,6 +187,7 @@
           {className: "Class 8", numStudents: 1},
         ];
 
+        // add list item with class info
         function ClassItem(props) {
           return (
             <li>
@@ -190,6 +199,7 @@
           );
         }
 
+        // add all classes to list
         function AddClasses(props) {
           let items = [];
           for (let i = 0; i < props.classes.length; i++) {
@@ -213,175 +223,92 @@
       </script>
 
     </div>
+    </section>
+    <section>
+      <div class="main">
+        <div class="header-info">
+          <div style="display: flex; width: 250;">
+            <div class="upper-info">
+              <!-- formatting for grade level section -->
+              <div class="upper-info-icon-shape grade-level"></div>
 
-    <div class="main">
+              <div style="height:10px;"></div>
+
+              <p>Grade Level</p>
+              <h1>5</h1>
+              <hr style="width: 50%;
+                text-align:center; 
+                height: 2px;" class="grade-level">
+
+            </div>
+            
+
+            <div style="display: inline-block; width:40px;"> </div>
+
+            <div class="upper-info">
+              <!-- formatting for num students section -->
+              <div class="upper-info-icon-shape num-students"></div>
+
+              <div style="height:10px;"></div>
+
+              <p>Number of Students</p>
+              <h1>120</h1>
+              <hr style="width: 50%;
+                text-align:center; 
+                height: 2px;" class="num-students">
+
+            </div>
+          </div>
+
+          <div class="upper-info" style="background-color: #F5CE3E;">
+            <!-- formatting for num students section -->
+            <div class="upper-info-icon-shape term-number"></div>
+
+            <div style="height:10px;"></div>
+
+            <!-- red text for term -->
+            <p style="color: #E1251B">Current Term</p>
+            <h1 style="color: #E1251B">2</h1>
+            <hr style="width: 50%;
+              text-align:center; 
+              height: 2px;" class="term-number">
+
+          </div>
+        </div>
+        <div style="height:20px;"></div>
+
+        <!-- add student buttons -->
+        <div class="add-student-section">
+          <!-- first button -->
+          <div class="add-student-button">
+            <div class="add-student-button-icon-shape">
+
+            </div>
+            <div class="add-student-button-text">Add New Student</div>
+          </div>
+
+          <div style="display: inline-block; width:20px;"> </div>
+
+          <!-- second button -->
+          <div class="add-student-button">
+            <div class="add-student-button-icon-shape">
+
+            </div>
+            <div class="add-student-button-text">Add Returning Student</div>
+          </div>
+
+          <div style="display: inline-block; width:20px;"> </div>
+
+          <!-- third button -->
+          <div class="add-student-button">
+            <div class="add-student-button-icon-shape">
+
+            </div>
+            <div class="add-student-button-text">Add Transfer Student</div>
+          </div>
+        </div>
+      </div>
+    </section>
     </div>
-
-
   </body>
 </html>
-
-
-    <!-- <div class="sideview">
-      <div class="sidebar">
-        <Line1 class="line" />
-        <div class="menu">
-          <div class="list-of-classes">
-            <div class="frame">
-              <div class="text-wrapper">List of Classes</div>
-              <p class="div">Teacher’s list of current classes</p>
-            </div>
-            <div class="banner-alert">
-              <div class="frame-2">
-                <div class="text-wrapper-2">Kindergarten Class 1</div>
-                <div class="frame-3">
-                  <div class="text-wrapper-3">Total enrolled students</div>
-                  <div class="frame-4">
-                    <Icon class="icon-instance" />
-                    <div class="text-wrapper-4">View student list</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="banner-alert">
-              <div class="frame-2">
-                <div class="text-wrapper-2">Kindergarten Class 2</div>
-                <div class="frame-3">
-                  <div class="text-wrapper-3">Total enrolled students</div>
-                  <div class="frame-4">
-                    <Icon class="icon-instance" />
-                    <div class="text-wrapper-4">View student list</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="banner-alert">
-              <div class="frame-2">
-                <div class="text-wrapper-2">Kindergarten Class 3</div>
-                <div class="frame-3">
-                  <div class="text-wrapper-3">Total enrolled students</div>
-                  <div class="frame-4">
-                    <Icon class="icon-instance" />
-                    <div class="text-wrapper-4">View student list</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="banner-alert">
-              <div class="frame-2">
-                <div class="text-wrapper-2">Kindergarten Class 4</div>
-                <div class="frame-3">
-                  <div class="text-wrapper-3">Total enrolled students</div>
-                  <div class="frame-4">
-                    <Icon class="icon-instance" />
-                    <div class="text-wrapper-4">View student list</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="dashboard">
-          <IconComponentNode class="icon-instance-node" />
-          <div class="text-wrapper-5">Dashboard</div>
-        </div>
-        <div class="teacher-information">
-          <img class="teacher-image" alt="Teacher image" src="teacher-image.png" />
-          <div class="teacher-name">
-            <div class="text-wrapper-6">First Last Name</div>
-            <div class="text-wrapper-7">Teacher: School Name</div>
-          </div>
-          <div class="text-wrapper-8">Email Address</div>
-        </div>
-        <div class="button-create-new">
-          <div class="text-wrapper-9">CREATE NEW CLASS</div>
-          <Vector class="vector-instance" />
-        </div>
-      </div>
-      <div class="main-screen">
-        <div class="st">
-          <div class="info">
-            <div class="frame-5">
-              <div class="frame-6">
-                <SolarNotebookMinimalisticLineDuotone class="solar-notebook" />
-                <div class="text-wrapper-10">Grade Level</div>
-              </div>
-              <div class="frame-7">
-                <div class="text-wrapper-11">5</div>
-                <Line2 class="line-2" color="#EC6B47" />
-              </div>
-            </div>
-            <div class="frame-5">
-              <div class="frame-6">
-                <NamecandidateNameSolarNotebookMinimalisticLineDuotoneScore101 class="solar-notebook" />
-                <div class="text-wrapper-12">Students</div>
-              </div>
-              <div class="frame-8">
-                <div class="text-wrapper-11">120</div>
-                <Line2 class="line-2" color="#116CBD" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <div class="div-2">
-            <div class="ep-edit">
-              <div class="person-add">
-                <div class="overlap-group">
-                  <Stroke1Copy class="stroke-copy" />
-                  <Plus class="icon-plus" />
-                </div>
-              </div>
-            </div>
-            <div class="text-wrapper-13">Add Returning Student</div>
-          </div>
-          <div class="div-2">
-            <div class="ep-edit">
-              <div class="folder-remove">
-                <div class="icon-folder-remove">
-                  <div class="overlap-group-2">
-                    <img class="icon-minus" alt="Icon minus" src="minus.svg" />
-                    <Folder class="icon-folder" />
-                    <img class="img" alt="Icon plus" src="plus.png" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="text-wrapper-13">Add Transfer Student</div>
-          </div>
-        </div>
-        <div class="yaklaan-etkinlikler">
-          <div class="frame">
-            <div class="text-wrapper-14">Student Roster</div>
-            <div class="div">Grade/level of school</div>
-          </div>
-          <div class="banner-alert-2">
-            <div class="frame-2">
-              <div class="text-wrapper-15">Last Name, First</div>
-              <div class="frame-9">
-                <div class="text-wrapper-16">Student ID</div>
-                <div class="frame-4">
-                  <div class="text-wrapper-16">Age (DOB)</div>
-                </div>
-              </div>
-            </div>
-            <div class="checkbox">
-              <div class="system-icons-wrapper">
-                <SystemIcons class="system-icons" />
-              </div>
-              <div class="title">Disability Status</div>
-            </div>
-            <div class="frame-10">
-              <div class="div-wrapper">
-                <div class="text-wrapper-17">Parent Name</div>
-              </div>
-              <div class="text-wrapper-18">Phone number</div>
-            </div>
-            <div class="group">
-              <div class="text-wrapper-19">Edit</div>
-              <EpEdit class="ep-edit-instance" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
