@@ -28,6 +28,9 @@ def create_app():
     # Register the school blueprint
     app.register_blueprint(school_bp, url_prefix='/schools')
 
+    # Register the student blueprint
+    app.register_blueprint(student_bp, url_prefix='/students')
+
     return app
 
 if __name__ == "__main__":
