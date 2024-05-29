@@ -9,7 +9,7 @@
 
 .sidebar {
     height: 100%;
-    width: 400px;
+    width: 360px;
     position: fixed;
     top: 0;
     left: 0;
@@ -86,7 +86,7 @@
         height: calc(100% - 480px);
         margin: auto;
         box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
-
+        overflow-y: auto;
     }
 
     .sidebar-class {
@@ -139,10 +139,6 @@
         font-size: 14px;
 
         margin: 0px;
-  }
-
-  #classes-root {
-    overflow-y: auto;
   }
 
   @keyframes modal-in {
@@ -351,8 +347,11 @@
   }
 
   .main {
-    margin-left: 400px;
-    padding: 50px;
+    width: calc(100% - 470px);
+    height: 100%;
+    margin: 50px;
+    margin-left: 410px;
+    position:fixed;
   }
 
   .header-info {
@@ -380,6 +379,7 @@
     color:#6e6e6e;
     text-align: center;
     margin: 0px;
+    white-space: nowrap;
   }
 
   .upper-info h1 {
@@ -391,6 +391,7 @@
     color:#3d3d3d;
     text-align: center;
     margin: -5px;
+    white-space: nowrap;
   }
 
   .upper-info-icon-shape {
@@ -421,7 +422,7 @@
   }
 
   .add-student-button {
-    width: 250px;
+    width: 220px;
     height: 30px;
     background-color: white;
     border-radius: 20px;
@@ -433,7 +434,7 @@
   }
 
   .add-student-button:hover {
-    width: 270px;
+    width: 230px;
     box-shadow: 0px 0px 20px 5px rgb(0, 0, 0, 0.05);
   }
 
@@ -451,8 +452,76 @@
     user-select: none;
     font-family: 'Open Sans', sans-serif;
     color:#a1a7a8;
-    font-size: 18px;
+    font-size: 16px;
     vertical-align: middle;
-    margin-top: 2px;
+    margin-top: 4px;
     margin-right: 6px;
+    white-space: nowrap;
   }
+
+  .student-section {
+    height:calc(100% - 340px);
+    position: relative;
+  }
+
+  .students-list {
+    border-radius: 20px;
+    background-color:#eef5fa;
+    height: 100%;
+    height: 100%;
+    margin: auto;
+    margin-top: 10px;
+    padding-top: 2px;
+    box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.1);
+
+    overflow-y: auto;
+}
+
+.student-list-item {
+    border-radius: 10px;
+    margin: 15px;
+    height: 50px;
+    /*background-color: #e9f2f8;*/
+    background-color: white;
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: background-color 0.2s;
+    display:flex;
+    justify-content: space-between;
+}
+
+.student-list-item:hover {
+  background-color: #fff0d2;
+}
+
+.students-title {
+  font-family: 'Open Sans', sans-serif;
+  color:#138999;
+  font-weight: bolder;
+  font-size: 20px;
+  margin-left: 23px;
+  margin-bottom: 0px;
+}
+
+.students-memo {
+  font-family: 'Open Sans', sans-serif;
+  color:#88a2a5;
+  font-size: 15px;
+  margin-left: 23px;
+  margin-top: 0px;
+}
+
+.student-info {
+    font-family: 'Open Sans', sans-serif;
+    color:#457B9D;
+
+    margin: 0px;
+}
+
+.student-info-body {
+    font-family: 'Open Sans', sans-serif;
+    color:#7c99ac;
+    font-size: 12px;
+
+    margin: 0px;
+}

@@ -193,7 +193,7 @@
             <li>
               <div class="sidebar-class">
                 <p class="class-info">{props.data.className}</p>
-                <p class="class-info-body">Total Number of Students: {props.data.numStudents}</p>
+                <p class="class-info-body">Total Enrolled Students: {props.data.numStudents}</p>
               </div>
             </li>
           );
@@ -208,14 +208,13 @@
           const classList = items;
 
           return (
-            <div>
-              <h1 class="classes-title">List of Classes</h1>
-              <p class="classes-memo">Teacher's list of currrent classes</p>
-
+            <section>
+              <h1 class="classes-title">Classes</h1>
+              <p class="classes-memo">Teacher's list of current classes</p>
               <ul class="nobullet">
                 {classList}
               </ul>
-            </div>
+            </section>
           );
         }
 
@@ -307,6 +306,71 @@
             <div class="add-student-button-text">Add Transfer Student</div>
           </div>
         </div>
+        <div class="student-section">
+          <div id="students-root" class="students-list"></div>
+          <script type="text/babel">
+            var students = [
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+            ];
+
+            // add list item with class info
+            function ClassItem(props) {
+              return (
+                <li>
+                  <div class="student-list-item">
+                    <div>
+                      <p class="student-info">{props.data.studentName}</p>
+                      <p class="student-info-body">Student ID: {props.data.studentID}</p>
+                      <p class="student-info-body">Disability: {props.data.disability}</p>
+                    </div>
+                    <div>
+                      <p class="student-info">Parent Contact Information</p>
+                      <p class="student-info-body">{props.data.contact}</p>
+                    </div>
+                    <div>
+                      <p class="student-info-body">Edit</p>
+                    </div>
+                  </div>
+                </li>
+              );
+            }
+
+            // add all classes to list
+            function AddClasses(props) {
+              let items = [];
+              for (let i = 0; i < props.classes.length; i++) {
+                items.push((<ClassItem data={props.classes[i]} />));
+              }
+              const classList = items;
+
+              return (
+                <div>
+                  <h1 class="students-title">Students</h1>
+                  <p class="students-memo"> &#60;Class Name&#62;</p>
+                  <ul class="nobullet">
+                    {classList}
+                  </ul>
+                </div>
+              );
+            }
+
+            ReactDOM.render(<AddClasses classes={students} />, document.getElementById("students-root"));
+          </script>
+        
+        </div>
+        
       </div>
     </section>
     </div>
