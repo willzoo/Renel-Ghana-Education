@@ -1,5 +1,4 @@
 #citation: chatgpt.com
-
 from flask import Blueprint, request, jsonify, current_app
 
 school_bp = Blueprint('school_bp', __name__)

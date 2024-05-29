@@ -1,5 +1,4 @@
 #citation: chatgpt.com
-
 from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
 
