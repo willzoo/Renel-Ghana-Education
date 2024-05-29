@@ -1,7 +1,6 @@
 #citation: chatgpt.com
 
-from flask import Blueprint, request, jsonify
-from db import mongo
+from flask import Blueprint, request, jsonify, current_app
 
 school_bp = Blueprint('school_bp', __name__)
 
@@ -29,6 +28,7 @@ def create_school():
             "grade_levels": grade_levels
         }
 
+        mongo = current_app.extensions['pymongo']
         mongo.db.schools.insert_one(school_data)
         return jsonify({"message": "School created successfully"}), 201
 

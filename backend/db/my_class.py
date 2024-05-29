@@ -2,7 +2,6 @@
 
 from flask import Blueprint, request, jsonify
 from bson.objectid import ObjectId
-from db import mongo
 
 class_bp = Blueprint('class', __name__)
 

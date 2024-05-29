@@ -1,7 +1,7 @@
 #citation: chatgpt
 from flask import Blueprint, request, jsonify
 from bson.objectid import ObjectId
-from db import mongo
+from server import mongo
 
 student_bp = Blueprint('student', __name__)
 
