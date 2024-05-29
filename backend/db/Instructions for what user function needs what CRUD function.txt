@@ -1,0 +1,53 @@
+Necessary CRUD routes for each user action:
+
+	Teacher view: creating account, and login
+	- Teacher collection: UPDATE function for password, READ if email and access code match
+	- Teacher collection: READ function for login, only check password and email
+
+	Teacher view: create new class info
+	- Class collection: CREATE function that makes new class with class name, teacher id, grade level, and school id
+
+	Teacher view: create brand new student button (if teacher teaches k1, if its the schools first year in the system, or if the a student transferred from outside the system)
+	- Student collection: CREATE new student record, need the following info: name, parent contact; can have following info: disabled, health_conditions, misc_info. Automatically include class's id, class's grade level, and class's school id.
+	- Class collection: UPDATE students list with reference to student.
+
+	Teacher view: add returning student button
+	- School collection: READ student records from the same school in past years.
+	^ Student collection: After student is added, automatically UPDATES history with last year (from class), term, class_id, grade_level, and then UPDATES current_class_id, and current_grade_level with current info.
+	- Class collection: UPDATE students list with reference to student that already existed.
+
+	Teacher view: add transfer student button
+	- Transfer collection: READ through transfer collection, and find the student they are looking for, check if teacher is allowed to . 
+	^ Student collection: After student is added, automatically UPDATES history with last year (from class), term, class_id, grade_level, and then UPDATES current_class_id, and current_grade_level with current info.
+	- Class collection: UPDATE students list with reference to student that already existed.
+
+	Teacher view: edit or display current student button
+	- Student collection: READ through student info, and display student info
+	- Student collection: UPDATE any applicable student info to be changed
+
+	Teacher view: class roster student list
+	- Class collection: READ list of students in class, and how many there are
+	- Student collection: READ through student info, and display student info
+
+	Admin view: grade level roster student list:
+	- School collection: READ list of classes in grade level
+	- Class collection: READ list of students in classes
+	- Student collection: READ through student info, and display student info		
+
+	Admin view: button to compare list of current year with past year. 
+	- School collection: READ percentage dropped out in school
+	^ Student collection: READ if each student exists in current year (do this by READING if student's "current_class" is in current year))
+	- Student collection: On each student in class roster, READ history, find status change year on year.	
+
+	School Management view: making new schools
+	- School collection: CREATE new school record, with school name, access code (auto generated), and year
+	
+	School Management view: making new teacher accounts by setting emails
+	- Teacher collection: CREATE new teacher record, with just email and name
+	- School collection: UPDATE school's teacher list with reference to new teacher.
+	
+	Admin Transfer Portal: see all students, mark some for transfer
+	- TBD
+
+	Yearly Update script:
+	- TBD
