@@ -1,5 +1,5 @@
 #citation: chatgpt
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
 from server import mongo
 
@@ -8,6 +8,7 @@ student_bp = Blueprint('student', __name__)
 # Create a new student
 @student_bp.route('/students', methods=['POST'])
 def create_student():
+    mongo = current_app.extensions['pymongo']
     data = request.get_json()
     name = data.get('name')
     parent_contact = data.get('parent_contact')
@@ -43,6 +44,7 @@ def create_student():
 # Read student information
 @student_bp.route('/students/<student_id>', methods=['GET'])
 def get_student(student_id):
+    mongo = current_app.extensions['pymongo']
     try:
         student = mongo.db.students.find_one({"_id": ObjectId(student_id)})
         if not student:
@@ -56,9 +58,9 @@ def get_student(student_id):
 # Update student information
 @student_bp.route('/students/<student_id>', methods=['PUT'])
 def update_student(student_id):
+    mongo = current_app.extensions['pymongo']
     data = request.get_json()
     update_data = {key: value for key, value in data.items() if value is not None}
-
     try:
         result = mongo.db.students.update_one({"_id": ObjectId(student_id)}, {"$set": update_data})
         if result.matched_count == 0:
@@ -71,6 +73,7 @@ def update_student(student_id):
 # Delete a student (if needed)
 @student_bp.route('/students/<student_id>', methods=['DELETE'])
 def delete_student(student_id):
+    mongo = current_app.extensions['pymongo']
     try:
         result = mongo.db.students.delete_one({"_id": ObjectId(student_id)})
         if result.deleted_count == 0:

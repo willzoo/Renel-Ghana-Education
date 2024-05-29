@@ -1,6 +1,6 @@
 #citation: chatgpt.com
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from server import mongo
 
 # Create a Blueprint instance for teachers
@@ -8,6 +8,7 @@ teacher_bp = Blueprint('teacher_bp', __name__)
 
 @teacher_bp.route('/', methods=['POST'])
 def create_teacher():
+    mongo = current_app.extensions['pymongo']
     try:
         data = request.get_json()
         teacher_id = data.get('_id')

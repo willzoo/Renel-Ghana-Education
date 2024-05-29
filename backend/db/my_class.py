@@ -1,6 +1,6 @@
 #citation: chatgpt.com
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
 
 class_bp = Blueprint('class', __name__)
@@ -8,6 +8,8 @@ class_bp = Blueprint('class', __name__)
 # Create a new class
 @class_bp.route('/classes', methods=['POST'])
 def create_class():
+    mongo = current_app.extensions['pymongo']
+
     data = request.get_json()
     class_name = data.get('class_name')
     grade_level = data.get('grade_level')
@@ -36,6 +38,7 @@ def create_class():
 # Read class information
 @class_bp.route('/classes/<class_id>', methods=['GET'])
 def get_class(class_id):
+    mongo = current_app.extensions['pymongo']
     try:
         class_data = mongo.db.classes.find_one({"_id": ObjectId(class_id)})
         if not class_data:
@@ -53,6 +56,7 @@ def get_class(class_id):
 # Update class information
 @class_bp.route('/classes/<class_id>', methods=['PUT'])
 def update_class(class_id):
+    mongo = current_app.extensions['pymongo']
     data = request.get_json()
     update_data = {key: value for key, value in data.items() if value is not None}
 
@@ -76,6 +80,7 @@ def update_class(class_id):
 # Delete a class (if needed)
 @class_bp.route('/classes/<class_id>', methods=['DELETE'])
 def delete_class(class_id):
+    mongo = current_app.extensions['pymongo']
     try:
         result = mongo.db.classes.delete_one({"_id": ObjectId(class_id)})
         if result.deleted_count == 0:
@@ -88,6 +93,7 @@ def delete_class(class_id):
 # Update student list in a class
 @class_bp.route('/classes/<class_id>/students', methods=['PUT'])
 def update_class_students(class_id):
+    mongo = current_app.extensions['pymongo']
     data = request.get_json()
     student_ids = data.get('students', [])
 
@@ -108,6 +114,7 @@ def update_class_students(class_id):
 # Get class roster
 @class_bp.route('/classes/<class_id>/roster', methods=['GET'])
 def get_class_roster(class_id):
+    mongo = current_app.extensions['pymongo']
     try:
         class_data = mongo.db.classes.find_one({"_id": ObjectId(class_id)})
         if not class_data:

@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 import os
 
 # Import the blueprint from their respective modules
-from school import school_bp 
-# from student import student_bp 
-# from teacher import teacher_bp
-# from my_class import class_bp
+from db.school import school_bp 
+from db.student import student_bp 
+from db.teacher import teacher_bp
+from db.my_class import class_bp
 
 # Initialize PyMongo
 mongo = PyMongo()
@@ -33,17 +33,11 @@ def create_app():
         except Exception as e:
             return "Error: {e}"
 
-    # Register the school blueprint
+    # Register the blueprints
     app.register_blueprint(school_bp, url_prefix='/schools')
-
-    # # Register the student blueprint
-    # app.register_blueprint(student_bp, url_prefix='/students')
-
-    # # Register the teacher blueprint
-    # app.register_blueprint(teacher_bp, url_prefix='/teachers')
-
-    # # Register the class blueprint
-    # app.register_blueprint(class_bp, url_prefix='/classes')
+    app.register_blueprint(student_bp, url_prefix='/students')
+    app.register_blueprint(teacher_bp, url_prefix='/teachers')
+    app.register_blueprint(class_bp, url_prefix='/classes')
 
     return app
 
