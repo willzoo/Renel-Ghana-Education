@@ -2,7 +2,9 @@ from flask import Flask
 from db import mongo
 import os
 from dotenv import load_dotenv
-from school import school_bp  # Import the blueprint from the school module
+# Import the blueprint from their respective modules
+from school import school_bp 
+from student import student_bp 
 
 def create_app():
     app = Flask(__name__)
