@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from school import school_bp 
 from student import student_bp 
 from teacher import teacher_bp
+from my_class import class_bp
 
 
 def create_app():
@@ -25,7 +26,7 @@ def create_app():
             mongo.cx.admin.command('ping')
             return "Pinged your deployment. You successfully connected to MongoDB!"
         except Exception as e:
-            return f"Error: {e}"
+            return "Error: {e}"
 
     # Register the school blueprint
     app.register_blueprint(school_bp, url_prefix='/schools')
@@ -35,6 +36,9 @@ def create_app():
 
     # Register the teacher blueprint
     app.register_blueprint(teacher_bp, url_prefix='/teachers')
+
+    # Register the class blueprint
+    app.register_blueprint(class_bp, url_prefix='/classes')
 
     return app
 
