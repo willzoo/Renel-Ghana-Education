@@ -28,7 +28,8 @@ def create_school():
         }
 
         mongo = current_app.extensions['pymongo']
-        mongo.db.schools.insert_one(school_data)
+        db = mongo.cx.EduTracker
+        db.schools.insert_one(school_data)
         return jsonify({"message": "School created successfully"}), 201
 
     except Exception as e:

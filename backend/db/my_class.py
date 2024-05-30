@@ -7,8 +7,6 @@ class_bp = Blueprint('class', __name__)
 # Create a new class
 @class_bp.route('/classes', methods=['POST'])
 def create_class():
-    mongo = current_app.extensions['pymongo']
-
     data = request.get_json()
     class_name = data.get('class_name')
     grade_level = data.get('grade_level')
@@ -28,7 +26,9 @@ def create_class():
     }
 
     try:
-        result = mongo.db.classes.insert_one(new_class)
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        result = db.classes.insert_one(new_class)
         class_id = str(result.inserted_id)
         return jsonify({"message": "Class created successfully", "class_id": class_id}), 201
     except Exception as e:
@@ -37,9 +37,10 @@ def create_class():
 # Read class information
 @class_bp.route('/classes/<class_id>', methods=['GET'])
 def get_class(class_id):
-    mongo = current_app.extensions['pymongo']
     try:
-        class_data = mongo.db.classes.find_one({"_id": ObjectId(class_id)})
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        class_data = db.classes.find_one({"_id": ObjectId(class_id)})
         if not class_data:
             return jsonify({"error": "Class not found"}), 404
 
@@ -55,7 +56,6 @@ def get_class(class_id):
 # Update class information
 @class_bp.route('/classes/<class_id>', methods=['PUT'])
 def update_class(class_id):
-    mongo = current_app.extensions['pymongo']
     data = request.get_json()
     update_data = {key: value for key, value in data.items() if value is not None}
 
@@ -68,7 +68,9 @@ def update_class(class_id):
         update_data['students'] = [ObjectId(student) for student in update_data['students']]
 
     try:
-        result = mongo.db.classes.update_one({"_id": ObjectId(class_id)}, {"$set": update_data})
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        result = db.classes.update_one({"_id": ObjectId(class_id)}, {"$set": update_data})
         if result.matched_count == 0:
             return jsonify({"error": "Class not found"}), 404
 
@@ -79,9 +81,10 @@ def update_class(class_id):
 # Delete a class (if needed)
 @class_bp.route('/classes/<class_id>', methods=['DELETE'])
 def delete_class(class_id):
-    mongo = current_app.extensions['pymongo']
     try:
-        result = mongo.db.classes.delete_one({"_id": ObjectId(class_id)})
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        result = db.classes.delete_one({"_id": ObjectId(class_id)})
         if result.deleted_count == 0:
             return jsonify({"error": "Class not found"}), 404
 
@@ -92,7 +95,6 @@ def delete_class(class_id):
 # Update student list in a class
 @class_bp.route('/classes/<class_id>/students', methods=['PUT'])
 def update_class_students(class_id):
-    mongo = current_app.extensions['pymongo']
     data = request.get_json()
     student_ids = data.get('students', [])
 
@@ -102,7 +104,9 @@ def update_class_students(class_id):
     student_object_ids = [ObjectId(student_id) for student_id in student_ids]
 
     try:
-        result = mongo.db.classes.update_one({"_id": ObjectId(class_id)}, {"$set": {"students": student_object_ids}})
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        result = db.classes.update_one({"_id": ObjectId(class_id)}, {"$set": {"students": student_object_ids}})
         if result.matched_count == 0:
             return jsonify({"error": "Class not found"}), 404
 
@@ -113,9 +117,10 @@ def update_class_students(class_id):
 # Get class roster
 @class_bp.route('/classes/<class_id>/roster', methods=['GET'])
 def get_class_roster(class_id):
-    mongo = current_app.extensions['pymongo']
     try:
-        class_data = mongo.db.classes.find_one({"_id": ObjectId(class_id)})
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        class_data = db.classes.find_one({"_id": ObjectId(class_id)})
         if not class_data:
             return jsonify({"error": "Class not found"}), 404
 

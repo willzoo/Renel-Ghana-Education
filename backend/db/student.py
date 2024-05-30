@@ -10,7 +10,6 @@ def create_student():
     if request.content_type != 'application/json':
         return jsonify({"error": "Content-Type must be application/json"}), 415
     
-    mongo = current_app.extensions['pymongo']
     data = request.get_json(force=True, silent=True)  # force=True to handle empty body
     if data is None:
         return jsonify({"error": "No input data provided"}), 400
@@ -45,7 +44,9 @@ def create_student():
     }
 
     try:
-        result = mongo.db.students.insert_one(new_student)
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker  
+        result = db.students.insert_one(new_student)
         student_id = str(result.inserted_id)
         return jsonify({"message": "Student created successfully", "student_id": student_id}), 201
     except Exception as e:
@@ -54,9 +55,10 @@ def create_student():
 # Read student information
 @student_bp.route('/students/<student_id>', methods=['GET'])
 def get_student(student_id):
-    mongo = current_app.extensions['pymongo']
     try:
-        student = mongo.db.students.find_one({"_id": ObjectId(student_id)})
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        student = db.students.find_one({"_id": ObjectId(student_id)})
         if not student:
             return jsonify({"error": "Student not found"}), 404
 
@@ -68,11 +70,12 @@ def get_student(student_id):
 # Update student information
 @student_bp.route('/students/<student_id>', methods=['PUT'])
 def update_student(student_id):
-    mongo = current_app.extensions['pymongo']
     data = request.get_json()
     update_data = {key: value for key, value in data.items() if value is not None}
     try:
-        result = mongo.db.students.update_one({"_id": ObjectId(student_id)}, {"$set": update_data})
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        result = db.students.update_one({"_id": ObjectId(student_id)}, {"$set": update_data})
         if result.matched_count == 0:
             return jsonify({"error": "Student not found"}), 404
 
@@ -83,9 +86,10 @@ def update_student(student_id):
 # Delete a student (if needed)
 @student_bp.route('/students/<student_id>', methods=['DELETE'])
 def delete_student(student_id):
-    mongo = current_app.extensions['pymongo']
     try:
-        result = mongo.db.students.delete_one({"_id": ObjectId(student_id)})
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        result = db.students.delete_one({"_id": ObjectId(student_id)})
         if result.deleted_count == 0:
             return jsonify({"error": "Student not found"}), 404
 
