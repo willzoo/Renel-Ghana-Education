@@ -1,9 +1,9 @@
 #citation: chatgpt.com
 from flask import Blueprint, request, jsonify, current_app
 
-school_bp = Blueprint('school_bp', __name__)
+school_bp = Blueprint('school', __name__)
 
-@school_bp.route('/', methods=['POST'])
+@school_bp.route('/schools', methods=['POST'])
 def create_school():
     try:
         data = request.get_json()
