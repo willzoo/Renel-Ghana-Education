@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, current_app
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import os
@@ -26,6 +26,8 @@ def create_app():
 
     # Initialize PyMongo with the app
     mongo.init_app(app)
+    with app.app_context():
+        current_app.extensions['pymongo'] = mongo
 
     @app.route('/')
     def index():
