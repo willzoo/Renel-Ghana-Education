@@ -9,6 +9,7 @@ from db.student import student_bp
 from db.teacher import teacher_bp
 from db.my_class import class_bp
 from db.admin import admin_bp
+from db.transfer import transfer_bp
 
 
 # Initialize PyMongo
@@ -41,6 +42,8 @@ def create_app():
     app.register_blueprint(teacher_bp, url_prefix='/teachers')
     app.register_blueprint(class_bp, url_prefix='/classes')
     app.register_blueprint(admin_bp, url_prefix='/admins')
+    app.register_blueprint(transfer_bp, url_prefix='/transfers')
+    
 
 
     return app
