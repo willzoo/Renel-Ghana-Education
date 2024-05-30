@@ -7,8 +7,14 @@ student_bp = Blueprint('student', __name__)
 # Create a new student
 @student_bp.route('/students', methods=['POST'])
 def create_student():
+    if request.content_type != 'application/json':
+        return jsonify({"error": "Content-Type must be application/json"}), 415
+    
     mongo = current_app.extensions['pymongo']
-    data = request.get_json()
+    data = request.get_json(force=True, silent=True)  # force=True to handle empty body
+    if data is None:
+        return jsonify({"error": "No input data provided"}), 400
+    
     name = data.get('name')
     parent_contact = data.get('parent_contact')
     dob = data.get('dob')
@@ -22,6 +28,7 @@ def create_student():
 
     if not name or not dob or not parent_contact or not class_id or not grade_level or not school_id:
         return jsonify({"error": "Missing required fields"}), 400
+    
 
     new_student = {
         'name': name,
