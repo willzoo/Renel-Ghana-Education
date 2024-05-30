@@ -374,9 +374,9 @@
     <section>
       <div class="main">
         <div class="header-info">
-          <div style="display: flex; width: 250;">
+          <!--<div style="display: flex; width: 250;">
             <div class="upper-info">
-              <!-- formatting for grade level section -->
+              <!-- formatting for grade level section --
               <div class="upper-info-icon-shape grade-level"></div>
 
               <div style="height:10px;"></div>
@@ -393,7 +393,7 @@
             <div style="display: inline-block; width:40px;"> </div>
 
             <div class="upper-info">
-              <!-- formatting for num students section -->
+              <!-- formatting for num students section --
               <div class="upper-info-icon-shape num-students"></div>
 
               <div style="height:10px;"></div>
@@ -408,18 +408,52 @@
           </div>
 
           <div class="upper-info" style="background-color: #F5CE3E;">
-            <!-- formatting for num students section -->
+            <!-- formatting for num students section --
             <div class="upper-info-icon-shape term-number"></div>
 
             <div style="height:10px;"></div>
 
-            <!-- red text for term -->
+            <!-- red text for term --
             <p style="color: #E1251B">Current Term</p>
             <h1 style="color: #E1251B">2</h1>
             <hr style="width: 50%;
               text-align:center; 
               height: 2px;" class="term-number">
 
+          </div> -->
+          <script type="text/babel">
+            function Indicator(props) {
+              return(
+                <section>
+                  <div class="row" >
+                    <div>
+                      <div class={`upper-info-icon-shape ${props.theme}`}></div>
+
+                      <p class="label">{props.title}</p>
+                    </div>
+                    
+                    <p class="value">{props.value}</p>
+                  </div>
+                </section>
+              )
+            }
+          </script>
+          <div>EduTracker Logo will eventually go here :&#41;</div>
+          <div class="upper-info">
+            <section id="grade-level-indicator"></section>
+            <script type="text/babel">
+              ReactDOM.render(<Indicator title="Grade Level" value="5" theme="grade-level"/>, document.getElementById("grade-level-indicator"))
+            </script>
+            
+            <section id="num-students-indicator"></section>
+            <script type="text/babel">
+              ReactDOM.render(<Indicator title="Enrolled Students" value="120" theme="num-students"/>, document.getElementById("num-students-indicator"))
+            </script>
+
+            <section id="current-term-indicator"></section>
+            <script type="text/babel">
+              ReactDOM.render(<Indicator title="Current Term" value="2" theme="term-number"/>, document.getElementById("current-term-indicator"))
+            </script>
           </div>
         </div>
         <div style="height:20px;"></div>

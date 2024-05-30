@@ -381,9 +381,9 @@
   }
 
   .main {
-    width: calc(100% - 470px);
+    width: calc(100% - 440px);
     height: 100%;
-    margin: 50px;
+    margin: 30px;
     margin-left: 410px;
     position:fixed;
   }
@@ -395,45 +395,65 @@
   }
 
   .upper-info {
-    width: 180px;
+    /* width: 180px;
     height:120px;
     border-radius: 40px;
     box-shadow: 0px 0px 20px 10px rgb(0, 0, 0, 0.05);
     background-color: white;
     padding: 20px;
-    vertical-align: top;
+    vertical-align: top; */
+    width: 250px;
+    height: 80px;
+    background-color: white;
+    border-radius: 18px;
+    box-shadow: 0px 0px 10px 5px rgb(0, 0, 0, 0.02);
+    transition: 0.1s;
+    padding: 10px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
-  .upper-info p {
-    text-align: center;
+  .upper-info .row {
+    display:flex;
+    justify-content: space-between;
+    width: 250px;
+    position:absolute
+
+  }
+
+  .upper-info .label {
+    text-align: left;
     
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-    font-weight: bold;
-    color:#6e6e6e;
-    text-align: center;
-    margin: 0px;
+    color:#484848;
+    margin: auto;
+    margin-top: 5px;
+    margin-left: 45px;
     white-space: nowrap;
   }
 
-  .upper-info h1 {
-    text-align: center;
+  .upper-info .value {
+    text-align: right;
     
     font-family: 'Open Sans', sans-serif;
-    font-size: 40px;
-    font-weight: bold;
-    color:#3d3d3d;
-    text-align: center;
-    margin: -5px;
+    font-size: 22px;
+    color:#484848;
+    margin: auto;
+    margin-right: 5px;
+    margin-top: -1px;
     white-space: nowrap;
   }
 
   .upper-info-icon-shape {
     margin: auto;
-    width: 40px;
-    height:40px;
+    width: 30px;
+    height:30px;
+    position: absolute;
     z-index: 1;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0px 0px 10px 5px rgb(0, 0, 0, 0.1);
   }
 
