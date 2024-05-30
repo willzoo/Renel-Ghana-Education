@@ -43,6 +43,7 @@ students:
     "_id": "student_id",
     "name": "Student Name",
     "parent_contact": "7777-777-777",
+    "dob": "DD/MM/YYYY",
     "disabled": true,
     "health_conditions": "Diabetes",
     "misc_info": "This student blah blah blah", 
