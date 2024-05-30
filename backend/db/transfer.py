@@ -1,12 +1,13 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
-from db import mongo
+
 
 transfer_bp = Blueprint('transfer', __name__)
 
 # Create a transfer
 @transfer_bp.route('/transfers', methods=['POST'])
 def create_transfer():
+    mongo = current_app.extensions["pymongo"]
     data = request.get_json()
     students = data.get('students')
 
@@ -22,6 +23,7 @@ def create_transfer():
 # Read a transfer
 @transfer_bp.route('/transfers/<transfer_id>', methods=['GET'])
 def read_transfer(transfer_id):
+    mongo = current_app.extensions["pymongo"]
     transfer = mongo.db.transfer.find_one({"_id": ObjectId(transfer_id)})
 
     if transfer:
@@ -33,6 +35,7 @@ def read_transfer(transfer_id):
 # Update a transfer
 @transfer_bp.route('/transfers/<transfer_id>', methods=['PUT'])
 def update_transfer(transfer_id):
+    mongo = current_app.extensions["pymongo"]
     data = request.get_json()
     students = data.get('students')
 
@@ -52,6 +55,7 @@ def update_transfer(transfer_id):
 # Delete a transfer
 @transfer_bp.route('/transfers/<transfer_id>', methods=['DELETE'])
 def delete_transfer(transfer_id):
+    mongo = current_app.extensions["pymongo"]
     result = mongo.db.transfer.delete_one({"_id": ObjectId(transfer_id)})
 
     if result.deleted_count > 0:

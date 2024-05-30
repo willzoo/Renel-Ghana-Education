@@ -1,13 +1,13 @@
 #citation: chatgpt.com
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
-from db import mongo
 
 admin_bp = Blueprint('admin', __name__)
 
 # Create an admin
 @admin_bp.route('/admins', methods=['POST'])
 def create_admin():
+    mongo = current_app.extensions["pymongo"]
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
@@ -25,6 +25,7 @@ def create_admin():
 # Read an admin
 @admin_bp.route('/admins/<admin_id>', methods=['GET'])
 def read_admin(admin_id):
+    mongo = current_app.extensions["pymongo"]
     admin = mongo.db.admin.find_one({"_id": ObjectId(admin_id)})
 
     if admin:
@@ -36,6 +37,7 @@ def read_admin(admin_id):
 # Update an admin
 @admin_bp.route('/admins/<admin_id>', methods=['PUT'])
 def update_admin(admin_id):
+    mongo = current_app.extensions["pymongo"]
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
@@ -56,6 +58,7 @@ def update_admin(admin_id):
 # Delete an admin
 @admin_bp.route('/admins/<admin_id>', methods=['DELETE'])
 def delete_admin(admin_id):
+    mongo = current_app.extensions["pymongo"]
     result = mongo.db.admin.delete_one({"_id": ObjectId(admin_id)})
 
     if result.deleted_count > 0:
