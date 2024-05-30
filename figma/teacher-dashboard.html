@@ -17,6 +17,24 @@
     <!-- add light grey background -->
     <div class="background">
     <section>
+      <script type="text/babel">
+        const TextInput = (props) => {
+            return (
+              <div className="modal-text-input">
+                <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required/>
+              </div>
+            )
+          }
+          
+          const SubmitButton = () => {
+            return (
+              <div className="modal-submit">
+                <input type="submit" value="Create"/>
+              </div>
+            );
+          }
+      </script>
+
       <!-- add modal base -->
     <div class="modal-underlay" id="class-add-modal-underlay" onClick="CloseClassAddModal()">
       <div class="modal class-add-modal" id="class-add-modal" onClick="event.stopPropagation()">
@@ -30,22 +48,9 @@
         <script type="text/babel">
           // functions for class add tool
 
-          // first text box
-          function ClassNameInput() {
-            return (
-              <div className="modal-text-input">
-                <input placeholder="Class Name" title="Class Name" type="text" id="class-name" required/>
-              </div>
-            )
-          }
-
-          // second text box
-          function OtherSectionInput() {
-            return (
-              <div className="modal-text-input">
-                <input placeholder="Other Section" title="Other Section" type="text" id="other-section" required/>
-              </div>
-            )
+          let addClassInfo = {
+            className: {title: "Class Name", placeholder: "Class Name", id: "class-name"},
+            otherSection: {title: "Other Section", placeholder: "Other Section", id: "other-section"},
           }
 
           // grade dropdown list
@@ -78,15 +83,6 @@
 
           // submission button
 
-          function SubmitButton() {
-            return (
-              <div className="modal-submit">
-                <input type="submit" value="Create"/>
-              </div>
-            );
-          }
-
-          
 
           // build html and handle submission
           function Input() {
@@ -98,10 +94,14 @@
             return (
               <section style={{ margin: '50px' }}>
                 <form id="class-modal-form" onSubmit={handleSubmit}>
-                  <ClassNameInput />
+                  <TextInput title={addClassInfo.className.title}
+                  placeholder={addClassInfo.className.placeholder}
+                  id={addClassInfo.className.id}/>
                   <br/>
-                  <OtherSectionInput />
-                  <br />
+                  <TextInput title={addClassInfo.otherSection.title}
+                  placeholder={addClassInfo.otherSection.placeholder}
+                  id={addClassInfo.otherSection.id}/>
+                  <br/>
                   <GradeLevelDropdown />
                   <SubmitButton />
                 </form>
@@ -126,31 +126,9 @@
         <script type="text/babel">
           // functions for new student tool
 
-          // first text box
-          function ClassNameInput() {
-            return (
-              <div class="modal-text-input">
-                <input placeholder="Student Name" title="Student Name" type="text" id="student-name" required/>
-              </div>
-            )
-          }
-
-          // second text box
-          function OtherSectionInput() {
-            return (
-              <div class="modal-text-input">
-                <input placeholder="Other Section" title="Other Section" type="text" id="other-section-2" required/>
-              </div>
-            )
-          }
-
-          // submission button
-          function SubmitButton() {
-            return (
-              <div class="modal-submit">
-                <input type="submit" />
-              </div>
-            );
+          let newStudentInfo = {
+            studentName: {title: "Student Name", placeholder: "Student Name", id: "student-name"},
+            otherSection: {title: "Other Section", placeholder: "Other Section", id: "other-section"},
           }
 
           // build html and handle submission
@@ -163,9 +141,14 @@
             return (
               <section style={{ margin: '50px' }}>
                 <form id="new-student-form" onSubmit={handleSubmit}>
-                  <ClassNameInput />
+                  <TextInput title={newStudentInfo.studentName.title}
+                  placeholder={newStudentInfo.studentName.placeholder}
+                  id={newStudentInfo.studentName.id}/>
                   <br/>
-                  <OtherSectionInput />
+                  <TextInput title={newStudentInfo.otherSection.title}
+                  placeholder={newStudentInfo.otherSection.placeholder}
+                  id={newStudentInfo.otherSection.id}/>
+                  <br/>
                   <SubmitButton />
                 </form>
               </section>
@@ -188,36 +171,13 @@
         <div id="returning-student-modal-root"></div>
         <script type="text/babel">
           // functions for new student tool
-
-          // first text box
-
-          function ClassNameInput() {
-            return (
-              <div class="modal-text-input">
-                <input placeholder="Student Name" title="Student Name" type="text" id="student-name" required/>
-              </div>
-            )
+          
+          let returningStudentInfo = {
+            studentName: {title: "Find Student", placeholder: "Find Student", id: "student-name"},
+            otherSection: {title: "Other Section", placeholder: "Other Section", id: "other-section"},
           }
 
-          // second text box
-          function OtherSectionInput() {
-            return (
-              <div class="modal-text-input">
-                <input placeholder="Other Section" title="Other Section" type="text" id="other-section-2" required/>
-              </div>
-            )
-          }
-
-          // submission button
-          function SubmitButton() {
-            return (
-              <div class="modal-submit">
-                <input type="submit" />
-              </div>
-            );
-          }
-
-          // build html and handle submission
+        // build html and handle submission
           function Input() {
             const handleSubmit = (event) => {
               event.preventDefault();
@@ -227,9 +187,14 @@
             return (
               <section style={{ margin: '50px' }}>
                 <form id="returning-student-form" onSubmit={handleSubmit}>
-                  <ClassNameInput />
+                  <TextInput title={returningStudentInfo.studentName.title}
+                  placeholder={returningStudentInfo.studentName.placeholder}
+                  id={returningStudentInfo.studentName.id}/>
                   <br/>
-                  <OtherSectionInput />
+                  <TextInput title={returningStudentInfo.otherSection.title}
+                  placeholder={returningStudentInfo.otherSection.placeholder}
+                  id={returningStudentInfo.otherSection.id}/>
+                  <br/>
                   <SubmitButton />
                 </form>
               </section>
@@ -253,33 +218,11 @@
         <script type="text/babel">
           // functions for new student tool
 
-          // first text box
-
-          function ClassNameInput() {
-            return (
-              <div class="modal-text-input">
-                <input placeholder="Student Name" title="Student Name" type="text" id="student-name" required/>
-              </div>
-            )
+          let transferStudentInfo = {
+            studentName: {title: "Student Name", placeholder: "Student Name", id: "student-name"},
+            otherSection: {title: "Other Section", placeholder: "Other Section", id: "other-section"},
           }
 
-          // second text box
-          function OtherSectionInput() {
-            return (
-              <div class="modal-text-input">
-                <input placeholder="Other Section" title="Other Section" type="text" id="other-section-2" required/>
-              </div>
-            )
-          }
-
-          // submission button
-          function SubmitButton() {
-            return (
-              <div class="modal-submit">
-                <input type="submit" />
-              </div>
-            );
-          }
 
           // build html and handle submission
           function Input() {
@@ -291,9 +234,14 @@
             return (
               <section style={{ margin: '50px' }}>
                 <form id="transfer-student-form" onSubmit={handleSubmit}>
-                  <ClassNameInput />
+                  <TextInput title={transferStudentInfo.studentName.title}
+                  placeholder={transferStudentInfo.studentName.placeholder}
+                  id={transferStudentInfo.studentName.id}/>
                   <br/>
-                  <OtherSectionInput />
+                  <TextInput title={transferStudentInfo.otherSection.title}
+                  placeholder={transferStudentInfo.otherSection.placeholder}
+                  id={transferStudentInfo.otherSection.id}/>
+                  <br/>
                   <SubmitButton />
                 </form>
               </section>
