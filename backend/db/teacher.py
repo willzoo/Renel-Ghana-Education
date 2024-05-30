@@ -6,7 +6,6 @@ teacher_bp = Blueprint('teacher', __name__)
 
 @teacher_bp.route('/teachers', methods=['POST'])
 def create_teacher():
-    mongo = current_app.extensions['pymongo']
     try:
         data = request.get_json()
         teacher_id = data.get('_id')
@@ -28,8 +27,10 @@ def create_teacher():
             "current_school_id": current_school_id,
             "current_classes": current_classes
         }
-
-        mongo.db.teachers.insert_one(teacher_data)
+        
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        db.teachers.insert_one(teacher_data)
         return jsonify({"message": "Teacher created successfully"}), 201
 
     except Exception as e:

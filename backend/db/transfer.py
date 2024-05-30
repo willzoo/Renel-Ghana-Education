@@ -7,14 +7,15 @@ transfer_bp = Blueprint('transfer', __name__)
 # Create a transfer
 @transfer_bp.route('/transfers', methods=['POST'])
 def create_transfer():
-    mongo = current_app.extensions["pymongo"]
     data = request.get_json()
     students = data.get('students')
 
     if not students:
         return jsonify({"error": "Students list is required"}), 400
 
-    transfer_id = mongo.db.transfer.insert_one({
+    mongo = current_app.extensions['pymongo']
+    db = mongo.cx.EduTracker
+    transfer_id = db.transfer.insert_one({
         "students": students
     }).inserted_id
 
@@ -23,8 +24,9 @@ def create_transfer():
 # Read a transfer
 @transfer_bp.route('/transfers/<transfer_id>', methods=['GET'])
 def read_transfer(transfer_id):
-    mongo = current_app.extensions["pymongo"]
-    transfer = mongo.db.transfer.find_one({"_id": ObjectId(transfer_id)})
+    mongo = current_app.extensions['pymongo']
+    db = mongo.cx.EduTracker
+    transfer = db.transfer.find_one({"_id": ObjectId(transfer_id)})
 
     if transfer:
         transfer['_id'] = str(transfer['_id'])
@@ -35,14 +37,16 @@ def read_transfer(transfer_id):
 # Update a transfer
 @transfer_bp.route('/transfers/<transfer_id>', methods=['PUT'])
 def update_transfer(transfer_id):
-    mongo = current_app.extensions["pymongo"]
     data = request.get_json()
     students = data.get('students')
 
     if not students:
         return jsonify({"error": "Students list is required"}), 400
 
-    result = mongo.db.transfer.update_one(
+    
+    mongo = current_app.extensions['pymongo']
+    db = mongo.cx.EduTracker
+    result = db.transfer.update_one(
         {"_id": ObjectId(transfer_id)},
         {"$set": {"students": students}}
     )
@@ -55,8 +59,9 @@ def update_transfer(transfer_id):
 # Delete a transfer
 @transfer_bp.route('/transfers/<transfer_id>', methods=['DELETE'])
 def delete_transfer(transfer_id):
-    mongo = current_app.extensions["pymongo"]
-    result = mongo.db.transfer.delete_one({"_id": ObjectId(transfer_id)})
+    mongo = current_app.extensions['pymongo']
+    db = mongo.cx.EduTracker
+    result = db.transfer.delete_one({"_id": ObjectId(transfer_id)})
 
     if result.deleted_count > 0:
         return jsonify({"message": "Transfer deleted successfully"}), 200
