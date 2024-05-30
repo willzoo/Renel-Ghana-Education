@@ -9,7 +9,7 @@ school_<year>:
     "_id": "school_id",
     "name": "School Name",
     "access_code": "4Digit",
-    "year": "2023-2024",
+    "year": "2023-2024", 
     "teachers": ["teacher_id1", "teacher_id2", ...],
     "grade_levels": [
         {
@@ -44,21 +44,24 @@ students:
     "name": "Student Name",
     "parent_contact": "7777-777-777",
     "dob": "DD/MM/YYYY",
+    "student_school_id": "The school assigned id for the studnet",
     "disabled": true,
     "health_conditions": "Diabetes",
     "misc_info": "This student blah blah blah", 
-    "current_class_id": "class_id",
-    "current_grade_level": "Grade Level",
-    "current_school_id": "school_id",
-    "current_inactive": false, //Whether student is active in the current term. If inactive, don't add current term to student's history.
+    //These  4 should always change after each year
+    "class_id": "class_id",
+    "grade_level": "Grade Level",
+    "school_id": "school_id",
+    "inactive": false, //Whether student is active in the current term. If inactive, don't add current term to student's history.
     "history": [
         {
         "year": "2023-2024",
-        "term": "3",
+        "terms_present": ["1", "2", "3"],
         "class_id": "class_id_2023",
         "grade_level": "Grade Level",
         "school_id": "school_id_2023",
-        "health_info": "Old health info"
+        //
+        "health_info": "Old health info",
         "misc_info": "Old misc info"
         },
         ...

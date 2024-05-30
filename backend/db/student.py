@@ -11,6 +11,8 @@ def create_student():
     data = request.get_json()
     name = data.get('name')
     parent_contact = data.get('parent_contact')
+    dob = data.get('dob')
+    student_school_id = data.get('student_school_id')
     disabled = data.get('disabled', False)
     health_conditions = data.get('health_conditions', '')
     misc_info = data.get('misc_info', '')
@@ -18,12 +20,14 @@ def create_student():
     grade_level = data.get('grade_level')
     school_id = data.get('school_id')
 
-    if not name or not parent_contact or not class_id or not grade_level or not school_id:
+    if not name or not dob or not parent_contact or not class_id or not grade_level or not school_id:
         return jsonify({"error": "Missing required fields"}), 400
 
     new_student = {
         'name': name,
         'parent_contact': parent_contact,
+        'dob': dob,
+        "student_school_id": student_school_id,
         'disabled': disabled,
         'health_conditions': health_conditions,
         'misc_info': misc_info,

@@ -1,7 +1,6 @@
 #citation: chatgpt.com
 from flask import Blueprint, request, jsonify
 from bson.objectid import ObjectId
-from db import mongo
 
 admin_bp = Blueprint('admin', __name__)
 
