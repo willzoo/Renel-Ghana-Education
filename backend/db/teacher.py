@@ -2,9 +2,9 @@
 from flask import Blueprint, request, jsonify, current_app
 
 # Create a Blueprint instance for teachers
-teacher_bp = Blueprint('teacher_bp', __name__)
+teacher_bp = Blueprint('teacher', __name__)
 
-@teacher_bp.route('/', methods=['POST'])
+@teacher_bp.route('/teachers', methods=['POST'])
 def create_teacher():
     mongo = current_app.extensions['pymongo']
     try:

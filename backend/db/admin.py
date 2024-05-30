@@ -5,7 +5,7 @@ from bson.objectid import ObjectId
 admin_bp = Blueprint('admin', __name__)
 
 # Create an admin
-@admin_bp.route('/admin', methods=['POST'])
+@admin_bp.route('/admins', methods=['POST'])
 def create_admin():
     data = request.get_json()
     email = data.get('email')
@@ -22,7 +22,7 @@ def create_admin():
     return jsonify({"_id": str(admin_id), "email": email}), 201
 
 # Read an admin
-@admin_bp.route('/admin/<admin_id>', methods=['GET'])
+@admin_bp.route('/admins/<admin_id>', methods=['GET'])
 def read_admin(admin_id):
     admin = mongo.db.admin.find_one({"_id": ObjectId(admin_id)})
 
@@ -33,7 +33,7 @@ def read_admin(admin_id):
         return jsonify({"error": "Admin not found"}), 404
 
 # Update an admin
-@admin_bp.route('/admin/<admin_id>', methods=['PUT'])
+@admin_bp.route('/admins/<admin_id>', methods=['PUT'])
 def update_admin(admin_id):
     data = request.get_json()
     email = data.get('email')
@@ -53,7 +53,7 @@ def update_admin(admin_id):
         return jsonify({"error": "Admin not found"}), 404
 
 # Delete an admin
-@admin_bp.route('/admin/<admin_id>', methods=['DELETE'])
+@admin_bp.route('/admins/<admin_id>', methods=['DELETE'])
 def delete_admin(admin_id):
     result = mongo.db.admin.delete_one({"_id": ObjectId(admin_id)})
 
