@@ -36,7 +36,7 @@ def create_app():
             mongo.cx.admin.command('ping')
             return "Pinged your deployment. You successfully connected to MongoDB!"
         except Exception as e:
-            return "Error: {e}"
+            return f"Mongo Connection Error: {e}"
 
     # Register the blueprints
     app.register_blueprint(school_bp, url_prefix='/schools')
