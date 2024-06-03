@@ -66,7 +66,7 @@
       </script>
       
     <div class="modal-underlay" id="class-add-modal-underlay" onClick="CloseModal('class-add')">
-      <div class="modal" id="modal" onClick="event.stopPropagation()">
+      <div class="modal" id="class-add-modal" onClick="event.stopPropagation()">
         <div>
         <span class="modal-title">Create New Class</span>
         <span class="modal-close" title="Cancel" onClick="CloseModal('class-add')">&times</span>
@@ -123,7 +123,7 @@
     </div>
 
     <div class="modal-underlay" id="new-student-modal-underlay" onClick="CloseModal('new-student')">
-      <div class="modal" id="modal" onClick="event.stopPropagation()">
+      <div class="modal" id="new-student-modal" onClick="event.stopPropagation()">
         <div>
         <span class="modal-title">Add New Student</span>
         <span class="modal-close" title="Cancel" onClick="CloseModal('new-student')">&times</span>
@@ -192,13 +192,83 @@
       </div>
     </div>
 
+    <div class="modal-underlay" id="edit-student-modal-underlay" onClick="CloseModal('edit-student')">
+      <div class="modal" id="edit-student-modal" onClick="event.stopPropagation()">
+        <div>
+        <span class="modal-title">Edit Student Information</span>
+        <span class="modal-close" title="Cancel" onClick="CloseModal('edit-student')">&times</span>
+        <br>
+        <span class="modal-content">Fill out the following fields to edit the student's information.</span>
+        </div> 
+        <br>
+        <div id="edit-student-modal-root"></div>
+
+        <script type="text/babel">
+          // functions for new student tool
+
+          let editStudentInfo = {
+            studentName: {title: "Student Name", placeholder: "Please enter student name", id: "student-name"},
+            studentID: {title: "Student ID", placeholder: "Please enter student ID", id: "student-id"},
+            guardianName: {title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name"},
+            guardianContact: {title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact"},
+            studentMedical: {title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical"},
+            disabilityStatus: {title: "Disability Status", id: "disability-status"},
+            additionalInfo: {title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info"},
+          }
+
+          // build html and handle submission
+          function Input() {
+            const handleSubmit = (event) => {
+              event.preventDefault();
+              CloseModal("edit-student");
+            }
+
+            return (
+              <section style={{ margin: '50px' }}>
+                <form id="edit-student-form" onSubmit={handleSubmit}>
+                  <section id="edit-student-text-input">
+                  <TextInput title={newStudentInfo.studentName.title}
+                  placeholder={newStudentInfo.studentName.placeholder}
+                  id={newStudentInfo.studentName.id}/>
+                  <TextInput title={newStudentInfo.studentID.title}
+                  placeholder={newStudentInfo.studentID.placeholder}
+                  id={newStudentInfo.studentID.id}/>
+                  <TextInput title={newStudentInfo.guardianName.title}
+                  placeholder={newStudentInfo.guardianName.placeholder}
+                  id={newStudentInfo.guardianName.id}/>
+                  <TextInput title={newStudentInfo.guardianContact.title}
+                  placeholder={newStudentInfo.guardianContact.placeholder}
+                  id={newStudentInfo.guardianContact.id}/>
+                  <TextInput title={newStudentInfo.studentMedical.title}
+                  placeholder={newStudentInfo.studentMedical.placeholder}
+                  id={newStudentInfo.studentMedical.id}/>
+                  <br/>
+                  <Checkbox id={newStudentInfo.disabilityStatus.id}
+                    name={newStudentInfo.disabilityStatus.id}
+                    title={newStudentInfo.disabilityStatus.title}/>
+                  <TextInput title={newStudentInfo.additionalInfo.title}
+                  placeholder={newStudentInfo.additionalInfo.placeholder}
+                  id={newStudentInfo.additionalInfo.id}/>
+                  </section>
+                  <br/><br/><br/><br/>
+                  <SubmitButton value="Save"/>
+                </form>
+              </section>
+            )
+          }
+
+          ReactDOM.render(<Input />, document.getElementById("edit-student-modal-root"));
+        </script>
+      </div>
+    </div>
+
     <div class="modal-underlay" id="returning-student-modal-underlay" onClick="CloseModal('returning-student')">
-      <div class="modal" id="modal" onClick="event.stopPropagation()">
+      <div class="modal" id="returning-student-modal" onClick="event.stopPropagation()">
         <div>
         <span class="modal-title">Add Returning Student</span>
         <span class="modal-close" title="Cancel" onClick="CloseModal('returning-student')">&times</span>
         <br>
-        <span class="modal-content">Something something something returning student.</span>
+        <span class="modal-content">Please enter a student ID to find the student in our system.</span>
         </div>
         <br>
         <div id="returning-student-modal-root"></div>
@@ -213,7 +283,8 @@
           function Input() {
             const handleSubmit = (event) => {
               event.preventDefault();
-              CloseModal('returning-student');
+              CloseModal("returning-student");
+              OpenModal("edit-student");
             }
 
             return (
@@ -237,7 +308,7 @@
     </div>
 
     <div class="modal-underlay" id="transfer-student-modal-underlay" onClick="CloseModal('transfer-student')">
-      <div class="modal" id="modal" onClick="event.stopPropagation()">
+      <div class="modal" id="transfer-student-modal" onClick="event.stopPropagation()">
         <div>
         <span class="modal-title">Add Transfer Student</span>
         <span class="modal-close" title="Cancel" onClick="CloseModal('transfer-student')">&times</span>
@@ -323,17 +394,37 @@
         let underlay = document.getElementById(`${id}-modal-underlay`);
         underlay.classList.add("blurred-modal-underlay");
       
-        let modal = underlay.querySelector("#modal");
+        let modal = underlay.querySelector(`#${id}-modal`);
         modal.classList.add("displayed-modal");
 
         underlay.style.display = "block";
       }
 
+      // async function ChangeModalTo(id) {
+      //   let underlay = querySelector
+
+      //   let oldModal = underlay.querySelector(".displayed-modal");
+      //   oldModal.classList.remove("displayed-modal");
+
+      //   let newModal = underlay.querySelector(`#${id}-modal`);
+      //   newModal.classList.add("displayed-modal");
+
+      //   await pause(200);
+
+      //   textInputs = Array.from(oldModal.querySelector(`#${id}-text-input`).children);
+
+      //   textInputs.forEach((item) => {
+      //     try {Array.from(item.children).forEach((input => {
+      //       input.value = "";
+      //     }));} catch (e) {};
+      //   });
+      // }
+
       async function CloseModal(id) {
           let underlay = document.getElementById(`${id}-modal-underlay`);
           underlay.classList.remove("blurred-modal-underlay");
 
-          let modal = underlay.querySelector(".modal");
+          let modal = underlay.querySelector(`#${id}-modal`);
           modal.classList.remove("displayed-modal");
           await pause(200);
           
