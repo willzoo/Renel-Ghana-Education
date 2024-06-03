@@ -77,8 +77,8 @@ teachers:
     "name": "Teacher Name",
     "email": "Teacher Email",
     "password": "Teacher Password",
-    "current_school_id": "school_id",
-    "current_classes": ["class_id1", "class_id2", ...]
+    "school_id": "school_id",
+    "classes": ["class_id1", "class_id2", ...]
     }
 
 
