@@ -1,5 +1,6 @@
 #citation: chatgpt.com
 from flask import Blueprint, request, jsonify, current_app
+from bson.objectid import ObjectId
 
 school_bp = Blueprint('school', __name__)
 
@@ -32,5 +33,23 @@ def create_school():
         db.schools.insert_one(school_data)
         return jsonify({"message": "School created successfully"}), 201
 
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# New route to get a teacher's school name using the teacher's ID
+@school_bp.route('/schools/teacher/<teacher_id>/name', methods=['GET'])
+def get_teacher_school_name(teacher_id):
+    try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        teacher = db.teachers.find_one({"_id": ObjectId(teacher_id)}, {"school_id": 1})
+        if not teacher:
+            return jsonify({"error": "Teacher not found"}), 404
+
+        school = db.schools.find_one({"_id": ObjectId(teacher['school_id'])}, {"name": 1})
+        if not school:
+            return jsonify({"error": "School not found"}), 404
+
+        return jsonify({"school_name": school['name']}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
