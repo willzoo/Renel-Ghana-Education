@@ -19,23 +19,41 @@
     <section>
       <script type="text/babel">
         const TextInput = (props) => {
+          return (
+            <section className="modal-text-input">
+              <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required/>
+            </section>
+          )
+        }
+          
+        const SubmitButton = () => {
+          return (
+            <div className="modal-submit">
+              <input type="submit" value="Create"/>
+            </div>
+          );
+        }
+
+        const Dropdown = (props) => {
+          let name = props.data[0];
+
             return (
               <section className="modal-text-input">
-                <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required/>
+                <select title={name} id="grade-level" name="grade-level" required>
+                  <option className="modal-dropdown-default" value="" disabled selected> {name} </option>
+                  {props.data.slice(1).map((group, index) => (
+                    <optgroup key={index} label={group[0]}>
+                      {group.slice(1).map((option, optionIndex) => (
+                      <option key={optionIndex}>{option}</option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
               </section>
-            )
-          }
-          
-          const SubmitButton = () => {
-            return (
-              <div className="modal-submit">
-                <input type="submit" value="Create"/>
-              </div>
             );
-          }
+          };
       </script>
-
-      <!-- add modal base -->
+      
     <div class="modal-underlay" id="class-add-modal-underlay" onClick="CloseModal('class-add-modal-underlay')">
       <div class="modal class-add-modal" id="modal" onClick="event.stopPropagation()">
         <span class="modal-title">Create New Class</span>
@@ -50,36 +68,18 @@
 
           let addClassInfo = {
             className: {title: "Class Name", placeholder: "Class Name", id: "class-name"},
-            otherSection: {title: "Other Section", placeholder: "Other Section", id: "other-section"},
           }
 
-          // grade dropdown list
-          function GradeLevelDropdown() {
-            return (
-              <section className="modal-text-input">
-                <select title="Grade Level" id="grade-level" name="grade-level" required>
-                  <option class="modal-dropdown-default" value="" disabled selected>Grade Level</option>
-                  <optgroup label="Kindergarten">
-                  <option>Kindergarten 1</option>
-                  <option>Kindergarten 2</option>
-                  </optgroup>
-                  <optgroup label="Primary">
-                  <option>Primary 1</option>
-                  <option>Primary 2</option>
-                  <option>Primary 3</option>
-                  <option>Primary 4</option>
-                  <option>Primary 5</option>
-                  <option>Primary 6</option>
-                  </optgroup>
-                  <optgroup label="Junior High">
-                  <option>Junior High 1</option>
-                  <option>Junior High 2</option>
-                  <option>Junior High 3</option>
-                  </optgroup>
-                </select>
-              </section>
-            )
-          }
+          // grade dropdown data
+
+          let addClassDropdown = [
+            "Grade Level",
+            ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
+            ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
+            ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
+          ]
+
+          // class description
 
           // build html and handle submission
           function Input() {
@@ -93,14 +93,11 @@
                 <form id="class-modal-form" onSubmit={handleSubmit}>
                   <div id="text-input">
                   <TextInput title={addClassInfo.className.title}
-                  placeholder={addClassInfo.className.placeholder}
-                  id={addClassInfo.className.id}/>
+                    placeholder={addClassInfo.className.placeholder}
+                    id={addClassInfo.className.id}/>
                   <br/>
-                  <TextInput title={addClassInfo.otherSection.title}
-                  placeholder={addClassInfo.otherSection.placeholder}
-                  id={addClassInfo.otherSection.id}/>
+                  <Dropdown data={addClassDropdown} />
                   <br/>
-                  <GradeLevelDropdown />
                   </div>
                   <SubmitButton />
                 </form>
