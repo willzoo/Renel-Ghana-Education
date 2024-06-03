@@ -53,6 +53,28 @@ def get_class(class_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Get class roster
+@class_bp.route('/classes/<class_id>/roster', methods=['GET'])
+def get_class_roster(class_id):
+    try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        class_data = db.classes.find_one({"_id": ObjectId(class_id)})
+        if not class_data:
+            return jsonify({"error": "Class not found"}), 404
+
+        student_ids = class_data.get('students', [])
+        students = mongo.db.students.find({"_id": {"$in": student_ids}})
+
+        roster = []
+        for student in students:
+            student['_id'] = str(student['_id'])
+            roster.append(student)
+
+        return jsonify(roster), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 # Update class information
 @class_bp.route('/classes/<class_id>', methods=['PUT'])
 def update_class(class_id):
@@ -78,20 +100,6 @@ def update_class(class_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Delete a class (if needed)
-@class_bp.route('/classes/<class_id>', methods=['DELETE'])
-def delete_class(class_id):
-    try:
-        mongo = current_app.extensions['pymongo']
-        db = mongo.cx.EduTracker
-        result = db.classes.delete_one({"_id": ObjectId(class_id)})
-        if result.deleted_count == 0:
-            return jsonify({"error": "Class not found"}), 404
-
-        return jsonify({"message": "Class deleted successfully"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 # Update student list in a class
 @class_bp.route('/classes/<class_id>/students', methods=['PUT'])
 def update_class_students(class_id):
@@ -114,24 +122,16 @@ def update_class_students(class_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Get class roster
-@class_bp.route('/classes/<class_id>/roster', methods=['GET'])
-def get_class_roster(class_id):
+# Delete a class (if needed)
+@class_bp.route('/classes/<class_id>', methods=['DELETE'])
+def delete_class(class_id):
     try:
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
-        class_data = db.classes.find_one({"_id": ObjectId(class_id)})
-        if not class_data:
+        result = db.classes.delete_one({"_id": ObjectId(class_id)})
+        if result.deleted_count == 0:
             return jsonify({"error": "Class not found"}), 404
 
-        student_ids = class_data.get('students', [])
-        students = mongo.db.students.find({"_id": {"$in": student_ids}})
-
-        roster = []
-        for student in students:
-            student['_id'] = str(student['_id'])
-            roster.append(student)
-
-        return jsonify(roster), 200
+        return jsonify({"message": "Class deleted successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

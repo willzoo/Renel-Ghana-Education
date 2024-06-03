@@ -12,11 +12,11 @@ def create_teacher():
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
-        current_school_id = data.get('current_school_id')
-        current_classes = data.get('current_classes', [])
+        school_id = data.get('school_id')
+        classes = data.get('classes', [])
 
         # Check for required fields
-        if not teacher_id or not name or not email or not password or not current_school_id:
+        if not teacher_id or not name or not email or not password or not school_id:
             return jsonify({"error": "Missing required fields"}), 400
 
         teacher_data = {
@@ -24,8 +24,8 @@ def create_teacher():
             "name": name,
             "email": email,
             "password": password,
-            "current_school_id": current_school_id,
-            "current_classes": current_classes
+            "school_id": school_id,
+            "classes": classes
         }
         
         mongo = current_app.extensions['pymongo']
