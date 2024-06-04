@@ -106,8 +106,6 @@
 
               classInfo.push(content);
 
-              alert(content.grade_level);
-
               fetch('http://127.0.0.1:8000/classes/classes',
                 {
                   method: "POST",
@@ -129,6 +127,8 @@
               .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
               });
+
+              ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
             }
 
             return (
