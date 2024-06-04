@@ -14,7 +14,7 @@ def create_class():
     teacher_id = data.get('teacher_id')
     students = data.get('students', [])
 
-    if not class_name or not grade_level or not school_id or not teacher_id:
+    if not class_name or not grade_level: # or not school_id or not teacher_id:
         return jsonify({"error": "Missing required fields"}), 400
 
     new_class = {
