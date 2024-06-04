@@ -1,4 +1,15 @@
 .background {
+  position: absolute;
+  width: 1501px;
+  height: 1131px;
+  left: -31px;
+  top: -125px;
+  background: url('..figma/img/image-3-renel.jpeg') no-repeat center center/cover;
+  filter: blur(2.5px);
+  z-index: -1;
+}
+
+.background {
   background-color: #e7e8e9;
   position: fixed;
   width: 100%;
