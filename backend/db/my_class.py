@@ -30,7 +30,32 @@ def create_class():
         db = mongo.cx.EduTracker
         result = db.classes.insert_one(new_class)
         class_id = str(result.inserted_id)
+
+        #Patch teacher record with new class
+        add_teacher_class(teacher_id, class_id)
+
         return jsonify({"message": "Class created successfully", "class_id": class_id}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+# Function to add a new class to a teacher's list of classes
+def add_teacher_class(teacher_id, class_id):
+    try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        print("TESTING")
+
+        # Add the new class to the teacher's classes
+        result = db.teachers.update_one(
+            {"_id": ObjectId(teacher_id)},
+            {"$addToSet": {"classes": ObjectId(class_id)}}
+        )
+
+        if result.matched_count == 0:
+            return jsonify({"error": "Teacher not found"}), 404
+
+        return jsonify({"message": "Class added successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
