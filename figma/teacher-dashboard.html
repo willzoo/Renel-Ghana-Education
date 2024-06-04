@@ -102,11 +102,9 @@
               let className = document.getElementById('class-name').value;
               let gradeLevel = document.getElementById('grade-level').value;
 
-              let content = {"class_name": className, "grade_level": gradeLevel};
+              let content = {"class_name": className, "grade_level": gradeLevel, "teacher_id": "665da0b90c1d6c0c45724285", "school_id": "665da7c60c1d6c0c45724286"};
 
               classInfo.push(content);
-
-              alert(content.grade_level);
 
               fetch('http://127.0.0.1:8000/classes/classes',
                 {
@@ -129,6 +127,8 @@
               .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
               });
+
+              ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
             }
 
             return (

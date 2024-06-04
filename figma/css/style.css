@@ -1,3 +1,21 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Open Sans', sans-serif;
+  background: #949494; /* Fallback background color */
+}
+
+/* Background image */
+.background {
+  position: absolute;
+  width: 1501px;
+  height: 1131px;
+  left: -31px;
+  top: -125px;
+  background: url('path/to/image-3-renel.jpg'); /* Update the path to your image */
+  filter: blur(2.5px);
+}
 .background {
   background-color: #e7e8e9;
   position: fixed;

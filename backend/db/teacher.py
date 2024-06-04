@@ -54,3 +54,29 @@ def get_teacher_classes(teacher_id):
         return jsonify(teacher), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+# Route to patch (add) a new class to a teacher's list of classes
+@teacher_bp.route('/teachers/<teacher_id>/classes', methods=['PATCH'])
+def add_teacher_class(teacher_id):
+    try:
+        data = request.get_json()
+        new_class_id = data.get('class_id')
+
+        if not new_class_id:
+            return jsonify({"error": "Missing class_id"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Add the new class to the teacher's classes
+        result = db.teachers.update_one(
+            {"_id": ObjectId(teacher_id)},
+            {"$addToSet": {"classes": new_class_id}}
+        )
+
+        if result.matched_count == 0:
+            return jsonify({"error": "Teacher not found"}), 404
+
+        return jsonify({"message": "Class added successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
