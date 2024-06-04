@@ -1,0 +1,9 @@
+.background image{
+    position: absolute;
+    width: 1501px;
+    height: 1131px;
+    left: -31px;
+    top: -125px;
+    background: url('figma/css/path/image-3-renel.jpeg');
+    filter: blur(2.5px);
+}
