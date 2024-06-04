@@ -98,6 +98,36 @@
             const handleSubmit = (event) => {
               event.preventDefault();
               CloseModal("class-add");
+
+              let className = document.getElementById('class-name').value;
+              let gradeLevel = document.getElementById('grade-level').value;
+
+              let content = {class_name: className, grade_level: gradeLevel, school_id: 0, teacher_id: 0, students: []};
+
+              classInfo.push(content);
+
+              fetch('http://127.0.0.1:8000/classes/classes',
+                {
+                  method: "POST",
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
+                  },
+                  body: JSON.stringify(content)
+                }
+              )
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log('Data received:', data);
+              })
+              .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+              });
             }
 
             return (
@@ -228,27 +258,27 @@
                 <form id="edit-student-form" onSubmit={handleSubmit}>
                   <section id="edit-student-text-input">
                   <TextInput title={newStudentInfo.studentName.title}
-                  placeholder={newStudentInfo.studentName.placeholder}
-                  id={newStudentInfo.studentName.id}/>
+                    placeholder={newStudentInfo.studentName.placeholder}
+                    id={newStudentInfo.studentName.id}/>
                   <TextInput title={newStudentInfo.studentID.title}
-                  placeholder={newStudentInfo.studentID.placeholder}
-                  id={newStudentInfo.studentID.id}/>
+                    placeholder={newStudentInfo.studentID.placeholder}
+                    id={newStudentInfo.studentID.id}/>
                   <TextInput title={newStudentInfo.guardianName.title}
-                  placeholder={newStudentInfo.guardianName.placeholder}
-                  id={newStudentInfo.guardianName.id}/>
+                    placeholder={newStudentInfo.guardianName.placeholder}
+                    id={newStudentInfo.guardianName.id}/>
                   <TextInput title={newStudentInfo.guardianContact.title}
-                  placeholder={newStudentInfo.guardianContact.placeholder}
-                  id={newStudentInfo.guardianContact.id}/>
+                    placeholder={newStudentInfo.guardianContact.placeholder}
+                    id={newStudentInfo.guardianContact.id}/>
                   <TextInput title={newStudentInfo.studentMedical.title}
-                  placeholder={newStudentInfo.studentMedical.placeholder}
-                  id={newStudentInfo.studentMedical.id}/>
+                    placeholder={newStudentInfo.studentMedical.placeholder}
+                    id={newStudentInfo.studentMedical.id}/>
                   <br/>
                   <Checkbox id={newStudentInfo.disabilityStatus.id}
                     name={newStudentInfo.disabilityStatus.id}
                     title={newStudentInfo.disabilityStatus.title}/>
                   <TextInput title={newStudentInfo.additionalInfo.title}
-                  placeholder={newStudentInfo.additionalInfo.placeholder}
-                  id={newStudentInfo.additionalInfo.id}/>
+                    placeholder={newStudentInfo.additionalInfo.placeholder}
+                    id={newStudentInfo.additionalInfo.id}/>
                   </section>
                   <br/><br/><br/><br/>
                   <SubmitButton value="Save"/>
@@ -273,7 +303,6 @@
         <br>
         <div id="returning-student-modal-root"></div>
         <script type="text/babel">
-          // functions for new student tool
           
           let returningStudentInfo = {
             studentID: {title: "Student ID", placeholder: "Find Student", id: "student-id"},
@@ -284,7 +313,7 @@
             const handleSubmit = (event) => {
               event.preventDefault();
               CloseModal("returning-student");
-              OpenModal("edit-student");
+              OpenModal("edit-student", "1234");
             }
 
             return (
@@ -292,8 +321,8 @@
                 <form id="returning-student-form" onSubmit={handleSubmit}>
                   <section id="returning-student-text-input">
                   <TextInput title={returningStudentInfo.studentID.title}
-                  placeholder={returningStudentInfo.studentID.placeholder}
-                  id={returningStudentInfo.studentID.id}/>
+                    placeholder={returningStudentInfo.studentID.placeholder}
+                    id={returningStudentInfo.studentID.id}/>
                   </section>
                   <br/><br/><br/><br/>
                   <SubmitButton value="Search"/>
@@ -313,7 +342,7 @@
         <span class="modal-title">Add Transfer Student</span>
         <span class="modal-close" title="Cancel" onClick="CloseModal('transfer-student')">&times</span>
         <br>
-        <span class="modal-content">Something something something transfer student.</span>
+        <span class="modal-content">Search for a transferring student in our system.</span>
         </div> 
         <br>
         <div id="transfer-student-modal-root"></div>
@@ -339,12 +368,12 @@
                 <form id="transfer-student-form" onSubmit={handleSubmit}>
                   <section id="transfer-student-text-input">
                   <TextInput title={transferStudentInfo.studentName.title}
-                  placeholder={transferStudentInfo.studentName.placeholder}
-                  id={transferStudentInfo.studentName.id}/>
+                    placeholder={transferStudentInfo.studentName.placeholder}
+                    id={transferStudentInfo.studentName.id}/>
                   <br/>
                   <TextInput title={transferStudentInfo.otherSection.title}
-                  placeholder={transferStudentInfo.otherSection.placeholder}
-                  id={transferStudentInfo.otherSection.id}/>
+                    placeholder={transferStudentInfo.otherSection.placeholder}
+                    id={transferStudentInfo.otherSection.id}/>
                   </section>
                   <br/><br/><br/><br/>
                   <SubmitButton />
@@ -390,7 +419,7 @@
         
       const pause = (time) => new Promise(resolve => setTimeout(resolve, time));
 
-      function OpenModal(id) {
+      function OpenModal(id, studentID="-1") {
         let underlay = document.getElementById(`${id}-modal-underlay`);
         underlay.classList.add("blurred-modal-underlay");
       
@@ -398,6 +427,10 @@
         modal.classList.add("displayed-modal");
 
         underlay.style.display = "block";
+
+        if (id == "edit-student") {
+          // set all parameters for student ID
+        }
       }
 
       // async function ChangeModalTo(id) {
@@ -450,14 +483,7 @@
       <div id="classes-root" class="sidebar-classes"></div>
       <script type="text/babel">
         var classInfo = [
-          {className: "Class 1", numStudents: 5},
-          {className: "Class 2", numStudents: 4},
-          {className: "Class 3", numStudents: 2},
-          {className: "Class 4", numStudents: 7},
-          {className: "Class 5", numStudents: 9},
-          {className: "Class 6", numStudents: 3},
-          {className: "Class 7", numStudents: 6},
-          {className: "Class 8", numStudents: 1},
+          {class_name: "Class 1", grade_level: "5", school_id: 0, teacher_id: 0, students: ["john", "bob"]},
         ];
 
         // add list item with class info
@@ -465,8 +491,8 @@
           return (
             <li>
               <div class="sidebar-class">
-                <p class="class-info">{props.data.className}</p>
-                <p class="class-info-body">Total Enrolled Students: {props.data.numStudents}</p>
+                <p class="class-info">{props.data.class_name}</p>
+                <p class="class-info-body">Total Enrolled Students: {props.data.students.length}</p>
               </div>
             </li>
           );
@@ -499,53 +525,6 @@
     <section>
       <div class="main">
         <div class="header-info">
-          <!--<div style="display: flex; width: 250;">
-            <div class="upper-info">
-              <!-- formatting for grade level section --
-              <div class="upper-info-icon-shape grade-level"></div>
-
-              <div style="height:10px;"></div>
-
-              <p>Grade Level</p>
-              <h1>5</h1>
-              <hr style="width: 50%;
-                text-align:center; 
-                height: 2px;" class="grade-level">
-
-            </div>
-            
-
-            <div style="display: inline-block; width:40px;"> </div>
-
-            <div class="upper-info">
-              <!-- formatting for num students section --
-              <div class="upper-info-icon-shape num-students"></div>
-
-              <div style="height:10px;"></div>
-
-              <p>Number of Students</p>
-              <h1>120</h1>
-              <hr style="width: 50%;
-                text-align:center; 
-                height: 2px;" class="num-students">
-
-            </div>
-          </div>
-
-          <div class="upper-info" style="background-color: #F5CE3E;">
-            <!-- formatting for num students section --
-            <div class="upper-info-icon-shape term-number"></div>
-
-            <div style="height:10px;"></div>
-
-            <!-- red text for term --
-            <p style="color: #E1251B">Current Term</p>
-            <h1 style="color: #E1251B">2</h1>
-            <hr style="width: 50%;
-              text-align:center; 
-              height: 2px;" class="term-number">
-
-          </div> -->
           <script type="text/babel">
             function Indicator(props) {
               return(
