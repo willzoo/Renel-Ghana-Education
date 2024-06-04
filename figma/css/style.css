@@ -7,15 +7,16 @@ body, html {
 }
 
 /* Background image */
-.background {
+.background-image {
   position: absolute;
   width: 1501px;
   height: 1131px;
   left: -31px;
   top: -125px;
-  background: url('path/to/image-3-renel.jpg'); /* Update the path to your image */
+  background: url('./img/image-3-renel.jpg');
   filter: blur(2.5px);
 }
+
 .background {
   background-color: #e7e8e9;
   position: fixed;
