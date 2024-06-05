@@ -128,6 +128,8 @@
                 console.error('There was a problem with the fetch operation:', error);
               });
 
+              alert(classInfo);
+
               ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
             }
 
@@ -434,26 +436,6 @@
         }
       }
 
-      // async function ChangeModalTo(id) {
-      //   let underlay = querySelector
-
-      //   let oldModal = underlay.querySelector(".displayed-modal");
-      //   oldModal.classList.remove("displayed-modal");
-
-      //   let newModal = underlay.querySelector(`#${id}-modal`);
-      //   newModal.classList.add("displayed-modal");
-
-      //   await pause(200);
-
-      //   textInputs = Array.from(oldModal.querySelector(`#${id}-text-input`).children);
-
-      //   textInputs.forEach((item) => {
-      //     try {Array.from(item.children).forEach((input => {
-      //       input.value = "";
-      //     }));} catch (e) {};
-      //   });
-      // }
-
       async function CloseModal(id) {
           let underlay = document.getElementById(`${id}-modal-underlay`);
           underlay.classList.remove("blurred-modal-underlay");
@@ -484,7 +466,7 @@
       <div id="classes-root" class="sidebar-classes"></div>
       <script type="text/babel">
         var classInfo = [
-          {class_name: "Class 1", grade_level: "5", school_id: 0, teacher_id: 0, students: ["john", "bob"]},
+          {class_name: "Class 1", grade_level: "5", school_id: 0, students: [{name: "bob", }]},
         ];
 
         // add list item with class info
@@ -493,7 +475,7 @@
             <li>
               <div class="sidebar-class">
                 <p class="class-info">{props.data.class_name}</p>
-                <p class="class-info-body">Total Enrolled Students: {props.data.students.length}</p>
+                <p class="class-info-body">Total Enrolled Students: {props.data.grade_level}</p>
               </div>
             </li>
           );
@@ -616,7 +598,7 @@
             ];
 
             // add list item with class info
-            function ClassItem(props) {
+            function StudentItem(props) {
               return (
                 <li>
                   <div class="student-list-item">
@@ -637,11 +619,11 @@
               );
             }
 
-            // add all classes to list
-            function AddClasses(props) {
+            // add all stduents to list
+            function AddStudents(props) {
               let items = [];
-              for (let i = 0; i < props.classes.length; i++) {
-                items.push((<ClassItem data={props.classes[i]} />));
+              for (let i = 0; i < props.students.length; i++) {
+                items.push((<StudentItem data={props.students[i]} />));
               }
               const classList = items;
 
@@ -656,7 +638,7 @@
               );
             }
 
-            ReactDOM.render(<AddClasses classes={students} />, document.getElementById("students-root"));
+            ReactDOM.render(<AddStudents students={students} />, document.getElementById("students-root"));
           </script>
         
         </div>

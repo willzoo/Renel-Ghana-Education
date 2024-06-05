@@ -1,0 +1,79 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+}
+.background-image{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('figma/css/path/image-3-renel.jpeg') no-repeat center center fixed; 
+    background-size: cover;
+    filter: blur(2.5px);
+    z-index: -1;
+}
+.welcome{
+    position: absolute;
+    width: 565px;
+    height: 129px;
+    left: 140px;
+    top: 220px;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 129%; /* or 64px */
+    color: #FFFFFF;
+}
+.description{
+    position: absolute;
+    width: 466px;
+    height: 81px;
+    left: 140px;
+    top: 360px;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 150%; /* or 27px */
+    color: #FFFFFF;
+}
+.button-teacher {
+    position: absolute;
+    width: 168px;
+    height: 50px;
+    left: 140px;
+    top: 505px;
+    background: #FFFFFF;
+    border-radius: 224px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #2E2C2C;
+    cursor: pointer;
+}
+.button-admin {
+    position: absolute;
+    width: 168px;
+    height: 50px;
+    left: 339px;
+    top: 505px;
+    border: 1px solid #FFFFFF;
+    border-radius: 224px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
