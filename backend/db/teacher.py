@@ -1,6 +1,7 @@
 #citation: chatgpt.com
 from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
+import bcrypt
 
 # Create a Blueprint instance for teachers
 teacher_bp = Blueprint('teacher', __name__)
@@ -35,7 +36,7 @@ def create_teacher():
         return jsonify({"message": "Teacher created successfully"}), 201
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}),
 
 # New route to get a teacher's classes, name, and email
 @teacher_bp.route('/teachers/<teacher_id>/classes', methods=['GET'])
@@ -90,13 +91,16 @@ def update_teacher_password(teacher_id):
         if not new_password:
             return jsonify({"error": "Missing password"}), 400
 
+        # Hash the new password using bcrypt
+        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
 
         # Update the teacher's password
         result = db.teachers.update_one(
             {"_id": ObjectId(teacher_id)},
-            {"$set": {"password": new_password}}
+            {"$set": {"password": hashed_password}}
         )
 
         if result.matched_count == 0:
@@ -105,3 +109,31 @@ def update_teacher_password(teacher_id):
         return jsonify({"message": "Password updated successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@teacher_bp.route('/teachers/login', methods=['POST'])
+def login_teacher():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        if not email or not password:
+            return jsonify({"error": "Missing email or password"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Find the teacher by email
+        teacher = db.teachers.find_one({"email": email})
+
+        if not teacher:
+            return jsonify({"error": "Teacher not found"}), 404
+
+        # Check if the provided password matches the stored hashed password
+        if bcrypt.checkpw(password.encode('utf-8'), teacher['password']):
+            return jsonify({"message": "Login successful", "teacher_id": str(teacher['_id'])}), 200
+        else:
+            return jsonify({"error": "Invalid credentials"}), 401
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
