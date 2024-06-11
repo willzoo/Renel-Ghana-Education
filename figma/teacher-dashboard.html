@@ -14,6 +14,31 @@
   </head>
 
   <body>
+    <script>
+      var tempID = "665da0b90c1d6c0c45724285";
+
+      fetch(`http://127.0.0.1:8000/teacher/${tempID}/classes`,
+                {
+                  method: "GET",
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                }
+              )
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log('Data received:', data);
+              })
+              .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+              });
+
+    </script>
     <!-- add light grey background -->
     <div class="background">
     <section>
@@ -110,7 +135,7 @@
 
               classInfo.push(content);
 
-              fetch('http://127.0.0.1:8000/classes/classes',
+              fetch('http://127.0.0.1:8000/classes',
                 {
                   method: "POST",
                   headers: {
@@ -211,7 +236,7 @@
 
               selectedClass.students.push(content);
 
-              fetch('http://127.0.0.1:8000/students/students',
+              fetch('http://127.0.0.1:8000/students',
                 {
                   method: "POST",
                   headers: {
@@ -234,6 +259,7 @@
               });
 
               ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students"/>, document.getElementById("num-students-indicator"));
             }
 
             return (
@@ -404,8 +430,7 @@
           // functions for new student tool
 
           let transferStudentInfo = {
-            studentName: {title: "Student Name", placeholder: "Student Name", id: "student-name"},
-            otherSection: {title: "Other Section", placeholder: "Other Section", id: "other-section"},
+            studentID: {title: "Student ID", placeholder: "Student ID", id: "student-id"},
           }
 
 
@@ -420,16 +445,12 @@
               <section style={{ margin: '50px' }}>
                 <form id="transfer-student-form" onSubmit={handleSubmit}>
                   <section id="transfer-student-text-input">
-                  <TextInput title={transferStudentInfo.studentName.title}
-                    placeholder={transferStudentInfo.studentName.placeholder}
-                    id={transferStudentInfo.studentName.id}/>
-                  <br/>
-                  <TextInput title={transferStudentInfo.otherSection.title}
-                    placeholder={transferStudentInfo.otherSection.placeholder}
-                    id={transferStudentInfo.otherSection.id}/>
+                  <TextInput title={transferStudentInfo.studentID.title}
+                    placeholder={transferStudentInfo.studentID.placeholder}
+                    id={transferStudentInfo.studentID.id}/>
                   </section>
                   <br/><br/><br/><br/>
-                  <SubmitButton />
+                  <SubmitButton value="Select"/>
                 </form>
               </section>
             )
@@ -541,6 +562,8 @@
             selectedClass = props.data;
             students = props.data.students;
             ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+            ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level"/>, document.getElementById("grade-level-indicator"));
+            ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students"/>, document.getElementById("num-students-indicator"));
           };
 
           return (
@@ -555,7 +578,10 @@
 
         // add all classes to list
         function AddClasses(props) {
+
           let items = [];
+
+
           for (let i = 0; i < props.classes.length; i++) {
             items.push((<ClassItem data={props.classes[i]} />));
           }
@@ -566,7 +592,7 @@
             return (
               <section>
                 <h1 class="classes-title">Classes</h1>
-                <p class="classes-memo">Teacher's list of current classes</p>
+                <p class="classes-memo">Select a class to view students</p>
                 <ul class="nobullet">
                   <li><div class="lsit-issue">There are no classes associated with this teacher.</div></li>
                 </ul>
@@ -577,7 +603,7 @@
           return (
             <section>
               <h1 class="classes-title">Classes</h1>
-              <p class="classes-memo">Teacher's list of current classes</p>
+              <p class="classes-memo">Select a class to view students</p>
               <ul class="nobullet">
                 {classList}
               </ul>
@@ -614,12 +640,12 @@
           <div class="upper-info">
             <section id="grade-level-indicator"></section>
             <script type="text/babel">
-              ReactDOM.render(<Indicator title="Grade Level" value="5" theme="grade-level"/>, document.getElementById("grade-level-indicator"))
+              ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level"/>, document.getElementById("grade-level-indicator"))
             </script>
             
             <section id="num-students-indicator"></section>
             <script type="text/babel">
-              ReactDOM.render(<Indicator title="Enrolled Students" value="120" theme="num-students"/>, document.getElementById("num-students-indicator"))
+              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students"/>, document.getElementById("num-students-indicator"))
             </script>
 
             <section id="current-term-indicator"></section>
@@ -674,11 +700,7 @@
                 student_school_id: "bap5",
                 disabled: "Yes",
                 health_conditions: "a couple",
-                misc_info: "",
-                class_id: "9w7r",
-                grade_level: "Primary 2",
-                school_id: "nb9s",
-                history: [],}
+                misc_info: "",}
             ];
 
             // add list item with class info
@@ -714,20 +736,20 @@
 
               if (items.length == 0) {
                 return (
-                  <section>
-                    <h1 class="students-title">Students</h1>
-                    <p class="students-memo">{selectedClass.class_name}</p>
+                  <div>
+                    <h1 class="students-title">{selectedClass.class_name}</h1>
+                    <p class="students-memo">Students</p>
                     <ul class="nobullet">
                       <li><div class="list-issue">There are no students that have been added to this class.</div></li>
                     </ul>
-                  </section>
+                  </div>
                 );
               }
 
               return (
                 <div>
-                  <h1 class="students-title">Students</h1>
-                  <p class="students-memo">{selectedClass.class_name}</p>
+                  <h1 class="students-title">{selectedClass.class_name}</h1>
+                  <p class="students-memo">Students</p>
                   <ul class="nobullet">
                     {classList}
                   </ul>

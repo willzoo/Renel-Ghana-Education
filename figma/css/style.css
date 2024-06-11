@@ -489,11 +489,11 @@ body, html {
     text-align: right;
     
     font-family: 'Open Sans', sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     color:#484848;
     margin: auto;
     margin-right: 5px;
-    margin-top: -1px;
+    margin-top: 3px;
     white-space: nowrap;
   }
 
