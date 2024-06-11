@@ -41,6 +41,11 @@ body {
     width: 620px;
     height: auto;
 }
+.logo {
+    width: 50px; /* Adjust the size as needed */
+    height: auto;
+    margin-bottom: 10px; /* Add some spacing below the logo */
+}
 
 .header .title {
     font-weight: 700;
