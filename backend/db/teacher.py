@@ -110,7 +110,7 @@ def update_teacher_password(teacher_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@teacher_bp.route('/teachers/login', methods=['POST'])
+@teacher_bp.route('/teachers/login', methods=['GET'])
 def login_teacher():
     try:
         data = request.get_json()
