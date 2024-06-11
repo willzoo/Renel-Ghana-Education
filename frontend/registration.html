@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Teacher Registration - EduTracker</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="figma/css/rebecca.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- React Components -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
+  </head>
+
+  <body>
+    <!-- add light grey background -->
+    <div class="background"></div>
+    <div class="registration-container">
+        <div class="header">
+            <div class="title">Teacher Registration</div>
+        </div>
+        <form method="POST" action="/register">
+            <div class="input-field">
+                <div class="icon"></div>
+                <div class="divider"></div>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="input-field">
+                <div class="icon"></div>
+                <div class="divider"></div>
+                <input type="text" id="school_code" name="school_code" placeholder="School Code" required>
+            </div>
+            <div class="input-field">
+                <div class="icon"></div>
+                <div class="divider"></div>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="ctas">
+                <button type="submit" class="button">
+                    <div class="label">Register</div>
+                </button>
+            </div>
+        </form>
+    </div>
+  </body>
+</html>
