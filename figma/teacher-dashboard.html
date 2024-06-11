@@ -21,7 +21,7 @@
         const TextInput = (props) => {
           return (
             <section className="modal-text-input">
-              <p class="modal-text-label" for={props.id}>{props.title}</p>
+              <p class="modal-text-label">{props.title}</p>
               <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required/>
             </section>
           )
@@ -95,14 +95,18 @@
 
           // build html and handle submission
           function Input() {
-            const handleSubmit = (event) => {
+            let handleSubmit = (event) => {
               event.preventDefault();
               CloseModal("class-add");
 
               let className = document.getElementById('class-name').value;
               let gradeLevel = document.getElementById('grade-level').value;
 
-              let content = {"class_name": className, "grade_level": gradeLevel, "teacher_id": "665da0b90c1d6c0c45724285", "school_id": "665da7c60c1d6c0c45724286"};
+              let content = {"class_name": className,
+              "grade_level": gradeLevel,
+              "teacher_id": "665da0b90c1d6c0c45724285",
+              "school_id": "665da7c60c1d6c0c45724286",
+              "students": []};
 
               classInfo.push(content);
 
@@ -127,8 +131,6 @@
               .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
               });
-
-              alert(classInfo);
 
               ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
             }
@@ -181,14 +183,62 @@
 
           // build html and handle submission
           function Input() {
-            const handleSubmit = (event) => {
+            let handleNewStudentSubmit = (event) => {
               event.preventDefault();
               CloseModal("new-student");
+
+              let studentName = document.getElementById('student-name').value;
+              let studentID = document.getElementById('student-id').value;
+              let guardianName = document.getElementById('guardian-name').value;
+              let guardianContact = document.getElementById('guardian-contact').value;
+              let studentMedical = document.getElementById('student-medical').value;
+              let disabilityStatus = document.getElementById('disability-status').value;
+              let additionalInfo = document.getElementById('additional-info').value;
+
+              let content = {
+                'name': studentName,
+                'parent_contact': guardianContact,
+                'dob': 1,
+                "student_school_id": studentID,
+                'disabled': disabilityStatus,
+                'health_conditions': studentMedical,
+                'misc_info': additionalInfo,
+                'class_id': "9w7r",
+                'grade_level': "Primary 2",
+                'school_id': "nb9s",
+                'history': [],
+              };
+
+              selectedClass.students.push(content);
+
+              fetch('http://127.0.0.1:8000/students/students',
+                {
+                  method: "POST",
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(content)
+                }
+              )
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log('Data received:', data);
+              })
+              .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+              });
+
+              ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
             }
 
             return (
               <section style={{ margin: '50px' }}>
-                <form id="new-student-form" onSubmit={handleSubmit}>
+                <form id="new-student-form" onSubmit={handleNewStudentSubmit}>
                   <section id="new-student-text-input">
                   <TextInput title={newStudentInfo.studentName.title}
                   placeholder={newStudentInfo.studentName.placeholder}
@@ -465,17 +515,39 @@
       <!-- sidebar classes -->
       <div id="classes-root" class="sidebar-classes"></div>
       <script type="text/babel">
+
         var classInfo = [
-          {class_name: "Class 1", grade_level: "5", school_id: 0, students: [{name: "bob", }]},
+          {class_name: "Class 1", grade_level: "Primary 1", school_id: "07se", students: [
+              {
+              name: "Bob Ross",
+                parent_contact: "thisisaparentcontact@gmail.com",
+                dob: 1,
+                student_school_id: "bap5",
+                disabled: "Yes",
+                health_conditions: "a couple",
+                misc_info: "",
+                class_id: "9w7r",
+                grade_level: "Primary 2",
+                school_id: "nb9s",
+                history: [],}
+            ]},
+          {class_name: "Class 2", grade_level: "Primary 3", school_id: "ab72", students: []},
         ];
+        var selectedClass = classInfo[0];
 
         // add list item with class info
         function ClassItem(props) {
+          const handleClassClick = () => {
+            selectedClass = props.data;
+            students = props.data.students;
+            ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+          };
+
           return (
             <li>
-              <div class="sidebar-class">
+              <div class="sidebar-class" onClick={handleClassClick}>
                 <p class="class-info">{props.data.class_name}</p>
-                <p class="class-info-body">Total Enrolled Students: {props.data.grade_level}</p>
+                <p class="class-info-body">Total Enrolled Students: {props.data.students.length}</p>
               </div>
             </li>
           );
@@ -487,7 +559,20 @@
           for (let i = 0; i < props.classes.length; i++) {
             items.push((<ClassItem data={props.classes[i]} />));
           }
+
           const classList = items;
+
+          if (items.length == 0) {
+            return (
+              <section>
+                <h1 class="classes-title">Classes</h1>
+                <p class="classes-memo">Teacher's list of current classes</p>
+                <ul class="nobullet">
+                  <li><div class="lsit-issue">There are no classes associated with this teacher.</div></li>
+                </ul>
+              </section>
+            );
+          }
 
           return (
             <section>
@@ -582,19 +667,18 @@
           <div id="students-root" class="students-list"></div>
           <script type="text/babel">
             var students = [
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
-              {studentName: "Bob Ross", studentID: 5, disability: "Yes", contact: "thisisaparentcontact@gmail.com"},
+              {
+              name: "Bob Ross",
+                parent_contact: "thisisaparentcontact@gmail.com",
+                dob: 1,
+                student_school_id: "bap5",
+                disabled: "Yes",
+                health_conditions: "a couple",
+                misc_info: "",
+                class_id: "9w7r",
+                grade_level: "Primary 2",
+                school_id: "nb9s",
+                history: [],}
             ];
 
             // add list item with class info
@@ -603,13 +687,13 @@
                 <li>
                   <div class="student-list-item">
                     <div>
-                      <p class="student-info">{props.data.studentName}</p>
-                      <p class="student-info-body">Student ID: {props.data.studentID}</p>
-                      <p class="student-info-body">Disability: {props.data.disability}</p>
+                      <p class="student-info">{props.data.name}</p>
+                      <p class="student-info-body">Student ID: {props.data.student_school_id}</p>
+                      <p class="student-info-body">Disability: {props.data.disabled}</p>
                     </div>
                     <div>
                       <p class="student-info">Parent Contact Information</p>
-                      <p class="student-info-body">{props.data.contact}</p>
+                      <p class="student-info-body">{props.data.parent_contact}</p>
                     </div>
                     <div>
                       <p class="student-info-body">Edit</p>
@@ -625,12 +709,25 @@
               for (let i = 0; i < props.students.length; i++) {
                 items.push((<StudentItem data={props.students[i]} />));
               }
+
               const classList = items;
+
+              if (items.length == 0) {
+                return (
+                  <section>
+                    <h1 class="students-title">Students</h1>
+                    <p class="students-memo">{selectedClass.class_name}</p>
+                    <ul class="nobullet">
+                      <li><div class="list-issue">There are no students that have been added to this class.</div></li>
+                    </ul>
+                  </section>
+                );
+              }
 
               return (
                 <div>
                   <h1 class="students-title">Students</h1>
-                  <p class="students-memo"> &#60;Class Name&#62;</p>
+                  <p class="students-memo">{selectedClass.class_name}</p>
                   <ul class="nobullet">
                     {classList}
                   </ul>
@@ -638,7 +735,7 @@
               );
             }
 
-            ReactDOM.render(<AddStudents students={students} />, document.getElementById("students-root"));
+            ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
           </script>
         
         </div>
