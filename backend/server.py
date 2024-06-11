@@ -42,12 +42,12 @@ def create_app():
             return f"Mongo Connection Error: {e}"
 
     # Register the blueprints
-    app.register_blueprint(school_bp, url_prefix='/schools')
-    app.register_blueprint(student_bp, url_prefix='/students')
-    app.register_blueprint(teacher_bp, url_prefix='/teachers')
-    app.register_blueprint(class_bp, url_prefix='/classes')
-    app.register_blueprint(admin_bp, url_prefix='/admins')
-    app.register_blueprint(transfer_bp, url_prefix='/transfers')
+    app.register_blueprint(school_bp, url_prefix='')
+    app.register_blueprint(student_bp, url_prefix='')
+    app.register_blueprint(teacher_bp, url_prefix='')
+    app.register_blueprint(class_bp, url_prefix='')
+    app.register_blueprint(admin_bp, url_prefix='')
+    app.register_blueprint(transfer_bp, url_prefix='')
     
 
 
