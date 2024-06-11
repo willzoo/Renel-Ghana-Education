@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Landing Page - EduTracker</title>
+    <title>Teacher Login - EduTracker</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="figma/css/rebecca.css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
@@ -18,5 +18,28 @@
     <div class="background">
     
     </div>
+    <div class="login-container">
+      <div class="header">
+          <div class="title">Teacher Login</div>
+      </div>
+      <form method="POST" action="/login">
+          <div class="input-field">
+              <div class="icon"></div>
+              <div class="divider"></div>
+              <input type="text" id="email" name="email" placeholder="Email" required>
+          </div>
+          <div class="input-field">
+              <div class="icon"></div>
+              <div class="divider"></div>
+              <input type="text" id="password" name="password" placeholder="Password" required>
+          </div>
+          <div class="ctas">
+              <button type="submit" class="button">
+                  <div class="label">Login</div>
+              </button>
+          </div>
+      </form>
+      <div class="register-link">Don’t have an account? Register here</div>
+  </div>
   </body>
 </html>
