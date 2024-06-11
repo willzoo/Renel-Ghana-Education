@@ -50,8 +50,6 @@ def create_app():
     app.register_blueprint(class_bp, url_prefix='')
     app.register_blueprint(admin_bp, url_prefix='')
     app.register_blueprint(transfer_bp, url_prefix='')
-    
-
 
     return app
 
