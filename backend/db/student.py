@@ -25,7 +25,7 @@ def create_student():
     grade_level = data.get('grade_level')
     school_id = data.get('school_id')
 
-    if not name or not dob or not parent_contact or not class_id or not grade_level or not school_id:
+    if not name or not parent_contact or not class_id or not grade_level or not school_id:
         return jsonify({"error": "Missing required fields"}), 400
     
 

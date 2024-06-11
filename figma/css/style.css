@@ -145,6 +145,14 @@ body, html {
       margin-top: 0px;
     }
 
+    .list-issue {
+      font-family: 'Open Sans', sans-serif;
+      color:#516669;
+      font-size: 15px;
+      margin-left: 23px;
+      margin-top: 0px;
+    }
+
     .class-info {
         font-family: 'Open Sans', sans-serif;
         color:#457B9D;
