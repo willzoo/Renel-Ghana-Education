@@ -1,7 +1,7 @@
 from flask import Flask, current_app
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import os
 
 # Import the blueprint from their respective modules
@@ -18,8 +18,10 @@ mongo = PyMongo()
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
 
+    #Cross origin request
+    CORS(app)
+    app.config['CORS_HEADERS'] = 'application/json'
     
     # Load environment variables from .env file
     load_dotenv('config.env')
@@ -49,8 +51,6 @@ def create_app():
     app.register_blueprint(admin_bp, url_prefix='')
     app.register_blueprint(transfer_bp, url_prefix='')
     
-
-
     return app
 
 if __name__ == "__main__":
