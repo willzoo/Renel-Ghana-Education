@@ -15,9 +15,9 @@
 
   <body>
     <script>
-      var teacherID = "665da0b90c1d6c0c45724285";
+      var tempID = "665da0b90c1d6c0c45724285";
 
-      fetch(`http://127.0.0.1:8000/teacher/classes`,
+      fetch(`http://127.0.0.1:8000/teachers/${tempID}/classes`,
                 {
                   method: "GET",
                   headers: {
@@ -129,7 +129,7 @@
 
               let content = {"class_name": className,
               "grade_level": gradeLevel,
-              "teacher_id": teacherID,
+              "teacher_id": "665da0b90c1d6c0c45724285",
               "school_id": "665da7c60c1d6c0c45724286",
               "students": []};
 
@@ -566,23 +566,11 @@
             ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students"/>, document.getElementById("num-students-indicator"));
           };
 
-          const handleClassEdit = () => {
-
-          };
-
           return (
             <li>
               <div class="sidebar-class" onClick={handleClassClick}>
-                <div>
                 <p class="class-info">{props.data.class_name}</p>
-                <p class="class-info-body">{props.data.grade_level}</p>
                 <p class="class-info-body">Total Enrolled Students: {props.data.students.length}</p>
-                </div>
-                <div onClick={event.stopPropagation}>
-                  <div class="edit-button">
-                  <p class="edit-text">Edit</p>
-                  </div>
-                </div>
               </div>
             </li>
           );
