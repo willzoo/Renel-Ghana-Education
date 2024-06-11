@@ -80,3 +80,28 @@ def add_teacher_class(teacher_id):
         return jsonify({"message": "Class added successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@teacher_bp.route('/teachers/<teacher_id>/password', methods=['PATCH'])
+def update_teacher_password(teacher_id):
+    try:
+        data = request.get_json()
+        new_password = data.get('password')
+
+        if not new_password:
+            return jsonify({"error": "Missing password"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Update the teacher's password
+        result = db.teachers.update_one(
+            {"_id": ObjectId(teacher_id)},
+            {"$set": {"password": new_password}}
+        )
+
+        if result.matched_count == 0:
+            return jsonify({"error": "Teacher not found"}), 404
+
+        return jsonify({"message": "Password updated successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
