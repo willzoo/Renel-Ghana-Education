@@ -41,10 +41,13 @@ body {
     width: 620px;
     height: auto;
 }
-.logo {
-    width: 50px; /* Adjust the size as needed */
-    height: auto;
-    margin-bottom: 10px; /* Add some spacing below the logo */
+.edutracker-logo-icon {
+    position: absolute;
+    top: 40px; /* Adjust based on your layout */
+    right: 40px; /* Changed from left to right */
+    width: 92px;
+    height: 82px;
+    border-radius: 12px; /* Optional: Add some border radius */
 }
 
 .header .title {
