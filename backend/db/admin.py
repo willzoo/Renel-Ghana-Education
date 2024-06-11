@@ -1,6 +1,7 @@
 #citation: chatgpt.com
 from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
+import bcrypt
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -69,3 +70,33 @@ def delete_admin(admin_id):
         return jsonify({"message": "Admin deleted successfully"}), 200
     else:
         return jsonify({"error": "Admin not found"}), 404
+
+@admin_bp.route('/admins/create_accounts', methods=['POST'])
+def create_multiple_accounts():
+    try:
+        data = request.get_json()
+        emails = data.get('emails')
+
+        if not emails:
+            return jsonify({"error": "Emails are required"}), 400
+
+        email_list = [email.strip() for email in emails.split(',') if email.strip()]
+
+        if not email_list:
+            return jsonify({"error": "Invalid email list"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        created_accounts = []
+
+        for email in email_list:
+            new_account = {
+                "email": email,
+                "password": bcrypt.hashpw(b''.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')  # Set to an empty password
+            }
+            result = db.teachers.insert_one(new_account)
+            created_accounts.append(str(result.inserted_id))
+
+        return jsonify({"message": "Accounts created successfully", "accounts": created_accounts}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
