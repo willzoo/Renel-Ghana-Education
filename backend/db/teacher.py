@@ -44,15 +44,30 @@ def get_teacher_classes(teacher_id):
     try:
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
-        teacher = db.teachers.find_one({"_id": ObjectId(teacher_id)}, {"name": 1, "email": 1, "classes": 1})
+
+        # Fetch teacher's class IDs
+        teacher = db.teachers.find_one({"_id": ObjectId(teacher_id)}, {"classes": 1})
         if not teacher:
             return jsonify({"error": "Teacher not found"}), 404
 
-        # Convert ObjectId to string for JSON serialization
-        teacher['_id'] = str(teacher['_id'])
-        teacher['classes'] = [str(class_id) for class_id in teacher.get('classes', [])]
+        class_ids = teacher.get('classes', [])
+        if not class_ids:
+            return jsonify([]), 200
+        
+        # Fetch class details
+        classes = list(db.classes.find(
+            {"_id": {"$in": [ObjectId(class_id) for class_id in class_ids]}},
+            {"class_name": 1, "grade_level": 1, "school_id": 1, "teacher_id": 1, "students": 1}
+        ))
+        
+        # Convert ObjectId fields to strings for JSON serialization
+        for cls in classes:
+            cls['_id'] = str(cls['_id'])
+            cls['school_id'] = str(cls['school_id'])
+            cls['teacher_id'] = str(cls['teacher_id'])
+            cls['students'] = [str(student_id) for student_id in cls.get('students', [])]
 
-        return jsonify(teacher), 200
+        return jsonify(classes), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
