@@ -14,31 +14,6 @@
   </head>
 
   <body>
-    <script>
-      var tempID = "665da0b90c1d6c0c45724285";
-
-      fetch(`http://127.0.0.1:8000/teachers/${tempID}/classes`,
-                {
-                  method: "GET",
-                  headers: {
-                    'Content-Type': 'application/json'
-                  }
-                }
-              )
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                return response.json();
-              })
-              .then(data => {
-                console.log('Data received:', data);
-              })
-              .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-              });
-
-    </script>
     <!-- add light grey background -->
     <div class="background">
     <section>
@@ -134,7 +109,7 @@
               "students": []};
 
               classInfo.push(content);
-
+              
               fetch('http://127.0.0.1:8000/classes',
                 {
                   method: "POST",
@@ -536,25 +511,12 @@
       <!-- sidebar classes -->
       <div id="classes-root" class="sidebar-classes"></div>
       <script type="text/babel">
+        
+        var tempID = "665da0b90c1d6c0c45724285";
+        var classInfo;
+        var selectedClass;
 
-        var classInfo = [
-          {class_name: "Class 1", grade_level: "Primary 1", school_id: "07se", students: [
-              {
-              name: "Bob Ross",
-                parent_contact: "thisisaparentcontact@gmail.com",
-                dob: 1,
-                student_school_id: "bap5",
-                disabled: "Yes",
-                health_conditions: "a couple",
-                misc_info: "",
-                class_id: "9w7r",
-                grade_level: "Primary 2",
-                school_id: "nb9s",
-                history: [],}
-            ]},
-          {class_name: "Class 2", grade_level: "Primary 3", school_id: "ab72", students: []},
-        ];
-        var selectedClass = classInfo[0];
+        
 
         // add list item with class info
         function ClassItem(props) {
@@ -610,8 +572,33 @@
             </section>
           );
         }
+        
+        fetch(`http://127.0.0.1:8000/teachers/${tempID}/classes`,
+                  {
+                    method: "GET",
+                    headers: {
+                      'Content-Type': 'application/json'
+                    }
+                  }
+                )
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  console.log('Data received:', data);
+                  classInfo = data;
+                  selectedClass = classInfo[0];
+                  ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
+                })
+                .catch(error => {
+                  console.error('There was a problem with the fetch operation:', error);
+                });
 
-        ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
+
+        
       </script>
 
     </div>
