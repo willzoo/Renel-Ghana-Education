@@ -67,7 +67,7 @@ def get_teacher_classes(teacher_id):
             cls['teacher_id'] = str(cls['teacher_id'])
             cls['students'] = [str(student_id) for student_id in cls.get('students', [])]
 
-            # Fetch and convert student details
+            # TODO: We query every single class for all of their students and this is very slow, in future only class route should get students
             student_ids = [ObjectId(student_id) for student_id in cls['students']]
             student_cursor = db.students.find({"_id": {"$in": student_ids}})
             students = []

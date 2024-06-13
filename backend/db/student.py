@@ -48,6 +48,13 @@ def create_student():
         db = mongo.cx.EduTracker  
         result = db.students.insert_one(new_student)
         student_id = str(result.inserted_id)
+        
+        # Add the student reference to its class
+        db.classes.update_one(
+            {"_id": ObjectId(class_id)},
+            {"$addToSet": {"students": ObjectId(student_id)}}
+        )
+
         return jsonify({"message": "Student created successfully", "student_id": student_id}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
