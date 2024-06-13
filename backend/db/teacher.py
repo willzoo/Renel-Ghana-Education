@@ -67,6 +67,27 @@ def get_teacher_classes(teacher_id):
             cls['teacher_id'] = str(cls['teacher_id'])
             cls['students'] = [str(student_id) for student_id in cls.get('students', [])]
 
+            # Fetch and convert student details
+            student_ids = [ObjectId(student_id) for student_id in cls['students']]
+            student_cursor = db.students.find({"_id": {"$in": student_ids}})
+            students = []
+            for student in student_cursor:
+                student['_id'] = str(student['_id'])
+                student['school_id'] = str(student['school_id'])
+                student['class_id'] = str(student['class_id'])
+                student['name'] = str(student['name'])
+                student['parent_contact'] = str(student['parent_contact'])
+                student['dob'] = str(student['dob'])
+                student['student_school_id'] = str(student['student_school_id'])
+                student['disabled'] = str(student['disabled'])
+                student['health_conditions'] = str(student['health_conditions'])
+                student['misc_info'] = str(student['misc_info'])
+                student['class_id'] = str(student['class_id'])
+                student['grade_level'] = str(student['grade_level'])
+                student['school_id'] = str(student['school_id'])
+                students.append(student)            
+            cls['students'] = students
+
         return jsonify(classes), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
