@@ -18,6 +18,29 @@
     <div class="background">
     <section>
       <script type="text/babel">
+
+        //Reusable functions across the whole document
+          function waitForDefinition(variableName) {
+            return new Promise((resolve, reject) => {
+              const checkInterval = 200; // Check every 50 milliseconds
+              const maxChecks = 100; // Maximum number of checks before giving up (to avoid infinite loop)
+              let checks = 0;
+
+              const intervalId = setInterval(() => {
+                checks++;
+                if (typeof window[variableName] !== 'undefined') {
+                  clearInterval(intervalId);
+                  resolve(window[variableName]);
+                } else if (checks >= maxChecks) {
+                  clearInterval(intervalId);
+                  reject(new Error('Variable is not defined within the expected time.'));
+                }
+              }, checkInterval);
+            });
+          }
+          
+
+        //Reusable HTML components
         const TextInput = (props) => {
           return (
             <section className="modal-text-input">
@@ -151,7 +174,7 @@
               </section>
             )
           }
-
+          
           ReactDOM.render(<Input />, document.getElementById("class-add-modal-root"));
         </script>
       </div>
@@ -203,7 +226,7 @@
                 'disabled': disabilityStatus,
                 'health_conditions': studentMedical,
                 'misc_info': additionalInfo,
-                'class_id': "9w7r",
+                'class_id': selectedClass._id,
                 'grade_level': "Primary 2",
                 'school_id': "nb9s",
                 'history': [],
@@ -573,6 +596,7 @@
           );
         }
         
+        //Gets the list of classes
         fetch(`http://127.0.0.1:8000/teachers/${tempID}/classes`,
                   {
                     method: "GET",
@@ -596,9 +620,6 @@
                 .catch(error => {
                   console.error('There was a problem with the fetch operation:', error);
                 });
-
-
-        
       </script>
 
     </div>
@@ -627,12 +648,26 @@
           <div class="upper-info">
             <section id="grade-level-indicator"></section>
             <script type="text/babel">
-              ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level"/>, document.getElementById("grade-level-indicator"))
+              waitForDefinition('selectedClass')
+              .then(() => {
+                console.log("Selected class defined for grade level")
+                ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level"/>, document.getElementById("grade-level-indicator"))
+              })
+              .catch((error) => {
+                console.error(error);
+              });              
             </script>
             
             <section id="num-students-indicator"></section>
             <script type="text/babel">
-              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students"/>, document.getElementById("num-students-indicator"))
+              waitForDefinition('selectedClass')
+              .then((value) => {
+                console.log("Selected class defined for students")
+                ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students"/>, document.getElementById("num-students-indicator"))
+              })
+              .catch((error) => {
+                console.error(error);
+              });              
             </script>
 
             <section id="current-term-indicator"></section>
@@ -712,7 +747,7 @@
               );
             }
 
-            // add all stduents to list
+            // Add all students to list
             function AddStudents(props) {
               let items = [];
               for (let i = 0; i < props.students.length; i++) {
@@ -744,7 +779,15 @@
               );
             }
 
-            ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+            waitForDefinition('selectedClass')
+              .then((value) => {
+                console.log('selectedClass is defined:', value);
+                ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+
           </script>
         
         </div>
