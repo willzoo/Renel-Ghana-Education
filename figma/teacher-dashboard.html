@@ -255,8 +255,11 @@
               .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
               });
-
+              
               ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+              //Need to rerender classes as well to update enrolled students
+              //TODO: just rerender the one class
+              ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
               ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students"/>, document.getElementById("num-students-indicator"));
             }
 
@@ -596,7 +599,7 @@
           );
         }
         
-        //Gets the list of classes
+        //Gets the list of classes, and then renders themS
         fetch(`http://127.0.0.1:8000/teachers/${tempID}/classes`,
                   {
                     method: "GET",
