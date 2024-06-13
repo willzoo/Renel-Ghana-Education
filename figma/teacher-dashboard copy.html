@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Teacher Dashboard - EduTracker</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- React Components -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <script src="teacher-dashboard copy.js"></script>   
+  </head>
+
+  <body>
+    <!-- add light grey background -->
+    <div class="background">
+    <section>
+      <script type="text/babel">
+//Reusable functions across the whole document
+
+      </script>
+      
+    <div class="modal-underlay" id="class-add-modal-underlay" onClick="CloseModal('class-add')">
+      <div class="modal" id="class-add-modal" onClick="event.stopPropagation()">
+        <div>
+        <span class="modal-title">Create New Class</span>
+        <span class="modal-close" title="Cancel" onClick="CloseModal('class-add')">&times</span>
+        <br>
+        <span class="modal-content">Fill out the following fields to add a new class.</span>
+        </div>
+        <br>
+        <div id="class-add-modal-root"></div>
+        <script type="text/babel">
+         
+        </script>
+      </div>
+    </div>
+
+    <div class="modal-underlay" id="new-student-modal-underlay" onClick="CloseModal('new-student')">
+      <div class="modal" id="new-student-modal" onClick="event.stopPropagation()">
+        <div>
+        <span class="modal-title">Add New Student</span>
+        <span class="modal-close" title="Cancel" onClick="CloseModal('new-student')">&times</span>
+        <br>
+        <span class="modal-content">Fill out the following fields to add the new student's information.</span>
+        </div> 
+        <br>
+        <div id="new-student-modal-root"></div>
+
+        <script type="text/babel">
+         
+        </script>
+      </div>
+    </div>
+
+    <div class="modal-underlay" id="edit-student-modal-underlay" onClick="CloseModal('edit-student')">
+      <div class="modal" id="edit-student-modal" onClick="event.stopPropagation()">
+        <div>
+        <span class="modal-title">Edit Student Information</span>
+        <span class="modal-close" title="Cancel" onClick="CloseModal('edit-student')">&times</span>
+        <br>
+        <span class="modal-content">Fill out the following fields to edit the student's information.</span>
+        </div> 
+        <br>
+        <div id="edit-student-modal-root"></div>
+
+        <script type="text/babel">
+        
+        </script>
+      </div>
+    </div>
+
+    <div class="modal-underlay" id="returning-student-modal-underlay" onClick="CloseModal('returning-student')">
+      <div class="modal" id="returning-student-modal" onClick="event.stopPropagation()">
+        <div>
+        <span class="modal-title">Add Returning Student</span>
+        <span class="modal-close" title="Cancel" onClick="CloseModal('returning-student')">&times</span>
+        <br>
+        <span class="modal-content">Please enter a student ID to find the student in our system.</span>
+        </div>
+        <br>
+        <div id="returning-student-modal-root"></div>
+        <script type="text/babel">
+          
+        </script>
+      </div>
+    </div>
+
+    <div class="modal-underlay" id="transfer-student-modal-underlay" onClick="CloseModal('transfer-student')">
+      <div class="modal" id="transfer-student-modal" onClick="event.stopPropagation()">
+        <div>
+        <span class="modal-title">Add Transfer Student</span>
+        <span class="modal-close" title="Cancel" onClick="CloseModal('transfer-student')">&times</span>
+        <br>
+        <span class="modal-content">Search for a transferring student in our system.</span>
+        </div> 
+        <br>
+        <div id="transfer-student-modal-root"></div>
+
+        <script type="text/babel">
+         
+        </script>
+      </div>
+    </div>
+    </section> 
+
+    <section>
+    <div class="sidebar">
+      <!-- <span style="display:block; margin-bottom:4em"></span> -->
+      <div style="height:100px"></div>
+
+      <!-- add picture -->
+      <!-- <div class="shape"></div>
+      <span style="display:block; margin-bottom:1em"></span> -->
+
+      <!-- add profile info -->
+      <p class="profile-name">First Last</p>
+      <p class="profile-info">School Name</p>
+      <br>
+      <p class="profile-info" style="font-size: 15px;">emailaddress@renelglobal.org</p>
+
+      <div style="height:50px"></div>
+
+      <!-- section line -->
+      <hr style="width: 75%;
+      text-align:center; 
+      height: 2px;
+      background-color:rgb(41, 41, 41)">
+
+      <div style="height:50px"></div>
+
+      <!-- create new class button -->
+
+      <script>
+        
+     
+      </script>
+
+      <div class="create-class-button" onClick="OpenModal('class-add')">
+        <i class="fa fa-plus"></i> &nbsp; Create New Class
+      </div>
+
+      <span style="display:block; margin-bottom:1.5em"></span>
+
+      <!-- sidebar classes -->
+      <div id="classes-root" class="sidebar-classes"></div>
+      <script type="text/babel">
+        
+      </script>
+
+    </div>
+    </section>
+    <section>
+      <div class="main">
+        <div class="header-info">
+          <script type="text/babel">
+            
+          </script>
+          <div>EduTracker Logo will eventually go here :&#41;</div>
+          <div class="upper-info">
+            <section id="grade-level-indicator"></section>
+            <script type="text/babel">
+            
+            </script>
+            
+            <section id="num-students-indicator"></section>
+            <script type="text/babel">
+            
+            </script>
+
+            <section id="current-term-indicator"></section>
+            <script type="text/babel">
+            
+            </script>
+          </div>
+        </div>
+        <div style="height:20px;"></div>
+
+        <!-- add student buttons -->
+        <div class="add-student-section">
+          <!-- first button -->
+          <div class="add-student-button" onclick="OpenModal('new-student')">
+            <div class="add-student-button-icon-shape" >
+
+            </div>
+            <div class="add-student-button-text">Add New Student</div>
+
+          </div>
+
+          <div style="display: inline-block; width:20px;"> </div>
+
+          <!-- second button -->
+          <div class="add-student-button" onclick="OpenModal('returning-student')">
+            <div class="add-student-button-icon-shape">
+
+            </div>
+            <div class="add-student-button-text">Add Returning Student</div>
+            
+          </div>
+
+          <div style="display: inline-block; width:20px;"> </div>
+
+          <!-- third button -->
+          <div class="add-student-button" onClick="OpenModal('transfer-student')">
+            <div class="add-student-button-icon-shape">
+
+            </div>
+            <div class="add-student-button-text">Add Transfer Student</div>
+            
+          </div>
+        </div>
+        <div class="student-section">
+          <div id="students-root" class="students-list"></div>
+          <script type="text/babel">
+            
+          </script>
+        
+        </div>
+        
+      </div>
+    </section>
+    </div>
+  </body>
+</html>

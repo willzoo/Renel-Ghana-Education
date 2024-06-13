@@ -10,7 +10,7 @@
     <!-- React Components -->
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>  
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>   
   </head>
 
   <body>
@@ -20,7 +20,7 @@
       <script type="text/babel">
 
         //Reusable functions across the whole document
-          function waitForDefinition(variableName) {
+        function waitForDefinition(variableName) {
             return new Promise((resolve, reject) => {
               const checkInterval = 200; // Check every 50 milliseconds
               const maxChecks = 100; // Maximum number of checks before giving up (to avoid infinite loop)
