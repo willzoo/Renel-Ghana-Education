@@ -210,8 +210,7 @@
         </section>
     </div>
     <script type="text/babel">
-
-        //------------------------------------------- HELPER FUNCTIONS -------------------------------------------
+//------------------------------------------- HELPER FUNCTIONS -------------------------------------------
 
         function OpenModal(id, studentID = "-1") {
             console.log('OpenModal called with id:', id, 'and studentID:', studentID);
@@ -242,14 +241,21 @@
 
         //------------------------------------------- REUSABLE COMPONENTS -------------------------------------------
 
-        const TextInput = (props) => {
-            return (
-                <section className="modal-text-input">
-                    <p className="modal-text-label">{props.title}</p>
-                    <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required defaultValue={props.value} />
-                </section>
-            );
-        }
+      const TextInput = (props) => {
+          return (
+              <section className="modal-text-input">
+                  <p className="modal-text-label">{props.title}</p>
+                  <input 
+                  placeholder={props.placeholder} 
+                  title={props.title} 
+                  type="text" 
+                  id={props.id} 
+                  required 
+                  defaultValue={props.value}
+                  />
+              </section>
+          );
+      }
 
         const SubmitButton = (props) => {
             return (
@@ -549,48 +555,53 @@ ReactDOM.render(<ClassEditInput />, document.getElementById("class-edit-modal-ro
             additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info" },
         }
 
-        function EditStudentInput() {
-            const handleSubmit = (event) => {
-                event.preventDefault();
-                CloseModal("edit-student");
-            }
+      function EditStudentInput(props) {
+          const handleSubmit = (event) => {
+              event.preventDefault();
+              CloseModal("edit-student");
+          }
+          console.log("Edit student input called: " + props.student.name);
+          return (
+              <section style={{ margin: '50px' }}>
+                  <form id="edit-student-form" onSubmit={handleSubmit}>
+                      <section id="edit-student-text-input">
+                          <TextInput title={editStudentInfo.studentName.title}
+                              placeholder={editStudentInfo.studentName.placeholder}
+                              id={editStudentInfo.studentName.id} 
+                              value={props.student.name} />
+                          <TextInput title={editStudentInfo.studentID.title}
+                              placeholder={editStudentInfo.studentID.placeholder}
+                              id={editStudentInfo.studentID.id}
+                              value={props.student.name} />
+                          <TextInput title={editStudentInfo.guardianName.title}
+                              placeholder={editStudentInfo.guardianName.placeholder}
+                              id={editStudentInfo.guardianName.id}
+                              value={props.student.name} />
+                          <TextInput title={editStudentInfo.guardianContact.title}
+                              placeholder={editStudentInfo.guardianContact.placeholder}
+                              id={editStudentInfo.guardianContact.id} />
+                          <TextInput title={editStudentInfo.studentMedical.title}
+                              placeholder={editStudentInfo.studentMedical.placeholder}
+                              id={editStudentInfo.studentMedical.id}
+                              value={props.student.name} />
+                          <br />
+                          <Checkbox id={editStudentInfo.disabilityStatus.id}
+                              name={editStudentInfo.disabilityStatus.id}
+                              title={editStudentInfo.disabilityStatus.title}
+                              value={props.student.name} />
+                          <TextInput title={editStudentInfo.additionalInfo.title}
+                              placeholder={editStudentInfo.additionalInfo.placeholder}
+                              id={editStudentInfo.additionalInfo.id}
+                              value={props.student.name} />
+                      </section>
+                      <br /><br /><br /><br />
+                      <SubmitButton value="Save" />
+                  </form>
+              </section>
+          );
+      }
 
-            return (
-                <section style={{ margin: '50px' }}>
-                    <form id="edit-student-form" onSubmit={handleSubmit}>
-                        <section id="edit-student-text-input">
-                            <TextInput title={editStudentInfo.studentName.title}
-                                placeholder={editStudentInfo.studentName.placeholder}
-                                id={editStudentInfo.studentName.id}
-                                value={"reddit"} />
-                            <TextInput title={editStudentInfo.studentID.title}
-                                placeholder={editStudentInfo.studentID.placeholder}
-                                id={editStudentInfo.studentID.id} />
-                            <TextInput title={editStudentInfo.guardianName.title}
-                                placeholder={editStudentInfo.guardianName.placeholder}
-                                id={editStudentInfo.guardianName.id} />
-                            <TextInput title={editStudentInfo.guardianContact.title}
-                                placeholder={editStudentInfo.guardianContact.placeholder}
-                                id={editStudentInfo.guardianContact.id} />
-                            <TextInput title={editStudentInfo.studentMedical.title}
-                                placeholder={editStudentInfo.studentMedical.placeholder}
-                                id={editStudentInfo.studentMedical.id} />
-                            <br />
-                            <Checkbox id={editStudentInfo.disabilityStatus.id}
-                                name={editStudentInfo.disabilityStatus.id}
-                                title={editStudentInfo.disabilityStatus.title} />
-                            <TextInput title={editStudentInfo.additionalInfo.title}
-                                placeholder={editStudentInfo.additionalInfo.placeholder}
-                                id={editStudentInfo.additionalInfo.id} />
-                        </section>
-                        <br /><br /><br /><br />
-                        <SubmitButton value="Save" />
-                    </form>
-                </section>
-            );
-        }
-
-        ReactDOM.render(<EditStudentInput />, document.getElementById("edit-student-modal-root"));
+      //ReactDOM.render(<EditStudentInput />, document.getElementById("edit-student-modal-root"));
 
         //------------------------------------------- ADD RETURNING STUDENT COMPONENT -------------------------------------------      
 
@@ -698,8 +709,13 @@ ReactDOM.render(<ClassEditInput />, document.getElementById("class-edit-modal-ro
                 });
             } catch (e) { };
 
-            underlay.style.display = "none";
-        }
+          underlay.style.display = "none";
+
+          // Unmount the React component for the edit student modal
+          if (id === "edit-student") {
+              ReactDOM.unmountComponentAtNode(document.getElementById("edit-student-modal-root"));
+          }
+      }
 
         //------------------------------------------- CLASS LIST ITEM COMPONENTS -------------------------------------------
 
@@ -839,29 +855,31 @@ ReactDOM.render(<ClassEditInput />, document.getElementById("class-edit-modal-ro
             }
         ];
 
-        function StudentItem(props) {
-            const handleEdit = (event) => {
-                OpenModal("edit-student");
-            }
-            return (
-                <li>
-                    <div className="student-list-item">
-                        <div>
-                            <p className="student-info">{props.data.name}</p>
-                            <p className="student-info-body">Student ID: {props.data.student_school_id}</p>
-                            <p className="student-info-body">Disability: {props.data.disabled}</p>
-                        </div>
-                        <div>
-                            <p className="student-info">Parent Contact Information</p>
-                            <p className="student-info-body">{props.data.parent_contact}</p>
-                        </div>
-                        <div>
-                            <p className="student-info-body" onClick={handleEdit}>Edit</p>
-                        </div>
-                    </div>
-                </li>
-            );
-        }
+      function StudentItem(props) {
+          const handleEdit = (event) => {
+              console.log("Student item function called")
+              ReactDOM.render(<EditStudentInput student={props.data} />, document.getElementById("edit-student-modal-root"));
+              OpenModal("edit-student");
+          }
+          return (
+              <li>
+                  <div className="student-list-item">
+                      <div>
+                          <p className="student-info">{props.data.name}</p>
+                          <p className="student-info-body">Student ID: {props.data.student_school_id}</p>
+                          <p className="student-info-body">Disability: {props.data.disabled}</p>
+                      </div>
+                      <div>
+                          <p className="student-info">Parent Contact Information</p>
+                          <p className="student-info-body">{props.data.parent_contact}</p>
+                      </div>
+                      <div>
+                          <p className="student-info-body" onClick={handleEdit}>Edit</p>
+                      </div>
+                  </div>
+              </li>
+          );
+      }
 
         function AddStudents(props) {
             document.getElementsByClassName("students-title")[0].textContent = selectedClass.class_name;

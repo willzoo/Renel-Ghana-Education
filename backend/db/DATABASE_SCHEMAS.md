@@ -52,18 +52,18 @@ There will be 1 permanent student database. When a teacher adds a returning stud
 
 students:
     {
-    "_id": "student_id",
+    "_id": "MongoDB assigned id",
     "name": "Student Name",
     "parent_contact": "7777-777-777",
     "dob": "DD/MM/YYYY",
-    "student_school_id": "The school assigned id for the studnet",
+    "student_school_id": "The school assigned id for the student",
     "disabled": true,
     "health_conditions": "Diabetes",
     "misc_info": "This student blah blah blah", 
     //These  4 should always change after each year
     "class_id": "class_id",
     "grade_level": "Grade Level",
-    "school_id": "school_id",
+    "school_id": "The MongoDB id for the school",
     "inactive": false, //Whether student is active in the current term. If inactive, don't add current term to student's history.
     "history": [
         {
