@@ -172,7 +172,7 @@ def delete_class(class_id):
         return jsonify({'error': str(e)}), 500
 
 #Route that adds a student to a class but checks if the student has been in the school's database previously
-@app.route('/add_student', methods=['POST'])
+@class_bp.route('/add_student', methods=['POST'])
 def add_student():
     data = request.json
     student_school_id = data.get('student_school_id')
