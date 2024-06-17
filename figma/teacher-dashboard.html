@@ -70,10 +70,10 @@
     <div class="modal-underlay" id="returning-student-modal-underlay" onClick="CloseModal('returning-student')">
       <div class="modal" id="returning-student-modal" onClick="event.stopPropagation()">
         <div>
-        <span class="modal-title">Add Returning Student</span>
+        <span class="modal-title">Add Student</span>
         <span class="modal-close" title="Cancel" onClick="CloseModal('returning-student')">&times;</span>
         <br>
-        <span class="modal-content">Please enter a student ID to find the student in our system.</span>
+        <span class="modal-content">Please enter the student's ID to see if they are in our system.</span>
         </div>
         <br>
         <div id="returning-student-modal-root"></div>
@@ -149,21 +149,21 @@
         <!-- add student buttons -->
         <div class="add-student-section">
           <!-- first button -->
-          <div class="add-student-button" onclick="OpenModal('new-student')">
+          <!-- <div class="add-student-button" onclick="OpenModal('new-student')">
             <div class="add-student-button-icon-shape">
                 <i class="fa fa-plus upper-info-icon"></i>
             </div>
             <div class="add-student-button-text">Add New Student</div>
           </div>
 
-          <div style="display: inline-block; width:20px;"></div>
+          <div style="display: inline-block; width:20px;"></div> -->
 
           <!-- second button -->
           <div class="add-student-button" onclick="OpenModal('returning-student')">
             <div class="add-student-button-icon-shape">
-                <i class="fa fa-arrow-down upper-info-icon"></i>
+                <i class="fa fa-plus upper-info-icon"></i>
             </div>
-            <div class="add-student-button-text">Add Returning Student</div>
+            <div class="add-student-button-text">Add Student</div>
           </div>
 
           <div style="display: inline-block; width:20px;"></div>
@@ -299,6 +299,12 @@
 
               classInfo.push(content);
 
+              selectedClass = classInfo.at(-1);
+              
+              classInfo.sort((a, b) => {
+                return a.class_name.localeCompare(b.class_name);
+              });
+
               fetch('http://127.0.0.1:8000/classes', {
                   method: "POST",
                   headers: {
@@ -319,7 +325,11 @@
                       console.error('There was a problem with the fetch operation:', error);
                   });
 
-              ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
+                ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
+
+                ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+                ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book"/>, document.getElementById("grade-level-indicator"));
+                ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap"/>, document.getElementById("num-students-indicator"));
           }
 
           return (
@@ -404,7 +414,7 @@
 
               ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
               ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
-              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" />, document.getElementById("num-students-indicator"));
+              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap"/>, document.getElementById("num-students-indicator"));
           }
 
           return (
@@ -501,14 +511,21 @@
 //------------------------------------------- ADD RETURNING STUDENT COMPONENT -------------------------------------------      
 
       let returningStudentInfo = {
-          studentID: { title: "Student ID", placeholder: "Find Student", id: "student-id" },
+          studentID: { title: "Student ID", placeholder: "Find Student", id: "returning-student-id-request" },
       }
 
       function ReturningStudentInput() {
           const handleSubmit = (event) => {
               event.preventDefault();
               CloseModal("returning-student");
-              OpenModal("edit-student", "1234");
+              let id = document.getElementById("returning-student-id-request").value;
+            if (id == "1234") {
+                OpenModal("edit-student", "1234");
+            }
+            else {
+                OpenModal("new-student");
+            }
+
           }
 
           return (
@@ -610,8 +627,8 @@
               selectedClass = props.data;
               students = props.data.students;
               ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
-              ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" />, document.getElementById("grade-level-indicator"));
-              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" />, document.getElementById("num-students-indicator"));
+              ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book"/>, document.getElementById("grade-level-indicator"));
+              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap"/>, document.getElementById("num-students-indicator"));
           };
 
           return (
@@ -672,8 +689,13 @@
           .then(data => {
               console.log('Data received:', data);
               classInfo = data;
+
+              classInfo.sort((a, b) => {
+                return a.class_name.localeCompare(b.class_name);
+              });
+
               selectedClass = classInfo[0];
-              ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
+              ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));          
           })
           .catch(error => {
               console.error('There was a problem with the fetch operation:', error);
@@ -713,7 +735,7 @@
               console.error(error);
           });
 
-      ReactDOM.render(<Indicator title="Current Term" value="2" theme="term-number" />, document.getElementById("current-term-indicator"))
+      ReactDOM.render(<Indicator title="Current Term" value="2" theme="term-number" icon="fa fa-calendar-o"/>, document.getElementById("current-term-indicator"))
 
 //------------------------------------------- STUDENT LIST ITEM COMPONENTS -------------------------------------------
 
