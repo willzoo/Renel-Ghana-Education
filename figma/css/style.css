@@ -927,6 +927,13 @@ body, html {
   max-width: 300px;
   min-width: 300px;
 }
+.admin-dashoard body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #FFFFFF;
+}
+
 .admin-dashboard-background {
   position: relative;
   width: 1280px;
@@ -1042,6 +1049,7 @@ body, html {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .admin-dashboard-modal-footer button {
@@ -1049,10 +1057,11 @@ body, html {
   font-size: 16px;
   border: none;
   cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .admin-dashboard-cancel-button {
-  background: #FFFFFF;
+  background: #E2E8F0;
   border: 1px solid #B7B7B7;
   color: #144047;
   border-radius: 3px;
@@ -1062,4 +1071,5 @@ body, html {
   background: #144047;
   color: #FFFFFF;
   border-radius: 3px;
+  font-family: 'Open Sans', sans-serif;
 }
