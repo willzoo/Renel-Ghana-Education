@@ -151,6 +151,8 @@ def update_class_students(class_id):
 @class_bp.route('/classes/<class_id>', methods=['DELETE'])
 def delete_class(class_id):
     try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
         # Remove the class from the classes list in the grade_levels collection
         grade_level_update_result = mongo.db.grade_levels.update_many(
             {},
@@ -174,6 +176,8 @@ def delete_class(class_id):
 #Route that adds a student to a class but checks if the student has been in the school's database previously
 @class_bp.route('/add_student', methods=['POST'])
 def add_student():
+    mongo = current_app.extensions['pymongo']
+    db = mongo.cx.EduTracker
     data = request.json
     student_school_id = data.get('student_school_id')
     teacher_id = data.get('teacher_id')
@@ -223,6 +227,8 @@ def add_student():
 @class_bp.route('/classes/<class_id>/students/<student_id>', methods=['PATCH'])
 def remove_student_from_class(class_id, student_id):
     try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
         # Remove class_id from the student document
         student_update_result = mongo.db.students.update_one(
             {'_id': ObjectId(student_id)},
