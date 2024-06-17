@@ -76,8 +76,52 @@
             <span style="display:block; margin-bottom:1.5em"></span>
       
             <!-- sidebar classes -->
-            <div id="schools-root" class="sidebar-classes"></div>
-      
+            <div id="schools-root" class="sidebar-classes">
+                <div class="list-of-schools">
+                    <div class="frame">
+                        <div class="list-title">List of Schools</div>
+                        <div class="list-subtitle">List of Schools and Total Student count</div>
+                    </div>
+        
+                    <div class="school-item">
+                        <div class="school-name">Accra Primary School</div>
+                        <div class="school-details">
+                            <div class="students-count">Total enrolled students</div>
+                            <div class="view-grade"><i class="fa fa-eye"></i> View student list by grade</div>
+                        </div>
+                    </div>
+        
+                    <div class="school-item">
+                        <div class="school-name">University Basic School, Legon</div>
+                        <div class="school-details">
+                            <div class="students-count">Total enrolled students</div>
+                            <div class="view-grade"><i class="fa fa-eye"></i> View student list by grade</div>
+                        </div>
+                    </div>
+        
+                    <div class="school-item">
+                        <div class="school-name">Greater Accra Region Primary School</div>
+                        <div class="school-details">
+                            <div class="students-count">Total enrolled students</div>
+                            <div class="view-grade"><i class="fa fa-eye"></i> View student list by grade</div>
+                        </div>
+                    </div>
+        
+                    <div class="school-item">
+                        <div class="school-name">Kwame Nkrumah Primary School</div>
+                        <div class="school-details">
+                            <div class="students-count">Total enrolled students</div>
+                            <div class="view-grade"><i class="fa fa-eye"></i> View student list by grade</div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="remove-button-container">
+                    <button class="remove-button">REMOVE</button>
+                </div>
+            </div>
+        </section>
+        <section>
           </div>
           </section>
           <section>
@@ -132,238 +176,249 @@
       
       //------------------------------------------- ADD NEW SCHOOL COMPONENT -------------------------------------------
       
-            let addSchoolInfo = {
-                schoolName: { title: "School Name", placeholder: "Enter the school name", id: "school-name" },
-                accessCode: { title: "Access Code", placeholder: "Enter access code", id: "access-code" },
-                year: { title: "Year Established", placeholder: "Enter year", id: "year" },
-            };
-      
-            function SchoolInput() {
-                let handleSubmit = (event) => {
-                    event.preventDefault();
-                    CloseModal("school-add");
-      
-                    let schoolName = document.getElementById('school-name').value;
-                    let accessCode = document.getElementById('access-code').value;
-                    let year = document.getElementById('year').value;
-      
-                    let content = {
-                        "school_name": schoolName,
-                        "access_code": accessCode,
-                        "year": year
-                    };
-      
-                    schoolInfo.push(content);
-      
-                    fetch('http://127.0.0.1:8000/schools', {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(content)
-                    })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log('Data received:', data);
-                        })
-                        .catch(error => {
-                            console.error('There was a problem with the fetch operation:', error);
-                        });
-      
-                    ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
+      let addSchoolInfo = {
+    schoolName: { title: "School Name", placeholder: "Enter the school name", id: "school-name" },
+    accessCode: { title: "Access Code", placeholder: "Enter access code", id: "access-code" },
+};
+
+function SchoolInput() {
+    let handleSubmit = (event) => {
+        event.preventDefault();
+        CloseModal("school-add");
+
+        let schoolName = document.getElementById('school-name').value;
+        let accessCode = document.getElementById('access-code').value;
+        let year = document.getElementById('year').value;
+
+        let content = {
+            "school_name": schoolName,
+            "access_code": accessCode,
+            "year": year
+        };
+
+        schoolInfo.push(content);
+
+        fetch('http://127.0.0.1:8000/schools', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(content)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-      
-                return (
-                    <section style={{ margin: '50px' }}>
-                        <form id="school-modal-form" onSubmit={handleSubmit}>
-                            <div id="school-add-text-input">
-                                <TextInput title={addSchoolInfo.schoolName.title}
-                                    placeholder={addSchoolInfo.schoolName.placeholder}
-                                    id={addSchoolInfo.schoolName.id} />
-                                <TextInput title={addSchoolInfo.accessCode.title}
-                                    placeholder={addSchoolInfo.accessCode.placeholder}
-                                    id={addSchoolInfo.accessCode.id} />
-                                <TextInput title={addSchoolInfo.year.title}
-                                    placeholder={addSchoolInfo.year.placeholder}
-                                    id={addSchoolInfo.year.id} />
-                                <br /><br /><br /><br />
-                            </div>
-                            <SubmitButton value="Add" />
-                        </form>
-                    </section>
-                );
-            }
-      
-            ReactDOM.render(<SchoolInput />, document.getElementById("school-add-modal-root"));
-      
-      //------------------------------------------- SCHOOL LIST ITEM COMPONENTS -------------------------------------------
-      
-            var tempID = "adminID123";
-            var schoolInfo;
-            var selectedSchool;
-      
-            function SchoolItem(props) {
-                const handleSchoolClick = () => {
-                    selectedSchool = props.data;
-                    students = props.data.students;
-                    ReactDOM.render(<AddStudents students={selectedSchool.students} />, document.getElementById("students-root"));
-                    ReactDOM.render(<Indicator title="Total Students" value={selectedSchool.total_students} theme="num-students" />, document.getElementById("num-students-indicator"));
-                };
-      
-                return (
-                    <li>
-                        <div className="sidebar-class" onClick={handleSchoolClick}>
-                            <p className="class-info">{props.data.school_name}</p>
-                            <p className="class-info-body">Total Enrolled Students: {props.data.total_students}</p>
-                        </div>
-                    </li>
-                );
-            }
-      
-            function AddSchools(props) {
-                let items = [];
-                for (let i = 0; i < props.schools.length; i++) {
-                    items.push((<SchoolItem data={props.schools[i]} />));
-                }
-      
-                const schoolList = items;
-      
-                if (items.length == 0) {
-                    return (
-                        <section>
-                            <h1 className="classes-title">Schools</h1>
-                            <p className="classes-memo">Select a school to view students</p>
-                            <ul className="nobullet">
-                                <li><div className="list-issue">There are no schools available.</div></li>
-                            </ul>
-                        </section>
-                    );
-                }
-      
-                return (
-                    <section>
-                        <h1 className="classes-title">Schools</h1>
-                        <p className="classes-memo">Select a school to view students</p>
-                        <ul className="nobullet">
-                            {schoolList}
-                        </ul>
-                    </section>
-                );
-            }
-      
-            fetch(`http://127.0.0.1:8000/admins/${tempID}/schools`, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                return response.json();
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Data received:', data);
-                    schoolInfo = data;
-                    selectedSchool = schoolInfo[0];
-                    ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
-      
-            function Indicator(props) {
-                return (
-                    <section>
-                        <div className="row">
-                            <div>
-                                <div className={`upper-info-icon-shape ${props.theme}`}></div>
-                                <p className="label">{props.title}</p>
-                            </div>
-                            <p className="value">{props.value}</p>
-                        </div>
-                    </section>
-                );
+            .then(data => {
+                console.log('Data received:', data);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+        ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
+    }
+
+    return (
+        <section style={{ margin: '50px' }}>
+            <form id="school-modal-form" onSubmit={handleSubmit}>
+                <div id="school-add-text-input">
+                    <TextInput title={addSchoolInfo.schoolName.title}
+                        placeholder={addSchoolInfo.schoolName.placeholder}
+                        id={addSchoolInfo.schoolName.id} />
+                    <TextInput title={addSchoolInfo.accessCode.title}
+                        placeholder={addSchoolInfo.accessCode.placeholder}
+                        id={addSchoolInfo.accessCode.id} />
+                    <TextInput title={addSchoolInfo.year.title}
+                        placeholder={addSchoolInfo.year.placeholder}
+                        id={addSchoolInfo.year.id} />
+                    <br /><br /><br /><br />
+                </div>
+                <SubmitButton value="Add" />
+            </form>
+        </section>
+    );
+}
+
+ReactDOM.render(<SchoolInput />, document.getElementById("school-add-modal-root"));
+
+//------------------------------------------- SCHOOL LIST ITEM COMPONENTS -------------------------------------------
+function removeSchool(event) {
+            event.preventDefault();
+            const schoolItems = document.querySelectorAll('.school-item');
+            if (schoolItems.length > 0) {
+                schoolItems[schoolItems.length - 1].remove();
             }
-      
-            waitForDefinition('selectedSchool')
-                .then(() => {
-                    console.log("Selected school defined for total students")
-                    ReactDOM.render(<Indicator title="Total Students" value={selectedSchool.total_students} theme="num-students" />, document.getElementById("num-students-indicator"))
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-      
-            ReactDOM.render(<Indicator title="Current Term" value="2" theme="term-number" />, document.getElementById("current-term-indicator"))
-      
-            var students = [];
-      
-            function StudentItem(props) {
-                return (
-                    <li>
-                        <div className="student-list-item">
-                            <div>
-                                <p className="student-info">{props.data.name}</p>
-                                <p className="student-info-body">Student ID: {props.data.student_school_id}</p>
-                                <p className="student-info-body">Disability: {props.data.disabled}</p>
-                            </div>
-                            <div>
-                                <p className="student-info">Parent Contact Information</p>
-                                <p className="student-info-body">{props.data.parent_contact}</p>
-                            </div>
-                        </div>
-                    </li>
-                );
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const removeButton = document.querySelector('.remove-button');
+            if (removeButton) {
+                removeButton.addEventListener('click', removeSchool);
             }
-      
-            function AddStudents(props) {
-                let items = [];
-                for (let i = 0; i < props.students.length; i++) {
-                    items.push((<StudentItem data={props.students[i]} />));
-                }
-      
-                const studentList = items;
-      
-                if (items.length == 0) {
-                    return (
-                        <div>
-                            <h1 className="students-title">{selectedSchool.school_name}</h1>
-                            <p className="students-memo">Students</p>
-                            <ul className="nobullet">
-                                <li><div className="list-issue">There are no students enrolled in this school.</div></li>
-                            </ul>
-                        </div>
-                    );
-                }
-      
-                return (
-                    <div>
-                        <h1 className="students-title">{selectedSchool.school_name}</h1>
-                        <p className="students-memo">Students</p>
-                        <ul className="nobullet">
-                            {studentList}
-                        </ul>
-                    </div>
-                );
-            }
-      
-            waitForDefinition('selectedSchool')
-                .then((value) => {
-                    console.log('selectedSchool is defined:', value);
-                    ReactDOM.render(<AddStudents students={selectedSchool.students} />, document.getElementById("students-root"));
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-          </script>
-      </body>
-      
-      </html>
-      
+        });
+        
+var tempID = "adminID123";
+var schoolInfo;
+var selectedSchool;
+
+function SchoolItem(props) {
+    const handleSchoolClick = () => {
+        selectedSchool = props.data;
+        students = props.data.students;
+        ReactDOM.render(<AddStudents students={selectedSchool.students} />, document.getElementById("students-root"));
+        ReactDOM.render(<Indicator title="Total Students" value={selectedSchool.total_students} theme="num-students" />, document.getElementById("num-students-indicator"));
+    };
+
+    return (
+        <div className="school-item">
+            <p className="school-name">{props.data.school_name}</p>
+            <p className="school-info">Total enrolled students</p>
+            <p className="school-view-list" onClick={handleSchoolClick}>View student list by grade</p>
+        </div>
+    );
+}
+
+function AddSchools(props) {
+    let items = [];
+    for (let i = 0; i < props.schools.length; i++) {
+        items.push((<SchoolItem data={props.schools[i]} />));
+    }
+
+    const schoolList = items;
+
+    if (items.length == 0) {
+        return (
+            <section>
+                <h2 className="schools-title">Schools</h2>
+                <p className="schools-subtitle">Select a school to view students</p>
+                <div className="schools-list">
+                    <div className="list-issue">There are no schools available.</div>
+                </div>
+            </section>
+        );
+    }
+
+    return (
+        <section>
+            <h2 className="schools-title">Schools</h2>
+            <p className="schools-subtitle">Select a school to view students</p>
+            <div className="schools-list">
+                {schoolList}
+            </div>
+        </section>
+    );
+}
+
+fetch(`http://127.0.0.1:8000/admins/${tempID}/schools`, {
+    method: "GET",
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Data received:', data);
+        schoolInfo = data;
+        selectedSchool = schoolInfo[0];
+        ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+function Indicator(props) {
+    return (
+        <section>
+            <div className="row">
+                <div>
+                    <div className={`upper-info-icon-shape ${props.theme}`}></div>
+                    <p className="label">{props.title}</p>
+                </div>
+                <p className="value">{props.value}</p>
+            </div>
+        </section>
+    );
+}
+
+waitForDefinition('selectedSchool')
+    .then(() => {
+        console.log("Selected school defined for total students")
+        ReactDOM.render(<Indicator title="Total Students" value={selectedSchool.total_students} theme="num-students" />, document.getElementById("num-students-indicator"))
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+
+ReactDOM.render(<Indicator title="Current Term" value="2" theme="term-number" />, document.getElementById("current-term-indicator"))
+
+var students = [];
+
+function StudentItem(props) {
+    return (
+        <li>
+            <div className="student-list-item">
+                <div>
+                    <p className="student-info">{props.data.name}</p>
+                    <p className="student-info-body">Student ID: {props.data.student_school_id}</p>
+                    <p className="student-info-body">Disability: {props.data.disabled}</p>
+                </div>
+                <div>
+                    <p className="student-info">Parent Contact Information</p>
+                    <p className="student-info-body">{props.data.parent_contact}</p>
+                </div>
+            </div>
+        </li>
+    );
+}
+
+function AddStudents(props) {
+    let items = [];
+    for (let i = 0; i < props.students.length; i++) {
+        items.push((<StudentItem data={props.students[i]} />));
+    }
+
+    const studentList = items;
+
+    if (items.length == 0) {
+        return (
+            <div>
+                <h1 className="students-title">{selectedSchool.school_name}</h1>
+                <p className="students-memo">Students</p>
+                <ul className="nobullet">
+                    <li><div className="list-issue">There are no students enrolled in this school.</div></li>
+                </ul>
+            </div>
+        );
+    }
+
+    return (
+        <div>
+            <h1 className="students-title">{selectedSchool.school_name}</h1>
+            <p className="students-memo">Students</p>
+            <ul className="nobullet">
+                {studentList}
+            </ul>
+        </div>
+    );
+}
+
+waitForDefinition('selectedSchool')
+    .then((value) => {
+        console.log('selectedSchool is defined:', value);
+        ReactDOM.render(<AddStudents students={selectedSchool.students} />, document.getElementById("students-root"));
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+    </script>
+</body>
+
+</html>
