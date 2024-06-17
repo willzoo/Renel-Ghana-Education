@@ -15,7 +15,8 @@ def create_student():
         return jsonify({"error": "No input data provided"}), 400
     
     name = data.get('name')
-    parent_contact = data.get('parent_contact')
+    guardian_name = data.get('guardian_name')
+    guardian_contact = data.get('guardian_contact')
     dob = data.get('dob')
     student_school_id = data.get('student_school_id')
     disabled = data.get('disabled', False)
@@ -25,13 +26,14 @@ def create_student():
     grade_level = data.get('grade_level')
     school_id = data.get('school_id')
 
-    if not name or not parent_contact or not class_id or not grade_level or not school_id:
+    if not name or not guardian_contact or not class_id or not grade_level or not school_id:
         return jsonify({"error": "Missing required fields"}), 400
     
 
     new_student = {
         'name': name,
-        'parent_contact': parent_contact,
+        'guardian_name': guardian_name,
+        'guardian_contact': guardian_contact,
         'dob': dob,
         "student_school_id": student_school_id,
         'disabled': disabled,
@@ -75,7 +77,7 @@ def get_student(student_id):
         return jsonify({"error": str(e)}), 500
 
 # Update student information
-@student_bp.route('/students/<student_id>', methods=['PUT'])
+@student_bp.route('/students/<student_id>', methods=['PATCH'])
 def update_student(student_id):
     data = request.get_json()
     update_data = {key: value for key, value in data.items() if value is not None}
@@ -88,6 +90,7 @@ def update_student(student_id):
 
         return jsonify({"message": "Student updated successfully"}), 200
     except Exception as e:
+        print("error" + str(e))
         return jsonify({"error": str(e)}), 500
 
 # Delete a student (if needed)
