@@ -58,15 +58,8 @@
 
                 <!-- section line -->
                 <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
+
                 <div style="height:50px"></div>
-
-                  <!-- Year Selection Buttons -->
-                <div class="year-selection">
-                    <button onClick="fetchGradesForYear(2023)">2023</button>
-                    <button onClick="fetchGradesForYear(2022)">2022</button>
-                    <button onClick="fetchGradesForYear(2021)">2021</button>
-                </div>
-
                 <!-- Sidebar Grades -->
                 <div class="sidebar-grades-container">
                     <h1 class="grades-title">Grades</h1>
@@ -79,10 +72,9 @@
         <section>
             <div class="main">
                 <div class="header-info">
-                    <div>EduTracker Logo Here</div>
                     <div class="upper-info">
-                        <section id="grade-level-indicator"></section>
-                        <section id="num-students-indicator"></section>
+                        <section id="school-name-indicator"></section>
+                        <section id="total-students-indicator"></section>
                     </div>
                 </div>
                 <div style="height:20px;"></div>
@@ -156,8 +148,41 @@
         }
 
         //------------------------------------------- GRADE LIST ITEM COMPONENTS -------------------------------------------
-        var selectedSchoolID = new URLSearchParams(window.location.search).get('school_id');
+        var selectedSchoolID = 'school-000'; // Hardcoded for demo purposes
         var selectedGrade;
+        var schoolInfo = {
+            _id: 'school-000',
+            school_name: 'Name of School',
+            total_students: 123,
+            grades: [
+                { level: 'Kindergarten 1' },
+                { level: 'Kindergarten 2' },
+                { level: 'Primary 1' },
+                { level: 'Primary 2' },
+                { level: 'Primary 3' },
+                { level: 'Primary 4' },
+                { level: 'Primary 5' },
+                { level: 'Primary 6' },
+            ]
+        };
+
+        function updateSchoolInfo() {
+            ReactDOM.render(
+                <div>
+                    <p className="info-label">School:</p>
+                    <p className="info-value">{schoolInfo.school_name}</p>
+                </div>, 
+                document.getElementById("school-name-indicator")
+            );
+
+            ReactDOM.render(
+                <div>
+                    <p className="info-label">Total Students:</p>
+                    <p className="info-value">{schoolInfo.total_students}</p>
+                </div>, 
+                document.getElementById("total-students-indicator")
+            );
+        }
 
         function GradeItem(props) {
             const handleGradeClick = () => {
@@ -166,8 +191,10 @@
             };
 
             return (
-                <div className="grade-item" onClick={handleGradeClick}>
-                    <p className="grade-level">{props.data.level}</p>
+                <div className="school-item" onClick={handleGradeClick}>
+                    <p className="school-name">{props.data.level}</p>
+                    <p className="school-info">Total enrolled students</p>
+                    <p className="school-view-list">View student list by grade</p>
                 </div>
             );
         }
@@ -194,8 +221,6 @@
 
             return (
                 <section>
-                    <h2 className="grades-title">Grades</h2>
-                    <p className="grades-subtitle">Select a grade to view students</p>
                     <div className="grades-list">
                         {gradeList}
                     </div>
@@ -209,13 +234,32 @@
         }
 
         //------------------------------------------- STUDENT LIST ITEM COMPONENTS -------------------------------------------
+        function getStudentColor(status) {
+            switch (status) {
+                case 'enrolled':
+                    return '#4BB34B';
+                case 'passed':
+                    return '#FFA000';
+                case 'dropped':
+                    return '#FF0F0F';
+                case 'repeating':
+                    return '#E77B39';
+                case 'new':
+                    return '#007AFF';
+                case 'returning':
+                    return '#A400C7';
+                default:
+                    return '#FFFFFF';
+            }
+        }
+
         function StudentItem(props) {
             const handleStudentClick = () => {
                 displayStudentProfile(props.data);
             };
 
             return (
-                <tr onClick={handleStudentClick} style={{ cursor: 'pointer' }}>
+                <tr onClick={handleStudentClick} style={{ cursor: 'pointer', backgroundColor: getStudentColor(props.data.status) }}>
                     <td>{props.data.first_name} {props.data.last_name}</td>
                     <td>{props.data.student_id}</td>
                     <td>{props.data.dob}</td>
@@ -271,11 +315,25 @@
         }
 
         function fetchStudentsForGrade(schoolId, gradeLevel) {
-            const school = schoolInfo.find(s => s._id === schoolId);
-            const studentsInGrade = school.students.filter(student => student.grade_level === gradeLevel);
-            ReactDOM.render(<AddStudents students={studentsInGrade} />, document.getElementById("students-root"));
+            const students = [];
+            const statuses = ['enrolled', 'passed', 'dropped', 'repeating', 'new', 'returning'];
+            for (let i = 1; i <= 60; i++) {
+                const status = statuses[Math.floor(Math.random() * statuses.length)];
+                students.push({
+                    first_name: `Student${i}`,
+                    last_name: `LastName${i}`,
+                    student_id: `ID${i}`,
+                    dob: '2006-01-01',
+                    age: 18,
+                    teacher: `Teacher${i % 5 + 1}`,
+                    status
+                });
+            }
+
+            ReactDOM.render(<AddStudents students={students} />, document.getElementById("students-root"));
         }
 
+        updateSchoolInfo(); // Initial update for the school info
         fetchGradesForYear(2024); // Initial fetch for the current year
     </script>
 </body>
