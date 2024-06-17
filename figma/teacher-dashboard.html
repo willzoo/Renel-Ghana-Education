@@ -226,7 +226,7 @@
           return (
               <section className="modal-text-input">
                   <p className="modal-text-label">{props.title}</p>
-                  <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required />
+                  <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required defaultValue={props.value} />
               </section>
           );
       }
@@ -473,7 +473,8 @@
                       <section id="edit-student-text-input">
                           <TextInput title={editStudentInfo.studentName.title}
                               placeholder={editStudentInfo.studentName.placeholder}
-                              id={editStudentInfo.studentName.id} />
+                              id={editStudentInfo.studentName.id} 
+                              value={"reddit"} />
                           <TextInput title={editStudentInfo.studentID.title}
                               placeholder={editStudentInfo.studentID.placeholder}
                               id={editStudentInfo.studentID.id} />
@@ -747,6 +748,9 @@
       ];
 
       function StudentItem(props) {
+          const handleEdit = (event) => {
+              OpenModal("edit-student");
+          }
           return (
               <li>
                   <div className="student-list-item">
@@ -760,7 +764,7 @@
                           <p className="student-info-body">{props.data.parent_contact}</p>
                       </div>
                       <div>
-                          <p className="student-info-body">Edit</p>
+                          <p className="student-info-body" onClick={handleEdit}>Edit</p>
                       </div>
                   </div>
               </li>
