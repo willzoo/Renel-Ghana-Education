@@ -38,7 +38,7 @@
             <div style="height:100px"></div>
       
               <!-- EduTracker logo -->
-      <div class="edutracker-logo-icon">
+      <div class="edutracker-logo">
         <svg width="288" height="39" viewBox="0 0 288 39" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M21.4636 38.2978C25.147 38.2978 28.6795 36.8346 31.2841 34.2301C33.8886 31.6255 35.3518 28.093 35.3518 24.4096C35.3518 20.7262 33.8886 17.1937 31.2841 14.5891C28.6795 11.9846 25.147 10.5214 21.4636 10.5214C17.7802 10.5214 14.2477 11.9846 11.6432 14.5891C9.03861 17.1937 7.57539 20.7262 7.57539 24.4096C7.57539 28.093 9.03861 31.6255 11.6432 34.2301C14.2477 36.8346 17.7802 38.2978 21.4636 38.2978ZM24.2141 28.1583L16.3857 31.1693C15.3333 31.5761 14.2971 30.54 14.704 29.4875L17.7149 21.6591C17.8939 21.198 18.252 20.8399 18.7131 20.6609L26.5415 17.6499C27.594 17.2431 28.6302 18.2793 28.2233 19.3317L25.2123 27.1601C25.0387 27.6213 24.6753 27.9793 24.2141 28.1583ZM23.1996 24.4096C23.1996 23.9492 23.0167 23.5076 22.6912 23.182C22.3656 22.8565 21.924 22.6736 21.4636 22.6736C21.0032 22.6736 20.5616 22.8565 20.2361 23.182C19.9105 23.5076 19.7276 23.9492 19.7276 24.4096C19.7276 24.87 19.9105 25.3116 20.2361 25.6372C20.5616 25.9627 21.0032 26.1456 21.4636 26.1456C21.924 26.1456 22.3656 25.9627 22.6912 25.6372C23.0167 25.3116 23.1996 24.87 23.1996 24.4096Z" fill="#28585F"/>
           <path fill-rule="evenodd" clip-rule="evenodd" d="M21.4636 38.0255C28.9834 38.0255 35.0795 31.9294 35.0795 24.4096C35.0795 16.8897 28.9834 10.7937 21.4636 10.7937C13.9437 10.7937 7.84767 16.8897 7.84767 24.4096C7.84767 31.9294 13.9437 38.0255 21.4636 38.0255Z" fill="#144047" fill-opacity="0.5"/>
@@ -104,15 +104,15 @@
                     </div>
                     <div style="height:20px;"></div>
     
-                    <!-- Reintegration Tracker and School Management Buttons -->
-                    <div class="button-section">
-                        <button onclick="navigateTo('reintegration-tracker')">Reintegration Tracker</button>
-                        <button onclick="navigateTo('school-management')">School Management</button>
-                    </div>
-    
-                    <div id="content">
-                        <!-- Dynamic content will be loaded here -->
-                    </div>
+                   <!-- Reintegration Tracker and School Management Buttons -->
+<div class="button-section">
+    <button onclick="navigateTo('../figma/reintegration-tracker.html')">Reintegration Tracker</button>
+    <button onclick="navigateTo('school-management')">School Management</button>
+</div>
+
+<div id="content">
+    <!-- Dynamic content will be loaded here -->
+</div>
                 </div>
             </section>
         </div> 
@@ -122,34 +122,39 @@
             function OpenModal(id) {
                 console.log('OpenModal called with id:', id);
             }
-    
+        
             function CloseModal(id) {
                 console.log('CloseModal called with id:', id);
             }
-    
+        
             function handleYearChange(event) {
                 const selectedYear = event.target.value;
                 // Fetch schools for the selected year
                 fetchSchools(selectedYear);
             }
-    
+        
             function handleSchoolSearch(event) {
                 const searchQuery = event.target.value.toLowerCase();
                 const filteredSchools = schoolInfo.filter(school => school.school_name.toLowerCase().includes(searchQuery));
                 ReactDOM.render(<AddSchools schools={filteredSchools} />, document.getElementById("schools-root"));
             }
-    
+        
             function navigateTo(page) {
-                // Logic to navigate to different pages like 'reintegration-tracker' or 'school-management'
-                if (page === 'reintegration-tracker') {
-                    // Load Reintegration Tracker content
-                    ReactDOM.render(<ReintegrationTracker />, document.getElementById("content"));
-                } else if (page === 'school-management') {
-                    // Load School Management content
-                    ReactDOM.render(<SchoolManagement />, document.getElementById("content"));
+                // Check if the page is an external link
+                if (page.includes('.html')) {
+                    window.location.href = page;
+                } else {
+                    // Logic to navigate to different pages like 'reintegration-tracker' or 'school-management'
+                    if (page === 'reintegration-tracker') {
+                        // Load Reintegration Tracker content
+                        ReactDOM.render(<ReintegrationTracker />, document.getElementById("content"));
+                    } else if (page === 'school-management') {
+                        // Load School Management content
+                        ReactDOM.render(<SchoolManagement />, document.getElementById("content"));
+                    }
                 }
             }
-    
+        
             //------------------------------------------- ADD NEW SCHOOL COMPONENT -------------------------------------------
             const TextInput = (props) => {
                 return (
@@ -159,7 +164,7 @@
                     </section>
                 );
             }
-    
+        
             const SubmitButton = (props) => {
                 return (
                     <div className="modal-submit">
@@ -167,22 +172,22 @@
                     </div>
                 );
             }
-    
+        
             let addSchoolInfo = {
                 schoolName: { title: "School Name", placeholder: "Enter the school name", id: "school-name" },
                 accessCode: { title: "Access Code", placeholder: "Enter access code", id: "access-code" },
                 gradeLevel: { title: "Grade Level", placeholder: "Enter grade level", id: "grade-level" }
             };
-    
+        
             function SchoolInput() {
                 let handleSubmit = (event) => {
                     event.preventDefault();
                     CloseModal("school-add");
-    
+        
                     let schoolName = document.getElementById('school-name').value;
                     let accessCode = document.getElementById('access-code').value;
                     let gradeLevel = document.getElementById('grade-level').value;
-    
+        
                     let content = {
                         "school_name": schoolName,
                         "grade_level": gradeLevel,
@@ -190,9 +195,9 @@
                         "teacher_id": "665da0b90c1d6c0c45724285",
                         "school_id": "665da7c60c1d6c0c45724286"
                     };
-    
+        
                     schoolInfo.push(content);
-    
+        
                     fetch('http://127.0.0.1:8000/schools', {
                         method: "POST",
                         headers: {
@@ -212,10 +217,10 @@
                         .catch(error => {
                             console.error('There was a problem with the fetch operation:', error);
                         });
-    
+        
                     ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
                 }
-    
+        
                 return (
                     <section style={{ margin: '50px' }}>
                         <form id="school-modal-form" onSubmit={handleSubmit}>
@@ -236,9 +241,9 @@
                     </section>
                 );
             }
-    
+        
             ReactDOM.render(<SchoolInput />, document.getElementById("school-add-modal-root"));
-    
+        
             //------------------------------------------- SCHOOL LIST ITEM COMPONENTS -------------------------------------------
             var tempID = "adminID123";
             var schoolInfo = [
@@ -273,13 +278,13 @@
                 }
             ];
             var selectedSchool;
-    
+        
             function SchoolItem(props) {
                 const handleSchoolClick = () => {
                     selectedSchool = props.data;
                     fetchGradesForSchool(selectedSchool._id);
                 };
-    
+        
                 return (
                     <div className="school-item" onClick={handleSchoolClick}>
                         <p className="school-name">{props.data.school_name}</p>
@@ -288,15 +293,15 @@
                     </div>
                 );
             }
-    
+        
             function AddSchools(props) {
                 let items = [];
                 for (let i = 0; i < props.schools.length; i++) {
                     items.push((<SchoolItem data={props.schools[i]} />));
                 }
-    
+        
                 const schoolList = items;
-    
+        
                 if (items.length == 0) {
                     return (
                         <section>
@@ -308,7 +313,7 @@
                         </section>
                     );
                 }
-    
+        
                 return (
                     <section>
                         <h2 className="schools-title">Schools</h2>
@@ -319,25 +324,25 @@
                     </section>
                 );
             }
-    
+        
             function fetchSchools(year) {
                 // Simulated fetching of schools based on selected year
                 ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
             }
-    
+        
             function fetchGradesForSchool(schoolId) {
                 const school = schoolInfo.find(s => s._id === schoolId);
                 ReactDOM.render(<GradeList grades={school.grades} />, document.getElementById("content"));
             }
-    
+        
             function fetchStudentsForGrade(schoolId, gradeLevel) {
                 const school = schoolInfo.find(s => s._id === schoolId);
                 const studentsInGrade = school.students; // Simplified for this example
                 ReactDOM.render(<StudentList students={studentsInGrade} />, document.getElementById("content"));
             }
-    
+        
             fetchSchools(2024); // Initial fetch for the current year
-    
+        
             function Indicator(props) {
                 return (
                     <section>
@@ -351,7 +356,7 @@
                     </section>
                 );
             }
-    
+        
             //------------------------------------------- REACT COMPONENTS -------------------------------------------
             class ReintegrationTracker extends React.Component {
                 render() {
@@ -363,7 +368,7 @@
                     );
                 }
             }
-    
+        
             class SchoolManagement extends React.Component {
                 render() {
                     return (
@@ -374,7 +379,7 @@
                     );
                 }
             }
-    
+        
             class GradeList extends React.Component {
                 render() {
                     return (
@@ -391,7 +396,7 @@
                     );
                 }
             }
-    
+        
             class StudentList extends React.Component {
                 render() {
                     return (
@@ -410,11 +415,11 @@
                     );
                 }
             }
-    
+        
             function displayStudentProfile(student) {
                 ReactDOM.render(<StudentProfile student={student} />, document.getElementById("content"));
             }
-    
+        
             function getStudentColor(status) {
                 switch (status) {
                     case 'enrolled':
@@ -433,7 +438,7 @@
                         return '#FFFFFF';
                 }
             }
-    
+        
             class StudentProfile extends React.Component {
                 render() {
                     const student = this.props.student;
@@ -455,7 +460,7 @@
                     );
                 }
             }
-    
+        
             waitForDefinition('selectedSchool')
                 .then((value) => {
                     console.log('selectedSchool is defined:', value);
