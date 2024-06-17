@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Login - EduTracker</title>
+    <title>Administrator Login - EduTracker</title>
     <link rel="stylesheet" href="figma/css/rebecca.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script>
       // Hardcoded credentials for demonstration
-      const validEmail = 'teacher@example.com';
+      const validEmail = 'admin@renelghana.org';
       const validPassword = 'password123';
 
       function handleLogin(event) {
@@ -19,7 +19,7 @@
         const password = document.getElementById('password').value;
 
         if (email === validEmail && password === validPassword) {
-          window.location.href = '../figma/teacher-dashboard-copy.html'; // Adjusted the path to point to the correct location
+          window.location.href = '../figma/admin-dashboard.html'; // Adjusted the path to point to the correct location
         } else {
           alert('Invalid credentials');
         }
@@ -37,7 +37,7 @@
                     <path d="M45.9989 0C47.1632 0 48.3132 0.202706 49.4057 0.593643L89.7266 15.261C91.0922 15.7677 91.9978 17.0709 91.9978 18.5333C91.9978 19.9957 91.0922 21.2988 89.7266 21.8055L81.4037 24.8317C83.7611 28.5673 85.098 32.9834 85.098 37.6312V41.6998C85.098 45.8119 86.6504 50.0543 88.3035 53.3989C89.2379 55.2812 90.3016 57.1345 91.5378 58.8431C91.9978 59.4657 92.1272 60.2765 91.8684 61.015C91.6097 61.7534 91.0059 62.3036 90.2585 62.4918L81.0587 64.8085C80.4549 64.9677 79.8081 64.8519 79.2762 64.5189C78.7444 64.1859 78.3706 63.6357 78.2556 63.0131C77.0194 56.816 77.6375 51.256 78.5575 47.2743C79.0175 45.2182 79.6356 43.1188 80.4981 41.1931V37.6312C80.4981 33.2585 79.0318 29.132 76.4875 25.8307C74.6332 23.5865 72.2326 21.7766 69.4152 20.6617L46.847 11.7281C45.6683 11.2647 44.3314 11.8439 43.8715 13.0312C43.4115 14.2185 43.9864 15.565 45.1652 16.0284L67.7334 24.962C69.5158 25.6715 71.0827 26.7574 72.362 28.0895L49.4201 36.4294C48.3276 36.8204 47.1776 37.0231 46.0133 37.0231C44.8489 37.0231 43.6989 36.8204 42.6065 36.4294L2.2712 21.8055C0.905605 21.3132 0 19.9957 0 18.5333C0 17.0709 0.905605 15.7677 2.2712 15.261L42.5921 0.593643C43.6846 0.202706 44.8346 0 45.9989 0Z" fill="#144047"/>
                 </svg>
             </div>
-            <div class="title">Teacher Login</div>
+            <div class="title">Administrator Login</div>
         </div>
         <form onsubmit="handleLogin(event)">
             <div class="input-field">
