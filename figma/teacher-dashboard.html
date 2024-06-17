@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Teacher Dashboard - EduTracker</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="css/style.css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     <!-- React Components -->
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
@@ -16,140 +17,159 @@
 <body>
     <!-- add light grey background -->
     <div class="background">
-    <section>
-      
-    <div class="modal-underlay blurred-modal-underlay" style="display:block" id="loading-modal-underlay">
-        <div class="modal displayed-modal" id="loading-modal">
-            <div class="modal-title">Loading...</div>
-            <div class="modal-content" style="margin-top: -20px; margin-bottom: 10px;">Please wait while we load your class information.</div>
-        </div>
-    </div>
+        <section>
 
-    <div class="modal-underlay" id="class-add-modal-underlay" onClick="CloseModal('class-add')">
-      <div class="modal" id="class-add-modal" onClick="event.stopPropagation()">
-        <div>
-        <span class="modal-title">Create New Class</span>
-        <span class="modal-close" title="Cancel" onClick="CloseModal('class-add')">&times;</span>
-        <br>
-        <span class="modal-content">Fill out the following fields to add a new class.</span>
-        </div>
-        <br>
-        <div id="class-add-modal-root"></div>
-        
-      </div>
-    </div>
+            <div class="modal-underlay blurred-modal-underlay" style="display:block" id="loading-modal-underlay">
+                <div class="modal displayed-modal" id="loading-modal">
+                    <div class="modal-title">Loading...</div>
+                    <div class="modal-content" style="margin-top: -20px; margin-bottom: 10px;">Please wait while we load
+                        your class information.</div>
+                </div>
+            </div>
 
-    <div class="modal-underlay" id="new-student-modal-underlay" onClick="CloseModal('new-student')">
-      <div class="modal" id="new-student-modal" onClick="event.stopPropagation()">
-        <div>
-        <span class="modal-title">Add New Student</span>
-        <span class="modal-close" title="Cancel" onClick="CloseModal('new-student')">&times;</span>
-        <br>
-        <span class="modal-content">Fill out the following fields to add the new student's information.</span>
-        </div> 
-        <br>
-        <div id="new-student-modal-root"></div>
+            <div class="modal-underlay" id="class-add-modal-underlay" onClick="CloseModal('class-add')">
+                <div class="modal" id="class-add-modal" onClick="event.stopPropagation()">
+                    <div>
+                        <span class="modal-title">Create New Class</span>
+                        <span class="modal-close" title="Cancel" onClick="CloseModal('class-add')">&times;</span>
+                        <br>
+                        <span class="modal-content">Fill out the following fields to add a new class.</span>
+                    </div>
+                    <br>
+                    <div id="class-add-modal-root"></div>
 
-      </div>
-    </div>
+                </div>
+            </div>
 
-    <div class="modal-underlay" id="edit-student-modal-underlay" onClick="CloseModal('edit-student')">
-      <div class="modal" id="edit-student-modal" onClick="event.stopPropagation()">
-        <div>
-        <span class="modal-title">Edit Student Information</span>
-        <span class="modal-close" title="Cancel" onClick="CloseModal('edit-student')">&times;</span>
-        <br>
-        <span class="modal-content">Fill out the following fields to edit the student's information.</span>
-        </div> 
-        <br>
-        <div id="edit-student-modal-root"></div>
+            <div class="modal-underlay" id="class-edit-modal-underlay" onClick="CloseModal('class-edit')">
+                <div class="modal" id="class-edit-modal" onClick="event.stopPropagation()">
+                    <div>
+                        <span class="modal-title">Edit Class</span>
+                        <span class="modal-close" title="Cancel" onClick="CloseModal('class-edit')">&times;</span>
+                        <br>
+                        <span class="modal-content">Use these fields to modify your class's information.</span>
+                    </div>
+                    <br>
+                    <div id="class-edit-modal-root"></div>
 
-      </div>
-    </div>
+                </div>
+            </div>
 
-    <div class="modal-underlay" id="returning-student-modal-underlay" onClick="CloseModal('returning-student')">
-      <div class="modal" id="returning-student-modal" onClick="event.stopPropagation()">
-        <div>
-        <span class="modal-title">Add Student</span>
-        <span class="modal-close" title="Cancel" onClick="CloseModal('returning-student')">&times;</span>
-        <br>
-        <span class="modal-content">Please enter the student's ID to see if they are in our system.</span>
-        </div>
-        <br>
-        <div id="returning-student-modal-root"></div>
-        
-      </div>
-    </div>
+            <div class="modal-underlay" id="new-student-modal-underlay" onClick="CloseModal('new-student')">
+                <div class="modal" id="new-student-modal" onClick="event.stopPropagation()">
+                    <div>
+                        <span class="modal-title">Add New Student</span>
+                        <span class="modal-close" title="Cancel" onClick="CloseModal('new-student')">&times;</span>
+                        <br>
+                        <span class="modal-content">Fill out the following fields to add the new student's
+                            information.</span>
+                    </div>
+                    <br>
+                    <div id="new-student-modal-root"></div>
 
-    <div class="modal-underlay" id="transfer-student-modal-underlay" onClick="CloseModal('transfer-student')">
-      <div class="modal" id="transfer-student-modal" onClick="event.stopPropagation()">
-        <div>
-        <span class="modal-title">Add Transfer Student</span>
-        <span class="modal-close" title="Cancel" onClick="CloseModal('transfer-student')">&times;</span>
-        <br>
-        <span class="modal-content">Search for a transferring student in our system.</span>
-        </div> 
-        <br>
-        <div id="transfer-student-modal-root"></div>
+                </div>
+            </div>
 
-       
-      </div>
-    </div>
-    </section> 
+            <div class="modal-underlay" id="edit-student-modal-underlay" onClick="CloseModal('edit-student')">
+                <div class="modal" id="edit-student-modal" onClick="event.stopPropagation()">
+                    <div>
+                        <span class="modal-title">Edit Student Information</span>
+                        <span class="modal-close" title="Cancel" onClick="CloseModal('edit-student')">&times;</span>
+                        <br>
+                        <span class="modal-content">Fill out the following fields to edit the student's
+                            information.</span>
+                    </div>
+                    <br>
+                    <div id="edit-student-modal-root"></div>
 
-    <section>
-    <div class="sidebar">
-      <div style="height:100px"></div>
+                </div>
+            </div>
 
-      <!-- add profile info -->
-      <p id="teacher-name" class="profile-name">First Last</p>
-      <p id="school-name" class="profile-info">School Name</p>
-      <br>
-      <p id="teacher-email" class="profile-info" style="font-size: 15px;">emailaddress@renelglobal.org</p>
+            <div class="modal-underlay" id="returning-student-modal-underlay" onClick="CloseModal('returning-student')">
+                <div class="modal" id="returning-student-modal" onClick="event.stopPropagation()">
+                    <div>
+                        <span class="modal-title">Add Student</span>
+                        <span class="modal-close" title="Cancel"
+                            onClick="CloseModal('returning-student')">&times;</span>
+                        <br>
+                        <span class="modal-content">Please enter the student's ID to see if they are in our
+                            system.</span>
+                    </div>
+                    <br>
+                    <div id="returning-student-modal-root"></div>
 
-      <div style="height:50px"></div>
+                </div>
+            </div>
 
-      <!-- section line -->
-      <hr style="width: 75%;
+            <div class="modal-underlay" id="transfer-student-modal-underlay" onClick="CloseModal('transfer-student')">
+                <div class="modal" id="transfer-student-modal" onClick="event.stopPropagation()">
+                    <div>
+                        <span class="modal-title">Add Transfer Student</span>
+                        <span class="modal-close" title="Cancel" onClick="CloseModal('transfer-student')">&times;</span>
+                        <br>
+                        <span class="modal-content">Search for a transferring student in our system.</span>
+                    </div>
+                    <br>
+                    <div id="transfer-student-modal-root"></div>
+
+
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="sidebar">
+                <div style="height:100px"></div>
+
+                <!-- add profile info -->
+                <p id="teacher-name" class="profile-name">First Last</p>
+                <p id="school-name" class="profile-info">School Name</p>
+                <br>
+                <p id="teacher-email" class="profile-info" style="font-size: 15px;">emailaddress@renelglobal.org</p>
+
+                <div style="height:50px"></div>
+
+                <!-- section line -->
+                <hr style="width: 75%;
       text-align:center; 
       height: 2px;
       background-color:rgb(41, 41, 41)">
 
-      <div style="height:50px"></div>
+                <div style="height:50px"></div>
 
-      <!-- create new class button -->
-      <div class="create-class-button" onClick="OpenModal('class-add')">
-        <i class="fa fa-plus"></i> &nbsp; Create New Class
-      </div>
+                <!-- create new class button -->
+                <div class="create-class-button" onClick="OpenModal('class-add')">
+                    <i class="fa fa-plus"></i> &nbsp; Create New Class
+                </div>
 
-      <span style="display:block; margin-bottom:1.5em"></span>
+                <span style="display:block; margin-bottom:1.5em"></span>
 
-      <!-- sidebar classes -->
-      <div class="sidebar-classes-container">
-        <h1 class="classes-title">Classes</h1>
-        <p class="classes-memo">Select a class to view students</p>
-        <div id="classes-root" class="sidebar-classes"></div>
-      </div>
+                <!-- sidebar classes -->
+                <div class="sidebar-classes-container">
+                    <h1 class="classes-title">Classes</h1>
+                    <p class="classes-memo">Select a class to view students</p>
+                    <div id="classes-root" class="sidebar-classes"></div>
+                </div>
 
-    </div>
-    </section>
-    <section>
-      <div class="main">
-        <div class="header-info">
-         
-          <div>EduTracker Logo will eventually go here :)</div>
-          <div class="upper-info">
-            <section id="grade-level-indicator"></section>
-            <section id="num-students-indicator"></section>
-            <section id="current-term-indicator"></section>
-          </div>
-        </div>
-        <div style="height:20px;"></div>
+            </div>
+        </section>
+        <section>
+            <div class="main">
+                <div class="header-info">
 
-        <!-- add student buttons -->
-        <div class="add-student-section">
-          <!-- first button -->
-          <!-- <div class="add-student-button" onclick="OpenModal('new-student')">
+                    <div>EduTracker Logo will eventually go here :)</div>
+                    <div class="upper-info">
+                        <section id="grade-level-indicator"></section>
+                        <section id="num-students-indicator"></section>
+                        <section id="current-term-indicator"></section>
+                    </div>
+                </div>
+                <div style="height:20px;"></div>
+
+                <!-- add student buttons -->
+                <div class="add-student-section">
+                    <!-- first button -->
+                    <!-- <div class="add-student-button" onclick="OpenModal('new-student')">
             <div class="add-student-button-icon-shape">
                 <i class="fa fa-plus upper-info-icon"></i>
             </div>
@@ -158,315 +178,389 @@
 
           <div style="display: inline-block; width:20px;"></div> -->
 
-          <!-- second button -->
-          <div class="add-student-button" onclick="OpenModal('returning-student')">
-            <div class="add-student-button-icon-shape">
-                <i class="fa fa-plus upper-info-icon"></i>
+                    <!-- second button -->
+                    <div class="add-student-button" onclick="OpenModal('returning-student')">
+                        <div class="add-student-button-icon-shape">
+                            <i class="fa fa-plus upper-info-icon"></i>
+                        </div>
+                        <div class="add-student-button-text">Add Student</div>
+                    </div>
+
+                    <div style="display: inline-block; width:20px;"></div>
+
+                    <!-- third button -->
+                    <div class="add-student-button" onclick="OpenModal('transfer-student')">
+                        <div class="add-student-button-icon-shape">
+                            <i class="fa fa-arrow-right upper-info-icon"></i>
+                        </div>
+                        <div class="add-student-button-text">Add Transfer Student</div>
+                    </div>
+                </div>
+
+
+                <div class="student-section">
+                    <div class="students-list-container">
+                        <h1 class="students-title">Class Name</h1>
+                        <p class="students-memo">Students</p>
+                        <div id="students-root" class="students-list"></div>
+                    </div>
+                </div>
+
             </div>
-            <div class="add-student-button-text">Add Student</div>
-          </div>
-
-          <div style="display: inline-block; width:20px;"></div>
-
-          <!-- third button -->
-          <div class="add-student-button" onclick="OpenModal('transfer-student')">
-            <div class="add-student-button-icon-shape">
-                <i class="fa fa-arrow-right upper-info-icon"></i>
-            </div>
-            <div class="add-student-button-text">Add Transfer Student</div>
-          </div>
-        </div>
-
-
-        <div class="student-section">
-          <div class="students-list-container">
-            <h1 class="students-title">Class Name</h1>
-            <p class="students-memo">Students</p>
-            <div id="students-root" class="students-list"></div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-    </div> 
+        </section>
+    </div>
     <script type="text/babel">
-
 //------------------------------------------- HELPER FUNCTIONS -------------------------------------------
 
-      function OpenModal(id, studentID = "-1") {
-          console.log('OpenModal called with id:', id, 'and studentID:', studentID);
-      }
+        function OpenModal(id, studentID = "-1") {
+            console.log('OpenModal called with id:', id, 'and studentID:', studentID);
+        }
 
-      function CloseModal(id) {
-          console.log('CloseModal called with id:', id);
-      }
+        function CloseModal(id) {
+            console.log('CloseModal called with id:', id);
+        }
 
-      function waitForDefinition(variableName) {
-          return new Promise((resolve, reject) => {
-              const checkInterval = 200; // Check every 200 milliseconds
-              const maxChecks = 100; // Maximum number of checks before giving up (to avoid infinite loop)
-              let checks = 0;
+        function waitForDefinition(variableName) {
+            return new Promise((resolve, reject) => {
+                const checkInterval = 200; // Check every 200 milliseconds
+                const maxChecks = 100; // Maximum number of checks before giving up (to avoid infinite loop)
+                let checks = 0;
 
-              const intervalId = setInterval(() => {
-                  checks++;
-                  if (typeof window[variableName] !== 'undefined') {
-                      clearInterval(intervalId);
-                      resolve(window[variableName]);
-                  } else if (checks >= maxChecks) {
-                      clearInterval(intervalId);
-                      reject(new Error('Variable is not defined within the expected time.'));
-                  }
-              }, checkInterval);
-          });
-      }
+                const intervalId = setInterval(() => {
+                    checks++;
+                    if (typeof window[variableName] !== 'undefined') {
+                        clearInterval(intervalId);
+                        resolve(window[variableName]);
+                    } else if (checks >= maxChecks) {
+                        clearInterval(intervalId);
+                        reject(new Error('Variable is not defined within the expected time.'));
+                    }
+                }, checkInterval);
+            });
+        }
 
-//------------------------------------------- REUSABLE COMPONENTS -------------------------------------------
+        //------------------------------------------- REUSABLE COMPONENTS -------------------------------------------
 
       const TextInput = (props) => {
           return (
               <section className="modal-text-input">
                   <p className="modal-text-label">{props.title}</p>
-                  <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required defaultValue={props.value} />
+                  <input 
+                  placeholder={props.placeholder} 
+                  title={props.title} 
+                  type="text" 
+                  id={props.id} 
+                  required 
+                  defaultValue={props.value}
+                  />
               </section>
           );
       }
 
-      const SubmitButton = (props) => {
-          return (
-              <div className="modal-submit">
-                  <input type="submit" value={props.value} />
-              </div>
-          );
-      }
+        const SubmitButton = (props) => {
+            return (
+                <div className="modal-submit">
+                    <input type="submit" value={props.value} />
+                </div>
+            );
+        }
 
-      const Dropdown = (props) => {
-          let name = props.data[0][0];
-          let id = props.data[0][1];
+        const Dropdown = (props) => {
+            let name = props.data[0][0];
+            let id = props.data[0][1];
 
-          return (
-              <section className="modal-text-input">
-                  <select title={name} id={id} name={id} required>
-                      <option className="modal-dropdown-default" value="" disabled selected> {name} </option>
-                      {props.data.slice(1).map((group, index) => (
-                          <optgroup key={index} label={group[0]}>
-                              {group.slice(1).map((option, optionIndex) => (
-                                  <option key={optionIndex}>{option}</option>
-                              ))}
-                          </optgroup>
-                      ))}
-                  </select>
-              </section>
-          );
-      }
+            return (
+                <section className="modal-text-input">
+                    <select title={name} id={id} name={id} required>
+                        <option className="modal-dropdown-default" value="" disabled selected> {name} </option>
+                        {props.data.slice(1).map((group, index) => (
+                            <optgroup key={index} label={group[0]}>
+                                {group.slice(1).map((option, optionIndex) => (
+                                    <option key={optionIndex}>{option}</option>
+                                ))}
+                            </optgroup>
+                        ))}
+                    </select>
+                </section>
+            );
+        }
 
-      const Checkbox = (props) => {
-          return (
-              <section className="modal-text-input">
-                  <label className="modal-text-label" htmlFor={props.id}>{props.title} &ensp;</label>
-                  <input className="modal-text-input" type="checkbox" id={props.id} name={props.name} value={props.title} />
-              </section>
-          );
-      }
+        const Checkbox = (props) => {
+            return (
+                <section className="modal-text-input">
+                    <label className="modal-text-label" htmlFor={props.id}>{props.title} &ensp;</label>
+                    <input className="modal-text-input" type="checkbox" id={props.id} name={props.name} value={props.title} />
+                </section>
+            );
+        }
 
-//------------------------------------------- CREATE NEW CLASS COMPONENT -------------------------------------------
+        //------------------------------------------- CREATE NEW CLASS COMPONENT -------------------------------------------
 
-      let addClassInfo = {
-          className: { title: "Class Name", placeholder: "Enter a class name", id: "class-name" },
-      };
+        let addClassInfo = {
+            className: { title: "Class Name", placeholder: "Enter a class name", id: "class-name" },
+        };
 
-      let addClassDropdown = [
-          ["Grade Level", "grade-level"],
-          ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
-          ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
-          ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
-      ];
+        let addClassDropdown = [
+            ["Grade Level", "grade-level"],
+            ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
+            ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
+            ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
+        ];
 
-      function ClassInput() {
-          let handleSubmit = (event) => {
-              event.preventDefault();
-              CloseModal("class-add");
+        function ClassInput() {
+            let handleSubmit = (event) => {
+                event.preventDefault();
+                CloseModal("class-add");
 
-              let className = document.getElementById('class-name').value;
-              let gradeLevel = document.getElementById('grade-level').value;
+                let className = document.getElementById('class-name').value;
+                let gradeLevel = document.getElementById('grade-level').value;
 
-              let content = {
-                  "class_name": className,
-                  "grade_level": gradeLevel,
-                  "teacher_id": "665da0b90c1d6c0c45724285",
-                  "school_id": "665da7c60c1d6c0c45724286",
-                  "students": []
-              };
+                let content = {
+                    "class_name": className,
+                    "grade_level": gradeLevel,
+                    "teacher_id": "665da0b90c1d6c0c45724285",
+                    "school_id": "665da7c60c1d6c0c45724286",
+                    "students": []
+                };
 
-              classInfo.push(content);
+                classInfo.push(content);
 
-              selectedClass = classInfo[-1];
-              
-              classInfo.sort((a, b) => {
-                return a.class_name.localeCompare(b.class_name);
-              });
+                selectedClass = classInfo.at(-1);
 
-              fetch('http://127.0.0.1:8000/classes', {
-                  method: "POST",
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(content)
-              })
-                  .then(response => {
-                      if (!response.ok) {
-                          throw new Error('Network response was not ok');
-                      }
-                      return response.json();
-                  })
-                  .then(data => {
-                      console.log('Data received:', data);
-                  })
-                  .catch(error => {
-                      console.error('There was a problem with the fetch operation:', error);
-                  });
+                classInfo.sort((a, b) => {
+                    return a.class_name.localeCompare(b.class_name);
+                });
 
-              ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
-          }
+                fetch('http://127.0.0.1:8000/classes', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(content)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Data received:', data);
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
 
-          return (
-              <section style={{ margin: '50px' }}>
-                  <form id="class-modal-form" onSubmit={handleSubmit}>
-                      <div id="class-add-text-input">
-                          <TextInput title={addClassInfo.className.title}
-                              placeholder={addClassInfo.className.placeholder}
-                              id={addClassInfo.className.id} />
-                          <br />
-                          <Dropdown data={addClassDropdown} />
-                          <br /><br /><br /><br />
-                      </div>
-                      <SubmitButton value="Create" />
-                  </form>
-              </section>
-          );
-      }
+                ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
 
-      ReactDOM.render(<ClassInput />, document.getElementById("class-add-modal-root"));
+                ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+                ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"));
+                ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"));
+            }
 
-//------------------------------------------- ADD NEW STUDENT COMPONENT -------------------------------------------
+            return (
+                <section style={{ margin: '50px' }}>
+                    <form id="class-modal-form" onSubmit={handleSubmit}>
+                        <div id="class-add-text-input">
+                            <TextInput title={addClassInfo.className.title}
+                                placeholder={addClassInfo.className.placeholder}
+                                id={addClassInfo.className.id} />
+                            <br />
+                            <Dropdown data={addClassDropdown} />
+                            <br /><br /><br /><br />
+                        </div>
+                        <SubmitButton value="Create" />
+                    </form>
+                </section>
+            );
+        }
 
-      let newStudentInfo = {
-          studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
-          studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id" },
-          guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name" },
-          guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact" },
-          studentMedical: { title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical" },
-          disabilityStatus: { title: "Disability Status", id: "disability-status" },
-          additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info" },
-      }
+        ReactDOM.render(<ClassInput />, document.getElementById("class-add-modal-root"));
 
-      function NewStudentInput() {
-          let handleNewStudentSubmit = (event) => {
-              event.preventDefault();
-              CloseModal("new-student");
+//------------------------------------------- EDIT CLASS COMPONENT -------------------------------------------
 
-              let studentName = document.getElementById('student-name').value;
-              let studentID = document.getElementById('student-id').value;
-              let guardianName = document.getElementById('guardian-name').value;
-              let guardianContact = document.getElementById('guardian-contact').value;
-              let studentMedical = document.getElementById('student-medical').value;
-              let disabilityStatus = document.getElementById('disability-status').value;
-              let additionalInfo = document.getElementById('additional-info').value;
+function ClassEditInput() {
+    let handleSubmit = (event) => {
+        event.preventDefault();
+        CloseModal("class-edit");
 
-              let content = {
-                  'name': studentName,
-                  'parent_contact': guardianContact,
-                  'dob': 1,
-                  "student_school_id": studentID,
-                  'disabled': disabilityStatus,
-                  'health_conditions': studentMedical,
-                  'misc_info': additionalInfo,
-                  'class_id': selectedClass._id,
-                  'grade_level': "Primary 2",
-                  'school_id': "nb9s",
-                  'history': [],
-              };
+        let className = document.getElementById('class-name').value;
+        let gradeLevel = document.getElementById('grade-level').value;
 
-              selectedClass.students.push(content);
+        let content = {
+            "class_name": className,
+            "grade_level": gradeLevel,
+            "teacher_id": "665da0b90c1d6c0c45724285",
+            "school_id": "665da7c60c1d6c0c45724286",
+            "students": []
+        };
 
-              fetch('http://127.0.0.1:8000/students', {
-                  method: "POST",
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(content)
-              })
-                  .then(response => {
-                      if (!response.ok) {
-                          throw new Error('Network response was not ok');
-                      }
-                      return response.json();
-                  })
-                  .then(data => {
-                      console.log('Data received:', data);
-                  })
-                  .catch(error => {
-                      console.error('There was a problem with the fetch operation:', error);
-                  });
+        fetch('http://127.0.0.1:8000/classes', {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(content)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
 
-              ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
-              ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
-              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap"/>, document.getElementById("num-students-indicator"));
-          }
+        ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
 
-          return (
-              <section style={{ margin: '50px' }}>
-                  <form id="new-student-form" onSubmit={handleNewStudentSubmit}>
-                      <section id="new-student-text-input">
-                          <TextInput title={newStudentInfo.studentName.title}
-                              placeholder={newStudentInfo.studentName.placeholder}
-                              id={newStudentInfo.studentName.id} />
-                          <TextInput title={newStudentInfo.studentID.title}
-                              placeholder={newStudentInfo.studentID.placeholder}
-                              id={newStudentInfo.studentID.id} />
-                          <TextInput title={newStudentInfo.guardianName.title}
-                              placeholder={newStudentInfo.guardianName.placeholder}
-                              id={newStudentInfo.guardianName.id} />
-                          <TextInput title={newStudentInfo.guardianContact.title}
-                              placeholder={newStudentInfo.guardianContact.placeholder}
-                              id={newStudentInfo.guardianContact.id} />
-                          <TextInput title={newStudentInfo.studentMedical.title}
-                              placeholder={newStudentInfo.studentMedical.placeholder}
-                              id={newStudentInfo.studentMedical.id} />
-                          <br />
-                          <Checkbox id={newStudentInfo.disabilityStatus.id}
-                              name={newStudentInfo.disabilityStatus.id}
-                              title={newStudentInfo.disabilityStatus.title} />
-                          <TextInput title={newStudentInfo.additionalInfo.title}
-                              placeholder={newStudentInfo.additionalInfo.placeholder}
-                              id={newStudentInfo.additionalInfo.id} />
-                      </section>
-                      <br /><br /><br /><br />
-                      <SubmitButton value="Add" />
-                  </form>
-              </section>
-          );
-      }
+        ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+        ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"));
+        ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"));
+    }
 
-      ReactDOM.render(<NewStudentInput />, document.getElementById("new-student-modal-root"));
+    return (
+        <section style={{ margin: '50px' }}>
+            <form id="class-edit-modal-form" onSubmit={handleSubmit}>
+                <div id="class-edit-text-input">
+                    <TextInput title={addClassInfo.className.title}
+                        placeholder={addClassInfo.className.placeholder}
+                        id={addClassInfo.className.id}/>
+                    <br />
+                    <Dropdown data={addClassDropdown}/>
+                    <br /><br /><br /><br />
+                </div>
+                <SubmitButton value="Save" />
+            </form>
+        </section>
+    );
+}
 
-//------------------------------------------- EDIT STUDENT COMPONENT -------------------------------------------
+ReactDOM.render(<ClassEditInput />, document.getElementById("class-edit-modal-root"));
 
-      let editStudentInfo = {
-          studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
-          studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id" },
-          guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name" },
-          guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact" },
-          studentMedical: { title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical" },
-          disabilityStatus: { title: "Disability Status", id: "disability-status" },
-          additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info" },
-      }
+        //------------------------------------------- ADD NEW STUDENT COMPONENT -------------------------------------------
 
-      function EditStudentInput() {
+        let newStudentInfo = {
+            studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
+            studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id" },
+            guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name" },
+            guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact" },
+            studentMedical: { title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical" },
+            disabilityStatus: { title: "Disability Status", id: "disability-status" },
+            additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info" },
+        }
+
+        function NewStudentInput() {
+            let handleNewStudentSubmit = (event) => {
+                event.preventDefault();
+                CloseModal("new-student");
+
+                let studentName = document.getElementById('student-name').value;
+                let studentID = document.getElementById('student-id').value;
+                let guardianName = document.getElementById('guardian-name').value;
+                let guardianContact = document.getElementById('guardian-contact').value;
+                let studentMedical = document.getElementById('student-medical').value;
+                let disabilityStatus = document.getElementById('disability-status').value;
+                let additionalInfo = document.getElementById('additional-info').value;
+
+                let content = {
+                    'name': studentName,
+                    'parent_contact': guardianContact,
+                    'dob': 1,
+                    "student_school_id": studentID,
+                    'disabled': disabilityStatus,
+                    'health_conditions': studentMedical,
+                    'misc_info': additionalInfo,
+                    'class_id': selectedClass._id,
+                    'grade_level': "Primary 2",
+                    'school_id': "nb9s",
+                    'history': [],
+                };
+
+                selectedClass.students.push(content);
+
+                fetch('http://127.0.0.1:8000/students', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(content)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Data received:', data);
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+
+                ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+                ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
+                ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"));
+            }
+
+            return (
+                <section style={{ margin: '50px' }}>
+                    <form id="new-student-form" onSubmit={handleNewStudentSubmit}>
+                        <section id="new-student-text-input">
+                            <TextInput title={newStudentInfo.studentName.title}
+                                placeholder={newStudentInfo.studentName.placeholder}
+                                id={newStudentInfo.studentName.id} />
+                            <TextInput title={newStudentInfo.studentID.title}
+                                placeholder={newStudentInfo.studentID.placeholder}
+                                id={newStudentInfo.studentID.id} />
+                            <TextInput title={newStudentInfo.guardianName.title}
+                                placeholder={newStudentInfo.guardianName.placeholder}
+                                id={newStudentInfo.guardianName.id} />
+                            <TextInput title={newStudentInfo.guardianContact.title}
+                                placeholder={newStudentInfo.guardianContact.placeholder}
+                                id={newStudentInfo.guardianContact.id} />
+                            <TextInput title={newStudentInfo.studentMedical.title}
+                                placeholder={newStudentInfo.studentMedical.placeholder}
+                                id={newStudentInfo.studentMedical.id} />
+                            <br />
+                            <Checkbox id={newStudentInfo.disabilityStatus.id}
+                                name={newStudentInfo.disabilityStatus.id}
+                                title={newStudentInfo.disabilityStatus.title} />
+                            <TextInput title={newStudentInfo.additionalInfo.title}
+                                placeholder={newStudentInfo.additionalInfo.placeholder}
+                                id={newStudentInfo.additionalInfo.id} />
+                        </section>
+                        <br /><br /><br /><br />
+                        <SubmitButton value="Add" />
+                    </form>
+                </section>
+            );
+        }
+
+        ReactDOM.render(<NewStudentInput />, document.getElementById("new-student-modal-root"));
+
+        //------------------------------------------- EDIT STUDENT COMPONENT -------------------------------------------
+
+        let editStudentInfo = {
+            studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
+            studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id" },
+            guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name" },
+            guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact" },
+            studentMedical: { title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical" },
+            disabilityStatus: { title: "Disability Status", id: "disability-status" },
+            additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info" },
+        }
+
+      function EditStudentInput(props) {
           const handleSubmit = (event) => {
               event.preventDefault();
               CloseModal("edit-student");
           }
-
+          console.log("Edit student input called: " + props.student.name);
           return (
               <section style={{ margin: '50px' }}>
                   <form id="edit-student-form" onSubmit={handleSubmit}>
@@ -474,26 +568,31 @@
                           <TextInput title={editStudentInfo.studentName.title}
                               placeholder={editStudentInfo.studentName.placeholder}
                               id={editStudentInfo.studentName.id} 
-                              value={"reddit"} />
+                              value={props.student.name} />
                           <TextInput title={editStudentInfo.studentID.title}
                               placeholder={editStudentInfo.studentID.placeholder}
-                              id={editStudentInfo.studentID.id} />
+                              id={editStudentInfo.studentID.id}
+                              value={props.student.name} />
                           <TextInput title={editStudentInfo.guardianName.title}
                               placeholder={editStudentInfo.guardianName.placeholder}
-                              id={editStudentInfo.guardianName.id} />
+                              id={editStudentInfo.guardianName.id}
+                              value={props.student.name} />
                           <TextInput title={editStudentInfo.guardianContact.title}
                               placeholder={editStudentInfo.guardianContact.placeholder}
                               id={editStudentInfo.guardianContact.id} />
                           <TextInput title={editStudentInfo.studentMedical.title}
                               placeholder={editStudentInfo.studentMedical.placeholder}
-                              id={editStudentInfo.studentMedical.id} />
+                              id={editStudentInfo.studentMedical.id}
+                              value={props.student.name} />
                           <br />
                           <Checkbox id={editStudentInfo.disabilityStatus.id}
                               name={editStudentInfo.disabilityStatus.id}
-                              title={editStudentInfo.disabilityStatus.title} />
+                              title={editStudentInfo.disabilityStatus.title}
+                              value={props.student.name} />
                           <TextInput title={editStudentInfo.additionalInfo.title}
                               placeholder={editStudentInfo.additionalInfo.placeholder}
-                              id={editStudentInfo.additionalInfo.id} />
+                              id={editStudentInfo.additionalInfo.id}
+                              value={props.student.name} />
                       </section>
                       <br /><br /><br /><br />
                       <SubmitButton value="Save" />
@@ -502,253 +601,264 @@
           );
       }
 
-      ReactDOM.render(<EditStudentInput />, document.getElementById("edit-student-modal-root"));
+      //ReactDOM.render(<EditStudentInput />, document.getElementById("edit-student-modal-root"));
 
-//------------------------------------------- ADD RETURNING STUDENT COMPONENT -------------------------------------------      
+        //------------------------------------------- ADD RETURNING STUDENT COMPONENT -------------------------------------------      
 
-      let returningStudentInfo = {
-          studentID: { title: "Student ID", placeholder: "Find Student", id: "returning-student-id-request" },
-      }
+        let returningStudentInfo = {
+            studentID: { title: "Student ID", placeholder: "Find Student", id: "returning-student-id-request" },
+        }
 
-      function ReturningStudentInput() {
-          const handleSubmit = (event) => {
-              event.preventDefault();
-              CloseModal("returning-student");
-              let id = document.getElementById("returning-student-id-request").value;
-            if (id == "1234") {
-                OpenModal("edit-student", "1234");
+        function ReturningStudentInput() {
+            const handleSubmit = (event) => {
+                event.preventDefault();
+
+                CloseModal("returning-student");
+                let id = document.getElementById("returning-student-id-request").value;
+                if (selectedClass.students.find(student => student.student_school_id === id)) {
+                    OpenModal("edit-student", id);
+                }
+                else {
+                    OpenModal("new-student");
+                }
+
             }
-            else {
-                OpenModal("new-student");
+
+            return (
+                <section style={{ margin: '50px' }}>
+                    <form id="returning-student-form" onSubmit={handleSubmit}>
+                        <section id="returning-student-text-input">
+                            <TextInput title={returningStudentInfo.studentID.title}
+                                placeholder={returningStudentInfo.studentID.placeholder}
+                                id={returningStudentInfo.studentID.id} />
+                            </section>
+                        <br /><br /><br /><br />
+                        <SubmitButton value="Search" />
+                    </form>
+                </section>
+            );
+        }
+
+        ReactDOM.render(<ReturningStudentInput />, document.getElementById("returning-student-modal-root"));
+
+        //------------------------------------------- ADD TRANSFER STUDENT COMPONENT -------------------------------------------
+
+        let transferStudentInfo = {
+            studentID: { title: "Student ID", placeholder: "Student ID", id: "student-id" },
+        }
+
+        function TransferStudentInput() {
+            const handleSubmit = (event) => {
+                event.preventDefault();
+                CloseModal('transfer-student');
             }
 
-          }
+            return (
+                <section style={{ margin: '50px' }}>
+                    <form id="transfer-student-form" onSubmit={handleSubmit}>
+                        <section id="transfer-student-text-input">
+                            <TextInput title={transferStudentInfo.studentID.title}
+                                placeholder={transferStudentInfo.studentID.placeholder}
+                                id={transferStudentInfo.studentID.id} />
+                        </section>
+                        <br /><br /><br /><br />
+                        <SubmitButton value="Select" />
+                    </form>
+                </section>
+            );
+        }
 
-          return (
-              <section style={{ margin: '50px' }}>
-                  <form id="returning-student-form" onSubmit={handleSubmit}>
-                      <section id="returning-student-text-input">
-                          <TextInput title={returningStudentInfo.studentID.title}
-                              placeholder={returningStudentInfo.studentID.placeholder}
-                              id={returningStudentInfo.studentID.id} />
-                      </section>
-                      <br /><br /><br /><br />
-                      <SubmitButton value="Search" />
-                  </form>
-              </section>
-          );
-      }
+        ReactDOM.render(<TransferStudentInput />, document.getElementById("transfer-student-modal-root"));
 
-      ReactDOM.render(<ReturningStudentInput />, document.getElementById("returning-student-modal-root"));
+        //------------------------------------------- MODAL -------------------------------------------
 
-//------------------------------------------- ADD TRANSFER STUDENT COMPONENT -------------------------------------------
+        const pause = (time) => new Promise(resolve => setTimeout(resolve, time));
 
-      let transferStudentInfo = {
-          studentID: { title: "Student ID", placeholder: "Student ID", id: "student-id" },
-      }
+        function OpenModal(id, studentID = "-1") {
+            let underlay = document.getElementById(`${id}-modal-underlay`);
+            underlay.classList.add("blurred-modal-underlay");
 
-      function TransferStudentInput() {
-          const handleSubmit = (event) => {
-              event.preventDefault();
-              CloseModal('transfer-student');
-          }
+            let modal = underlay.querySelector(`#${id}-modal`);
+            modal.classList.add("displayed-modal");
 
-          return (
-              <section style={{ margin: '50px' }}>
-                  <form id="transfer-student-form" onSubmit={handleSubmit}>
-                      <section id="transfer-student-text-input">
-                          <TextInput title={transferStudentInfo.studentID.title}
-                              placeholder={transferStudentInfo.studentID.placeholder}
-                              id={transferStudentInfo.studentID.id} />
-                      </section>
-                      <br /><br /><br /><br />
-                      <SubmitButton value="Select" />
-                  </form>
-              </section>
-          );
-      }
+            underlay.style.display = "block";
 
-      ReactDOM.render(<TransferStudentInput />, document.getElementById("transfer-student-modal-root"));
+            if (id == "edit-student" && studentID !== "-1") {
+                console.log(`Editing student with ID: ${studentID}`);
+            }
+        }
 
-//------------------------------------------- MODAL -------------------------------------------
+        async function CloseModal(id) {
+            let underlay = document.getElementById(`${id}-modal-underlay`);
+            underlay.classList.remove("blurred-modal-underlay");
 
-      const pause = (time) => new Promise(resolve => setTimeout(resolve, time));
+            let modal = underlay.querySelector(`#${id}-modal`);
+            modal.classList.remove("displayed-modal");
+            await pause(200);
 
-      function OpenModal(id, studentID = "-1") {
-          let underlay = document.getElementById(`${id}-modal-underlay`);
-          underlay.classList.add("blurred-modal-underlay");
+            try {
 
-          let modal = underlay.querySelector(`#${id}-modal`);
-          modal.classList.add("displayed-modal");
+                let textInputs = Array.from(modal.querySelector(`#${id}-text-input`).children);
 
-          underlay.style.display = "block";
-
-          if (id == "edit-student" && studentID !== "-1") {
-              console.log(`Editing student with ID: ${studentID}`);
-          }
-      }
-
-      async function CloseModal(id) {
-          let underlay = document.getElementById(`${id}-modal-underlay`);
-          underlay.classList.remove("blurred-modal-underlay");
-
-          let modal = underlay.querySelector(`#${id}-modal`);
-          modal.classList.remove("displayed-modal");
-          await pause(200);
-
-          try{
-
-            let textInputs = Array.from(modal.querySelector(`#${id}-text-input`).children);
-
-            textInputs.forEach((item) => {
-                try {
-                    Array.from(item.children).forEach((input => {
-                        input.value = "";
-                    }));
-                } catch (e) { };
-            });
-            } catch (e) {};
+                textInputs.forEach((item) => {
+                    try {
+                        Array.from(item.children).forEach((input => {
+                            input.value = "";
+                        }));
+                    } catch (e) { };
+                });
+            } catch (e) { };
 
           underlay.style.display = "none";
+
+          // Unmount the React component for the edit student modal
+          if (id === "edit-student") {
+              ReactDOM.unmountComponentAtNode(document.getElementById("edit-student-modal-root"));
+          }
       }
 
-//------------------------------------------- CLASS LIST ITEM COMPONENTS -------------------------------------------
+        //------------------------------------------- CLASS LIST ITEM COMPONENTS -------------------------------------------
 
-      var teacherID = "665da0b90c1d6c0c45724285";
-      var classInfo;
-      var selectedClass;
+        var teacherID = "665da0b90c1d6c0c45724285";
+        var classInfo;
+        var selectedClass;
 
-      function ClassItem(props) {
-          const handleClassClick = () => {
-              selectedClass = props.data;
-              students = props.data.students;
-              ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
-              ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book"/>, document.getElementById("grade-level-indicator"));
-              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap"/>, document.getElementById("num-students-indicator"));
-          };
+        function ClassItem(props) {
+            const handleEditClick = () => {
+                OpenModal('class-edit');
+            }
 
-          return (
-              <li>
-                <div className="sidebar-class" onClick={handleClassClick}>
-                    <div>
-                    <p className="class-info">{props.data.class_name}</p>
-                    <p className="class-info-body">{props.data.grade_level}</p>
-                    <p className="class-info-body">Total Enrolled Students: {props.data.students.length}</p>
+            const handleClassClick = () => {
+                selectedClass = props.data;
+                ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+                ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"));
+                ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"));
+            };
+
+            return (
+                <li>
+                    <div className="sidebar-class" onClick={handleClassClick}>
+                        <div>
+                            <p className="class-info">{props.data.class_name}</p>
+                            <p className="class-info-body">{props.data.grade_level}</p>
+                            <p className="class-info-body">Total Enrolled Students: {props.data.students.length}</p>
+                        </div>
+                        <div className="edit-button">
+                            <p className="edit-text" onClick={handleEditClick}>Edit</p>
+                        </div>
                     </div>
-                    <div className="edit-button">
-                    <p className="edit-text">Edit</p>
-                    </div>
-                </div>
-              </li>
-          );
-      }
+                </li>
+            );
+        }
 
-      function AddClasses(props) {
-          let items = [];
-          for (let i = 0; i < props.classes.length; i++) {
-              items.push((<ClassItem data={props.classes[i]} />));
-          }
+        function AddClasses(props) {
+            let items = [];
+            for (let i = 0; i < props.classes.length; i++) {
+                items.push((<ClassItem data={props.classes[i]} />));
+            }
 
-          const classList = items;
+            const classList = items;
 
-          if (items.length == 0) {
-              return (
-                  <section>
-                      <ul className="nobullet">
-                          <li><div className="list-issue">There are no classes associated with this teacher.</div></li>
-                      </ul>
-                  </section>
-              );
-          }
+            if (items.length == 0) {
+                return (
+                    <section>
+                        <ul className="nobullet">
+                            <li><div className="list-issue">There are no classes associated with this teacher.</div></li>
+                        </ul>
+                    </section>
+                );
+            }
 
-          return (
-              <section>
-                  <ul className="nobullet">
-                      {classList}
-                  </ul>
-              </section>
-          );
-      }
+            return (
+                <section>
+                    <ul className="nobullet">
+                        {classList}
+                    </ul>
+                </section>
+            );
+        }
 
-      fetch(`http://127.0.0.1:8000/teachers/${teacherID}/classes`, {
-          method: "GET",
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      })
-          .then(response => {
-              if (!response.ok) {
-                  throw new Error('Network response was not ok');
-              }
-              return response.json();
-          })
-          .then(data => {
-              console.log('Data received:', data);
-              classInfo = data;
+        fetch(`http://127.0.0.1:8000/teachers/${teacherID}/classes`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
+                classInfo = data;
 
-              classInfo.sort((a, b) => {
-                return a.class_name.localeCompare(b.class_name);
-              });
+                classInfo.sort((a, b) => {
+                    return a.class_name.localeCompare(b.class_name);
+                });
 
-              selectedClass = classInfo[0];
-              ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
-          })
-          .catch(error => {
-              console.error('There was a problem with the fetch operation:', error);
-          });
+                selectedClass = classInfo[0];
+                ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
 
-      function Indicator(props) {
-          return (
-              <section>
-                  <div className="row">
-                      <div>
-                          <div className={`upper-info-icon-shape ${props.theme}`}>
-                            <i className={`${props.icon} upper-info-icon`}></i>
+        function Indicator(props) {
+            return (
+                <section>
+                    <div className="row">
+                        <div>
+                            <div className={`upper-info-icon-shape ${props.theme}`}>
+                                <i className={`${props.icon} upper-info-icon`}></i>
                             </div>
-                          <p className="label">{props.title}</p>
-                      </div>
-                      <p className="value">{props.value}</p>
-                  </div>
-              </section>
-          );
-      }
+                            <p className="label">{props.title}</p>
+                        </div>
+                        <p className="value">{props.value}</p>
+                    </div>
+                </section>
+            );
+        }
 
-      waitForDefinition('selectedClass')
-          .then(() => {
-              console.log("Selected class defined for grade level")
-              ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book"/>, document.getElementById("grade-level-indicator"))
-          })
-          .catch((error) => {
-              console.error(error);
-          });
+        waitForDefinition('selectedClass')
+            .then(() => {
+                console.log("Selected class defined for grade level")
+                ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"))
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
-      waitForDefinition('selectedClass')
-          .then((value) => {
-              console.log("Selected class defined for students")
-              ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap"/>, document.getElementById("num-students-indicator"))
-          })
-          .catch((error) => {
-              console.error(error);
-          });
+        waitForDefinition('selectedClass')
+            .then((value) => {
+                console.log("Selected class defined for students")
+                ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"))
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
-      ReactDOM.render(<Indicator title="Current Term" value="2" theme="term-number" icon="fa fa-calendar-o"/>, document.getElementById("current-term-indicator"))
+        ReactDOM.render(<Indicator title="Current Term" value="2" theme="term-number" icon="fa fa-calendar-o" />, document.getElementById("current-term-indicator"))
 
-//------------------------------------------- STUDENT LIST ITEM COMPONENTS -------------------------------------------
+        //------------------------------------------- STUDENT LIST ITEM COMPONENTS -------------------------------------------
 
-      var students = [
-          {
-              name: "Bob Ross",
-              parent_contact: "thisisaparentcontact@gmail.com",
-              dob: 1,
-              student_school_id: "bap5",
-              disabled: "Yes",
-              health_conditions: "a couple",
-              misc_info: ""
-          }
-      ];
+        var students = [
+            {
+                name: "Bob Ross",
+                parent_contact: "thisisaparentcontact@gmail.com",
+                dob: 1,
+                student_school_id: "bap5",
+                disabled: "Yes",
+                health_conditions: "a couple",
+                misc_info: ""
+            }
+        ];
 
       function StudentItem(props) {
           const handleEdit = (event) => {
+              console.log("Student item function called")
+              ReactDOM.render(<EditStudentInput student={props.data} />, document.getElementById("edit-student-modal-root"));
               OpenModal("edit-student");
           }
           return (
@@ -771,58 +881,58 @@
           );
       }
 
-      function AddStudents(props) {
-        document.getElementsByClassName("students-title")[0].textContent = selectedClass.class_name;
+        function AddStudents(props) {
+            document.getElementsByClassName("students-title")[0].textContent = selectedClass.class_name;
 
-          let items = [];
-          for (let i = 0; i < props.students.length; i++) {
-              items.push((<StudentItem data={props.students[i]} />));
-          }
+            let items = [];
+            for (let i = 0; i < props.students.length; i++) {
+                items.push((<StudentItem data={props.students[i]} />));
+            }
 
-          const classList = items;
+            const classList = items;
 
-          if (items.length == 0) {
-              return (
+            if (items.length == 0) {
+                return (
+                    <ul className="nobullet">
+                        <li><div className="list-issue">There are no students that have been added to this class.</div></li>
+                    </ul>
+                );
+            }
+
+            return (
                 <ul className="nobullet">
-                    <li><div className="list-issue">There are no students that have been added to this class.</div></li>
+                    {classList}
                 </ul>
-              );
-          }
+            );
+        }
 
-          return (
-            <ul className="nobullet">
-                {classList}
-            </ul>
-          );
-      }
-
-      waitForDefinition('classInfo')
-          .then((value) => {
-              console.log('classInfo is defined:', value);
-              document.getElementById("teacher-name").textContent = "We need to add this";
-              document.getElementById("teacher-email").textContent = "and also this @gmail.com";
-          })
-          .catch((error) => {
-            console.error(error);
-        });
-
-      waitForDefinition('selectedClass')
-          .then((value) => {
-              console.log('selectedClass is defined:', value);
-              ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
-          })
-          .catch((error) => {
-            console.error(error);
-        });
+        waitForDefinition('classInfo')
+            .then((value) => {
+                console.log('classInfo is defined:', value);
+                document.getElementById("teacher-name").textContent = "We need to add this";
+                document.getElementById("teacher-email").textContent = "and also this @gmail.com";
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
         waitForDefinition('selectedClass')
-          .then((value) => {
-              console.log('selectedClass is defined:', value);
-              CloseModal("loading");
-          })
-          .catch((error) => {
-            console.error(error);
-        });
+            .then((value) => {
+                console.log('selectedClass is defined:', value);
+                ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        waitForDefinition('selectedClass')
+            .then((value) => {
+                console.log('selectedClass is defined:', value);
+                CloseModal("loading");
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     </script>
 </body>
 

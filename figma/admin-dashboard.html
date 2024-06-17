@@ -16,29 +16,41 @@
 <body>
     <!-- add light grey background -->
     <div class="background">
-    <section>
-     
+         <section>
+        <!-- Modals for Adding and Editing Schools -->
         <div class="modal-underlay" id="school-add-modal-underlay" onClick="CloseModal('school-add')">
             <div class="modal" id="school-add-modal" onClick="event.stopPropagation()">
-              <div>
-              <span class="modal-title">Add New School</span>
-              <span class="modal-close" title="Cancel" onClick="CloseModal('school-add')">&times;</span>
-              <br>
-              <span class="modal-content">Fill out the following fields to add a new school.</span>
-              </div>
-              <br>
-              <div id="school-add-modal-root"></div>
+                <div>
+                    <span class="modal-title">Add New School</span>
+                    <span class="modal-close" title="Cancel" onClick="CloseModal('school-add')">&times;</span>
+                    <br>
+                    <span class="modal-content">Fill out the following fields to add a new school.</span>
+                </div>
+                <br>
+                <div id="school-add-modal-root"></div>
             </div>
-          </div>
-      
-          </section> 
+        </div>
+
+        <div class="modal-underlay" id="school-edit-modal-underlay" onClick="CloseModal('school-edit')">
+            <div class="modal" id="school-edit-modal" onClick="event.stopPropagation()">
+                <div>
+                    <span class="modal-title">Edit School</span>
+                    <span class="modal-close" title="Cancel" onClick="CloseModal('school-edit')">&times;</span>
+                    <br>
+                    <span class="modal-content">Use these fields to modify the school's information.</span>
+                </div>
+                <br>
+                <div id="school-edit-modal-root"></div>
+            </div>
+        </div>
+    </section>
       
           <section>
           <div class="sidebar">
             <div style="height:100px"></div>
       
               <!-- EduTracker logo -->
-      <div class="edutracker-logo-icon">
+      <div class="edutracker-logo">
         <svg width="288" height="39" viewBox="0 0 288 39" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M21.4636 38.2978C25.147 38.2978 28.6795 36.8346 31.2841 34.2301C33.8886 31.6255 35.3518 28.093 35.3518 24.4096C35.3518 20.7262 33.8886 17.1937 31.2841 14.5891C28.6795 11.9846 25.147 10.5214 21.4636 10.5214C17.7802 10.5214 14.2477 11.9846 11.6432 14.5891C9.03861 17.1937 7.57539 20.7262 7.57539 24.4096C7.57539 28.093 9.03861 31.6255 11.6432 34.2301C14.2477 36.8346 17.7802 38.2978 21.4636 38.2978ZM24.2141 28.1583L16.3857 31.1693C15.3333 31.5761 14.2971 30.54 14.704 29.4875L17.7149 21.6591C17.8939 21.198 18.252 20.8399 18.7131 20.6609L26.5415 17.6499C27.594 17.2431 28.6302 18.2793 28.2233 19.3317L25.2123 27.1601C25.0387 27.6213 24.6753 27.9793 24.2141 28.1583ZM23.1996 24.4096C23.1996 23.9492 23.0167 23.5076 22.6912 23.182C22.3656 22.8565 21.924 22.6736 21.4636 22.6736C21.0032 22.6736 20.5616 22.8565 20.2361 23.182C19.9105 23.5076 19.7276 23.9492 19.7276 24.4096C19.7276 24.87 19.9105 25.3116 20.2361 25.6372C20.5616 25.9627 21.0032 26.1456 21.4636 26.1456C21.924 26.1456 22.3656 25.9627 22.6912 25.6372C23.0167 25.3116 23.1996 24.87 23.1996 24.4096Z" fill="#28585F"/>
           <path fill-rule="evenodd" clip-rule="evenodd" d="M21.4636 38.0255C28.9834 38.0255 35.0795 31.9294 35.0795 24.4096C35.0795 16.8897 28.9834 10.7937 21.4636 10.7937C13.9437 10.7937 7.84767 16.8897 7.84767 24.4096C7.84767 31.9294 13.9437 38.0255 21.4636 38.0255Z" fill="#144047" fill-opacity="0.5"/>
@@ -68,104 +80,82 @@
       
             <div style="height:50px"></div>
       
-            <!-- add new school button -->
-            <div class="create-class-button" onClick="OpenModal('school-add')">
-              <i class="fa fa-plus"></i> &nbsp; Add New School
-            </div>
-      
-            <span style="display:block; margin-bottom:1.5em"></span>
-      
-            <!-- sidebar classes -->
-            <div id="schools-root" class="sidebar-classes">
-                <div class="list-of-schools">
-                    <div class="frame">
-                        <div class="list-title">List of Schools</div>
-                        <div class="list-subtitle">List of Schools and Total Student count</div>
+                       <!-- Academic Year Selection -->
+                       <div class="year-selection">
+                        <select id="year-select" onChange="handleYearChange(event)">
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                        </select>
                     </div>
-        
-                    <div class="school-item">
-                        <div class="school-name">Accra Primary School</div>
-                        <div class="school-details">
-                            <div class="students-count">Total enrolled students</div>
-                            <div class="view-grade"><i class="fa fa-eye"></i> View student list by grade</div>
-                        </div>
+    
+                    <!-- Search Bar for Schools -->
+                    <div class="search-bar">
+                        <input type="text" id="school-search" placeholder="Search for schools..." onInput="handleSchoolSearch(event)">
                     </div>
-        
-                    <div class="school-item">
-                        <div class="school-name">University Basic School, Legon</div>
-                        <div class="school-details">
-                            <div class="students-count">Total enrolled students</div>
-                            <div class="view-grade"><i class="fa fa-eye"></i> View student list by grade</div>
-                        </div>
-                    </div>
-        
-                    <div class="school-item">
-                        <div class="school-name">Greater Accra Region Primary School</div>
-                        <div class="school-details">
-                            <div class="students-count">Total enrolled students</div>
-                            <div class="view-grade"><i class="fa fa-eye"></i> View student list by grade</div>
-                        </div>
-                    </div>
-        
-                    <div class="school-item">
-                        <div class="school-name">Kwame Nkrumah Primary School</div>
-                        <div class="school-details">
-                            <div class="students-count">Total enrolled students</div>
-                            <div class="view-grade"><i class="fa fa-eye"></i> View student list by grade</div>
-                        </div>
+    
+                    <!-- Sidebar Schools List -->
+                    <div id="schools-root" class="sidebar-classes"></div>
+    
+                    <!-- Add New School Button -->
+                    <div class="create-class-button" onClick="OpenModal('school-add')">
+                        <i class="fa fa-plus"></i> &nbsp; Add New School
                     </div>
                 </div>
-        
-                <div class="remove-button-container">
-                    <button class="remove-button">REMOVE</button>
+            </section>
+          
+            <section>
+                <div class="main">
+                    <div class="header-info">
+                        <div>EduTracker logo's moved to sidebar.</div>
+                        <div class="upper-info">
+                            <section id="school-indicator"></section>
+                            <section id="num-students-indicator"></section>
+                            <section id="current-term-indicator"></section>
+                        </div>
+                    </div>
+                    <div style="height:20px;"></div>
+    
+                   <!-- Reintegration Tracker and School Management Buttons -->
+<div class="button-section">
+    <button onclick="navigateTo('../figma/reintegration-tracker.html')">Reintegration Tracker</button>
+    <button onclick="navigateTo('school-management')">School Management</button>
+</div>
+
+<div id="content">
+    <!-- Dynamic content will be loaded here -->
+</div>
                 </div>
-            </div>
-        </section>
-        <section>
-          </div>
-          </section>
-          <section>
-            <div class="main">
-              <div class="header-info">
-               
-                <div>EduTracker logo's moved to sidebar.</div>
-                <div class="upper-info">
-                  <section id="school-indicator"></section>
-                  <section id="num-students-indicator"></section>
-                  <section id="current-term-indicator"></section>
-                </div>
-              </div>
-              <div style="height:20px;"></div>
-      
-              <div class="student-section">
-                <div id="students-root" class="students-list"></div>
-              </div>
-            </div>
-          </section>
-          </div> 
-          <script type="text/babel">
-      
-      //------------------------------------------- HELPER FUNCTIONS -------------------------------------------
-      
-            function OpenModal(id) {
-                console.log('OpenModal called with id:', id);
+            </section>
+        </div> 
+    
+        <script type="text/babel">
+            //------------------------------------------- HELPER FUNCTIONS -------------------------------------------
+            function OpenModal(id, studentID = "-1") {
+                console.log('OpenModal called with id:', id, 'and studentID:', studentID);
             }
-      
+    
             function CloseModal(id) {
                 console.log('CloseModal called with id:', id);
             }
-      
-      //------------------------------------------- REUSABLE COMPONENTS -------------------------------------------
-      
+    
+            //------------------------------------------- REUSABLE COMPONENTS -------------------------------------------
             const TextInput = (props) => {
                 return (
                     <section className="modal-text-input">
                         <p className="modal-text-label">{props.title}</p>
-                        <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required />
+                        <input 
+                        placeholder={props.placeholder} 
+                        title={props.title} 
+                        type="text" 
+                        id={props.id} 
+                        required 
+                        defaultValue={props.value}
+                        />
                     </section>
                 );
             }
-      
+    
             const SubmitButton = (props) => {
                 return (
                     <div className="modal-submit">
@@ -173,252 +163,246 @@
                     </div>
                 );
             }
-      
-      //------------------------------------------- ADD NEW SCHOOL COMPONENT -------------------------------------------
-      
-      let addSchoolInfo = {
-    schoolName: { title: "School Name", placeholder: "Enter the school name", id: "school-name" },
-    accessCode: { title: "Access Code", placeholder: "Enter access code", id: "access-code" },
-};
-
-function SchoolInput() {
-    let handleSubmit = (event) => {
-        event.preventDefault();
-        CloseModal("school-add");
-
-        let schoolName = document.getElementById('school-name').value;
-        let accessCode = document.getElementById('access-code').value;
-        let year = document.getElementById('year').value;
-
-        let content = {
-            "school_name": schoolName,
-            "access_code": accessCode,
-            "year": year
-        };
-
-        schoolInfo.push(content);
-
-        fetch('http://127.0.0.1:8000/schools', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(content)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+    
+            //------------------------------------------- ADD NEW SCHOOL COMPONENT -------------------------------------------
+            let addSchoolInfo = {
+                schoolName: { title: "School Name", placeholder: "Enter the school name", id: "school-name" },
+                accessCode: { title: "Access Code", placeholder: "Enter access code", id: "access-code" },
+                gradeLevel: { title: "Grade Level", placeholder: "Enter grade level", id: "grade-level" }
+            };
+    
+            function SchoolInput() {
+                let handleSubmit = (event) => {
+                    event.preventDefault();
+                    CloseModal("school-add");
+    
+                    let schoolName = document.getElementById('school-name').value;
+                    let accessCode = document.getElementById('access-code').value;
+                    let gradeLevel = document.getElementById('grade-level').value;
+    
+                    let content = {
+                        "school_name": schoolName,
+                        "grade_level": gradeLevel,
+                        "access_code": accessCode,
+                        "admin_id": "665da0b90c1d6c0c45724285",
+                        "school_id": "665da7c60c1d6c0c45724286"
+                    };
+    
+                    schoolInfo.push(content);
+    
+                    fetch('http://127.0.0.1:8000/schools', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(content)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Data received:', data);
+                        })
+                        .catch(error => {
+                            console.error('There was a problem with the fetch operation:', error);
+                        });
+    
+                    ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
                 }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Data received:', data);
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-
-        ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
-    }
-
-    return (
-        <section style={{ margin: '50px' }}>
-            <form id="school-modal-form" onSubmit={handleSubmit}>
-                <div id="school-add-text-input">
-                    <TextInput title={addSchoolInfo.schoolName.title}
-                        placeholder={addSchoolInfo.schoolName.placeholder}
-                        id={addSchoolInfo.schoolName.id} />
-                    <TextInput title={addSchoolInfo.accessCode.title}
-                        placeholder={addSchoolInfo.accessCode.placeholder}
-                        id={addSchoolInfo.accessCode.id} />
-                    <TextInput title={addSchoolInfo.year.title}
-                        placeholder={addSchoolInfo.year.placeholder}
-                        id={addSchoolInfo.year.id} />
-                    <br /><br /><br /><br />
-                </div>
-                <SubmitButton value="Add" />
-            </form>
-        </section>
-    );
-}
-
-ReactDOM.render(<SchoolInput />, document.getElementById("school-add-modal-root"));
-
-//------------------------------------------- SCHOOL LIST ITEM COMPONENTS -------------------------------------------
-function removeSchool(event) {
-            event.preventDefault();
-            const schoolItems = document.querySelectorAll('.school-item');
-            if (schoolItems.length > 0) {
-                schoolItems[schoolItems.length - 1].remove();
+    
+                return (
+                    <section style={{ margin: '50px' }}>
+                        <form id="school-modal-form" onSubmit={handleSubmit}>
+                            <div id="school-add-text-input">
+                                <TextInput title={addSchoolInfo.schoolName.title}
+                                    placeholder={addSchoolInfo.schoolName.placeholder}
+                                    id={addSchoolInfo.schoolName.id} />
+                                <TextInput title={addSchoolInfo.accessCode.title}
+                                    placeholder={addSchoolInfo.accessCode.placeholder}
+                                    id={addSchoolInfo.accessCode.id} />
+                                <TextInput title={addSchoolInfo.gradeLevel.title}
+                                    placeholder={addSchoolInfo.gradeLevel.placeholder}
+                                    id={addSchoolInfo.gradeLevel.id} />
+                                <br /><br /><br /><br />
+                            </div>
+                            <SubmitButton value="Add" />
+                        </form>
+                    </section>
+                );
             }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const removeButton = document.querySelector('.remove-button');
-            if (removeButton) {
-                removeButton.addEventListener('click', removeSchool);
+    
+            ReactDOM.render(<SchoolInput />, document.getElementById("school-add-modal-root"));
+    
+            //------------------------------------------- EDIT SCHOOL COMPONENT -------------------------------------------
+            function SchoolEditInput() {
+                let handleSubmit = (event) => {
+                    event.preventDefault();
+                    CloseModal("school-edit");
+    
+                    let schoolName = document.getElementById('school-name').value;
+                    let accessCode = document.getElementById('access-code').value;
+                    let gradeLevel = document.getElementById('grade-level').value;
+    
+                    let content = {
+                        "school_name": schoolName,
+                        "grade_level": gradeLevel,
+                        "access_code": accessCode,
+                        "admin_id": "665da0b90c1d6c0c45724285",
+                        "school_id": "665da7c60c1d6c0c45724286"
+                    };
+    
+                    fetch('http://127.0.0.1:8000/schools', {
+                        method: "PATCH",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(content)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Data received:', data);
+                        })
+                        .catch(error => {
+                            console.error('There was a problem with the fetch operation:', error);
+                        });
+    
+                    ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
+                }
+    
+                return (
+                    <section style={{ margin: '50px' }}>
+                        <form id="school-edit-modal-form" onSubmit={handleSubmit}>
+                            <div id="school-edit-text-input">
+                                <TextInput title={addSchoolInfo.schoolName.title}
+                                    placeholder={addSchoolInfo.schoolName.placeholder}
+                                    id={addSchoolInfo.schoolName.id}/>
+                                <TextInput title={addSchoolInfo.accessCode.title}
+                                    placeholder={addSchoolInfo.accessCode.placeholder}
+                                    id={addSchoolInfo.accessCode.id}/>
+                                <TextInput title={addSchoolInfo.gradeLevel.title}
+                                    placeholder={addSchoolInfo.gradeLevel.placeholder}
+                                    id={addSchoolInfo.gradeLevel.id}/>
+                                <br /><br /><br /><br />
+                            </div>
+                            <SubmitButton value="Save" />
+                        </form>
+                    </section>
+                );
             }
-        });
-        
-var tempID = "adminID123";
-var schoolInfo;
-var selectedSchool;
-
-function SchoolItem(props) {
-    const handleSchoolClick = () => {
-        selectedSchool = props.data;
-        students = props.data.students;
-        ReactDOM.render(<AddStudents students={selectedSchool.students} />, document.getElementById("students-root"));
-        ReactDOM.render(<Indicator title="Total Students" value={selectedSchool.total_students} theme="num-students" />, document.getElementById("num-students-indicator"));
-    };
-
-    return (
-        <div className="school-item">
-            <p className="school-name">{props.data.school_name}</p>
-            <p className="school-info">Total enrolled students</p>
-            <p className="school-view-list" onClick={handleSchoolClick}>View student list by grade</p>
-        </div>
-    );
-}
-
-function AddSchools(props) {
-    let items = [];
-    for (let i = 0; i < props.schools.length; i++) {
-        items.push((<SchoolItem data={props.schools[i]} />));
-    }
-
-    const schoolList = items;
-
-    if (items.length == 0) {
-        return (
-            <section>
-                <h2 className="schools-title">Schools</h2>
-                <p className="schools-subtitle">Select a school to view students</p>
-                <div className="schools-list">
-                    <div className="list-issue">There are no schools available.</div>
-                </div>
-            </section>
-        );
-    }
-
-    return (
-        <section>
-            <h2 className="schools-title">Schools</h2>
-            <p className="schools-subtitle">Select a school to view students</p>
-            <div className="schools-list">
-                {schoolList}
-            </div>
-        </section>
-    );
-}
-
-fetch(`http://127.0.0.1:8000/admins/${tempID}/schools`, {
-    method: "GET",
-    headers: {
-        'Content-Type': 'application/json'
-    }
-})
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Data received:', data);
-        schoolInfo = data;
-        selectedSchool = schoolInfo[0];
-        ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
-
-function Indicator(props) {
-    return (
-        <section>
-            <div className="row">
-                <div>
-                    <div className={`upper-info-icon-shape ${props.theme}`}></div>
-                    <p className="label">{props.title}</p>
-                </div>
-                <p className="value">{props.value}</p>
-            </div>
-        </section>
-    );
-}
-
-waitForDefinition('selectedSchool')
-    .then(() => {
-        console.log("Selected school defined for total students")
-        ReactDOM.render(<Indicator title="Total Students" value={selectedSchool.total_students} theme="num-students" />, document.getElementById("num-students-indicator"))
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-
-ReactDOM.render(<Indicator title="Current Term" value="2" theme="term-number" />, document.getElementById("current-term-indicator"))
-
-var students = [];
-
-function StudentItem(props) {
-    return (
-        <li>
-            <div className="student-list-item">
-                <div>
-                    <p className="student-info">{props.data.name}</p>
-                    <p className="student-info-body">Student ID: {props.data.student_school_id}</p>
-                    <p className="student-info-body">Disability: {props.data.disabled}</p>
-                </div>
-                <div>
-                    <p className="student-info">Parent Contact Information</p>
-                    <p className="student-info-body">{props.data.parent_contact}</p>
-                </div>
-            </div>
-        </li>
-    );
-}
-
-function AddStudents(props) {
-    let items = [];
-    for (let i = 0; i < props.students.length; i++) {
-        items.push((<StudentItem data={props.students[i]} />));
-    }
-
-    const studentList = items;
-
-    if (items.length == 0) {
-        return (
-            <div>
-                <h1 className="students-title">{selectedSchool.school_name}</h1>
-                <p className="students-memo">Students</p>
-                <ul className="nobullet">
-                    <li><div className="list-issue">There are no students enrolled in this school.</div></li>
-                </ul>
-            </div>
-        );
-    }
-
-    return (
-        <div>
-            <h1 className="students-title">{selectedSchool.school_name}</h1>
-            <p className="students-memo">Students</p>
-            <ul className="nobullet">
-                {studentList}
-            </ul>
-        </div>
-    );
-}
-
-waitForDefinition('selectedSchool')
-    .then((value) => {
-        console.log('selectedSchool is defined:', value);
-        ReactDOM.render(<AddStudents students={selectedSchool.students} />, document.getElementById("students-root"));
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-    </script>
-</body>
-
-</html>
+    
+            ReactDOM.render(<SchoolEditInput />, document.getElementById("school-edit-modal-root"));
+    
+            //------------------------------------------- SCHOOL LIST ITEM COMPONENTS -------------------------------------------
+            var adminID = "665da0b90c1d6c0c45724285";
+            var schoolInfo = [
+                {
+                    _id: 'school-001',
+                    school_name: 'University Basic School, Legon',
+                    total_students: 500,
+                    grades: [
+                        { level: 'Kindergarten 1' },
+                        { level: 'Kindergarten 2' },
+                        { level: 'Primary 1' },
+                        { level: 'Primary 2' },
+                        { level: 'Primary 3' },
+                        { level: 'Primary 4' },
+                        { level: 'Primary 5' },
+                        { level: 'Primary 6' },
+                        { level: 'Junior High 1' },
+                        { level: 'Junior High 2' },
+                        { level: 'Junior High 3' }
+                    ]
+                }
+            ];
+            var selectedSchool;
+    
+            function SchoolItem(props) {
+                const handleEditClick = () => {
+                    OpenModal('school-edit');
+                }
+    
+                const handleSchoolClick = () => {
+                    selectedSchool = props.data;
+                    window.location.href = `reintegration-tracker.html?school_id=${selectedSchool._id}`;
+                };
+    
+                return (
+                    <li>
+                        <div className="sidebar-school" onClick={handleSchoolClick}>
+                            <div>
+                                <p className="school-info">{props.data.school_name}</p>
+                                <p className="school-info-body">Total Enrolled Students: {props.data.total_students}</p>
+                            </div>
+                            <div className="edit-button">
+                                <p className="edit-text" onClick={handleEditClick}>Edit</p>
+                            </div>
+                        </div>
+                    </li>
+                );
+            }
+    
+            function AddSchools(props) {
+                let items = [];
+                for (let i = 0; i < props.schools.length; i++) {
+                    items.push((<SchoolItem data={props.schools[i]} />));
+                }
+    
+                const schoolList = items;
+    
+                if (items.length == 0) {
+                    return (
+                        <section>
+                            <ul className="nobullet">
+                                <li><div className="list-issue">There are no schools available.</div></li>
+                            </ul>
+                        </section>
+                    );
+                }
+    
+                return (
+                    <section>
+                        <ul className="nobullet">
+                            {schoolList}
+                        </ul>
+                    </section>
+                );
+            }
+    
+            fetch(`http://127.0.0.1:8000/admins/${adminID}/schools`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data received:', data);
+                    schoolInfo = data;
+    
+                    schoolInfo.sort((a, b) => {
+                        return a.school_name.localeCompare(b.school_name);
+                    });
+    
+                    selectedSchool = schoolInfo[0];
+                    ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        </script>
+    </body>
+    
+    </html>
