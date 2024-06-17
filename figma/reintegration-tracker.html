@@ -20,54 +20,20 @@
                 <!-- Modal for Student Profile -->
                 <div class="modal-underlay" id="student-profile-modal-underlay" onClick="CloseModal('student-profile')">
                     <div class="modal" id="student-profile-modal" onClick="event.stopPropagation()">
-                        <span class="modal-close" title="Close" onClick="CloseModal('student-profile')">&times;</span>
-                        <div class="modal-title">Student Profile Information</div>
-                        <div class="modal-content">
-                            <div class="input-group">
-                                <label for="student-name">Student Name</label>
-                                <input type="text" id="student-name" name="student-name" placeholder="Student Name" required>
-                            </div>
-                            <div class="input-group">
-                                <label for="dob">Date of Birth</label>
-                                <input type="date" id="dob" name="dob" required>
-                                <label for="grade-level">Enrolled Grade Level</label>
-                                <input type="text" id="grade-level" name="grade-level" placeholder="Kindergarten" required>
-                            </div>
-                            <div class="input-group">
-                                <label for="student-id">Student ID</label>
-                                <input type="text" id="student-id" name="student-id" placeholder="Enter Student ID" required>
-                            </div>
-                            <div class="input-group">
-                                <label for="guardian-name">Parent/Guardian Name</label>
-                                <input type="text" id="guardian-name" name="guardian-name" placeholder="Parent/Guardian" required>
-                            </div>
-                            <div class="input-group">
-                                <label for="guardian-contact">Parent/Guardian Contact Information</label>
-                                <input type="text" id="guardian-contact" name="guardian-contact" placeholder="phone number" required>
-                            </div>
-                            <div class="input-group">
-                                <label for="medical-info">Student Medical Information</label>
-                                <input type="text" id="medical-info" name="medical-info" placeholder="List any known allergies or other medical information" required>
-                            </div>
-                            <div class="checkbox-group">
-                                <label for="disability-status">Disability Status</label>
-                                <input type="checkbox" id="disability-status" name="disability-status">
-                            </div>
-                            <div class="input-group">
-                                <label for="additional-info">Additional Information</label>
-                                <input type="text" id="additional-info" name="additional-info" placeholder="Any additional information about student included here" required>
-                            </div>
+                        <div class="modal-header">
+                            <div class="modal-title">Student Profile Information</div>
+                            <span class="modal-close" title="Close" onClick="CloseModal('student-profile')">&times;</span>
                         </div>
-                        <div class="modal-submit">
-                            <input type="submit" value="Save">
+                        <div class="modal-body" id="student-profile-modal-root"></div>
+                        <div class="modal-footer">
+                            <button class="save-button" onClick="document.getElementById('student-profile-form').submit()">Save</button>
                         </div>
                     </div>
                 </div>
             </section>
-     
+
             <div class="sidebar">
                 <div style="height:100px"></div>
-
                 <!-- EduTracker logo -->
                 <div class="edutracker-logo">
                     <svg width="288" height="39" viewBox="0 0 288 39" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +52,6 @@
                       <path d="M285.817 11.7585C286.142 11.7585 286.517 11.7797 286.94 11.8221C287.378 11.8503 287.732 11.8927 288 11.9492L287.513 18.0098C287.301 17.9392 286.997 17.8897 286.601 17.8615C286.22 17.8191 285.888 17.7979 285.605 17.7979C284.772 17.7979 283.96 17.9038 283.168 18.1157C282.391 18.3277 281.692 18.6738 281.07 19.1541C280.449 19.6203 279.954 20.2419 279.587 21.0189C279.234 21.7818 279.057 22.7212 279.057 23.8373V35.8949H272.594V12.2035H277.489L278.443 16.1874H278.761C279.227 15.3821 279.806 14.6475 280.498 13.9835C281.205 13.3054 282.003 12.7686 282.893 12.373C283.797 11.9633 284.772 11.7585 285.817 11.7585Z" fill="#2B5359"/>
                     </svg>
                 </div>
-            
                 <div style="height:50px"></div>
                 <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
                 <div style="height:50px"></div>
@@ -120,7 +85,7 @@
     </div>
     <script type="text/babel">
         //------------------------------------------- HELPER FUNCTIONS -------------------------------------------
-        function OpenModal(id, studentID = "-1") {
+        function OpenModal(id) {
             const underlay = document.getElementById(`${id}-modal-underlay`);
             underlay.classList.add("blurred-modal-underlay");
 
@@ -141,18 +106,20 @@
                 underlay.style.display = "none";
             }, 200);
         }
+
         //------------------------------------------- REUSABLE COMPONENTS -------------------------------------------
         const TextInput = (props) => {
             return (
                 <section className="modal-text-input">
                     <p className="modal-text-label">{props.title}</p>
                     <input 
-                    placeholder={props.placeholder} 
-                    title={props.title} 
-                    type="text" 
-                    id={props.id} 
-                    required 
-                    defaultValue={props.value}
+                        placeholder={props.placeholder} 
+                        title={props.title} 
+                        type="text" 
+                        id={props.id} 
+                        required 
+                        defaultValue={props.value}
+                        className="static-width"  
                     />
                 </section>
             );
@@ -166,35 +133,32 @@
             );
         }
 
-       //------------------------------------------- STUDENT PROFILE COMPONENT -------------------------------------------
+        //------------------------------------------- STUDENT PROFILE COMPONENT -------------------------------------------
         function StudentProfile(props) {
             return (
                 <section>
                     <form id="student-profile-form" onSubmit={(e) => handleProfileSubmit(e, props.student.student_id)}>
-                        <div class="input-group">
+                        <div className="input-group">
                             <TextInput title="First Name" placeholder="Enter first name" id="student-first-name" value={props.student.first_name} />
                             <TextInput title="Last Name" placeholder="Enter last name" id="student-last-name" value={props.student.last_name} />
                         </div>
-                        <div class="input-group">
+                        <div className="input-group">
                             <TextInput title="Student ID" placeholder="Enter student ID" id="student-id" value={props.student.student_id} />
                             <TextInput title="Date of Birth" placeholder="Enter date of birth" id="student-dob" value={props.student.dob} />
                         </div>
-                        <div class="input-group">
+                        <div className="input-group">
                             <TextInput title="Age" placeholder="Enter age" id="student-age" value={props.student.age} />
                             <TextInput title="Teacher" placeholder="Enter teacher name" id="student-teacher" value={props.student.teacher} />
                         </div>
-                        <div class="input-group">
+                        <div className="input-group">
                             <TextInput title="Parent Contact" placeholder="Enter parent contact" id="student-parent-contact" value={props.student.parent_contact} />
                             <TextInput title="Medical Conditions" placeholder="Enter medical conditions" id="student-health" value={props.student.health_conditions} />
                         </div>
-                        <div class="checkbox-group">
-                            <label for="disability-status">Disability Status</label>
+                        <div className="checkbox-group">
+                            <label htmlFor="disability-status">Disability Status</label>
                             <input type="checkbox" id="disability-status" name="disability-status" defaultChecked={props.student.disabled} />
                         </div>
                         <TextInput title="Additional Information" placeholder="Enter additional information" id="student-misc" value={props.student.misc_info} />
-                        <div className="modal-submit">
-                            <input type="submit" value="Save" />
-                        </div>
                     </form>
                 </section>
             );
@@ -225,6 +189,7 @@
             ReactDOM.render(<StudentProfile student={student} />, document.getElementById("student-profile-modal-root"));
             OpenModal("student-profile");
         }
+
         //------------------------------------------- GRADE LIST ITEM COMPONENTS -------------------------------------------
         var selectedSchoolID = 'school-000'; // Hardcoded for demo purposes
         var selectedGrade;
@@ -256,7 +221,7 @@
             ReactDOM.render(
                 <div>
                     <p className="info-label">Total Students:</p>
-                    <p className="info-value">{schoolInfo.total_students}</p>
+                    <p class="info-value">{schoolInfo.total_students}</p>
                 </div>, 
                 document.getElementById("total-students-indicator")
             );
@@ -271,10 +236,10 @@
             };
 
             return (
-                <div className="school-item" onClick={handleGradeClick}>
-                    <p className="school-name">{props.data.level}</p>
-                    <p className="school-info">Total enrolled students</p>
-                    <p className="school-view-list">View student list by grade</p>
+                <div class="school-item" onClick={handleGradeClick}>
+                    <p class="school-name">{props.data.level}</p>
+                    <p class="school-info">Total enrolled students</p>
+                    <p class="school-view-list">View student list by grade</p>
                 </div>
             );
         }
@@ -287,13 +252,13 @@
 
             const gradeList = items;
 
-            if (items.length == 0) {
+            if (items.length === 0) {
                 return (
                     <section>
-                        <h2 className="grades-title">Grades</h2>
-                        <p className="grades-subtitle">No grades available.</p>
-                        <div className="grades-list">
-                            <div className="list-issue">There are no grades available for this school.</div>
+                        <h2 class="grades-title">Grades</h2>
+                        <p class="grades-subtitle">No grades available.</p>
+                        <div class="grades-list">
+                            <div class="list-issue">There are no grades available for this school.</div>
                         </div>
                     </section>
                 );
@@ -301,7 +266,7 @@
 
             return (
                 <section>
-                    <div className="grades-list">
+                    <div class="grades-list">
                         {gradeList}
                     </div>
                 </section>
@@ -316,18 +281,18 @@
         //------------------------------------------- STUDENT LIST ITEM COMPONENTS -------------------------------------------
         function getStudentColor(status) {
             switch (status) {
-                case 'enrolled':
-                    return '#4BB34B';
+                case 'progressed':
+                    return '#83f18d';
                 case 'passed':
-                    return '#FFA000';
+                    return '#fcf151';
                 case 'dropped':
-                    return '#FF0F0F';
+                    return '#f5554a';
                 case 'repeating':
-                    return '#E77B39';
+                    return '#ff9a00';
                 case 'new':
-                    return '#007AFF';
+                    return '#67dfff';
                 case 'returning':
-                    return '#A400C7';
+                    return '#a058c1';
                 default:
                     return '#FFFFFF';
             }
@@ -352,12 +317,12 @@
         function AddStudents(props) {
             let items = [];
             for (let i = 0; i < props.students.length; i++) {
-                items.push((<StudentItem data={props.students[i]} />));
+                items.push((<StudentItem data={props.students[i]} key={props.students[i].student_id} />));
             }
 
             const studentList = items;
 
-            if (items.length == 0) {
+            if (items.length === 0) {
                 return (
                     <table class="student-list-table">
                         <thead>
@@ -396,7 +361,7 @@
 
         function fetchStudentsForGrade(schoolId, gradeLevel) {
             const students = [];
-            const statuses = ['enrolled', 'passed', 'dropped', 'repeating', 'new', 'returning'];
+            const statuses = ['progressed', 'passed', 'dropped', 'repeating', 'new', 'returning'];
             for (let i = 1; i <= 60; i++) {
                 const status = statuses[Math.floor(Math.random() * statuses.length)];
                 students.push({
