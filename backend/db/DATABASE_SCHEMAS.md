@@ -1,10 +1,10 @@
-We will have two types of collections in our projects: YEARLY collections and PERMANENT collections. Yearly collections will be locked year after the year ends, and another one made in its place, while permanent databases will persist forever.
+The following is a list of all the databases used in our project. Instead of making a new object every year, objects in our database will persist and store a past history within their schema.
 
----YEARLY DATABASES---
+---DATABASES---
 
-The first yearly database is school_<year>. As the school collections holds the classes, which change every year, it is reset every year. The reintegration tracker may search into past years to track the progress of students in a school.
+The first database is schools. As the school collections holds the classes, which change every year, it copies the classes in "grade_levels" into "past_years". "past_years" should hold all of the classes from all past years. The access code is 4 digits and used by teachers and checked against the db to allow them to register. The reintegration tracker may search into past years to track the progress of students in a school.
 
-school_<year>:
+schools:
     {
     "_id": "school_id",
     "name": "School Name",
@@ -18,23 +18,35 @@ school_<year>:
         },
         ...
     ]
+    "past_years": [
+        {
+        "year": "2022-2023",
+        "grade_levels": [
+            {
+            "grade": "5",
+            "classes": ["class_id1", "class_id2", ...]
+            },
+            ...
+        ]
+        },
+        ...
+    ]
     }
 
 
-Classes will also be stored in yearly databases that are archived after every year. Each class lasts for 3 terms. The term list stores term 1, 2, and 3. Each term is where students are stored, in case students drop out between terms.
+Classes will stored in one database which contains classes from all years. Each class contains info about the class and a list of students in each class.
 
-classes_<year>:
+classes:
     {
     "_id": "class_id",
     "name": "Class Name",
+    "year": "2024",
     "teacher_id": "teacher_id",
     "grade_level": "Grade Level",
     "school_id": "school_id",
     "students": ["student_id1", "student_id2", ...]
     }
 
-
----PERMANENT DATABASES---
 
 There will be 1 permanent student database. When a teacher adds a returning student to their roster they will be adding students from this database (they will not have access to this database directly, but through past years in their school's database). When a student transfers, a reference to a student here will be added to the transfer portal. 
 
