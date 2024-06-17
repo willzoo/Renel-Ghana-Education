@@ -151,12 +151,49 @@ def update_class_students(class_id):
 @class_bp.route('/classes/<class_id>', methods=['DELETE'])
 def delete_class(class_id):
     try:
-        mongo = current_app.extensions['pymongo']
-        db = mongo.cx.EduTracker
-        result = db.classes.delete_one({"_id": ObjectId(class_id)})
-        if result.deleted_count == 0:
-            return jsonify({"error": "Class not found"}), 404
+        # Remove the class from the classes list in the grade_levels collection
+        grade_level_update_result = mongo.db.grade_levels.update_many(
+            {},
+            {'$pull': {'classes': ObjectId(class_id)}}
+        )
+        
+        if grade_level_update_result.modified_count == 0:
+            return jsonify({'error': 'Class not found in any grade level'}), 404
 
-        return jsonify({"message": "Class deleted successfully"}), 200
+        # Delete the class document
+        class_delete_result = mongo.db.classes.delete_one({'_id': ObjectId(class_id)})
+
+        if class_delete_result.deleted_count == 0:
+            return jsonify({'error': 'Class not found'}), 404
+
+        return jsonify({'message': 'Class deleted successfully'}), 200
+    
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'error': str(e)}), 500
+
+# Remove a student from the class's student list as well as removes the student's class_id
+@class_bp.route('/classes/<class_id>/students/<student_id>', methods=['PATCH'])
+def remove_student_from_class(class_id, student_id):
+    try:
+        # Remove class_id from the student document
+        student_update_result = mongo.db.students.update_one(
+            {'_id': ObjectId(student_id)},
+            {'$unset': {'class_id': ""}}
+        )
+        
+        if student_update_result.modified_count == 0:
+            return jsonify({'error': 'Student not found or already removed from class'}), 404
+        
+        # Remove student from the class's student list
+        class_update_result = mongo.db.classes.update_one(
+            {'_id': ObjectId(class_id)},
+            {'$pull': {'students': ObjectId(student_id)}}
+        )
+        
+        if class_update_result.modified_count == 0:
+            return jsonify({'error': 'Class not found or student not in class'}), 404
+
+        return jsonify({'message': 'Student removed from class successfully'}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
