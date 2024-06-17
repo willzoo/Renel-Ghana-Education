@@ -151,6 +151,8 @@ def update_class_students(class_id):
 @class_bp.route('/classes/<class_id>', methods=['DELETE'])
 def delete_class(class_id):
     try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
         # Remove the class from the classes list in the grade_levels collection
         grade_level_update_result = mongo.db.grade_levels.update_many(
             {},
@@ -171,10 +173,62 @@ def delete_class(class_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+#Route that adds a student to a class but checks if the student has been in the school's database previously
+@class_bp.route('/add_student', methods=['POST'])
+def add_student():
+    mongo = current_app.extensions['pymongo']
+    db = mongo.cx.EduTracker
+    data = request.json
+    student_school_id = data.get('student_school_id')
+    teacher_id = data.get('teacher_id')
+
+    # Find the teacher to get the school_id
+    teacher = db.teachers.find_one({'_id': teacher_id})
+    if not teacher:
+        return jsonify({"error": "Teacher not found"}), 404
+
+    school_id = teacher['school_id']
+    
+    # Check current students
+    current_students = db.students.find_one({'student_school_id': student_school_id, 'school_id': school_id})
+    if current_students:
+        return jsonify({"status": "existing", "student": current_students})
+
+    # Check past students
+    school = db.schools.find_one({'_id': school_id})
+    if not school:
+        return jsonify({"error": "School not found"}), 404
+
+    for year in school.get('past_years', []):
+        for grade in year.get('grade_levels', []):
+            for cls in grade.get('classes', []):
+                for student in cls.get('students', []):
+                    if student.get('student_school_id') == student_school_id:
+                        return jsonify({"status": "existing", "student": student})
+
+    # If student not found, create a new student
+    new_student = {
+        "student_school_id": student_school_id,
+        "name": data.get('name'),
+        "parent_contact": data.get('parent_contact'),
+        "dob": data.get('dob'),
+        "disabled": data.get('disabled'),
+        "health_conditions": data.get('health_conditions'),
+        "misc_info": data.get('misc_info'),
+        "class_id": data.get('class_id'),
+        "grade_level": data.get('grade_level'),
+        "school_id": school_id,
+        "history": []
+    }
+    db.students.insert_one(new_student)
+    return jsonify({"status": "new", "student": new_student})
+
 # Remove a student from the class's student list as well as removes the student's class_id
 @class_bp.route('/classes/<class_id>/students/<student_id>', methods=['PATCH'])
 def remove_student_from_class(class_id, student_id):
     try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
         # Remove class_id from the student document
         student_update_result = mongo.db.students.update_one(
             {'_id': ObjectId(student_id)},
