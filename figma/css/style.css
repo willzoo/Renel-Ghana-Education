@@ -761,3 +761,12 @@ body, html {
   cursor: pointer;
   width: 80%;
 }
+.sidebar-grades {
+  max-height: 300px; /* Set the maximum height */
+  overflow-y: auto; /* Add vertical scroll */
+  padding: 10px;
+}
+
+.school-item {
+  margin-bottom: 10px; /* Adjust as needed */
+}
