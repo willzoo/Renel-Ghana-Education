@@ -180,7 +180,7 @@
       function waitForDefinition(variableName) {
           return new Promise((resolve, reject) => {
               const checkInterval = 200; // Check every 200 milliseconds
-              const maxChecks = 100; // Maximum number of checks before giving up (to avoid infinite loop)
+              const maxChecks = 1000; // Maximum number of checks before giving up (to avoid infinite loop)
               let checks = 0;
 
               const intervalId = setInterval(() => {
@@ -196,7 +196,7 @@
           });
       }
 
-//------------------------------------------- REUSABLE COMPONENTS -------------------------------------------
+//------------------------------------------- MINOR REUSABLE COMPONENTS -------------------------------------------
 
       const TextInput = (props) => {
           return (
