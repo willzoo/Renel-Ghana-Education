@@ -190,7 +190,6 @@
     </section>
     </div> 
     <script type="text/babel">
-
 //------------------------------------------- HELPER FUNCTIONS -------------------------------------------
 
       function OpenModal(id, studentID = "-1") {
@@ -226,7 +225,14 @@
           return (
               <section className="modal-text-input">
                   <p className="modal-text-label">{props.title}</p>
-                  <input placeholder={props.placeholder} title={props.title} type="text" id={props.id} required defaultValue={props.value} />
+                  <input 
+                  placeholder={props.placeholder} 
+                  title={props.title} 
+                  type="text" 
+                  id={props.id} 
+                  required 
+                  defaultValue={props.value}
+                  />
               </section>
           );
       }
@@ -455,12 +461,12 @@
           additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info" },
       }
 
-      function EditStudentInput() {
+      function EditStudentInput(props) {
           const handleSubmit = (event) => {
               event.preventDefault();
               CloseModal("edit-student");
           }
-
+          console.log("Edit student input called: " + props.student.name);
           return (
               <section style={{ margin: '50px' }}>
                   <form id="edit-student-form" onSubmit={handleSubmit}>
@@ -468,26 +474,31 @@
                           <TextInput title={editStudentInfo.studentName.title}
                               placeholder={editStudentInfo.studentName.placeholder}
                               id={editStudentInfo.studentName.id} 
-                              value={"reddit"} />
+                              value={props.student.name} />
                           <TextInput title={editStudentInfo.studentID.title}
                               placeholder={editStudentInfo.studentID.placeholder}
-                              id={editStudentInfo.studentID.id} />
+                              id={editStudentInfo.studentID.id}
+                              value={props.student.name} />
                           <TextInput title={editStudentInfo.guardianName.title}
                               placeholder={editStudentInfo.guardianName.placeholder}
-                              id={editStudentInfo.guardianName.id} />
+                              id={editStudentInfo.guardianName.id}
+                              value={props.student.name} />
                           <TextInput title={editStudentInfo.guardianContact.title}
                               placeholder={editStudentInfo.guardianContact.placeholder}
                               id={editStudentInfo.guardianContact.id} />
                           <TextInput title={editStudentInfo.studentMedical.title}
                               placeholder={editStudentInfo.studentMedical.placeholder}
-                              id={editStudentInfo.studentMedical.id} />
+                              id={editStudentInfo.studentMedical.id}
+                              value={props.student.name} />
                           <br />
                           <Checkbox id={editStudentInfo.disabilityStatus.id}
                               name={editStudentInfo.disabilityStatus.id}
-                              title={editStudentInfo.disabilityStatus.title} />
+                              title={editStudentInfo.disabilityStatus.title}
+                              value={props.student.name} />
                           <TextInput title={editStudentInfo.additionalInfo.title}
                               placeholder={editStudentInfo.additionalInfo.placeholder}
-                              id={editStudentInfo.additionalInfo.id} />
+                              id={editStudentInfo.additionalInfo.id}
+                              value={props.student.name} />
                       </section>
                       <br /><br /><br /><br />
                       <SubmitButton value="Save" />
@@ -496,7 +507,7 @@
           );
       }
 
-      ReactDOM.render(<EditStudentInput />, document.getElementById("edit-student-modal-root"));
+      //ReactDOM.render(<EditStudentInput />, document.getElementById("edit-student-modal-root"));
 
 //------------------------------------------- ADD RETURNING STUDENT COMPONENT -------------------------------------------      
 
@@ -597,6 +608,11 @@
             } catch (e) {};
 
           underlay.style.display = "none";
+
+          // Unmount the React component for the edit student modal
+          if (id === "edit-student") {
+              ReactDOM.unmountComponentAtNode(document.getElementById("edit-student-modal-root"));
+          }
       }
 
 //------------------------------------------- CLASS LIST ITEM COMPONENTS -------------------------------------------
@@ -731,6 +747,8 @@
 
       function StudentItem(props) {
           const handleEdit = (event) => {
+              console.log("Student item function called")
+              ReactDOM.render(<EditStudentInput student={props.data} />, document.getElementById("edit-student-modal-root"));
               OpenModal("edit-student");
           }
           return (
