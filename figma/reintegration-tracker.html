@@ -15,24 +15,54 @@
 </head>
 <body>
     <div class="reintegration-tracker">
-      </div>
-    <div class="background">
-        <section>
+        <div class="background">
             <section>
-               <!-- Modal for Student Profile -->
-<div class="modal-underlay" id="student-profile-modal-underlay" onClick="CloseModal('student-profile')">
-    <div class="modal" id="student-profile-modal" onClick="event.stopPropagation()">
-        <div>
-            <span class="modal-title">Student Profile</span>
-            <span class="modal-close" title="Close" onClick="CloseModal('student-profile')">&times;</span>
-            <br>
-            <span class="modal-content">View and edit the student's information.</span>
-        </div>
-        <br>
-        <div id="student-profile-modal-root"></div>
-    </div>
-</div>
-
+                <!-- Modal for Student Profile -->
+                <div class="modal-underlay" id="student-profile-modal-underlay" onClick="CloseModal('student-profile')">
+                    <div class="modal" id="student-profile-modal" onClick="event.stopPropagation()">
+                        <span class="modal-close" title="Close" onClick="CloseModal('student-profile')">&times;</span>
+                        <div class="modal-title">Student Profile Information</div>
+                        <div class="modal-content">
+                            <div class="input-group">
+                                <label for="student-name">Student Name</label>
+                                <input type="text" id="student-name" name="student-name" placeholder="Student Name" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" id="dob" name="dob" required>
+                                <label for="grade-level">Enrolled Grade Level</label>
+                                <input type="text" id="grade-level" name="grade-level" placeholder="Kindergarten" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="student-id">Student ID</label>
+                                <input type="text" id="student-id" name="student-id" placeholder="Enter Student ID" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="guardian-name">Parent/Guardian Name</label>
+                                <input type="text" id="guardian-name" name="guardian-name" placeholder="Parent/Guardian" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="guardian-contact">Parent/Guardian Contact Information</label>
+                                <input type="text" id="guardian-contact" name="guardian-contact" placeholder="phone number" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="medical-info">Student Medical Information</label>
+                                <input type="text" id="medical-info" name="medical-info" placeholder="List any known allergies or other medical information" required>
+                            </div>
+                            <div class="checkbox-group">
+                                <label for="disability-status">Disability Status</label>
+                                <input type="checkbox" id="disability-status" name="disability-status">
+                            </div>
+                            <div class="input-group">
+                                <label for="additional-info">Additional Information</label>
+                                <input type="text" id="additional-info" name="additional-info" placeholder="Any additional information about student included here" required>
+                            </div>
+                        </div>
+                        <div class="modal-submit">
+                            <input type="submit" value="Save">
+                        </div>
+                    </div>
+                </div>
             </section>
      
             <div class="sidebar">
@@ -58,14 +88,8 @@
                 </div>
             
                 <div style="height:50px"></div>
-                  
-                        <div style="height:50px"></div>
-
-                <!-- section line -->
                 <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
-
                 <div style="height:50px"></div>
-                
                 <!-- Sidebar Grades -->
                 <div class="sidebar-grades-container">
                     <h1 class="grades-title">Grades</h1>
@@ -84,11 +108,10 @@
                     </div>
                 </div>
                 <div style="height:20px;"></div>
-
                 <div class="student-section">
                     <div class="students-list-container">
-                        <h1 class="students-title">Grade Level</h1>
-                        <p class="students-memo">Students</p>
+                        <h1 id="selected-grade-title" class="students-title">Grade Level</h1>
+                        <p id="selected-grade-subtitle" class="students-memo">Students</p>
                         <div id="students-root" class="students-list"></div>
                     </div>
                 </div>
@@ -98,26 +121,26 @@
     <script type="text/babel">
         //------------------------------------------- HELPER FUNCTIONS -------------------------------------------
         function OpenModal(id, studentID = "-1") {
-    const underlay = document.getElementById(`${id}-modal-underlay`);
-    underlay.classList.add("blurred-modal-underlay");
+            const underlay = document.getElementById(`${id}-modal-underlay`);
+            underlay.classList.add("blurred-modal-underlay");
 
-    const modal = underlay.querySelector(`#${id}-modal`);
-    modal.classList.add("displayed-modal");
+            const modal = underlay.querySelector(`#${id}-modal`);
+            modal.classList.add("displayed-modal");
 
-    underlay.style.display = "block";
-}
+            underlay.style.display = "flex";
+        }
 
-function CloseModal(id) {
-    const underlay = document.getElementById(`${id}-modal-underlay`);
-    underlay.classList.remove("blurred-modal-underlay");
+        function CloseModal(id) {
+            const underlay = document.getElementById(`${id}-modal-underlay`);
+            underlay.classList.remove("blurred-modal-underlay");
 
-    const modal = underlay.querySelector(`#${id}-modal`);
-    modal.classList.remove("displayed-modal");
+            const modal = underlay.querySelector(`#${id}-modal`);
+            modal.classList.remove("displayed-modal");
 
-    setTimeout(() => {
-        underlay.style.display = "none";
-    }, 200);
-}
+            setTimeout(() => {
+                underlay.style.display = "none";
+            }, 200);
+        }
         //------------------------------------------- REUSABLE COMPONENTS -------------------------------------------
         const TextInput = (props) => {
             return (
@@ -144,53 +167,64 @@ function CloseModal(id) {
         }
 
        //------------------------------------------- STUDENT PROFILE COMPONENT -------------------------------------------
-function StudentProfile(props) {
-    return (
-        <section>
-            <form id="student-profile-form" onSubmit={(e) => handleProfileSubmit(e, props.student.student_id)}>
-                <TextInput title="First Name" placeholder="Enter first name" id="student-first-name" value={props.student.first_name} />
-                <TextInput title="Last Name" placeholder="Enter last name" id="student-last-name" value={props.student.last_name} />
-                <TextInput title="Student ID" placeholder="Enter student ID" id="student-id" value={props.student.student_id} />
-                <TextInput title="Date of Birth" placeholder="Enter date of birth" id="student-dob" value={props.student.dob} />
-                <TextInput title="Age" placeholder="Enter age" id="student-age" value={props.student.age} />
-                <TextInput title="Teacher" placeholder="Enter teacher name" id="student-teacher" value={props.student.teacher} />
-                <TextInput title="Parent Contact" placeholder="Enter parent contact" id="student-parent-contact" value={props.student.parent_contact} />
-                <TextInput title="Disability Status" placeholder="Enter disability status" id="student-disability" value={props.student.disabled} />
-                <TextInput title="Medical Conditions" placeholder="Enter medical conditions" id="student-health" value={props.student.health_conditions} />
-                <TextInput title="Additional Information" placeholder="Enter additional information" id="student-misc" value={props.student.misc_info} />
-                <div className="modal-submit">
-                    <input type="submit" value="Save" />
-                </div>
-            </form>
-        </section>
-    );
-}
+        function StudentProfile(props) {
+            return (
+                <section>
+                    <form id="student-profile-form" onSubmit={(e) => handleProfileSubmit(e, props.student.student_id)}>
+                        <div class="input-group">
+                            <TextInput title="First Name" placeholder="Enter first name" id="student-first-name" value={props.student.first_name} />
+                            <TextInput title="Last Name" placeholder="Enter last name" id="student-last-name" value={props.student.last_name} />
+                        </div>
+                        <div class="input-group">
+                            <TextInput title="Student ID" placeholder="Enter student ID" id="student-id" value={props.student.student_id} />
+                            <TextInput title="Date of Birth" placeholder="Enter date of birth" id="student-dob" value={props.student.dob} />
+                        </div>
+                        <div class="input-group">
+                            <TextInput title="Age" placeholder="Enter age" id="student-age" value={props.student.age} />
+                            <TextInput title="Teacher" placeholder="Enter teacher name" id="student-teacher" value={props.student.teacher} />
+                        </div>
+                        <div class="input-group">
+                            <TextInput title="Parent Contact" placeholder="Enter parent contact" id="student-parent-contact" value={props.student.parent_contact} />
+                            <TextInput title="Medical Conditions" placeholder="Enter medical conditions" id="student-health" value={props.student.health_conditions} />
+                        </div>
+                        <div class="checkbox-group">
+                            <label for="disability-status">Disability Status</label>
+                            <input type="checkbox" id="disability-status" name="disability-status" defaultChecked={props.student.disabled} />
+                        </div>
+                        <TextInput title="Additional Information" placeholder="Enter additional information" id="student-misc" value={props.student.misc_info} />
+                        <div className="modal-submit">
+                            <input type="submit" value="Save" />
+                        </div>
+                    </form>
+                </section>
+            );
+        }
 
-function handleProfileSubmit(event, studentID) {
-    event.preventDefault();
-    CloseModal('student-profile');
+        function handleProfileSubmit(event, studentID) {
+            event.preventDefault();
+            CloseModal('student-profile');
 
-    const updatedProfile = {
-        first_name: document.getElementById('student-first-name').value,
-        last_name: document.getElementById('student-last-name').value,
-        student_id: document.getElementById('student-id').value,
-        dob: document.getElementById('student-dob').value,
-        age: document.getElementById('student-age').value,
-        teacher: document.getElementById('student-teacher').value,
-        parent_contact: document.getElementById('student-parent-contact').value,
-        disabled: document.getElementById('student-disability').value,
-        health_conditions: document.getElementById('student-health').value,
-        misc_info: document.getElementById('student-misc').value,
-    };
+            const updatedProfile = {
+                first_name: document.getElementById('student-first-name').value,
+                last_name: document.getElementById('student-last-name').value,
+                student_id: document.getElementById('student-id').value,
+                dob: document.getElementById('student-dob').value,
+                age: document.getElementById('student-age').value,
+                teacher: document.getElementById('student-teacher').value,
+                parent_contact: document.getElementById('student-parent-contact').value,
+                disabled: document.getElementById('disability-status').checked,
+                health_conditions: document.getElementById('student-health').value,
+                misc_info: document.getElementById('student-misc').value,
+            };
 
-    console.log('Updated profile for student:', studentID, updatedProfile);
-    // Add fetch or AJAX request here to update the student profile in the backend
-}
+            console.log('Updated profile for student:', studentID, updatedProfile);
+            // Add fetch or AJAX request here to update the student profile in the backend
+        }
 
-function displayStudentProfile(student) {
-    ReactDOM.render(<StudentProfile student={student} />, document.getElementById("student-profile-modal-root"));
-    OpenModal("student-profile");
-}
+        function displayStudentProfile(student) {
+            ReactDOM.render(<StudentProfile student={student} />, document.getElementById("student-profile-modal-root"));
+            OpenModal("student-profile");
+        }
         //------------------------------------------- GRADE LIST ITEM COMPONENTS -------------------------------------------
         var selectedSchoolID = 'school-000'; // Hardcoded for demo purposes
         var selectedGrade;
@@ -232,6 +266,8 @@ function displayStudentProfile(student) {
             const handleGradeClick = () => {
                 selectedGrade = props.data;
                 fetchStudentsForGrade(selectedSchoolID, selectedGrade.level);
+                document.getElementById("selected-grade-title").innerText = selectedGrade.level;
+                document.getElementById("selected-grade-subtitle").innerText = `Students in ${selectedGrade.level}`;
             };
 
             return (
@@ -323,7 +359,7 @@ function displayStudentProfile(student) {
 
             if (items.length == 0) {
                 return (
-                    <table>
+                    <table class="student-list-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -341,7 +377,7 @@ function displayStudentProfile(student) {
             }
 
             return (
-                <table>
+                <table class="student-list-table">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -380,6 +416,5 @@ function displayStudentProfile(student) {
         updateSchoolInfo(); // Initial update for the school info
         fetchGradesForYear(2024); // Initial fetch for the current year
     </script>
-    </body>
 </body>
 </html>
