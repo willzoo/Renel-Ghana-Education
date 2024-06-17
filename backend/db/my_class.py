@@ -160,3 +160,29 @@ def delete_class(class_id):
         return jsonify({"message": "Class deleted successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@class_bp.route('/classes/<class_id>/students/<student_id>', methods=['PATCH'])
+def remove_student_from_class(class_id, student_id):
+    try:
+        # Remove class_id from the student document
+        student_update_result = mongo.db.students.update_one(
+            {'_id': ObjectId(student_id)},
+            {'$unset': {'class_id': ""}}
+        )
+        
+        if student_update_result.modified_count == 0:
+            return jsonify({'error': 'Student not found or already removed from class'}), 404
+        
+        # Remove student from the class's student list
+        class_update_result = mongo.db.classes.update_one(
+            {'_id': ObjectId(class_id)},
+            {'$pull': {'students': ObjectId(student_id)}}
+        )
+        
+        if class_update_result.modified_count == 0:
+            return jsonify({'error': 'Class not found or student not in class'}), 404
+
+        return jsonify({'message': 'Student removed from class successfully'}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
