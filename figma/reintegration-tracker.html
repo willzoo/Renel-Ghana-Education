@@ -42,14 +42,21 @@
                 
                 <!-- Sidebar Year and Term Selector -->
                 <div>
-                    <label for="year-select">Select Year:</label>
-                    <select id="year-select" onchange="handleYearChange(event)">
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                    </select>
+                    <div class="dropdown-button-container" id="dropdownContainer">
+                        <button class="dropdown-button" onclick="toggleDropdown()">
+                            Select Year
+                            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 1L5 5L9 1"></path>
+                            </svg>
+                        </button>
+                        <div class="dropdown-content" id="dropdownContent">
+                            <a href="#" onclick="selectYear('2024')">2024</a>
+                            <a href="#" onclick="selectYear('2023')">2023</a>
+                            <a href="#" onclick="selectYear('2022')">2022</a>
+                            <a href="#" onclick="selectYear('2021')">2021</a>
+                            <a href="#" onclick="selectYear('2020')">2020</a>
+                        </div>
+                    </div>
                 </div>
                 <div style="height:50px"></div>
                 <div id="grades-root" class="sidebar-grades"></div>
@@ -86,18 +93,19 @@
             </div>
         </div>
 
-    <!-- Modal structure for student profile -->
-    <div id="student-profile-modal-underlay" class="reintegration-tracker modal-underlay" onClick="CloseModal('student-profile')">
-        <div id="student-profile-modal" class="modal" onClick="event.stopPropagation()">
-            <div class="modal-header">
-                <div class="modal-title">Student Profile Information</div>
-                <span class="modal-close" title="Close" onClick="CloseModal('student-profile')">&times;</span>
-            </div>
-            <div id="student-profile-modal-root" class="modal-body">
-                <!-- Student profile content will be rendered here -->
-            </div>
-            <div class="modal-footer">
-                <button class="save-button" onClick="document.getElementById('student-profile-form').submit()">Save</button>
+        <!-- Modal structure for student profile -->
+        <div id="student-profile-modal-underlay" class="reintegration-tracker modal-underlay" onClick="CloseModal('student-profile')">
+            <div id="student-profile-modal" class="modal" onClick="event.stopPropagation()">
+                <div class="modal-header">
+                    <div class="modal-title">Student Profile Information</div>
+                    <span class="modal-close" title="Close" onClick="CloseModal('student-profile')">&times;</span>
+                </div>
+                <div id="student-profile-modal-root" class="modal-body">
+                    <!-- Student profile content will be rendered here -->
+                </div>
+                <div class="modal-footer">
+                    <button class="save-button" onClick="document.getElementById('student-profile-form').submit()">Save</button>
+                </div>
             </div>
         </div>
     </div>
@@ -110,6 +118,21 @@
             { _id: 'school-004', school_name: 'Kwame Nkrumah Primary School' }
         ];
 
+        let selectedYear = '2024'; // Default year
+
+        function toggleDropdown() {
+            const dropdownContent = document.getElementById('dropdownContent');
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function selectYear(year) {
+            selectedYear = year;
+            const dropdownButton = document.querySelector('.dropdown-button');
+            dropdownButton.innerHTML = `${year} <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L5 5L9 1"></path></svg>`;
+            toggleDropdown();
+            updateSchoolInfo();
+        }
+
         function handleSchoolSearch(event) {
             const searchQuery = event.target.value.toLowerCase();
             const filteredSchools = schoolInfo.filter(school => school.school_name.toLowerCase().includes(searchQuery));
@@ -120,21 +143,26 @@
             return (
                 <ul>
                     {props.schools.map(school => (
-                        <li key={school._id} onClick={() => window.location.href = `reintegration-tracker.html?school_id=${school._id}&school_name=${school.school_name}&year=2024`}>
+                        <li key={school._id} onClick={() => handleSchoolClick(school._id, school.school_name)}>
                             <div>{school.school_name}</div>
                             <div>{school._id}</div>
-                            <i className="fa fa-external-link school-icon"></i>
+                            <i className="fa fa-external-link"></i>
                         </li>
                     ))}
                 </ul>
             );
         }
 
+        function handleSchoolClick(schoolId, schoolName) {
+            window.location.href = `reintegration-tracker.html?school_id=${schoolId}&school_name=${schoolName}&year=${selectedYear}`;
+        }
+
         ReactDOM.render(<SchoolList schools={schoolInfo} />, document.getElementById("school-list"));
+
         const urlParams = new URLSearchParams(window.location.search);
         const schoolId = urlParams.get('school_id');
         const schoolName = urlParams.get('school_name');
-        const selectedYear = urlParams.get('year') || '2024';
+        selectedYear = urlParams.get('year') || '2024';
 
         const studentCache = {};
 
@@ -161,7 +189,7 @@
             };
         }
 
-        async function updateSchoolInfo(selectedYear) {
+        async function updateSchoolInfo() {
             const schoolInfo = await fetchSchoolInfo(schoolId);
 
             const termYearIndicator = `Viewing: Term 1, ${selectedYear}`;
@@ -189,11 +217,7 @@
                 </div>,
                 document.getElementById("term-year-indicator")
             );
-        }
 
-        function handleYearChange(event) {
-            const selectedYear = event.target.value;
-            updateSchoolInfo(selectedYear);
             fetchGradesForYear(selectedYear);
         }
 
@@ -206,10 +230,10 @@
             };
 
             return (
-                <div class="school-item" onClick={handleGradeClick}>
-                    <p class="school-name">{props.data.level}</p>
-                    <p class="school-info">Total enrolled students</p>
-                    <p class="school-view-list">View student list by grade</p>
+                <div className="school-item" onClick={handleGradeClick}>
+                    <p className="school-name">{props.data.level}</p>
+                    <p className="school-info">Total enrolled students</p>
+                    <p className="school-view-list">View student list by grade</p>
                 </div>
             );
         }
@@ -222,8 +246,8 @@
 
             return (
                 <section>
-                    <div class="grades-list">
-                        {items.length > 0 ? items : <p class="grades-subtitle">No grades available.</p>}
+                    <div className="grades-list">
+                        {items.length > 0 ? items : <p className="grades-subtitle">No grades available.</p>}
                     </div>
                 </section>
             );
@@ -276,7 +300,7 @@
             }
 
             return (
-                <table class="student-list-table">
+                <table className="student-list-table">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -434,116 +458,8 @@
             OpenModal("student-profile");
         }
 
-        function handleSchoolSearch(event) {
-            const searchQuery = event.target.value.toLowerCase();
-            const filteredSchools = schoolInfo.filter(school => school.school_name.toLowerCase().includes(searchQuery));
-            ReactDOM.render(<SchoolList schools={filteredSchools} />, document.getElementById("school-list"));
-        }
-
-        function SchoolList(props) {
-            return (
-                <ul>
-                    {props.schools.map(school => (
-                        <li key={school._id} onClick={() => window.location.href = `reintegration-tracker.html?school_id=${school._id}&school_name=${school.school_name}&year=2024`}>
-                            <div>{school.school_name}</div>
-                            <div>{school._id}</div>
-                            <i className="fa fa-external-link school-icon"></i>
-                        </li>
-                    ))}
-                </ul>
-            );
-        }
-        var schoolInfolist = [
-            {
-                _id: 'school-001',
-                school_name: 'Accra Primary School',
-                total_students: 300,
-                teachers: ['Teacher1', 'Teacher2', 'Teacher3']
-            },
-            {
-                _id: 'school-002',
-                school_name: 'University Basic School, Legon',
-                total_students: 500,
-                teachers: ['Teacher4', 'Teacher5', 'Teacher6']
-            },
-            {
-                _id: 'school-003',
-                school_name: 'Greater Accra Region Primary School',
-                total_students: 400,
-                teachers: ['Teacher7', 'Teacher8', 'Teacher9']
-            },
-            {
-                _id: 'school-004',
-                school_name: 'Kwame Nkrumah Primary School',
-                total_students: 350,
-                teachers: ['Teacher10', 'Teacher11', 'Teacher12']
-            }
-        ];
-
-        function SchoolItem(props) {
-            const handleSchoolClick = () => {
-                // Redirect to reintegration tracker page for the first school
-                window.location.href = 'reintegration-tracker.html';
-            };
-
-            return (
-                <div className="school-item" onClick={handleSchoolClick}>
-                    <p className="school-name">{props.data.school_name}</p>
-                    <p className="school-info">Total enrolled students: {props.data.total_students}</p>
-                    <p className="school-info">Teachers: {props.data.teachers.join(', ')}</p>
-                    <p className="school-view-list">View student list by grade</p>
-                </div>
-            );
-        }
-
-        function AddSchools(props) {
-            let items = [];
-            for (let i = 0; i < props.schools.length; i++) {
-                items.push((<SchoolItem data={props.schools[i]} />));
-            }
-
-            const schoolList = items;
-
-            if (items.length == 0) {
-                return (
-                    <section>
-                        <h2 className="schools-title">Schools</h2>
-                        <p className="schools-subtitle">No schools available.</p>
-                        <div className="schools-list">
-                            <div className="list-issue">There are no schools available.</div>
-                        </div>
-                    </section>
-                );
-            }
-
-            return (
-                <section>
-                    <div className="schools-list">
-                        {schoolList}
-                    </div>
-                </section>
-            );
-        }
-
-        async function handleSchoolSearch(event) {
-            const query = event.target.value.toLowerCase();
-            const filteredSchools = schoolInfolist.filter(school => school.school_name.toLowerCase().includes(query));
-
-            ReactDOM.render(
-                <ul>
-                    {filteredSchools.map(school => (
-                        <li key={school._id}>{school.school_name}</li>
-                    ))}
-                </ul>,
-                document.getElementById("school-list")
-            );
-        }
-
-        ReactDOM.render(<AddSchools schools={schoolInfolist} />, document.getElementById("schools-root"));
-
         document.addEventListener('DOMContentLoaded', async () => {
-            await updateSchoolInfolist(selectedYear);
-            await fetchGradesForYear(selectedYear);
+            await updateSchoolInfo();
         });
     </script>
 </body>
