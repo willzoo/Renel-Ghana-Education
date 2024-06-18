@@ -1,6 +1,7 @@
 Flask==2.0.1
 Flask-PyMongo==2.3.0
 pymongo==3.11.4
+python-dotenv==0.19.2
 
 # Frontend dependencies
 react==17.0.2
