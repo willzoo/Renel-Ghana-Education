@@ -1,4 +1,3 @@
 config.env
 __pycache__
 certificate.py
-.DS_Store
