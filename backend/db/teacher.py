@@ -18,7 +18,7 @@ def create_teacher():
         classes = data.get('classes', [])
 
         # Check for required fields
-        if not name or not email or not password or not school_id:
+        if not name or not email or not school_id:
             return jsonify({"error": "Missing required fields"}), 400
 
         teacher_data = {
@@ -31,7 +31,20 @@ def create_teacher():
         
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
-        db.teachers.insert_one(teacher_data)
+        result = db.teachers.insert_one(teacher_data)
+        
+        # Add the new teacher to the school's teacher list
+        teacher_id = result.inserted_id
+
+        print(school_id)
+        print(teacher_id)
+
+        result2 = db.schools.update_one(
+            {"_id": ObjectId(school_id)},
+            {"$push": {"teachers": teacher_id}}
+        )
+        print(result2)
+
         return jsonify({"message": "Teacher created successfully"}), 201
 
     except Exception as e:

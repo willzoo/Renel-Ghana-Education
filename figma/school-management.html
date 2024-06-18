@@ -433,8 +433,6 @@ function NewTeacherInput() {
     let handleNewTeacherSubmit = (event) => {
         event.preventDefault();
         CloseModal("new-teacher");
-        
-        console.log("returning teacher 2: " + RETURNING_TEACHER_ID);
 
         let teacherName = document.getElementById('teacher-name').value;
         let teacherEmail = document.getElementById('teacher-email').value;
@@ -480,12 +478,10 @@ function NewTeacherInput() {
                 <section id="new-teacher-text-input">
                     <TextInput title={newTeacherInfo.teacherName.title}
                         placeholder={newTeacherInfo.teacherName.placeholder}
-                        id={newTeacherInfo.teacherName.id} 
-                        defaultValue={props.teacher.name} />
+                        id={newTeacherInfo.teacherName.id} />
                     <TextInput title={newTeacherInfo.teacherEmail.title}
                         placeholder={newTeacherInfo.teacherEmail.placeholder}
-                        id={newTeacherInfo.teacherEmail.id}
-                        defaultValue={props.teacher.email} />
+                        id={newTeacherInfo.teacherEmail.id} />
                 </section>
                 <br /><br /><br /><br />
                 <SubmitButton value="Add" />
