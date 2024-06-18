@@ -36,6 +36,42 @@ def create_school():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# New route to get info of all schools with teachers defined
+@school_bp.route('/schools/teachers', methods=['GET'])
+def get_schools_with_teachers():
+    try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Fetch all schools
+        schools_cursor = db.schools.find({})
+        schools = []
+
+        for school in schools_cursor:
+            school['_id'] = str(school['_id'])
+            teacher_ids = school.get('teachers', [])
+            teacher_ids = [ObjectId(teacher_id) for teacher_id in teacher_ids]
+
+            # Fetch teacher details for the teachers in this school
+            teacher_cursor = db.teachers.find({"_id": {"$in": teacher_ids}})
+            teachers = []
+            for teacher in teacher_cursor:                
+                teachers.append({
+                    'teacher_id': str(teacher['_id']),
+                    'name': teacher['name'],
+                    'email': teacher['email'],
+                })
+
+            # Add school and its teachers to the list
+            school['teachers'] = teachers
+            schools.append(school)
+
+        return jsonify(schools), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
 # New route to get a teacher's school name using the teacher's ID
 @school_bp.route('/schools/teacher/<teacher_id>/name', methods=['GET'])
 def get_teacher_school_name(teacher_id):
