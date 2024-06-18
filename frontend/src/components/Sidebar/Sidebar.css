@@ -35,29 +35,6 @@
     margin: 0px;
 }
 
-/* button to add a new class */
-.create-class-button {
-    font-size: 15px;
-    text-align: center;
-    color: white;
-
-    user-select: none;
-    cursor: pointer;
-    margin: auto;
-    background-color: #457B9D;
-    width:75%;
-    border-radius: 10px;
-    padding: 10px;
-    
-    transition: background-color 0.1s, width 0.1s;
-}
-
-/* hover animation for button */
-.create-class-button:hover {
-    background-color: #457B9D;
-    width: 78%;
-}
-
 /* container for classes in sidebar */
 .sidebar-classes-container {
     border-radius: 20px;
@@ -98,4 +75,13 @@
  /* more preparation to hide scrollbar */
   .sidebar-classes::-webkit-scrollbar {
     display: none;
+  }
+
+  /* displayed text if there is an issue loading a list of classes/students */
+  .list-issue {
+    font-family: 'Open Sans', sans-serif;
+    color:#516669;
+    font-size: 15px;
+    margin-left: 23px;
+    margin-top: 0px;
   }
