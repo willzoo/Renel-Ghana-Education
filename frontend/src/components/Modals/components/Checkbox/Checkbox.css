@@ -1,0 +1,11 @@
+/* styling for checkbox */
+.modal-text-input input[type="checkbox"] {
+    color: #09393f;
+    background-color: #f2f4f5;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: #c2d2da !important;
+    transition: 0.1s;
+  }

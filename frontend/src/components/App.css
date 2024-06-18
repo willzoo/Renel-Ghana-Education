@@ -61,55 +61,8 @@ body, html {
     text-align: center;
   }
 
-  .modal-text-label {
-    color:#70878a;
-    font-size: 16px;
-    font-family: 'Open Sans', sans-serif;
-    margin-bottom: 5px;
-  }
+  
 
-  .modal-text-input input[type="checkbox"] {
-    color: #09393f;
-    background-color: #f2f4f5;
-    font-size: 16px;
-    font-family: 'Open Sans', sans-serif;
-    border-radius: 10px;
-    border: 2px solid;
-    border-color: #c2d2da !important;
-    transition: 0.1s;
-  }
-
-  .modal-text-input input[type="text"] {
-    margin: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #09393f;
-    background-color: #f2f4f5;
-    font-size: 16px;
-    width: 400px;
-    height: 40px;
-    font-family: 'Open Sans', sans-serif;
-    border-radius: 10px;
-    border: 2px solid;
-    border-color: #c2d2da;
-    transition: 0.1s;
-  }
-
-  .modal-text-input input[type="text"]:focus {
-    background-color: #f7f9fa;
-    border-color: #9eb5c2 !important;
-    border: 2px solid;
-    outline: none;
-    width: 410px;
-    padding-left: 15px;
-  }
-
-  .modal-text-input input[type="text"]:hover {
-    background-color: #f5f6f8;
-    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
-    width: 410px;
-    padding-left: 15px;
-  }
   
   .text-input input[type="email"], input[type="password"] {
     margin: auto;
@@ -143,83 +96,6 @@ body, html {
     padding-left: 15px;
   }
 
-  .modal-text-input select {
-    margin: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #09393f !important;
-    background-color: #f2f4f5;
-    font-size: 15px;
-    width: 150px;
-    height: 40px;
-    font-family: 'Open Sans', sans-serif;
-    border-radius: 10px;
-    border: 2px solid;
-    border-color: #c2d2da;
-    transition: 0.1s;
-  }
-
-  .modal-text-input select:hover {
-    background-color: #f5f6f8;
-    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
-    width: 160px;
-    padding-left: 12px;
-  }
-
-  .modal-text-input select:focus {
-    background-color: #f5f6f8;
-    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
-    width: 160px;
-    padding-left: 12px;
-    border-color: #9eb5c2 !important;
-  }
-
-  .modal-text-input select:checked {
-    border-color: #9eb5c2 !important;
-  }
-
-  .modal-dropdown-default {
-    display: none;
-  }
-
-  .modal-submit {
-    text-align: center;
-  }
-
-  .modal-submit input[type="submit"], input[type="button"] {
-    text-align: center;
-    /* margin: auto; */
-    padding-left: 10px;
-    padding-right: 10px;
-    transform: translate(-50%, -50%);
-    color: #5d7073;
-    background-color: #f2f4f5;
-    font-size: 16px;
-    width: 100px;
-    height: 40px;
-    font-family: 'Open Sans', sans-serif;
-    border-radius: 10px;
-    border: 2px solid;
-    border-color: #c2d2da;
-    transition: 0.1s;
-    position: absolute;
-    bottom: 40px;
-  }
-
-  .modal-submit input[type="submit"]:focus, input[type="button"]:focus {
-    color: #09393f;
-    border-color: #4083b0 !important;
-    border: 2px solid;
-    outline: none;
-    width: 100px;
-  }
-
-  .modal-submit input[type="submit"]:hover, input[type="button"]:hover {
-    color: #09393f;
-    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
-    width: 105px;
-    background-color: #f5f6f8;
-  }
 
   .main {
     width: calc(100% - 440px);

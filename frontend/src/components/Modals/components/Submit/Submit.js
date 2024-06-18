@@ -1,4 +1,5 @@
 import React from 'react'
+import './Submit.css'
 
 function Submit (props) {
     return (

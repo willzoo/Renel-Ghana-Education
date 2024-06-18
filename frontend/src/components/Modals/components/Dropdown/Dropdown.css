@@ -1,0 +1,42 @@
+/* basic dropdown styling */
+.modal-text-input select {
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #09393f !important;
+    background-color: #f2f4f5;
+    font-size: 15px;
+    width: 150px;
+    height: 40px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: #c2d2da;
+    transition: 0.1s;
+  }
+
+  /* dropdown styling on hover */
+  .modal-text-input select:hover {
+    background-color: #f5f6f8;
+    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
+    width: 160px;
+    padding-left: 12px;
+  }
+
+  /* dropdown styling on selection */
+  .modal-text-input select:focus {
+    background-color: #f5f6f8;
+    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
+    width: 160px;
+    padding-left: 12px;
+    border-color: #9eb5c2 !important;
+  }
+
+  /* dropdown style when item is selected */
+  .modal-text-input select:checked {
+    border-color: #9eb5c2 !important;
+  }
+
+  .modal-dropdown-default {
+    display: none;
+  }
