@@ -23,7 +23,6 @@ function ModalBase(props) {
                     <br />
                     <span className="content">{props.info.text}</span>
                 </div>
-                <br />
                 <div id={`${props.info.id}-modal-root`}>
                     {content}
                 </div>

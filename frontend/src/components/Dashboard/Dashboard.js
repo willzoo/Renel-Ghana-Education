@@ -26,7 +26,7 @@ function Dashboard(props) {
                 {/* <div style={{display: 'inline-block', width:'20px'}}></div> */}
 
                 {/* add student/returning student button */}
-                <AddStudentButton id="returning" text="Add Student" icon={faPlus}/>
+                <AddStudentButton id="search" text="Add Student" icon={faPlus}/>
                 
                 {/* insert space between buttons */}
                 <div style={{display: 'inline-block', width:'20px'}}></div>

@@ -1,3 +1,12 @@
+/* main dashboard page formatting */
+.main {
+  width: calc(100% - 440px);
+  height: 100%;
+  margin: 30px;
+  margin-left: 410px;
+  position:fixed;
+}
+
 /* header content */
 .header-info {
     height:160px;

@@ -53,3 +53,66 @@ def get_teacher_school_name(teacher_id):
         return jsonify({"school_name": school['name']}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+# GET route to fetch specific school's grade list and their students
+@school_bp.route('/schools/<school_id>/grades', methods=['GET'])
+def get_school_grades_and_students(school_id):
+    try:
+        # Convert school_id to ObjectId
+        school_id = ObjectId(school_id)
+        
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Connect to the collections
+        schools_collection = mongo.db.schools
+        classes_collection = mongo.db.classes
+        students_collection = mongo.db.students
+        
+        # Fetch school document to ensure it exists
+        school = schools_collection.find_one({"_id": school_id}, {"grade_list": 1})
+        
+        if not school:
+            return jsonify({"error": "School not found"}), 404
+        
+        # Initialize the response structure
+        grade_list = school.get("grade_list", [])
+        detailed_grades = []
+        
+        # Iterate through the grades to fetch class and student information
+        for grade in grade_list:
+            grade_level = grade.get("grade_level")
+            classes = list(classes_collection.find({"school_id": school_id, "grade_level": grade_level}))
+            
+            # Fetch students for each class
+            for _class in classes:
+                _class['_id'] = str(_class['_id'])  # Convert ObjectId to string
+                student_cursor = students_collection.find({"class_id": _class['_id']})
+                _class['students'] = []
+                for student in student_cursor:
+                    student['_id'] = str(student['_id'])
+                    student['school_id'] = str(student['school_id'])
+                    student['class_id'] = str(student['class_id'])
+                    student['name'] = str(student['name'])
+                    student['guardian_name'] = str(student['guardian_name'])
+                    student['guardian_contact'] = str(student['guardian_contact'])
+                    student['dob'] = str(student['dob'])
+                    student['student_school_id'] = str(student['student_school_id'])
+                    student['disabled'] = str(student['disabled'])
+                    student['health_conditions'] = str(student['health_conditions'])
+                    student['misc_info'] = str(student['misc_info'])
+                    student['grade_level'] = str(student['grade_level'])
+                    _class['students'].append(student)
+            
+            # Append detailed information for the grade
+            detailed_grades.append({
+                "grade_level": grade_level,
+                "classes": classes
+            })
+        
+        # Return the detailed grades and students as JSON response
+        return jsonify(detailed_grades), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+

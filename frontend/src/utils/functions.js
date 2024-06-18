@@ -28,85 +28,6 @@ function waitForDefinition(variableName) {
 
 //------------------------------------------- CREATE NEW CLASS COMPONENT -------------------------------------------
 
-// let addClassInfo = {
-//     className: { title: "Class Name", placeholder: "Enter a class name", id: "class-name" },
-// };
-
-// let addClassDropdown = [
-//     ["Grade Level", "grade-level"],
-//     ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
-//     ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
-//     ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
-// ];
-
-// function ClassInput() {
-//     let handleSubmit = (event) => {
-//         event.preventDefault();
-//         CloseModal("class-add");
-
-//         let className = document.getElementById('class-name').value;
-//         let gradeLevel = document.getElementById('grade-level').value;
-
-//         let content = {
-//             "class_name": className,
-//             "grade_level": gradeLevel,
-//             "teacher_id": "665da0b90c1d6c0c45724285",
-//             "school_id": "665da7c60c1d6c0c45724286",
-//             "students": []
-//         };
-
-//         classInfo.push(content);
-
-//         selectedClass = classInfo.at(-1);
-
-//         classInfo.sort((a, b) => {
-//             return a.class_name.localeCompare(b.class_name);
-//         });
-
-//         fetch('http://127.0.0.1:8000/classes', {
-//             method: "POST",
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify(content)
-//         })
-//             .then(response => {
-//                 if (!response.ok) {
-//                     throw new Error('Network response was not ok');
-//                 }
-//                 return response.json();
-//             })
-//             .then(data => {
-//                 console.log('Data received:', data);
-//             })
-//             .catch(error => {
-//                 console.error('There was a problem with the fetch operation:', error);
-//             });
-
-//         // ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
-
-//         // ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
-//         // ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"));
-//         // ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"));
-//     }
-
-//     return (
-//         <section style={{ margin: '50px' }}>
-//             <form id="class-modal-form" onSubmit={handleSubmit}>
-//                 <div id="class-add-text-input">
-//                     <TextInput title={addClassInfo.className.title}
-//                         placeholder={addClassInfo.className.placeholder}
-//                         id={addClassInfo.className.id} />
-//                     <br />
-//                     <Dropdown data={addClassDropdown} />
-//                     <br /><br /><br /><br />
-//                 </div>
-//                 <SubmitButton value="Create" />
-//             </form>
-//         </section>
-//     );
-// }
-
 // ReactDOM.render(<ClassInput />, document.getElementById("class-add-modal-root"));
 
 //------------------------------------------- EDIT CLASS COMPONENT -------------------------------------------
@@ -175,108 +96,7 @@ function waitForDefinition(variableName) {
 
 //------------------------------------------- ADD NEW STUDENT COMPONENT -------------------------------------------
 
-// let newStudentInfo = {
-//     studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
-//     studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id" },
-//     studentDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "student-dob" },
-//     guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name" },
-//     guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact" },
-//     studentMedical: { title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical" },
-//     disabilityStatus: { title: "Disability Status", id: "disability-status" },
-//     additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info" },
-// }
-
-// function NewStudentInput() {
-//     let handleNewStudentSubmit = (event) => {
-//         event.preventDefault();
-//         CloseModal("new-student");
-        
-//         console.log("returning student 2: " + RETURNING_STUDENT_ID);
-
-//         let studentName = document.getElementById('student-name').value;
-//         let studentID = RETURNING_STUDENT_ID;
-//         let studentDOB = document.getElementById('student-dob').value;
-//         let guardianName = document.getElementById('guardian-name').value;
-//         let guardianContact = document.getElementById('guardian-contact').value;
-//         let studentMedical = document.getElementById('student-medical').value;
-//         let disabilityStatus = document.getElementById('disability-status').value;
-//         let additionalInfo = document.getElementById('additional-info').value;
-
-//         let content = {
-//             'name': studentName,
-//             'guardian_name': guardianName,
-//             'guardian_contact': guardianContact,
-//             'dob': studentDOB,
-//             "student_school_id": studentID,
-//             'disabled': disabilityStatus,
-//             'health_conditions': studentMedical,
-//             'misc_info': additionalInfo,
-//             'class_id': selectedClass._id,
-//             'grade_level': "Primary 2",
-//             'school_id': "nb9s",
-//             'history': [],
-//         };
-
-//         selectedClass.students.push(content);
-
-//         fetch('http://127.0.0.1:8000/students', {
-//             method: "POST",
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify(content)
-//         })
-//             .then(response => {
-//                 if (!response.ok) {
-//                     throw new Error('Network response was not ok');
-//                 }
-//                 return response.json();
-//             })
-//             .then(data => {
-//                 console.log('Data received:', data);
-//             })
-//             .catch(error => {
-//                 console.error('There was a problem with the fetch operation:', error);
-//             });
-
-//         // ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
-//         // ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
-//         // ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"));
-//     }
-
-//     return (
-//         <section style={{ margin: '50px' }}>
-//             <form id="new-student-form" onSubmit={handleNewStudentSubmit}>
-//                 <section id="new-student-text-input">
-//                     <TextInput title={newStudentInfo.studentName.title}
-//                         placeholder={newStudentInfo.studentName.placeholder}
-//                         id={newStudentInfo.studentName.id} />
-//                     <TextInput title={newStudentInfo.studentDOB.title}
-//                         placeholder={newStudentInfo.studentDOB.placeholder}
-//                         id={newStudentInfo.studentDOB.id} />
-//                     <TextInput title={newStudentInfo.guardianName.title}
-//                         placeholder={newStudentInfo.guardianName.placeholder}
-//                         id={newStudentInfo.guardianName.id} />
-//                     <TextInput title={newStudentInfo.guardianContact.title}
-//                         placeholder={newStudentInfo.guardianContact.placeholder}
-//                         id={newStudentInfo.guardianContact.id} />
-//                     <TextInput title={newStudentInfo.studentMedical.title}
-//                         placeholder={newStudentInfo.studentMedical.placeholder}
-//                         id={newStudentInfo.studentMedical.id} />
-//                     <br />
-//                     <Checkbox id={newStudentInfo.disabilityStatus.id}
-//                         name={newStudentInfo.disabilityStatus.id}
-//                         title={newStudentInfo.disabilityStatus.title} />
-//                     <TextInput title={newStudentInfo.additionalInfo.title}
-//                         placeholder={newStudentInfo.additionalInfo.placeholder}
-//                         id={newStudentInfo.additionalInfo.id} />
-//                 </section>
-//                 <br /><br /><br /><br />
-//                 <SubmitButton value="Add" />
-//             </form>
-//         </section>
-//     );
-// }
+// 
 
 // ReactDOM.render(<NewStudentInput />, document.getElementById("new-student-modal-root"));
 
@@ -386,42 +206,6 @@ function waitForDefinition(variableName) {
 
 //------------------------------------------- ADD RETURNING STUDENT COMPONENT -------------------------------------------      
 
-// let returningStudentInfo = {
-//     studentID: { title: "Student ID", placeholder: "Find Student", id: "returning-student-id-request" },
-// }
-
-// function ReturningStudentInput() {
-//     const handleSubmit = (event) => {
-//         event.preventDefault();
-
-//         CloseModal("returning-student");
-//         let id = document.getElementById("returning-student-id-request").value;
-//         //Global variable to be used later with in add new student
-//         RETURNING_STUDENT_ID = document.getElementById("returning-student-id-request").value;
-//         console.log("returning student: " + RETURNING_STUDENT_ID);
-//         if (selectedClass.students.find(student => student.student_school_id === id)) {
-//             OpenModal("edit-student", id);
-//         }
-//         else {
-//             OpenModal("new-student");
-//         }
-
-//     }
-
-//     return (
-//         <section style={{ margin: '50px' }}>
-//             <form id="returning-student-form" onSubmit={handleSubmit}>
-//                 <section id="returning-student-text-input">
-//                     <TextInput title={returningStudentInfo.studentID.title}
-//                         placeholder={returningStudentInfo.studentID.placeholder}
-//                         id={returningStudentInfo.studentID.id} />
-//                     </section>
-//                 <br /><br /><br /><br />
-//                 <SubmitButton value="Search" />
-//             </form>
-//         </section>
-//     );
-// }
 
 // ReactDOM.render(<ReturningStudentInput />, document.getElementById("returning-student-modal-root"));
 
@@ -467,9 +251,9 @@ export const OpenModal = (id, studentID = "-1") => {
 
     underlay.style.display = "block";
 
-    if (id == "edit-student" && studentID !== "-1") {
-        console.log(`Editing student with ID: ${studentID}`);
-    }
+    // if (id == "edit-student" && studentID !== "-1") {
+    //     console.log(`Editing student with ID: ${studentID}`);
+    // }
 }
 
 export const CloseModal = async (id) => {
@@ -690,30 +474,30 @@ var selectedClass;
 //     );
 // }
 
-// waitForDefinition('classInfo')
-//     .then((value) => {
-//         console.log('classInfo is defined:', value);
-//         document.getElementById("teacher-name").textContent = "We need to add this";
-//         document.getElementById("teacher-email").textContent = "and also this @gmail.com";
-//     })
-//     .catch((error) => {
-//         console.error(error);
-//     });
+waitForDefinition('classInfo')
+    .then((value) => {
+        console.log('classInfo is defined:', value);
+        document.getElementById("teacher-name").textContent = "We need to add this";
+        document.getElementById("teacher-email").textContent = "and also this @gmail.com";
+    })
+    .catch((error) => {
+        console.error(error);
+    });
 
-// waitForDefinition('selectedClass')
-//     .then((value) => {
-//         console.log('selectedClass is defined:', value);
-//         // ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
-//     })
-//     .catch((error) => {
-//         console.error(error);
-//     });
+waitForDefinition('selectedClass')
+    .then((value) => {
+        console.log('selectedClass is defined:', value);
+        // ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+    })
+    .catch((error) => {
+        console.error(error);
+    });
 
-// waitForDefinition('selectedClass')
-//     .then((value) => {
-//         console.log('selectedClass is defined:', value);
-//         CloseModal("loading");
-//     })
-//     .catch((error) => {
-//         console.error(error);
-//     });
+waitForDefinition('selectedClass')
+    .then((value) => {
+        console.log('selectedClass is defined:', value);
+        CloseModal("loading");
+    })
+    .catch((error) => {
+        console.error(error);
+    });

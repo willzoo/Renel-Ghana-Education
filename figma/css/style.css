@@ -710,7 +710,7 @@ body, html {
 
     margin: 0px;
 }
-/* Admin Dashboard additional CSS below */
+/* Admin Dashboard additional CSS */
 
 .list-of-schools {
   margin-top: 20px;
@@ -780,58 +780,102 @@ body, html {
   margin-bottom: 10px; /* Adjust as needed */
 }
 
-/* Ensure modal covers full screen */
+/* Modal styles */
 .reintegration-tracker .modal-underlay {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  display: none;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .reintegration-tracker .blurred-modal-underlay {
   display: flex;
 }
 
+.reintegration-tracker .modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  width: 800px; /* Increase the width */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.reintegration-tracker .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.reintegration-tracker .modal-title {
+  font-size: 1.5em;
+}
+
+.reintegration-tracker .modal-close {
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+.reintegration-tracker .modal-body {
+  padding: 20px 0;
+}
+
+.reintegration-tracker .modal-footer {
+  text-align: right;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.reintegration-tracker .save-button {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #144047;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
 .reintegration-tracker .input-group {
   display: flex;
-  gap: 50px;
+  flex-wrap: wrap;
+  gap: 20px; /* Increase gap between columns */
 }
 
-.reintegration-tracker .input-group input {
-  flex: 1;
+.reintegration-tracker .modal-text-input {
+  flex: 1 1 45%; /* Ensure two columns */
+}
+
+.reintegration-tracker .modal-text-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.reintegration-tracker .modal-text-input input {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
+  box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-}
-
-.reintegration-tracker .input-group label {
-  flex: 1;
-  font-weight: 600;
-  font-family: 'Open Sans', sans-serif;
+  border-radius: 4px;
 }
 
 .reintegration-tracker .checkbox-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .reintegration-tracker .checkbox-group label {
-  font-weight: 600;
-  font-family: 'Open Sans', sans-serif;
-}
-
-.reintegration-tracker .checkbox-group input {
-  margin: 0;
+  margin-right: 10px;
 }
 
 /* Grade blocks */
@@ -856,7 +900,7 @@ body, html {
   text-align: left;
 }
 
-/* Adjust the modal width */
+/* Modal adjustments */
 .modal {
   position: fixed;
   top: 50%;
@@ -993,20 +1037,21 @@ body, html {
   border-bottom: 1px solid #E0E0E0;
 }
 
-.admin-dashboard-search-modal {
-  position: absolute;
-  width: 520px;
-  height: 563px;
-  left: calc(50% - 520px/2 + 140px);
-  top: 124px;
+.reintegration-tracker .admin-dashboard-search-modal {
+  position: relative;
+  width: 90%;
+  height: 100%; /* Adjust as needed */
+  overflow-y: auto; /* Ensure it is scrollable */
   background: #FFFFFF;
   border: 1px solid rgba(29, 28, 29, 0.13);
   border-radius: 16px;
   box-shadow: 0px 10px 50px rgba(139, 139, 139, 0.1);
   padding: 20px;
+  margin-bottom: 20px; /* Add some space below */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */ 
 }
 
-.admin-dashboard-search-bar {
+.reintegration-tracker .admin-dashboard-search-bar {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -1015,7 +1060,7 @@ body, html {
   margin-bottom: 20px;
 }
 
-.admin-dashboard-search-bar input {
+.reintegration-tracker .admin-dashboard-search-bar input {
   border: none;
   outline: none;
   flex: 1;
@@ -1023,7 +1068,7 @@ body, html {
   font-size: 16px;
 }
 
-.admin-dashboard-search-bar i {
+.reintegration-tracker .admin-dashboard-search-bar i {
   color: #144047;
   margin-right: 10px;
 }
@@ -1087,7 +1132,7 @@ body, html {
 }
 
 /* Sidebar dropdown styles */
-.admin-dashboard-sidebar select {
+.reintegration-tracker .admin-dashboard-sidebar select {
   width: 100%;
   padding: 10px;
   font-size: 16px;
@@ -1134,20 +1179,4 @@ body, html {
   background-color: #28585F;
   color: white;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* Additional styling to ensure the search bar is between the two buttons */
-.search-bar-container {
-  flex: 2;
-  display: flex;
-  justify-content: center;
-}
-
-.search-bar-container input {
-  width: 80%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }

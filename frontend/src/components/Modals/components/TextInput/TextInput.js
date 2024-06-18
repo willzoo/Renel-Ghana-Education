@@ -4,15 +4,15 @@ import './TextInput.css'
 function TextInput(props) {
     return (
         <section className="modal-text-input">
-            <p className="label">{props.title}</p>
+            <p className="label">{props.info.title}</p>
 
             <input 
-            placeholder={props.placeholder} 
-            title={props.title} 
+            placeholder={props.info.placeholder} 
+            title={props.info.title} 
             type="text" 
-            id={props.id} 
+            id={props.info.id} 
             required 
-            defaultValue={props.defaultValue} />
+            defaultValue={props.info.defaultValue} />
 
         </section>
     );
