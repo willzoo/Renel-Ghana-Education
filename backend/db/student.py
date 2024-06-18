@@ -29,7 +29,6 @@ def create_student():
     if not name or not guardian_contact or not class_id or not grade_level or not school_id:
         return jsonify({"error": "Missing required fields"}), 400
     
-
     new_student = {
         'name': name,
         'guardian_name': guardian_name,

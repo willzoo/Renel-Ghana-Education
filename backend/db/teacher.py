@@ -6,11 +6,11 @@ import bcrypt
 # Create a Blueprint instance for teachers
 teacher_bp = Blueprint('teacher', __name__)
 
+# Route to make a new teacher #ADMIN
 @teacher_bp.route('/teachers', methods=['POST'])
 def create_teacher():
     try:
         data = request.get_json()
-        teacher_id = data.get('_id')
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
@@ -18,11 +18,10 @@ def create_teacher():
         classes = data.get('classes', [])
 
         # Check for required fields
-        if not teacher_id or not name or not email or not password or not school_id:
+        if not name or not email or not password or not school_id:
             return jsonify({"error": "Missing required fields"}), 400
 
         teacher_data = {
-            "_id": teacher_id,
             "name": name,
             "email": email,
             "password": password,
@@ -75,17 +74,6 @@ def get_teacher_classes(teacher_id):
                 student['_id'] = str(student['_id'])
                 student['school_id'] = str(student['school_id'])
                 student['class_id'] = str(student['class_id'])
-                student['name'] = str(student['name'])
-                student['guardian_name'] = str(student['guardian_name'])
-                student['guardian_contact'] = str(student['guardian_contact'])
-                student['dob'] = str(student['dob'])
-                student['student_school_id'] = str(student['student_school_id'])
-                student['disabled'] = str(student['disabled'])
-                student['health_conditions'] = str(student['health_conditions'])
-                student['misc_info'] = str(student['misc_info'])
-                student['class_id'] = str(student['class_id'])
-                student['grade_level'] = str(student['grade_level'])
-                student['school_id'] = str(student['school_id'])
                 students.append(student)            
             cls['students'] = students
 
@@ -93,6 +81,33 @@ def get_teacher_classes(teacher_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Route to patch a teacher with new info
+@teacher_bp.route('/teachers/<teacher_id>', methods=['PATCH'])
+def update_teacher(teacher_id):
+    try:
+        data = request.get_json()
+
+        # Filter out keys with None values
+        update_data = {key: value for key, value in data.items() if value is not None}
+
+        # Check if there is any data to update
+        if not update_data:
+            return jsonify({"error": "No fields to update"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Update the teacher document
+        result = db.teachers.update_one({"_id": ObjectId(teacher_id)}, {"$set": update_data})
+
+        if result.matched_count == 0:
+            return jsonify({"error": "Teacher not found"}), 404
+
+        return jsonify({"message": "Teacher updated successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 # Route to patch (add) a new class to a teacher's list of classes
 @teacher_bp.route('/teachers/<teacher_id>/classes', methods=['PATCH'])
 def add_teacher_class(teacher_id):
