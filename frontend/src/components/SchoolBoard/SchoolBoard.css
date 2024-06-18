@@ -1,0 +1,132 @@
+/* header content */
+.header-info {
+    height:160px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* indicator box */
+  .upper-info {
+    width: 290px;
+    height: 80px;
+    background-color: white;
+    border-radius: 18px;
+    box-shadow: 0px 0px 10px 5px rgb(0, 0, 0, 0.02);
+    transition: 0.1s;
+    padding: 10px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* indicator row, for inficator spacing */
+  .upper-info .row {
+    display:flex;
+    justify-content: space-between;
+    width: 290px;
+    position:absolute;
+  }
+
+  /* indicator label */
+  .upper-info .label {
+    text-align: left;
+    
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color:#484848;
+    margin: auto;
+    margin-top: 5px;
+    margin-left: 45px;
+    white-space: nowrap;
+  }
+
+  /* indicator value */
+  .upper-info .value {
+    text-align: right;
+    
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    color:#484848;
+    margin: auto;
+    margin-right: 5px;
+    margin-top: 3px;
+    white-space: nowrap;
+  }
+  
+/* icon styling */
+  .upper-info .icon {
+    margin: auto;
+    width: 30px;
+    height:30px;
+    position: absolute;
+    z-index: 1;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 5px rgb(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center; /* Vertical alignment */
+    justify-content: center;
+
+    /* styling for text */
+    font-size: 16;
+    color: white;
+  }
+
+/* upper section for add teacher buttons */
+.add-teacher-section {
+    height: 60px;
+    display:flex;
+    justify-content:center;
+  }
+
+  /* div for teacher list section */
+  .teacher-section {
+    height:calc(100% - 340px);
+    position: relative;
+  }
+  
+  /* container properties for teacher list */
+  .teachers-list-container {
+    border-radius: 20px;
+    background-color:#eef5fa;
+    height: 100%;
+    height: 100%;
+    margin: auto;
+    margin-top: 10px;
+    padding-top: 2px;
+    box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* allows for scrolling of list items only */
+  .teachers-list {
+    overflow-y: auto;
+    height: calc(100% - 90px);
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    mask-image: linear-gradient(to bottom, transparent, black 2%, black 98%, transparent);
+  }
+
+  /* more css for hiding scrollbar */
+  .sidebar-classes::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* title within teacher list */
+.teachers-list-container .title {
+    font-family: 'Open Sans', sans-serif;
+    color:#138999;
+    font-weight: bolder;
+    font-size: 20px;
+    margin-left: 23px;
+    margin-bottom: 0px;
+  }
+  
+  /* memo text within teacher list */
+  .teachers-list-container .body {
+    font-family: 'Open Sans', sans-serif;
+    color:#88a2a5;
+    font-size: 15px;
+    margin-left: 23px;
+    margin-top: 0px;
+  }
+  
