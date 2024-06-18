@@ -311,7 +311,7 @@ function SchoolInput() {
         selectedSchool = schoolInfo.at(-1);
 
         schoolInfo.sort((a, b) => {
-            return a.school_name.localeCompare(b.school_name);
+            return a.name.localeCompare(b.name);
         });
 
         fetch('http://127.0.0.1:8000/schools', {
@@ -426,13 +426,7 @@ ReactDOM.render(<SchoolEditInput />, document.getElementById("school-edit-modal-
 
 let newTeacherInfo = {
     teacherName: { title: "Teacher Name", placeholder: "Please enter teacher name", id: "teacher-name" },
-    teacherID: { title: "Teacher ID", placeholder: "Please enter teacher ID", id: "teacher-id" },
-    teacherDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "teacher-dob" },
-    guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name" },
-    guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact" },
-    teacherMedical: { title: "Teacher Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "teacher-medical" },
-    disabilityStatus: { title: "Disability Status", id: "disability-status" },
-    additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the teacher?", id: "additional-info" },
+    teacherEmail: { title: "Teacher Email", placeholder: "Please enter teacher email", id: "teacher-email" }
 }
 
 function NewTeacherInput() {
@@ -443,27 +437,14 @@ function NewTeacherInput() {
         console.log("returning teacher 2: " + RETURNING_TEACHER_ID);
 
         let teacherName = document.getElementById('teacher-name').value;
-        let teacherID = RETURNING_TEACHER_ID;
-        let teacherDOB = document.getElementById('teacher-dob').value;
-        let guardianName = document.getElementById('guardian-name').value;
-        let guardianContact = document.getElementById('guardian-contact').value;
-        let teacherMedical = document.getElementById('teacher-medical').value;
-        let disabilityStatus = document.getElementById('disability-status').value;
-        let additionalInfo = document.getElementById('additional-info').value;
+        let teacherEmail = document.getElementById('teacher-email').value;
 
         let content = {
             'name': teacherName,
-            'guardian_name': guardianName,
-            'guardian_contact': guardianContact,
-            'dob': teacherDOB,
-            "teacher_school_id": teacherID,
-            'disabled': disabilityStatus,
-            'health_conditions': teacherMedical,
-            'misc_info': additionalInfo,
+            'email': teacherEmail,
+            'password': '',
             'school_id': selectedSchool._id,
-            'grade_level': "Primary 2",
-            'school_id': "nb9s",
-            'history': [],
+            'classes': [],
         };
 
         selectedSchool.teachers.push(content);
@@ -499,26 +480,12 @@ function NewTeacherInput() {
                 <section id="new-teacher-text-input">
                     <TextInput title={newTeacherInfo.teacherName.title}
                         placeholder={newTeacherInfo.teacherName.placeholder}
-                        id={newTeacherInfo.teacherName.id} />
-                    <TextInput title={newTeacherInfo.teacherDOB.title}
-                        placeholder={newTeacherInfo.teacherDOB.placeholder}
-                        id={newTeacherInfo.teacherDOB.id} />
-                    <TextInput title={newTeacherInfo.guardianName.title}
-                        placeholder={newTeacherInfo.guardianName.placeholder}
-                        id={newTeacherInfo.guardianName.id} />
-                    <TextInput title={newTeacherInfo.guardianContact.title}
-                        placeholder={newTeacherInfo.guardianContact.placeholder}
-                        id={newTeacherInfo.guardianContact.id} />
-                    <TextInput title={newTeacherInfo.teacherMedical.title}
-                        placeholder={newTeacherInfo.teacherMedical.placeholder}
-                        id={newTeacherInfo.teacherMedical.id} />
-                    <br />
-                    <Checkbox id={newTeacherInfo.disabilityStatus.id}
-                        name={newTeacherInfo.disabilityStatus.id}
-                        title={newTeacherInfo.disabilityStatus.title} />
-                    <TextInput title={newTeacherInfo.additionalInfo.title}
-                        placeholder={newTeacherInfo.additionalInfo.placeholder}
-                        id={newTeacherInfo.additionalInfo.id} />
+                        id={newTeacherInfo.teacherName.id} 
+                        defaultValue={props.teacher.name} />
+                    <TextInput title={newTeacherInfo.teacherEmail.title}
+                        placeholder={newTeacherInfo.teacherEmail.placeholder}
+                        id={newTeacherInfo.teacherEmail.id}
+                        defaultValue={props.teacher.email} />
                 </section>
                 <br /><br /><br /><br />
                 <SubmitButton value="Add" />
@@ -533,8 +500,7 @@ ReactDOM.render(<NewTeacherInput />, document.getElementById("new-teacher-modal-
 
 let editTeacherInfo = {
     teacherName: { title: "Teacher Name", placeholder: "Please enter teacher name", id: "teacher-name-edit" },
-    teacherID: { title: "Teacher Email", placeholder: "Please enter teacher email", id: "teacher-email-edit" },
-    teacherPassword: { title: "Teacher Password", placeholder: "Change teacher password", id: "teacher-password-edit" },
+    teacherEmail: { title: "Teacher Email", placeholder: "Please enter teacher email", id: "teacher-email-edit" },
 }
 
 function EditTeacherInput(props) {
@@ -543,13 +509,7 @@ function EditTeacherInput(props) {
 
         const teacherData = {
             name: document.getElementById(editTeacherInfo.teacherName.id).value,
-            teacher_school_id: document.getElementById(editTeacherInfo.teacherID.id).value,
-            dob: document.getElementById(editTeacherInfo.teacherDOB.id).value,
-            guardian_name: document.getElementById(editTeacherInfo.guardianName.id).value,
-            guardian_contact: document.getElementById(editTeacherInfo.guardianContact.id).value,
-            health_conditions: document.getElementById(editTeacherInfo.teacherMedical.id).value,
-            disabled: document.getElementById(editTeacherInfo.disabilityStatus.id).checked,
-            misc_info: document.getElementById(editTeacherInfo.additionalInfo.id).value
+            email: document.getElementById(editTeacherInfo.teacherEmail.id).value
         };
 
         fetch(`http://127.0.0.1:8000/teachers/${props.teacher._id}`, {
@@ -591,35 +551,10 @@ function EditTeacherInput(props) {
                         placeholder={editTeacherInfo.teacherName.placeholder}
                         id={editTeacherInfo.teacherName.id} 
                         defaultValue={props.teacher.name} />
-                    <TextInput title={editTeacherInfo.teacherDOB.title}
-                        placeholder={editTeacherInfo.teacherDOB.placeholder}
-                        id={editTeacherInfo.teacherDOB.id}
-                        defaultValue={props.teacher.dob} />
-                    <TextInput title={editTeacherInfo.teacherID.title}
-                        placeholder={editTeacherInfo.teacherID.placeholder}
-                        id={editTeacherInfo.teacherID.id}
-                        defaultValue={props.teacher.teacher_school_id} />
-                    <TextInput title={editTeacherInfo.guardianName.title}
-                        placeholder={editTeacherInfo.guardianName.placeholder}
-                        id={editTeacherInfo.guardianName.id}
-                        defaultValue={props.teacher.guardian_name} />
-                    <TextInput title={editTeacherInfo.guardianContact.title}
-                        placeholder={editTeacherInfo.guardianContact.placeholder}
-                        id={editTeacherInfo.guardianContact.id}
-                        defaultValue={props.teacher.guardian_contact} />
-                    <TextInput title={editTeacherInfo.teacherMedical.title}
-                        placeholder={editTeacherInfo.teacherMedical.placeholder}
-                        id={editTeacherInfo.teacherMedical.id}
-                        defaultValue={props.teacher.health_conditions} />
-                    <br />
-                    <Checkbox id={editTeacherInfo.disabilityStatus.id}
-                        name={editTeacherInfo.disabilityStatus.id}
-                        title={editTeacherInfo.disabilityStatus.title}
-                        defaultValue={props.teacher.disabled} />
-                    <TextInput title={editTeacherInfo.additionalInfo.title}
-                        placeholder={editTeacherInfo.additionalInfo.placeholder}
-                        id={editTeacherInfo.additionalInfo.id}
-                        defaultValue={props.teacher.misc_info} />
+                    <TextInput title={editTeacherInfo.teacherEmail.title}
+                        placeholder={editTeacherInfo.teacherEmail.placeholder}
+                        id={editTeacherInfo.teacherEmail.id}
+                        defaultValue={props.teacher.email} />
                 </section>
                 <br /><br /><br /><br />
                 <SubmitButton value="Save" />
@@ -689,17 +624,14 @@ function SchoolItem(props) {
     const handleSchoolClick = () => {
         selectedSchool = props.data;
         ReactDOM.render(<AddTeachers teachers={selectedSchool.teachers} />, document.getElementById("teachers-root"));
-        ReactDOM.render(<Indicator title="Grade Level" value={selectedSchool.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"));
-        ReactDOM.render(<Indicator title="Enrolled Teachers" value={selectedSchool.teachers.length} theme="num-teachers" icon="fa fa-graduation-cap" />, document.getElementById("num-teachers-indicator"));
     };
 
     return (
         <li>
             <div className="sidebar-school" onClick={handleSchoolClick}>
                 <div>
-                    <p className="school-info">{props.data.school_name}</p>
-                    <p className="school-info-body">{props.data.grade_level}</p>
-                    <p className="school-info-body">Total Enrolled Teachers: {props.data.teachers.length}</p>
+                    <p className="school-info">{props.data.name}</p>
+                    <p className="school-info-body">Total Teachers: {props.data.teachers.length}</p>
                 </div>
                 <div className="edit-button">
                     <p className="edit-text" onClick={handleEditClick}>Edit</p>
@@ -736,7 +668,7 @@ function AddSchools(props) {
     );
 }
 
-fetch(`http://127.0.0.1:8000/teachers/${teacherID}/schools`, {
+fetch(`http://127.0.0.1:8000/schools/teachers`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json'
@@ -753,7 +685,7 @@ fetch(`http://127.0.0.1:8000/teachers/${teacherID}/schools`, {
         schoolInfo = data;
 
         schoolInfo.sort((a, b) => {
-            return a.school_name.localeCompare(b.school_name);
+            return a.name.localeCompare(b.name);
         });
 
         selectedSchool = schoolInfo[0];
@@ -780,15 +712,6 @@ function Indicator(props) {
 }
 
 waitForDefinition('selectedSchool')
-    .then(() => {
-        console.log("Selected school defined for grade level")
-        ReactDOM.render(<Indicator title="Grade Level" value={selectedSchool.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"))
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-
-waitForDefinition('selectedSchool')
     .then((value) => {
         console.log("Selected school defined for teachers")
         ReactDOM.render(<Indicator title="Enrolled Teachers" value={selectedSchool.teachers.length} theme="num-teachers" icon="fa fa-graduation-cap" />, document.getElementById("num-teachers-indicator"))
@@ -796,8 +719,6 @@ waitForDefinition('selectedSchool')
     .catch((error) => {
         console.error(error);
     });
-
-ReactDOM.render(<Indicator title="Current Term" value="2" theme="term-number" icon="fa fa-calendar-o" />, document.getElementById("current-term-indicator"))
 
 //------------------------------------------- TEACHER LIST ITEM COMPONENTS -------------------------------------------
 
@@ -823,13 +744,12 @@ function TeacherItem(props) {
         <li>
             <div className="teacher-list-item">
                 <div>
-                    <p className="teacher-info">{props.data.name}</p>
-                    <p className="teacher-info-body">Teacher ID: {props.data.teacher_school_id}</p>
-                    <p className="teacher-info-body">Disability: {props.data.disabled}</p>
+                    <p className="teacher-info">Teacher Name</p>
+                    <p className="teacher-info-body">{props.data.name}</p>
                 </div>
                 <div>
-                    <p className="teacher-info">Parent Contact Information</p>
-                    <p className="teacher-info-body">{props.data.guardian_contact}</p>
+                    <p className="teacher-info">Teacher Email</p>
+                    <p className="teacher-info-body">{props.data.email}</p>
                 </div>
                 <div>
                     <p className="teacher-info-body" onClick={handleEdit}>Edit</p>
@@ -840,7 +760,7 @@ function TeacherItem(props) {
 }
 
 function AddTeachers(props) {
-    document.getElementsByClassName("teachers-title")[0].textContent = selectedSchool.school_name;
+    document.getElementsByClassName("teachers-title")[0].textContent = selectedSchool.name;
 
     let items = [];
     for (let i = 0; i < props.teachers.length; i++) {
