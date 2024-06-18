@@ -57,9 +57,9 @@
             <div class="main">
                 <div class="header-info">
                     <div class="upper-info">
-                        <section id="school-name-indicator"></section>
-                        <section id="total-students-indicator"></section>
-                        <section id="term-year-indicator"></section>
+                        <section id="school-name-indicator">School Name: Loading...</section>
+                        <section id="total-students-indicator">Total Students: Loading...</section>
+                        <section id="term-year-indicator">Term & Year: Loading...</section>
                     </div>
                 </div>
                 <div style="height:20px;"></div>
@@ -79,29 +79,32 @@
         const schoolName = urlParams.get('school_name');
         const selectedYear = urlParams.get('year') || '2024';
 
-        const schoolInfo = {
-            _id: schoolId,
-            school_name: schoolName,
-            total_students: 123,  // This should be fetched dynamically
-            grades: [
-                { level: 'Kindergarten 1' },
-                { level: 'Kindergarten 2' },
-                { level: 'Primary 1' },
-                { level: 'Primary 2' },
-                { level: 'Primary 3' },
-                { level: 'Primary 4' },
-                { level: 'Primary 5' },
-                { level: 'Primary 6' },
-            ]
-        };
+        async function fetchSchoolInfo(schoolId) {
+            // Replace this with actual API call to fetch school info
+            // const response = await fetch(`/api/schools/${schoolId}`);
+            // const data = await response.json();
 
-        function handleYearChange(event) {
-            const selectedYear = event.target.value;
-            updateSchoolInfo(selectedYear);
-            fetchGradesForYear(selectedYear);
+            // Simulated data
+            return {
+                _id: schoolId,
+                school_name: schoolName,
+                total_students: 123, // This should be fetched dynamically
+                grades: [
+                    { level: 'Kindergarten 1' },
+                    { level: 'Kindergarten 2' },
+                    { level: 'Primary 1' },
+                    { level: 'Primary 2' },
+                    { level: 'Primary 3' },
+                    { level: 'Primary 4' },
+                    { level: 'Primary 5' },
+                    { level: 'Primary 6' },
+                ]
+            };
         }
 
-        function updateSchoolInfo(selectedYear) {
+        async function updateSchoolInfo(selectedYear) {
+            const schoolInfo = await fetchSchoolInfo(schoolId);
+
             const termYearIndicator = `Viewing: Term 1, ${selectedYear}`;
 
             ReactDOM.render(
@@ -129,10 +132,16 @@
             );
         }
 
+        function handleYearChange(event) {
+            const selectedYear = event.target.value;
+            updateSchoolInfo(selectedYear);
+            fetchGradesForYear(selectedYear);
+        }
+
         function GradeItem(props) {
             const handleGradeClick = () => {
                 const gradeLevel = props.data.level;
-                fetchStudentsForGrade(schoolInfo._id, gradeLevel);
+                fetchStudentsForGrade(props.schoolId, gradeLevel);
                 document.getElementById("selected-grade-title").innerText = gradeLevel;
                 document.getElementById("selected-grade-subtitle").innerText = `Students in ${gradeLevel}`;
             };
@@ -149,7 +158,7 @@
         function AddGrades(props) {
             let items = [];
             for (let i = 0; i < props.grades.length; i++) {
-                items.push(<GradeItem data={props.grades[i]} />);
+                items.push(<GradeItem data={props.grades[i]} schoolId={props.schoolId} />);
             }
 
             return (
@@ -161,9 +170,9 @@
             );
         }
 
-        function fetchGradesForYear(year) {
-            // Simulated fetching of grades based on selected year
-            ReactDOM.render(<AddGrades grades={schoolInfo.grades} />, document.getElementById("grades-root"));
+        async function fetchGradesForYear(year) {
+            const schoolInfo = await fetchSchoolInfo(schoolId);
+            ReactDOM.render(<AddGrades grades={schoolInfo.grades} schoolId={schoolId} />, document.getElementById("grades-root"));
         }
 
         function getStudentColor(status) {
@@ -225,7 +234,12 @@
             );
         }
 
-        function fetchStudentsForGrade(schoolId, gradeLevel) {
+        async function fetchStudentsForGrade(schoolId, gradeLevel) {
+            // Replace this with actual API call to fetch students for the selected grade
+            // const response = await fetch(`/api/students?school_id=${schoolId}&grade_level=${gradeLevel}`);
+            // const students = await response.json();
+
+            // Simulated data
             const students = [];
             const statuses = ['progressed', 'passed', 'dropped', 'repeating', 'new', 'returning'];
             for (let i = 1; i <= 60; i++) {
@@ -352,9 +366,9 @@
             OpenModal("student-profile");
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            updateSchoolInfo(selectedYear);
-            fetchGradesForYear(selectedYear);
+        document.addEventListener('DOMContentLoaded', async () => {
+            await updateSchoolInfo(selectedYear);
+            await fetchGradesForYear(selectedYear);
         });
     </script>
 </body>
