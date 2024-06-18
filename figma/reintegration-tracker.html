@@ -79,6 +79,8 @@
         const schoolName = urlParams.get('school_name');
         const selectedYear = urlParams.get('year') || '2024';
 
+        const studentCache = {};
+
         async function fetchSchoolInfo(schoolId) {
             // Replace this with actual API call to fetch school info
             // const response = await fetch(`/api/schools/${schoolId}`);
@@ -139,9 +141,9 @@
         }
 
         function GradeItem(props) {
-            const handleGradeClick = () => {
+            const handleGradeClick = async () => {
                 const gradeLevel = props.data.level;
-                fetchStudentsForGrade(props.schoolId, gradeLevel);
+                await fetchStudentsForGrade(props.schoolId, gradeLevel);
                 document.getElementById("selected-grade-title").innerText = gradeLevel;
                 document.getElementById("selected-grade-subtitle").innerText = `Students in ${gradeLevel}`;
             };
@@ -235,8 +237,14 @@
         }
 
         async function fetchStudentsForGrade(schoolId, gradeLevel) {
+            const cacheKey = `${schoolId}-${gradeLevel}-${selectedYear}`;
+            if (studentCache[cacheKey]) {
+                ReactDOM.render(<AddStudents students={studentCache[cacheKey]} />, document.getElementById("students-root"));
+                return;
+            }
+
             // Replace this with actual API call to fetch students for the selected grade
-            // const response = await fetch(`/api/students?school_id=${schoolId}&grade_level=${gradeLevel}`);
+            // const response = await fetch(`/api/students?school_id=${schoolId}&grade_level=${gradeLevel}&year=${selectedYear}`);
             // const students = await response.json();
 
             // Simulated data
@@ -255,6 +263,7 @@
                 });
             }
 
+            studentCache[cacheKey] = students;
             ReactDOM.render(<AddStudents students={students} />, document.getElementById("students-root"));
         }
 
