@@ -16,22 +16,6 @@
 <body>
     <div class="reintegration-tracker">
         <div class="background">
-            <section>
-                <!-- Modal for Student Profile -->
-                <div class="modal-underlay" id="student-profile-modal-underlay" onClick="CloseModal('student-profile')">
-                    <div class="modal" id="student-profile-modal" onClick="event.stopPropagation()">
-                        <div class="modal-header">
-                            <div class="modal-title">Student Profile Information</div>
-                            <span class="modal-close" title="Close" onClick="CloseModal('student-profile')">&times;</span>
-                        </div>
-                        <div class="modal-body" id="student-profile-modal-root"></div>
-                        <div class="modal-footer">
-                            <button class="save-button" onClick="document.getElementById('student-profile-form').submit()">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <div class="sidebar">
                 <div style="height:100px"></div>
                 <!-- EduTracker logo -->
@@ -55,21 +39,27 @@
                 <div style="height:50px"></div>
                 <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
                 <div style="height:50px"></div>
-                <!-- Sidebar Grades -->
-                <div class="sidebar-grades-container">
-                    <h1 class="grades-title">Grades</h1>
-                    <p class="grades-memo">Select a grade to view students</p>
-                    <div id="grades-root" class="sidebar-grades"></div>
+                
+                <!-- Sidebar Year and Term Selector -->
+                <div>
+                    <label for="year-select">Select Year:</label>
+                    <select id="year-select" onchange="handleYearChange(event)">
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                    </select>
                 </div>
+                <div style="height:50px"></div>
+                <div id="grades-root" class="sidebar-grades"></div>
             </div>
-        </section>
-
-        <section>
             <div class="main">
                 <div class="header-info">
                     <div class="upper-info">
                         <section id="school-name-indicator"></section>
                         <section id="total-students-indicator"></section>
+                        <section id="term-year-indicator"></section>
                     </div>
                 </div>
                 <div style="height:20px;"></div>
@@ -81,10 +71,174 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
     <script type="text/babel">
-        //------------------------------------------- HELPER FUNCTIONS -------------------------------------------
+        const schoolInfo = {
+            _id: 'school-000',
+            school_name: 'Name of School',
+            total_students: 123,
+            grades: [
+                { level: 'Kindergarten 1' },
+                { level: 'Kindergarten 2' },
+                { level: 'Primary 1' },
+                { level: 'Primary 2' },
+                { level: 'Primary 3' },
+                { level: 'Primary 4' },
+                { level: 'Primary 5' },
+                { level: 'Primary 6' },
+            ]
+        };
+
+        function handleYearChange(event) {
+            const selectedYear = event.target.value;
+            updateSchoolInfo(selectedYear);
+            fetchGradesForYear(selectedYear);
+        }
+
+        function updateSchoolInfo(selectedYear) {
+            const termYearIndicator = `Viewing: Term 1, ${selectedYear}`;
+
+            ReactDOM.render(
+                <div>
+                    <p className="info-label">School:</p>
+                    <p className="info-value">{schoolInfo.school_name}</p>
+                </div>, 
+                document.getElementById("school-name-indicator")
+            );
+
+            ReactDOM.render(
+                <div>
+                    <p className="info-label">Total Students:</p>
+                    <p className="info-value">{schoolInfo.total_students}</p>
+                </div>, 
+                document.getElementById("total-students-indicator")
+            );
+
+            ReactDOM.render(
+                <div>
+                    <p className="info-label">Term & Year:</p>
+                    <p className="info-value">{termYearIndicator}</p>
+                </div>,
+                document.getElementById("term-year-indicator")
+            );
+        }
+
+        function GradeItem(props) {
+            const handleGradeClick = () => {
+                const gradeLevel = props.data.level;
+                fetchStudentsForGrade(schoolInfo._id, gradeLevel);
+                document.getElementById("selected-grade-title").innerText = gradeLevel;
+                document.getElementById("selected-grade-subtitle").innerText = `Students in ${gradeLevel}`;
+            };
+
+            return (
+                <div class="school-item" onClick={handleGradeClick}>
+                    <p class="school-name">{props.data.level}</p>
+                    <p class="school-info">Total enrolled students</p>
+                    <p class="school-view-list">View student list by grade</p>
+                </div>
+            );
+        }
+
+        function AddGrades(props) {
+            let items = [];
+            for (let i = 0; i < props.grades.length; i++) {
+                items.push(<GradeItem data={props.grades[i]} />);
+            }
+
+            return (
+                <section>
+                    <div class="grades-list">
+                        {items.length > 0 ? items : <p class="grades-subtitle">No grades available.</p>}
+                    </div>
+                </section>
+            );
+        }
+
+        function fetchGradesForYear(year) {
+            // Simulated fetching of grades based on selected year
+            ReactDOM.render(<AddGrades grades={schoolInfo.grades} />, document.getElementById("grades-root"));
+        }
+
+        function getStudentColor(status) {
+            switch (status) {
+                case 'progressed':
+                    return '#83f18d';
+                case 'passed':
+                    return '#fcf151';
+                case 'dropped':
+                    return '#f5554a';
+                case 'repeating':
+                    return '#ff9a00';
+                case 'new':
+                    return '#67dfff';
+                case 'returning':
+                    return '#a058c1';
+                default:
+                    return '#FFFFFF';
+            }
+        }
+
+        function StudentItem(props) {
+            const handleStudentClick = () => {
+                displayStudentProfile(props.data);
+            };
+
+            return (
+                <tr onClick={handleStudentClick} style={{ cursor: 'pointer', backgroundColor: getStudentColor(props.data.status) }}>
+                    <td>{props.data.first_name} {props.data.last_name}</td>
+                    <td>{props.data.student_id}</td>
+                    <td>{props.data.dob}</td>
+                    <td>{props.data.age}</td>
+                    <td>{props.data.teacher}</td>
+                </tr>
+            );
+        }
+
+        function AddStudents(props) {
+            let items = [];
+            for (let i = 0; i < props.students.length; i++) {
+                items.push(<StudentItem data={props.students[i]} key={props.students[i].student_id} />);
+            }
+
+            return (
+                <table class="student-list-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Student ID</th>
+                            <th>Date of Birth</th>
+                            <th>Age</th>
+                            <th>Teacher</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {items.length > 0 ? items : <tr><td colSpan="5">There are no students in this grade.</td></tr>}
+                    </tbody>
+                </table>
+            );
+        }
+
+        function fetchStudentsForGrade(schoolId, gradeLevel) {
+            const students = [];
+            const statuses = ['progressed', 'passed', 'dropped', 'repeating', 'new', 'returning'];
+            for (let i = 1; i <= 60; i++) {
+                const status = statuses[Math.floor(Math.random() * statuses.length)];
+                students.push({
+                    first_name: `Student${i}`,
+                    last_name: `LastName${i}`,
+                    student_id: `ID${i}`,
+                    dob: '2006-01-01',
+                    age: 18,
+                    teacher: `Teacher${i % 5 + 1}`,
+                    status
+                });
+            }
+
+            ReactDOM.render(<AddStudents students={students} />, document.getElementById("students-root"));
+        }
+
         function OpenModal(id) {
             const underlay = document.getElementById(`${id}-modal-underlay`);
             underlay.classList.add("blurred-modal-underlay");
@@ -107,8 +261,7 @@
             }, 200);
         }
 
-        //------------------------------------------- REUSABLE COMPONENTS -------------------------------------------
-        const TextInput = (props) => {
+        function TextInput(props) {
             return (
                 <section className="modal-text-input">
                     <p className="modal-text-label">{props.title}</p>
@@ -125,7 +278,7 @@
             );
         }
 
-        const SubmitButton = (props) => {
+        function SubmitButton(props) {
             return (
                 <div className="modal-submit">
                     <input type="submit" value={props.value} />
@@ -133,7 +286,6 @@
             );
         }
 
-        //------------------------------------------- STUDENT PROFILE COMPONENT -------------------------------------------
         function StudentProfile(props) {
             return (
                 <section>
@@ -190,196 +342,14 @@
             OpenModal("student-profile");
         }
 
-        //------------------------------------------- GRADE LIST ITEM COMPONENTS -------------------------------------------
-        var selectedSchoolID = 'school-000'; // Hardcoded for demo purposes
-        var selectedGrade;
-        var schoolInfo = {
-            _id: 'school-000',
-            school_name: 'Name of School',
-            total_students: 123,
-            grades: [
-                { level: 'Kindergarten 1' },
-                { level: 'Kindergarten 2' },
-                { level: 'Primary 1' },
-                { level: 'Primary 2' },
-                { level: 'Primary 3' },
-                { level: 'Primary 4' },
-                { level: 'Primary 5' },
-                { level: 'Primary 6' },
-            ]
-        };
-
-        function updateSchoolInfo() {
-            ReactDOM.render(
-                <div>
-                    <p className="info-label">School:</p>
-                    <p className="info-value">{schoolInfo.school_name}</p>
-                </div>, 
-                document.getElementById("school-name-indicator")
-            );
-
-            ReactDOM.render(
-                <div>
-                    <p className="info-label">Total Students:</p>
-                    <p class="info-value">{schoolInfo.total_students}</p>
-                </div>, 
-                document.getElementById("total-students-indicator")
-            );
-        }
-
-        function GradeItem(props) {
-            const handleGradeClick = () => {
-                selectedGrade = props.data;
-                fetchStudentsForGrade(selectedSchoolID, selectedGrade.level);
-                document.getElementById("selected-grade-title").innerText = selectedGrade.level;
-                document.getElementById("selected-grade-subtitle").innerText = `Students in ${selectedGrade.level}`;
-            };
-
-            return (
-                <div class="school-item" onClick={handleGradeClick}>
-                    <p class="school-name">{props.data.level}</p>
-                    <p class="school-info">Total enrolled students</p>
-                    <p class="school-view-list">View student list by grade</p>
-                </div>
-            );
-        }
-
-        function AddGrades(props) {
-            let items = [];
-            for (let i = 0; i < props.grades.length; i++) {
-                items.push((<GradeItem data={props.grades[i]} />));
-            }
-
-            const gradeList = items;
-
-            if (items.length === 0) {
-                return (
-                    <section>
-                        <h2 class="grades-title">Grades</h2>
-                        <p class="grades-subtitle">No grades available.</p>
-                        <div class="grades-list">
-                            <div class="list-issue">There are no grades available for this school.</div>
-                        </div>
-                    </section>
-                );
-            }
-
-            return (
-                <section>
-                    <div class="grades-list">
-                        {gradeList}
-                    </div>
-                </section>
-            );
-        }
-
-        function fetchGradesForYear(year) {
-            // Simulated fetching of grades based on selected year
-            ReactDOM.render(<AddGrades grades={schoolInfo.grades} />, document.getElementById("grades-root"));
-        }
-
-        //------------------------------------------- STUDENT LIST ITEM COMPONENTS -------------------------------------------
-        function getStudentColor(status) {
-            switch (status) {
-                case 'progressed':
-                    return '#83f18d';
-                case 'passed':
-                    return '#fcf151';
-                case 'dropped':
-                    return '#f5554a';
-                case 'repeating':
-                    return '#ff9a00';
-                case 'new':
-                    return '#67dfff';
-                case 'returning':
-                    return '#a058c1';
-                default:
-                    return '#FFFFFF';
-            }
-        }
-
-        function StudentItem(props) {
-            const handleStudentClick = () => {
-                displayStudentProfile(props.data);
-            };
-
-            return (
-                <tr onClick={handleStudentClick} style={{ cursor: 'pointer', backgroundColor: getStudentColor(props.data.status) }}>
-                    <td>{props.data.first_name} {props.data.last_name}</td>
-                    <td>{props.data.student_id}</td>
-                    <td>{props.data.dob}</td>
-                    <td>{props.data.age}</td>
-                    <td>{props.data.teacher}</td>
-                </tr>
-            );
-        }
-
-        function AddStudents(props) {
-            let items = [];
-            for (let i = 0; i < props.students.length; i++) {
-                items.push((<StudentItem data={props.students[i]} key={props.students[i].student_id} />));
-            }
-
-            const studentList = items;
-
-            if (items.length === 0) {
-                return (
-                    <table class="student-list-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Student ID</th>
-                                <th>Date of Birth</th>
-                                <th>Age</th>
-                                <th>Teacher</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td colSpan="5">There are no students in this grade.</td></tr>
-                        </tbody>
-                    </table>
-                );
-            }
-
-            return (
-                <table class="student-list-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Student ID</th>
-                            <th>Date of Birth</th>
-                            <th>Age</th>
-                            <th>Teacher</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {studentList}
-                    </tbody>
-                </table>
-            );
-        }
-
-        function fetchStudentsForGrade(schoolId, gradeLevel) {
-            const students = [];
-            const statuses = ['progressed', 'passed', 'dropped', 'repeating', 'new', 'returning'];
-            for (let i = 1; i <= 60; i++) {
-                const status = statuses[Math.floor(Math.random() * statuses.length)];
-                students.push({
-                    first_name: `Student${i}`,
-                    last_name: `LastName${i}`,
-                    student_id: `ID${i}`,
-                    dob: '2006-01-01',
-                    age: 18,
-                    teacher: `Teacher${i % 5 + 1}`,
-                    status
-                });
-            }
-
-            ReactDOM.render(<AddStudents students={students} />, document.getElementById("students-root"));
-        }
-
-        updateSchoolInfo(); // Initial update for the school info
-        fetchGradesForYear(2024); // Initial fetch for the current year
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const schoolId = urlParams.get('school_id') || 'school-000';
+            const selectedYear = urlParams.get('year') || '2024';
+            
+            updateSchoolInfo(selectedYear);
+            fetchGradesForYear(selectedYear);
+        });
     </script>
 </body>
 </html>

@@ -14,11 +14,9 @@
 </head>
 
 <body>
-    <!-- add light grey background -->
-    <div id="admin-dashboard" class="background">
-          <div class="sidebar">
+    <div class="background">
+        <div class="sidebar">
             <div style="height:100px"></div>
-      
               <!-- EduTracker logo -->
       <div class="edutracker-logo">
         <svg width="288" height="39" viewBox="0 0 288 39" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,17 +46,6 @@
             height: 2px;
             background-color:rgb(41, 41, 41)">
 
-      <!-- Year Selector Dropdown -->
-      <div>
-        <label for="year-select">Select Year:</label>
-        <select id="year-select" onchange="handleYearChange()">
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-        </select>
-    </div>
     <div style="height:50px"></div>
 </div>
 </div>
@@ -71,24 +58,21 @@
                 <div onclick="location.href='reintegration-tracker.html'">Reintegration Tracker</div>
                 <div onclick="location.href='school-management.html'">School Management</div>
             </div>
-                </section>
-        <section>
-            <div class="admin-dashboard-search-modal">
-                <div class="admin-dashboard-modal-title">School Search</div>
-                <div class="admin-dashboard-search-bar">
-                    <i class="fa fa-search"></i>
-                    <input type="text" placeholder="Search School Name" oninput="handleSchoolSearch(event)" />
+            <section>
+                <div class="admin-dashboard-search-modal">
+                    <div class="admin-dashboard-modal-title">School Search</div>
+                    <div class="admin-dashboard-search-bar">
+                        <i class="fa fa-search"></i>
+                        <input type="text" placeholder="Search School Name" oninput="handleSchoolSearch(event)" />
+                    </div>
+                    <ul id="school-list" class="admin-dashboard-school-list">
+                        <!-- List of filtered schools will be rendered here -->
+                    </ul>
                 </div>
-                <ul id="school-list" class="admin-dashboard-school-list">
-                    <!-- List of filtered schools will be rendered here -->
-                </ul>
-                <div class="admin-dashboard-modal-footer">
-                    <button class="admin-dashboard-cancel-button">Cancel</button>
-                    <button class="admin-dashboard-search-button">Search</button>
-                </div>
-            </div>
+            </section>
         </div>
-        <script type="text/babel">
+    </div>
+    <script type="text/babel">
         const schoolInfo = [
             { _id: 'school-001', school_name: 'Accra Primary School' },
             { _id: 'school-002', school_name: 'University Basic School, Legon' },
@@ -106,11 +90,9 @@
             return (
                 <ul>
                     {props.schools.map(school => (
-                        <li key={school._id} onClick={() => window.location.href = `reintegration-tracker.html?school_id=${school._id}`}>
-                            <div>
-                                <div>{school.school_name}</div>
-                                <div>{school._id}</div>
-                            </div>
+                        <li key={school._id} onClick={() => window.location.href = `reintegration-tracker.html?school_id=${school._id}&year=2024`}>
+                            <div>{school.school_name}</div>
+                            <div>{school._id}</div>
                             <i className="fa fa-external-link"></i>
                         </li>
                     ))}
@@ -120,3 +102,5 @@
 
         ReactDOM.render(<SchoolList schools={schoolInfo} />, document.getElementById("school-list"));
     </script>
+</body>
+</html>

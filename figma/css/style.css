@@ -715,16 +715,19 @@ body, html {
 .list-of-schools {
   margin-top: 20px;
 }
+
 .list-title {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
 }
+
 .list-subtitle {
   font-size: 14px;
   color: #757575;
   margin-bottom: 20px;
 }
+
 .school-item {
   background-color: #ffffff;
   border: 1px solid #c5e1a5;
@@ -734,23 +737,28 @@ body, html {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .school-item:hover {
   background-color: #e8f5e9;
 }
+
 .school-name {
   font-size: 16px;
   font-weight: bold;
 }
+
 .school-details {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
   color: #757575;
 }
+
 .remove-button-container {
   text-align: center;
   margin-top: 20px;
 }
+
 .remove-button {
   background-color: #d32f2f;
   color: white;
@@ -761,6 +769,7 @@ body, html {
   cursor: pointer;
   width: 80%;
 }
+
 .sidebar-grades {
   max-height: 300px; /* Set the maximum height */
   overflow-y: auto; /* Add vertical scroll */
@@ -770,6 +779,7 @@ body, html {
 .school-item {
   margin-bottom: 10px; /* Adjust as needed */
 }
+
 /* Ensure modal covers full screen */
 .reintegration-tracker .modal-underlay {
   display: none;
@@ -922,12 +932,14 @@ body, html {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
 }
+
 .static-width {
   width: 600px; /* Adjust the width as needed */
   max-width: 300px;
   min-width: 300px;
 }
-.admin-dashoard body {
+
+.admin-dashboard body {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
