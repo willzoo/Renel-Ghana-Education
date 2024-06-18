@@ -1,42 +1,61 @@
-from flask import Flask
-from flask_pymongo import PyMongo
+from flask import Flask, current_app
+from dotenv import load_dotenv
+from pymongo import MongoClient
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
+import logging
+import os
 
-app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/edutracker"
-mongo = PyMongo(app)
+load_dotenv('../config.env')
+mongo_uri = os.getenv('ATLAS_URI')
+client = MongoClient(mongo_uri)
+db = client.get_database("EduTracker")
 
-def move_grade_levels(school_id, current_year, new_year):
-    school_collection = mongo.db.schools
+# Setup logging to a file
+logging.basicConfig(filename='grade_level_migration.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    # Find the school by ID
-    school = school_collection.find_one({"_id": school_id})
+def move_grade_levels_for_all_schools(current_year, new_year):
+    school_collection = db.schools
 
-    if not school:
-        print("School not found")
-        return
+    # Iterate over all schools
+    for school in school_collection.find():
+        school_id = school["_id"]
 
-    # Move current grade levels to past years
-    past_years = school.get("past_years", {})
-    past_years[current_year] = school.get("grade_levels", [])
+        # Skip the school if it has already been updated to the new year
+        if school.get("year") == new_year:
+            logging.info(f"Skipping already updated school ID {school_id}")
+            continue
 
-    # Update the school's past years and create a new grade level list
-    school_collection.update_one(
-        {"_id": school_id},
-        {
-            "$set": {
-                "past_years": past_years,
-                "grade_levels": []
-            },
-            "$push": {
-                "years": new_year
-            }
-        }
-    )
+        try:
+            # Move current grade levels to past years
+            past_years = school.get("past_years", {})
+            if current_year not in past_years:
+                past_years[current_year] = []
+            past_years[current_year].extend(school.get("grade_levels", []))
 
-    print(f"Moved grade levels for year {current_year} to past years and created new grade levels list for {new_year}")
+            # Update the school's past years and create a new grade level list
+            school_collection.update_one(
+                {"_id": school_id},
+                {
+                    "$set": {
+                        "past_years": past_years,
+                        "grade_levels": [],
+                        "year": new_year
+                    }
+                }
+            )
+
+            logging.info(f"Moved grade levels for year {current_year} to past years and created new grade levels list for {new_year} for school ID {school_id}")
+
+        except Exception as e:
+            logging.error(f"Error processing school ID {school_id}: {e}")
+            continue
+
+        break
+
+    logging.info("Completed moving grade levels for all schools.")
+
 
 def calculate_school_years():
     today = datetime.today()
@@ -49,15 +68,18 @@ def schedule_yearly_task():
     school_id = "your_school_id"  # Replace with the actual school ID
     current_year, new_year = calculate_school_years()
 
-    move_grade_levels(school_id, current_year, new_year)
+    move_grade_levels_for_all_schools(current_year, new_year)
 
 if __name__ == "__main__":
-    scheduler = BackgroundScheduler()
-    # Schedule the task to run every year on August 7th at 00:00
-    scheduler.add_job(schedule_yearly_task, 'cron', month=8, day=7, hour=0, minute=0)
+    # print(current_app['MONGO_URI'])
+    # scheduler = BackgroundScheduler()
+    # # Schedule the task to run every year on August 7th at 00:00
+    # scheduler.add_job(schedule_yearly_task, 'cron', month=8, day=7, hour=0, minute=0)
 
-    scheduler.start()
+    # scheduler.start()
     print("Scheduler started. The move_grade_levels function will run every year on August 7th.")
+    move_grade_levels_for_all_schools("2023-2024", "2024-2025")
+
 
     # Run the Flask app (if needed)
     # app.run(debug=True)
