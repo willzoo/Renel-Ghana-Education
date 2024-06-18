@@ -17,6 +17,8 @@ logging.basicConfig(filename='grade_level_migration.log', level=logging.INFO, fo
 
 def move_grade_levels_for_all_schools(current_year, new_year):
     school_collection = db.schools
+    student_collection = db.students
+    teacher_collection = db.teachers
 
     # Iterate over all schools
     for school in school_collection.find():
@@ -28,31 +30,77 @@ def move_grade_levels_for_all_schools(current_year, new_year):
             continue
 
         try:
-            # Move current grade levels to past years
-            past_years = school.get("past_years", {})
-            if current_year not in past_years:
-                past_years[current_year] = []
-            past_years[current_year].extend(school.get("grade_levels", []))
+            # Retrieve the current grade levels
+            current_grade_levels = school.get("grade_levels", [])
 
-            # Update the school's past years and create a new grade level list
+            # Create a new past year entry
+            new_past_year_entry = {
+                "year": current_year,
+                "grade_levels": current_grade_levels
+            }
+
+            # Update the school's past years and set up the new grade level list
             school_collection.update_one(
                 {"_id": school_id},
                 {
+                    "$push": {
+                        "past_years": new_past_year_entry
+                    },
                     "$set": {
-                        "past_years": past_years,
                         "grade_levels": [],
                         "year": new_year
                     }
                 }
             )
 
+
             logging.info(f"Moved grade levels for year {current_year} to past years and created new grade levels list for {new_year} for school ID {school_id}")
+
+            # Update all students where class_id is not empty
+            student_collection.update_many(
+                {
+                    "class_id": {"$ne": ""},
+                    "year": current_year
+                },
+                [
+                    {
+                        "$set": {
+                            "history": {
+                                "$concatArrays": [
+                                    "$history",
+                                    [
+                                        {
+                                            "year": current_year,
+                                            "class_id": "$class_id",
+                                            "grade_level": "$grade_level",
+                                            "school_id": "$school_id",
+                                            "health_conditions": "$health_conditions",
+                                            "misc_info": "$misc_info"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "class_id": "",
+                            "grade_level": "",
+                        }
+                    }
+                ]
+            )
+
+            logging.info(f"Updated students with current info moved to history for year {current_year}")
+
+
+            # Update teachers
+            teacher_collection.update_many(
+                {},
+                {
+                    "$set": {"classes": []}
+                }
+            )
 
         except Exception as e:
             logging.error(f"Error processing school ID {school_id}: {e}")
             continue
-
-        break
 
     logging.info("Completed moving grade levels for all schools.")
 
@@ -71,22 +119,28 @@ def schedule_yearly_task():
     move_grade_levels_for_all_schools(current_year, new_year)
 
 if __name__ == "__main__":
+    print("Type Update to trigger the update service")
+
+    command = input()
+
+    if command == "Update":
+        move_grade_levels_for_all_schools("2023-2024", "2024-2025")
+
+
     # print(current_app['MONGO_URI'])
     # scheduler = BackgroundScheduler()
     # # Schedule the task to run every year on August 7th at 00:00
     # scheduler.add_job(schedule_yearly_task, 'cron', month=8, day=7, hour=0, minute=0)
 
     # scheduler.start()
-    print("Scheduler started. The move_grade_levels function will run every year on August 7th.")
-    move_grade_levels_for_all_schools("2023-2024", "2024-2025")
 
 
     # Run the Flask app (if needed)
     # app.run(debug=True)
 
-    try:
-        # Keep the script running
-        while True:
-            time.sleep(2)
-    except (KeyboardInterrupt, SystemExit):
-        scheduler.shutdown()
+    # try:
+    #     # Keep the script running
+    #     while True:
+    #         time.sleep(2)
+    # except (KeyboardInterrupt, SystemExit):
+    #     scheduler.shutdown()
