@@ -74,10 +74,15 @@
         </div>
     </div>
     <script type="text/babel">
+        const urlParams = new URLSearchParams(window.location.search);
+        const schoolId = urlParams.get('school_id');
+        const schoolName = urlParams.get('school_name');
+        const selectedYear = urlParams.get('year') || '2024';
+
         const schoolInfo = {
-            _id: 'school-000',
-            school_name: 'Name of School',
-            total_students: 123,
+            _id: schoolId,
+            school_name: schoolName,
+            total_students: 123,  // This should be fetched dynamically
             grades: [
                 { level: 'Kindergarten 1' },
                 { level: 'Kindergarten 2' },
@@ -273,6 +278,7 @@
                         required 
                         defaultValue={props.value}
                         className="static-width"  
+                        style={{ backgroundColor: props.color }}  
                     />
                 </section>
             );
@@ -287,12 +293,13 @@
         }
 
         function StudentProfile(props) {
+            const statusColor = getStudentColor(props.student.status);
             return (
                 <section>
                     <form id="student-profile-form" onSubmit={(e) => handleProfileSubmit(e, props.student.student_id)}>
                         <div className="input-group">
-                            <TextInput title="First Name" placeholder="Enter first name" id="student-first-name" value={props.student.first_name} />
-                            <TextInput title="Last Name" placeholder="Enter last name" id="student-last-name" value={props.student.last_name} />
+                            <TextInput title="First Name" placeholder="Enter first name" id="student-first-name" value={props.student.first_name} color={statusColor} />
+                            <TextInput title="Last Name" placeholder="Enter last name" id="student-last-name" value={props.student.last_name} color={statusColor} />
                         </div>
                         <div className="input-group">
                             <TextInput title="Student ID" placeholder="Enter student ID" id="student-id" value={props.student.student_id} />
@@ -311,6 +318,9 @@
                             <input type="checkbox" id="disability-status" name="disability-status" defaultChecked={props.student.disabled} />
                         </div>
                         <TextInput title="Additional Information" placeholder="Enter additional information" id="student-misc" value={props.student.misc_info} />
+                        <div className="status-indicator" style={{ backgroundColor: statusColor }}>
+                            <p className="status-title">{props.student.status}</p>
+                        </div>
                     </form>
                 </section>
             );
@@ -343,10 +353,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const schoolId = urlParams.get('school_id') || 'school-000';
-            const selectedYear = urlParams.get('year') || '2024';
-            
             updateSchoolInfo(selectedYear);
             fetchGradesForYear(selectedYear);
         });
