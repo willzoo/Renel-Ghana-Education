@@ -69,12 +69,12 @@ students:
     "history": [
         {
         "year": "2023-2024",
-        "terms_present": ["1", "2", "3"],
+        //Stretch goal - "terms_present": ["1", "2", "3"],
         "class_id": "class_id_2023",
         "grade_level": "Grade Level",
         "school_id": "school_id_2023",
-        //
-        "health_info": "Old health info",
+        //These two should copied and not cutted
+        "health_conditions": "Old health info",
         "misc_info": "Old misc info"
         },
         ...

@@ -17,6 +17,8 @@ logging.basicConfig(filename='grade_level_migration.log', level=logging.INFO, fo
 
 def move_grade_levels_for_all_schools(current_year, new_year):
     school_collection = db.schools
+    student_collection = db.students
+    teacher_collection = db.teachers
 
     # Iterate over all schools
     for school in school_collection.find():
@@ -28,31 +30,77 @@ def move_grade_levels_for_all_schools(current_year, new_year):
             continue
 
         try:
-            # Move current grade levels to past years
-            past_years = school.get("past_years", {})
-            if current_year not in past_years:
-                past_years[current_year] = []
-            past_years[current_year].extend(school.get("grade_levels", []))
+            # Retrieve the current grade levels
+            current_grade_levels = school.get("grade_levels", [])
 
-            # Update the school's past years and create a new grade level list
+            # Create a new past year entry
+            new_past_year_entry = {
+                "year": current_year,
+                "grade_levels": current_grade_levels
+            }
+
+            # Update the school's past years and set up the new grade level list
             school_collection.update_one(
                 {"_id": school_id},
                 {
+                    "$push": {
+                        "past_years": new_past_year_entry
+                    },
                     "$set": {
-                        "past_years": past_years,
                         "grade_levels": [],
                         "year": new_year
                     }
                 }
             )
 
+
             logging.info(f"Moved grade levels for year {current_year} to past years and created new grade levels list for {new_year} for school ID {school_id}")
+
+            # Update all students where class_id is not empty
+            student_collection.update_many(
+                {
+                    "class_id": {"$ne": ""},
+                    "year": current_year
+                },
+                [
+                    {
+                        "$set": {
+                            "history": {
+                                "$concatArrays": [
+                                    "$history",
+                                    [
+                                        {
+                                            "year": current_year,
+                                            "class_id": "$class_id",
+                                            "grade_level": "$grade_level",
+                                            "school_id": "$school_id",
+                                            "health_conditions": "$health_conditions",
+                                            "misc_info": "$misc_info"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "class_id": "",
+                            "grade_level": "",
+                        }
+                    }
+                ]
+            )
+
+            logging.info(f"Updated students with current info moved to history for year {current_year}")
+
+
+            # Update teachers
+            teacher_collection.update_many(
+                {},
+                {
+                    "$set": {"classes": []}
+                }
+            )
 
         except Exception as e:
             logging.error(f"Error processing school ID {school_id}: {e}")
             continue
-
-        break
 
     logging.info("Completed moving grade levels for all schools.")
 
@@ -89,4 +137,4 @@ if __name__ == "__main__":
         while True:
             time.sleep(2)
     except (KeyboardInterrupt, SystemExit):
-        scheduler.shutdown()
+        #scheduler.shutdown()
