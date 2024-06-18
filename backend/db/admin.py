@@ -71,14 +71,19 @@ def delete_admin(admin_id):
     else:
         return jsonify({"error": "Admin not found"}), 404
 
+# Route that creates multiple teacher accounts with an email list
 @admin_bp.route('/admins/create_accounts', methods=['POST'])
 def create_multiple_accounts():
     try:
         data = request.get_json()
         emails = data.get('emails')
+        school_id = data.get('school_id')
 
         if not emails:
             return jsonify({"error": "Emails are required"}), 400
+
+        if not school_id:
+            return jsonify({"error": "School ID is required"}), 400
 
         email_list = [email.strip() for email in emails.split(',') if email.strip()]
 
@@ -92,7 +97,8 @@ def create_multiple_accounts():
         for email in email_list:
             new_account = {
                 "email": email,
-                "password": bcrypt.hashpw(b''.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')  # Set to an empty password
+                "password": bcrypt.hashpw(b''.encode('utf-8'), bcrypt.gensalt()).decode('utf-8'),  # Set to an empty password
+                "school_id": school_id
             }
             result = db.teachers.insert_one(new_account)
             created_accounts.append(str(result.inserted_id))
