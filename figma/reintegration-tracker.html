@@ -39,7 +39,7 @@
                 <div style="height:50px"></div>
                 <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
                 <div style="height:50px"></div>
-                
+
                 <!-- Sidebar Year and Term Selector -->
                 <div>
                     <div class="dropdown-button-container" id="dropdownContainer">
@@ -162,7 +162,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const schoolId = urlParams.get('school_id');
         const schoolName = urlParams.get('school_name');
-        selectedYear = urlParams.get('year') || '2024';
+        selectedYear = urlParams.get('year') || selectedYear;
 
         const studentCache = {};
 
@@ -191,14 +191,13 @@
 
         async function updateSchoolInfo() {
             const schoolInfo = await fetchSchoolInfo(schoolId);
-
             const termYearIndicator = `Viewing: Term 1, ${selectedYear}`;
 
             ReactDOM.render(
                 <div>
                     <p className="info-label">School:</p>
                     <p className="info-value">{schoolInfo.school_name}</p>
-                </div>, 
+                </div>,
                 document.getElementById("school-name-indicator")
             );
 
@@ -206,7 +205,7 @@
                 <div>
                     <p className="info-label">Total Students:</p>
                     <p className="info-value">{schoolInfo.total_students}</p>
-                </div>, 
+                </div>,
                 document.getElementById("total-students-indicator")
             );
 
