@@ -37,22 +37,21 @@
     </div>
 
     <div style="height:50px"></div>
-      
+            <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
             <div style="height:50px"></div>
-      
-            <!-- section line -->
-            <hr style="width: 75%;
-            text-align:center; 
-            height: 2px;
-            background-color:rgb(41, 41, 41)">
-
-    <div style="height:50px"></div>
-</div>
-</div>
-            <div style="height:50px"></div>
+            <!-- Year Selector Dropdown -->
+            <div>
+                <label for="year-select">Select Year:</label>
+                <select id="year-select" onchange="handleYearChange()">
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select>
             </div>
-        </section>
-    <section>
+            <div style="height:50px"></div>
+        </div>
         <div class="main">
             <div class="info-section">
                 <div onclick="location.href='reintegration-tracker.html'">Reintegration Tracker</div>
@@ -90,7 +89,7 @@
             return (
                 <ul>
                     {props.schools.map(school => (
-                        <li key={school._id} onClick={() => window.location.href = `reintegration-tracker.html?school_id=${school._id}&year=2024`}>
+                        <li key={school._id} onClick={() => window.location.href = `reintegration-tracker.html?school_id=${school._id}&school_name=${school.school_name}&year=2024`}>
                             <div>{school.school_name}</div>
                             <div>{school._id}</div>
                             <i className="fa fa-external-link"></i>
