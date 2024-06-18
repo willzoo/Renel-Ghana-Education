@@ -73,6 +73,20 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal structure for student profile -->
+    <div id="student-profile-modal-underlay" class="modal-underlay" style="display:none;">
+        <div id="student-profile-modal" class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Student Profile</span>
+                <button class="modal-close" onclick="CloseModal('student-profile')">&times;</button>
+            </div>
+            <div id="student-profile-modal-root" class="modal-content">
+                <!-- Student profile content will be rendered here -->
+            </div>
+        </div>
+    </div>
+
     <script type="text/babel">
         const urlParams = new URLSearchParams(window.location.search);
         const schoolId = urlParams.get('school_id');
