@@ -1,13 +1,12 @@
 import React from "react"
-import ModalBase from './ModalBase/ModalBase'
+import ModalBase from './components/ModalBase/ModalBase'
+import ClassAddModal from './ClassAddModal/ClassAddModal'
 
 const classAdd = {
     id: "class-add",
     title: "Create New Class",
     text: "Fill out the following fields to add a new class.",
-    content: () => {return (
-      <div></div>
-    )},
+    content: () => {return (<ClassAddModal/>)},
     closeable: true,
 }
 
@@ -42,9 +41,6 @@ const editStudent = {
 function Modals() {
   return (
     <section>
-        <ModalBase info={classAdd}/>
-        <ModalBase info={classAdd}/>
-        <ModalBase info={classAdd}/>
         <ModalBase info={classAdd}/>
     </section>
   );

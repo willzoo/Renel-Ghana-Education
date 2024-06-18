@@ -1,4 +1,5 @@
 import React from 'react'
+import './Dropdown.css'
 
 function Dropdown (props) {
     let name = props.data[0][0];
