@@ -75,14 +75,17 @@
     </div>
 
     <!-- Modal structure for student profile -->
-    <div id="student-profile-modal-underlay" class="modal-underlay" style="display:none;">
-        <div id="student-profile-modal" class="modal">
+    <div id="student-profile-modal-underlay" class="reintegration-tracker modal-underlay" onClick="CloseModal('student-profile')">
+        <div id="student-profile-modal" class="modal" onClick="event.stopPropagation()">
             <div class="modal-header">
-                <span class="modal-title">Student Profile</span>
-                <button class="modal-close" onclick="CloseModal('student-profile')">&times;</button>
+                <div class="modal-title">Student Profile Information</div>
+                <span class="modal-close" title="Close" onClick="CloseModal('student-profile')">&times;</span>
             </div>
-            <div id="student-profile-modal-root" class="modal-content">
+            <div id="student-profile-modal-root" class="modal-body">
                 <!-- Student profile content will be rendered here -->
+            </div>
+            <div class="modal-footer">
+                <button class="save-button" onClick="document.getElementById('student-profile-form').submit()">Save</button>
             </div>
         </div>
     </div>
@@ -303,25 +306,27 @@
             }, 200);
         }
 
-        function TextInput(props) {
+        const TextInput = (props) => {
+            const inputStyle = { backgroundColor: props.color };
+
             return (
                 <section className="modal-text-input">
                     <p className="modal-text-label">{props.title}</p>
-                    <input 
-                        placeholder={props.placeholder} 
-                        title={props.title} 
-                        type="text" 
-                        id={props.id} 
-                        required 
+                    <input
+                        placeholder={props.placeholder}
+                        title={props.title}
+                        type="text"
+                        id={props.id}
+                        required
                         defaultValue={props.value}
-                        className="static-width"  
-                        style={{ backgroundColor: props.color }}  
+                        className="static-width"
+                        style={inputStyle}
                     />
                 </section>
             );
         }
 
-        function SubmitButton(props) {
+        const SubmitButton = (props) => {
             return (
                 <div className="modal-submit">
                     <input type="submit" value={props.value} />
