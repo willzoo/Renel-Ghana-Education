@@ -16,29 +16,29 @@ def generate_unique_code(collection, field):
 def create_school():
     try:
         data = request.get_json()
-        school_id = data.get('_id')
         name = data.get('name')
-        year = data.get('year')
         teachers = data.get('teachers', [])
         grade_levels = data.get('grade_levels', [])
 
         # Check for required fields
-        if not school_id or not name:
+        if not name:
             return jsonify({"error": "Missing required fields"}), 400
 
         school_data = {
-            "_id": school_id,
             "name": name,
 #            "access_code": access_code,
-            "year": year,
             "teachers": teachers,
             "grade_levels": grade_levels
         }
 
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
-        db.schools.insert_one(school_data)
-        return jsonify({"message": "School created successfully"}), 201
+        result = db.schools.insert_one(school_data)
+
+        # Get the _id of the newly created school
+        school_id = result.inserted_id
+
+        return jsonify({"message": "School created successfully", "_id": str(school_id)}), 201
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -64,7 +64,7 @@ def get_schools_with_teachers():
             teachers = []
             for teacher in teacher_cursor:                
                 teachers.append({
-                    'teacher_id': str(teacher['_id']),
+                    '_id': str(teacher['_id']),
                     'name': teacher['name'],
                     'email': teacher['email'],
                 })

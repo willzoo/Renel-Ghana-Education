@@ -122,10 +122,10 @@
                 <div style="height:100px"></div>
 
                 <!-- add profile info -->
-                <p id="teacher-name" class="profile-name">First Last</p>
-                <p id="school-name" class="profile-info">School Name</p>
+                <p id="teacher-name-top" class="profile-name">First Last</p>
+                <p id="school-name-top" class="profile-info">School Name</p>
                 <br>
-                <p id="teacher-email" class="profile-info" style="font-size: 15px;">emailaddress@renelglobal.org</p>
+                <p id="teacher-email-top" class="profile-info" style="font-size: 15px;">emailaddress@renelglobal.org</p>
 
                 <div style="height:50px"></div>
 
@@ -291,7 +291,8 @@ function SchoolInput() {
         let schoolName = document.getElementById('school-name').value;
 
         let content = {
-            "school_name": schoolName
+            "name": schoolName,
+            "teachers": []
         };
 
         schoolInfo.push(content);
@@ -316,7 +317,7 @@ function SchoolInput() {
                 return response.json();
             })
             .then(data => {
-                console.log('Data received:', data._id);
+                console.log('Data received:', data);
                 selectedSchool._id = data._id;
             })
             .catch(error => {
@@ -324,7 +325,6 @@ function SchoolInput() {
             });
 
         ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
-
         ReactDOM.render(<AddTeachers teachers={selectedSchool.teachers} />, document.getElementById("teachers-root"));
         ReactDOM.render(<Indicator title="Enrolled Teachers" value={selectedSchool.teachers.length} theme="num-teachers" icon="fa fa-graduation-cap" />, document.getElementById("num-teachers-indicator"));
     }
@@ -348,23 +348,22 @@ ReactDOM.render(<SchoolInput />, document.getElementById("school-add-modal-root"
 
 //------------------------------------------- EDIT SCHOOL COMPONENT -------------------------------------------
 
-function SchoolEditInput() {
+let editSchoolInfo = {
+    schoolName: { title: "School Name", placeholder: "Enter a school name", id: "school-name-edit" },
+};
+
+function SchoolEditInput(props) {
     let handleSubmit = (event) => {
         event.preventDefault();
         CloseModal("school-edit");
 
-        let schoolName = document.getElementById('school-name').value;
-        let gradeLevel = document.getElementById('grade-level').value;
+        let schoolName = document.getElementById('school-name-edit').value;
 
         let content = {
-            "school_name": schoolName,
-            "grade_level": gradeLevel,
-            "teacher_id": "665da0b90c1d6c0c45724285",
-            "school_id": "665da7c60c1d6c0c45724286",
-            "teachers": []
+            "school_name": schoolName
         };
 
-        fetch('http://127.0.0.1:8000/schools', {
+        fetch(`http://127.0.0.1:8000/schools/${props.school._id}`, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json'
@@ -393,9 +392,9 @@ function SchoolEditInput() {
         <section style={{ margin: '50px' }}>
             <form id="school-edit-modal-form" onSubmit={handleSubmit}>
                 <div id="school-edit-text-input">
-                    <TextInput title={addSchoolInfo.schoolName.title}
-                        placeholder={addSchoolInfo.schoolName.placeholder}
-                        id={addSchoolInfo.schoolName.id}/>
+                    <TextInput title={editSchoolInfo.schoolName.title}
+                        placeholder={editSchoolInfo.schoolName.placeholder}
+                        id={editSchoolInfo.schoolName.id}/>
                     <br /><br /><br /><br />
                 </div>
                 <SubmitButton value="Save" />
@@ -403,8 +402,6 @@ function SchoolEditInput() {
         </section>
     );
 }
-
-ReactDOM.render(<SchoolEditInput />, document.getElementById("school-edit-modal-root"));
 
 //------------------------------------------- ADD NEW TEACHER COMPONENT -------------------------------------------
 
@@ -599,6 +596,7 @@ var selectedSchool;
 function SchoolItem(props) {
     const handleEditClick = () => {
         OpenModal('school-edit');
+        ReactDOM.render(<SchoolEditInput school={props.data}/>, document.getElementById("school-edit-modal-root"));
     }
 
     const handleSchoolClick = () => {
