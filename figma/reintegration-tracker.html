@@ -67,25 +67,24 @@
                 </section>
             </div>
         </div>
-                <!-- Schools List Section -->
-            </div>
-            <div class="main">
-                <div class="header-info">
-                    <div class="upper-info">
-                        <section id="school-name-indicator">School Name: Loading...</section>
-                        <section id="total-students-indicator">Total Students: Loading...</section>
-                        <section id="term-year-indicator">Term & Year: Loading...</section>
-                    </div>
-                </div>
-                <div style="height:20px;"></div>
-                <div class="student-section">
-                    <div class="students-list-container">
-                        <h1 id="selected-grade-title" class="students-title">Grade Level</h1>
-                        <p id="selected-grade-subtitle" class="students-memo">Students</p>
-                        <div id="students-root" class="students-list"></div>
-                    </div>
+        <!-- Schools List Section -->
+        <div class="main">
+            <div class="header-info">
+                <div class="upper-info">
+                    <section id="school-name-indicator">School Name: Loading...</section>
+                    <section id="total-students-indicator">Total Students: Loading...</section>
+                    <section id="term-year-indicator">Term & Year: Loading...</section>
                 </div>
             </div>
+            <div style="height:20px;"></div>
+            <div class="student-section">
+                <div class="students-list-container">
+                    <h1 id="selected-grade-title" class="students-title">Grade Level</h1>
+                    <p id="selected-grade-subtitle" class="students-memo">Students</p>
+                    <div id="students-root" class="students-list"></div>
+                </div>
+            </div>
+        </div>
 
     <!-- Modal structure for student profile -->
     <div id="student-profile-modal-underlay" class="reintegration-tracker modal-underlay" onClick="CloseModal('student-profile')">
@@ -124,7 +123,7 @@
                         <li key={school._id} onClick={() => window.location.href = `reintegration-tracker.html?school_id=${school._id}&school_name=${school.school_name}&year=2024`}>
                             <div>{school.school_name}</div>
                             <div>{school._id}</div>
-                            <i className="fa fa-external-link"></i>
+                            <i className="fa fa-external-link school-icon"></i>
                         </li>
                     ))}
                 </ul>
@@ -448,7 +447,7 @@
                         <li key={school._id} onClick={() => window.location.href = `reintegration-tracker.html?school_id=${school._id}&school_name=${school.school_name}&year=2024`}>
                             <div>{school.school_name}</div>
                             <div>{school._id}</div>
-                            <i className="fa fa-external-link"></i>
+                            <i className="fa fa-external-link school-icon"></i>
                         </li>
                     ))}
                 </ul>
@@ -528,7 +527,7 @@
 
         async function handleSchoolSearch(event) {
             const query = event.target.value.toLowerCase();
-            const filteredSchools = schoolInfo.filter(school => school.school_name.toLowerCase().includes(query));
+            const filteredSchools = schoolInfolist.filter(school => school.school_name.toLowerCase().includes(query));
 
             ReactDOM.render(
                 <ul>
@@ -540,10 +539,10 @@
             );
         }
 
-        ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
+        ReactDOM.render(<AddSchools schools={schoolInfolist} />, document.getElementById("schools-root"));
 
         document.addEventListener('DOMContentLoaded', async () => {
-            await updateSchoolInfo(selectedYear);
+            await updateSchoolInfolist(selectedYear);
             await fetchGradesForYear(selectedYear);
         });
     </script>
