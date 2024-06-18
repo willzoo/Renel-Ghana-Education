@@ -1,6 +1,8 @@
 import React from 'react'
 import { CloseModal } from '../../../utils/functions';
 
+import '../components/ModalBase/ModalBase.css'
+
 import Submit from '../components/Submit/Submit'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
@@ -34,33 +36,33 @@ function ClassAddModal() {
           "students": []
       };
 
-      classInfo.push(content);
+      //classInfo.push(content);
 
-      selectedClass = classInfo.at(-1);
+      // selectedClass = content //classInfo.at(-1);
 
-      classInfo.sort((a, b) => {
-          return a.class_name.localeCompare(b.class_name);
-      });
+    //   classInfo.sort((a, b) => {
+    //       return a.class_name.localeCompare(b.class_name);
+    //   });
 
-      fetch('http://127.0.0.1:8000/classes', {
-          method: "POST",
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(content)
-      })
-          .then(response => {
-              if (!response.ok) {
-                  throw new Error('Network response was not ok');
-              }
-              return response.json();
-          })
-          .then(data => {
-              console.log('Data received:', data);
-          })
-          .catch(error => {
-              console.error('There was a problem with the fetch operation:', error);
-          });
+    //   fetch('http://127.0.0.1:8000/classes', {
+    //       method: "POST",
+    //       headers: {
+    //           'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify(content)
+    //   })
+    //       .then(response => {
+    //           if (!response.ok) {
+    //               throw new Error('Network response was not ok');
+    //           }
+    //           return response.json();
+    //       })
+    //       .then(data => {
+    //           console.log('Data received:', data);
+    //       })
+    //       .catch(error => {
+    //           console.error('There was a problem with the fetch operation:', error);
+    //       });
 
       // ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
 
@@ -70,16 +72,14 @@ function ClassAddModal() {
   }
 
   return (
-      <section style={{ margin: '50px' }}>
+      <section>
           <form id="class-modal-form" onSubmit={handleSubmit}>
-              <div id="class-add-text-input">
-                  <TextInput title={addClassInfo.className.title}
-                      placeholder={addClassInfo.className.placeholder}
-                      id={addClassInfo.className.id} />
+              <section className="input-list" id="class-add-text-input">
+                  <TextInput info={addClassInfo.className} />
                   <br />
                   <Dropdown data={addClassDropdown} />
                   <br /><br /><br /><br />
-              </div>
+              </section>
               <Submit value="Create" />
           </form>
       </section>

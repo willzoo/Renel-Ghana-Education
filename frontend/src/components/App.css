@@ -97,13 +97,6 @@ body, html {
   }
 
 
-  .main {
-    width: calc(100% - 440px);
-    height: 100%;
-    margin: 30px;
-    margin-left: 410px;
-    position:fixed;
-  }
 
   .grade-level {
     background-color:#EC6B47;

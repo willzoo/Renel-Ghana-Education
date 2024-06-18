@@ -3,12 +3,12 @@ import React from 'react'
 function Checkbox(props) {
     return (
         <section className="modal-text-input">
-            <label className="modal-text-label" htmlFor={props.id}>{props.title} &ensp;</label>
+            <label className="label" htmlFor={props.info.id}>{props.info.title} &ensp;</label>
             <input 
             className="modal-text-input" 
-            type="checkbox" id={props.id} 
-            name={props.name} 
-            checked={props.defaultValue} />
+            type="checkbox" id={props.info.id} 
+            name={props.info.name} 
+            checked={props.info.defaultValue} />
         </section>
     );
 }

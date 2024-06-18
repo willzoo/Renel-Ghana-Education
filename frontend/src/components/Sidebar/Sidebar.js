@@ -11,7 +11,7 @@ const Sidebar = () => {
             <div style={{height: '100px'}}></div>
 
             {/* <!-- add profile info --> */}
-            <section class="profile">
+            <section className="profile">
                 <p id="teacher-name" className="name">First Last</p>
                 <p id="school-name" className="info">School Name</p>
                 <br />
