@@ -1,28 +1,35 @@
 #citation: chatgpt.com
 from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
+import random
+import string
 
 school_bp = Blueprint('school', __name__)
 
+def generate_unique_code(collection, field):
+    while True:
+        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
+        if not collection.find_one({field: code}):
+            return code
+        
 @school_bp.route('/schools', methods=['POST'])
 def create_school():
     try:
         data = request.get_json()
         school_id = data.get('_id')
         name = data.get('name')
-        access_code = data.get('access_code')
         year = data.get('year')
         teachers = data.get('teachers', [])
         grade_levels = data.get('grade_levels', [])
 
         # Check for required fields
-        if not school_id or not name or not access_code or not year:
+        if not school_id or not name:
             return jsonify({"error": "Missing required fields"}), 400
 
         school_data = {
             "_id": school_id,
             "name": name,
-            "access_code": access_code,
+#            "access_code": access_code,
             "year": year,
             "teachers": teachers,
             "grade_levels": grade_levels

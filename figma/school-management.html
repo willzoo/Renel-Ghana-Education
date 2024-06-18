@@ -283,27 +283,15 @@ let addSchoolInfo = {
     schoolName: { title: "School Name", placeholder: "Enter a school name", id: "school-name" },
 };
 
-let addSchoolDropdown = [
-    ["Grade Level", "grade-level"],
-    ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
-    ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
-    ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
-];
-
 function SchoolInput() {
     let handleSubmit = (event) => {
         event.preventDefault();
         CloseModal("school-add");
 
         let schoolName = document.getElementById('school-name').value;
-        let gradeLevel = document.getElementById('grade-level').value;
 
         let content = {
-            "school_name": schoolName,
-            "grade_level": gradeLevel,
-            "teacher_id": "665da0b90c1d6c0c45724285",
-            "school_id": "665da7c60c1d6c0c45724286",
-            "teachers": []
+            "school_name": schoolName
         };
 
         schoolInfo.push(content);
@@ -328,7 +316,8 @@ function SchoolInput() {
                 return response.json();
             })
             .then(data => {
-                console.log('Data received:', data);
+                console.log('Data received:', data._id);
+                selectedSchool._id = data._id;
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
@@ -337,7 +326,6 @@ function SchoolInput() {
         ReactDOM.render(<AddSchools schools={schoolInfo} />, document.getElementById("schools-root"));
 
         ReactDOM.render(<AddTeachers teachers={selectedSchool.teachers} />, document.getElementById("teachers-root"));
-        ReactDOM.render(<Indicator title="Grade Level" value={selectedSchool.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"));
         ReactDOM.render(<Indicator title="Enrolled Teachers" value={selectedSchool.teachers.length} theme="num-teachers" icon="fa fa-graduation-cap" />, document.getElementById("num-teachers-indicator"));
     }
 
@@ -348,8 +336,6 @@ function SchoolInput() {
                     <TextInput title={addSchoolInfo.schoolName.title}
                         placeholder={addSchoolInfo.schoolName.placeholder}
                         id={addSchoolInfo.schoolName.id} />
-                    <br />
-                    <Dropdown data={addSchoolDropdown} />
                     <br /><br /><br /><br />
                 </div>
                 <SubmitButton value="Create" />
@@ -410,8 +396,6 @@ function SchoolEditInput() {
                     <TextInput title={addSchoolInfo.schoolName.title}
                         placeholder={addSchoolInfo.schoolName.placeholder}
                         id={addSchoolInfo.schoolName.id}/>
-                    <br />
-                    <Dropdown data={addSchoolDropdown}/>
                     <br /><br /><br /><br />
                 </div>
                 <SubmitButton value="Save" />
