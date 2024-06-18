@@ -927,3 +927,149 @@ body, html {
   max-width: 300px;
   min-width: 300px;
 }
+.admin-dashoard body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #FFFFFF;
+}
+
+.admin-dashboard-background {
+  position: relative;
+  width: 1280px;
+  height: 720px;
+  background: #FFFFFF;
+}
+
+.admin-dashboard-sidebar {
+  position: absolute;
+  width: 330px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #DCE8F5;
+  border-radius: 0px 30px 30px 0px;
+  padding: 20px;
+}
+
+.admin-dashboard-logo-icon {
+  position: absolute;
+  width: 42.93px;
+  height: 38.3px;
+  top: 105px;
+  left: 17px;
+  background: #144047;
+}
+
+.admin-dashboard-title {
+  position: absolute;
+  left: 80px;
+  right: 72px;
+  top: 17px;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 30px;
+  color: #144047;
+}
+
+.admin-dashboard-header {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.admin-dashboard-search-modal {
+  position: absolute;
+  width: 520px;
+  height: 563px;
+  left: calc(50% - 520px/2 + 140px);
+  top: 124px;
+  background: #FFFFFF;
+  border: 1px solid rgba(29, 28, 29, 0.13);
+  border-radius: 16px;
+  box-shadow: 0px 10px 50px rgba(139, 139, 139, 0.1);
+  padding: 20px;
+}
+
+.admin-dashboard-search-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #B7B7B7;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.admin-dashboard-search-bar input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.admin-dashboard-search-bar i {
+  color: #144047;
+  margin-right: 10px;
+}
+
+.admin-dashboard-school-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-dashboard-school-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #E0E0E0;
+  cursor: pointer;
+}
+
+.admin-dashboard-school-list li:last-child {
+  border-bottom: none;
+}
+
+.admin-dashboard-school-list li:hover {
+  background: #F5F5F5;
+}
+
+.admin-dashboard-modal-title {
+  font-weight: 800;
+  font-size: 22px;
+  color: #144047;
+  margin-bottom: 20px;
+}
+
+.admin-dashboard-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.admin-dashboard-modal-footer button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.admin-dashboard-cancel-button {
+  background: #E2E8F0;
+  border: 1px solid #B7B7B7;
+  color: #144047;
+  border-radius: 3px;
+}
+
+.admin-dashboard-search-button {
+  background: #144047;
+  color: #FFFFFF;
+  border-radius: 3px;
+  font-family: 'Open Sans', sans-serif;
+}

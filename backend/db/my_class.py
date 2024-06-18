@@ -210,7 +210,8 @@ def add_student():
     new_student = {
         "student_school_id": student_school_id,
         "name": data.get('name'),
-        "parent_contact": data.get('parent_contact'),
+        "guardian_name": data.get('guardian_name'),
+        "guardian_contact": data.get('guardian_contact'),
         "dob": data.get('dob'),
         "disabled": data.get('disabled'),
         "health_conditions": data.get('health_conditions'),

@@ -54,7 +54,8 @@ students:
     {
     "_id": "MongoDB assigned id",
     "name": "Student Name",
-    "parent_contact": "7777-777-777",
+    "guardian_name": "Guardian name",
+    "guardian_contact": "7777-777-777",
     "dob": "DD/MM/YYYY",
     "student_school_id": "The school assigned id for the student",
     "disabled": true,
