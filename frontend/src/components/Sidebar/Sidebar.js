@@ -1,14 +1,13 @@
 import React from 'react';
 import './Sidebar.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import ClassAddButton from './ClassAddButton/ClassAddButton';
 
 
 const Sidebar = () => {
   return (
     <section>
         <div className="sidebar">
-
+            {/* This style of div is used throughout as a way to space objects apart */}
             <div style={{height: '100px'}}></div>
 
             {/* <!-- add profile info --> */}
@@ -32,9 +31,7 @@ const Sidebar = () => {
             <div style={{height: '50px'}}></div>   
 
             {/* create new class button */}
-            <div className="create-class-button" onClick="OpenModal('class-add')">
-                <FontAwesomeIcon icon={faPlus}/> &nbsp; Create New Class
-            </div>
+            <ClassAddButton/>
 
             <div style={{height: '50px'}}></div>
 
@@ -42,7 +39,9 @@ const Sidebar = () => {
             <div className="sidebar-classes-container">
                 <h1>Classes</h1>
                 <p>Select a class to view students</p>
-                <div id="classes-root" className="sidebar-classes"></div>
+                <div id="classes-root" className="sidebar-classes">
+                    {/* Sidebar classes will be loaded here */}
+                </div>
             </div>
 
         </div>
