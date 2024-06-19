@@ -1081,6 +1081,7 @@ body, html {
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
 }
 
 .admin-dashboard-school-list li {
