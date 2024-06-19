@@ -1336,3 +1336,71 @@ body, html {
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+.feature-buttons {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45%;
+  min-width: 280px;
+  margin: 20px;
+}
+
+.feature-button {
+  width: 100%;
+  padding: 20px;
+  background-color: #28585F;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.feature-button:hover {
+  background-color: #1e4a53;
+}
+
+.feature-button i {
+  margin-right: 10px;
+}
+
+.feature-description {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+.feature-description p {
+  margin: 0 0 10px;
+}
+
+.feature-description ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.feature-description ul li {
+  list-style-type: disc;
+}
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
