@@ -20,19 +20,8 @@
         <section>
             <div class="sidebar">
                 <div style="height:100px"></div>
-                
-                <div style="height:50px"></div>
-                
-                <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
-                
-                <div style="height:50px"></div>
-            </div>
-        </section>
-        
-        <section>
-            <div class="main">
-                 <!-- EduTracker logo -->
-                <div class="edutracker-logo">
+                   <!-- EduTracker logo -->
+                   <div class="edutracker-logo">
                     <svg width="288" height="39" viewBox="0 0 288 39" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M21.4636 38.2978C25.147 38.2978 28.6795 36.8346 31.2841 34.2301C33.8886 31.6255 35.3518 28.093 35.3518 24.4096C35.3518 20.7262 33.8886 17.1937 31.2841 14.5891C28.6795 11.9846 25.147 10.5214 21.4636 10.5214C17.7802 10.5214 14.2477 11.9846 11.6432 14.5891C9.03861 17.1937 7.57539 20.7262 7.57539 24.4096C7.57539 28.093 9.03861 31.6255 11.6432 34.2301C14.2477 36.8346 17.7802 38.2978 21.4636 38.2978ZM24.2141 28.1583L16.3857 31.1693C15.3333 31.5761 14.2971 30.54 14.704 29.4875L17.7149 21.6591C17.8939 21.198 18.252 20.8399 18.7131 20.6609L26.5415 17.6499C27.594 17.2431 28.6302 18.2793 28.2233 19.3317L25.2123 27.1601C25.0387 27.6213 24.6753 27.9793 24.2141 28.1583ZM23.1996 24.4096C23.1996 23.9492 23.0167 23.5076 22.6912 23.182C22.3656 22.8565 21.924 22.6736 21.4636 22.6736C21.0032 22.6736 20.5616 22.8565 20.2361 23.182C19.9105 23.5076 19.7276 23.9492 19.7276 24.4096C19.7276 24.87 19.9105 25.3116 20.2361 25.6372C20.5616 25.9627 21.0032 26.1456 21.4636 26.1456C21.924 26.1456 22.3656 25.9627 22.6912 25.6372C23.0167 25.3116 23.1996 24.87 23.1996 24.4096Z" fill="#28585F"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M21.4636 38.0255C28.9834 38.0255 35.0795 31.9294 35.0795 24.4096C35.0795 16.8897 28.9834 10.7937 21.4636 10.7937C13.9437 10.7937 7.84767 16.8897 7.84767 24.4096C7.84767 31.9294 13.9437 38.0255 21.4636 38.0255Z" fill="#144047" fill-opacity="0.5"/>
@@ -49,21 +38,45 @@
                             <path d="M285.817 11.7585C286.142 11.7585 286.517 11.7797 286.94 11.8221C287.378 11.8503 287.732 11.8927 288 11.9492L287.513 18.0098C287.301 17.9392 286.997 17.8897 286.601 17.8615C286.22 17.8191 285.888 17.7979 285.605 17.7979C284.772 17.7979 283.96 17.9038 283.168 18.1157C282.391 18.3277 281.692 18.6738 281.07 19.1541C280.449 19.6203 279.954 20.2419 279.587 21.0189C279.234 21.7818 279.057 22.7212 279.057 23.8373V35.8949H272.594V12.2035H277.489L278.443 16.1874H278.761C279.227 15.3821 279.806 14.6475 280.498 13.9835C281.205 13.3054 282.003 12.7686 282.893 12.373C283.797 11.9633 284.772 11.7585 285.817 11.7585Z" fill="#2B5359"/>
                           </svg>
                 </div>
-                <div class="info-section">
-                    <!-- Reintegration Tracker Button -->
-                    <div class="button-container" id="reintegration-tracker-button"> 
-                        <button class="dashboard-button" onclick="window.location.href='reintegration-tracker.html'">
-                            Reintegration Tracker
-                            <h2 class="button-description">Search for schools to view the enrollment status by grade level.</h2>
-                            After searching for and selecting the school to review, use the dropdown to choose the Academic Year to view.
+                
+                <div style="height:50px"></div>
+                
+                <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
+                
+                <div style="height:50px"></div>
+            </div>
+        </section>
+        
+        <section>
+            <div class="main-admin-dashboard">
+                <div class="feature-buttons">
+                    <div class="feature">
+                        <button class="feature-button" onclick="location.href='/figma/reintegration-tracker.html'">
+                            <i class="fa fa-search"></i>
+                            <div class="button-text">Reintegration Tracker</div>
                         </button>
+                        <div class="feature-description">
+                            <p>Search for schools to view the enrollment status by grade level, monitor reintegration efforts, and analyze student transitions.</p>
+                            <ul>
+                                <li>View enrollment status by grade</li>
+                                <li>Track reintegration progress</li>
+                                <li>Analyze student transitions</li>
+                            </ul>
+                        </div>
                     </div>
-                    <!-- School Management Button -->
-                    <div class="button-container" id="school-management-button">
-                        <button class="dashboard-button" onclick="window.location.href='school-management.html'">
-                            School Management
-                            <h2 class="button-description">Manage, add and edit Teachers by the school of employment.</h2>
+                    <div class="feature">
+                        <button class="feature-button" onclick="location.href='/figma/school-management.html'">
+                            <i class="fa fa-cogs"></i>
+                            <div class="button-text">School Management</div>
                         </button>
+                        <div class="feature-description">
+                            <p>Manage, add, and edit teachers by the school of employment, and oversee school operations and teacher assignments.</p>
+                            <ul>
+                                <li>Manage teacher records</li>
+                                <li>Add new teachers</li>
+                                <li>Edit teacher information</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
