@@ -8,10 +8,10 @@ school_bp = Blueprint('school', __name__)
 
 def generate_unique_code(collection, field):
     while True:
-        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
+        code = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
         if not collection.find_one({field: code}):
             return code
-        
+
 @school_bp.route('/schools', methods=['POST'])
 def create_school():
     try:
@@ -24,15 +24,18 @@ def create_school():
         if not name:
             return jsonify({"error": "Missing required fields"}), 400
 
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        access_code = generate_unique_code(db.schools, "access_code")
+
         school_data = {
             "name": name,
-#            "access_code": access_code,
+            "access_code": access_code,
             "teachers": teachers,
             "grade_levels": grade_levels
         }
 
-        mongo = current_app.extensions['pymongo']
-        db = mongo.cx.EduTracker
         result = db.schools.insert_one(school_data)
 
         # Get the _id of the newly created school
