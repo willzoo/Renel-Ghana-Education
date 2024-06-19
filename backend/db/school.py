@@ -43,6 +43,30 @@ def create_school():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#This patch route updates the school's name based off the school_id given
+@school_bp.route('/schools/<school_id>', methods=['PATCH'])
+def update_school_name(school_id):
+    try:
+        data = request.get_json()
+        new_name = data.get('name')
+
+        if not new_name:
+            return jsonify({"error": "New name is required"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        result = db.schools.update_one({"_id": ObjectId(school_id)}, {"$set": {"name": new_name}})
+
+        if result.matched_count == 0:
+            return jsonify({"error": "School not found"}), 404
+
+        return jsonify({"message": "School name updated successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 # New route to get info of all schools with teachers defined
 @school_bp.route('/schools/teachers', methods=['GET'])
 def get_schools_with_teachers():
