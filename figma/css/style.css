@@ -1176,10 +1176,13 @@ body, html {
 /* Header buttons and search bar */
 .info-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   text-align: center;
   margin-bottom: 20px;
+  min-height: 100vh;
+  width: 100%;
+  flex-direction: row;
 }
 
 .info-section div {
@@ -1266,29 +1269,45 @@ body, html {
 }
 
 /*admin dashboard shennanigans cont'd.*/
+
 .button-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
   margin: 20px;
+  text-align: center;
+  width: 100%;
+  flex: 1;
 }
 
 .dashboard-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: white;
   color: #144047;
-  padding: 15px 30px;
+  padding: 20px;
   border-radius: 8px;
   font-size: 18px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border: none;
   cursor: pointer;
+  line-height: 1.5;
+  width: 80%; /* Set a fixed width for uniform size */
+  max-width: 400px; /* Optionally set a max-width */
+  box-sizing: border-box; /* Include padding in width calculation */
+  min-height: 200px;  /* Ensure minimum height */
 }
 
 .button-description {
   font-size: 16px;
   text-align: center;
   color: #144047;
-  max-width: 200px;
+  max-width: 300px;  /* Increase max-width for better text wrapping */
+  margin: 10px 0 0 0;
+  line-height: 1.5;  /* Increase line height for better readability */
 }
