@@ -49,10 +49,6 @@ body, html {
 }
 
 
-    .nobullet, .nobullet li {
-        list-style-type: none;
-        padding-left: 0;
-    }
 
 
 
@@ -98,51 +94,9 @@ body, html {
 
 
 
-  .grade-level {
-    background-color:#EC6B47;
-  }
-
-  .num-students {
-    background-color:#116CBD;
-  }
-  
-  .term-number {
-    background-color:#E1251B;
-  }
 
 
 
-.student-list-item {
-    border-radius: 10px;
-    margin: 15px;
-    height: 50px;
-    /*background-color: #e9f2f8;*/
-    background-color: white;
-    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    transition: background-color 0.2s;
-    display:flex;
-    justify-content: space-between;
-}
-
-.student-list-item:hover {
-  background-color: #fff0d2;
-}
-
-.student-info {
-    font-family: 'Open Sans', sans-serif;
-    color:#457B9D;
-
-    margin: 0px;
-}
-
-.student-info-body {
-    font-family: 'Open Sans', sans-serif;
-    color:#7c99ac;
-    font-size: 12px;
-
-    margin: 0px;
-}
 /* Admin Dashboard additional CSS below */
 
 .list-of-schools {

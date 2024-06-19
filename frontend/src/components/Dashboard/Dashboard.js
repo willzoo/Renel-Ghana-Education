@@ -1,7 +1,11 @@
 import React from 'react';
 import AddStudentButton from './AddStudentButton/AddStudentButton';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Indicators from './Indicators/Indicators'
+import Students from './Students/Students';
+
+import { faPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+
+
 import './Dashboard.css'
 
 function Dashboard(props) {
@@ -10,11 +14,7 @@ function Dashboard(props) {
             <div className="header-info">
 
                 <div>EduTracker Logo will eventually go here :)</div>
-                <div className="upper-info">
-                    <section id="grade-level-indicator"></section>
-                    <section id="num-students-indicator"></section>
-                    <section id="current-term-indicator"></section>
-                </div>
+                <Indicators />
             </div>
             <div style={{height:'20px'}}></div>
 
@@ -37,13 +37,7 @@ function Dashboard(props) {
             </div>
 
 
-            <div className="student-section">
-                <div className="students-list-container">
-                    <h1 className="title">Class Name</h1>
-                    <p className="body">Students</p>
-                    <div id="students-root" className="students-list"></div>
-                </div>
-            </div>
+            <Students />
 
         </div>
     </section>

@@ -1,7 +1,9 @@
 import React from 'react';
 import './Sidebar.css';
 import ClassAddButton from './ClassAddButton/ClassAddButton';
+import ClassesList from './ClassesList/ClassesList'
 
+import { classInfo, selectedClass } from '../../utils/global';
 
 const Sidebar = () => {
   return (
@@ -12,10 +14,10 @@ const Sidebar = () => {
 
             {/* <!-- add profile info --> */}
             <section className="profile">
-                <p id="teacher-name" className="name">First Last</p>
+                <p id="teacher-name" className="name">{classInfo.name}</p>
                 <p id="school-name" className="info">School Name</p>
                 <br />
-                <p id="teacher-email" className="info" style={{fontSize: '15px'}}>emailaddress@renelglobal.org</p>
+                <p id="teacher-email" className="info" style={{fontSize: '15px'}}>{classInfo.email}</p>
             </section>
 
             <div style={{height: '50px'}}></div>
@@ -41,6 +43,7 @@ const Sidebar = () => {
                 <p>Select a class to view students</p>
                 <div id="classes-root" className="sidebar-classes">
                     {/* Sidebar classes will be loaded here */}
+                    <ClassesList info={classInfo}/>
                 </div>
             </div>
 

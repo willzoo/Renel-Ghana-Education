@@ -8,7 +8,7 @@ import Submit from '../components/Submit/Submit'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 
-import {classInfo, selectedClass} from "../../../utils/global"
+import { classInfo, selectedClass } from '../../Sidebar/Sidebar';
 
 let searchStudentInfo = {
     studentID: { title: "Student ID", placeholder: "Find Student", id: "search-student-id-request" },

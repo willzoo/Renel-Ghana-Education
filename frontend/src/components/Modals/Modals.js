@@ -4,6 +4,7 @@ import ClassAddModal from './ClassAddModal/ClassAddModal'
 import AddStudentModal from './AddStudentModal/AddStudentModal'
 import NewStudentModal from "./NewStudentModal/NewStudentModal"
 import EditStudentModal from "./EditStudentModal/EditStudentModal"
+import EditClassModal from './EditClassModal/EditClassModal'
 
 const classAdd = {
     id: "class-add",
@@ -31,26 +32,37 @@ const newStudent = {
 
 const editStudent = {
   id: "edit-student",
-  title: "Edit Class",
-  text: "Use these fields to modify your class's information.",
+  title: "Edit Student",
+  text: "Use these fields to modify your student's information.",
   content: () => {return <EditStudentModal/>},
   closeable: true,
 }
 
-const transferStudent = {
-  id: "class-add",
-  title: "Create New Class",
-  text: "Fill out the following fields to add a new class.",
+const editClass = {
+  id: "class-edit",
+  title: "Edit Class",
+  text: "Use these fields to modify your class's information.",
+  content: () => {return <EditClassModal/>},
   closeable: true,
+}
+
+const loading = {
+  id: "loading",
+  title: "Loading...",
+  text: "Please wait while we load your class information.",
+  content: () => {return <section/>},
+  closeable: false,
 }
 
 function Modals() {
   return (
     <section>
+        {/* <ModalBase info={loading}/> */}
         <ModalBase info={classAdd}/>
         <ModalBase info={addStudent}/>
         <ModalBase info={newStudent}/>
         <ModalBase info={editStudent}/>
+        <ModalBase info={editClass}/>
     </section>
   );
 }

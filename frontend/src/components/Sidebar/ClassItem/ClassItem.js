@@ -1,18 +1,23 @@
 import React from 'react';
 import './ClassItem.css'
 
-const handleEditClick = () => {
-    OpenModal('class-edit');
-}
+import {OpenModal} from '../../../utils/functions'
 
-const handleClassClick = () => {
-    selectedClass = props.data;
-    // ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
-    // ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"));
-    // ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"));
-};
+import { selectedClass } from '../../../utils/global';
 
 function ClassItem(props) {
+
+    const handleEditClick = () => {
+        OpenModal('class-edit');
+    }
+    
+    const handleClassClick = () => {
+        selectedClass = props.data;
+        // ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
+        // ReactDOM.render(<Indicator title="Grade Level" value={selectedClass.grade_level} theme="grade-level" icon="fa fa-book" />, document.getElementById("grade-level-indicator"));
+        // ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"));
+    };
+
     return (
         <li>
             <div className="sidebar-class" onClick={handleClassClick}>

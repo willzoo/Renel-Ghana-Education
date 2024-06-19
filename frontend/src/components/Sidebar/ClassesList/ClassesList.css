@@ -1,0 +1,14 @@
+/* displayed text if there is an issue loading a list of classes/students */
+  .list-issue {
+    font-family: 'Open Sans', sans-serif;
+    color:#516669;
+    font-size: 15px;
+    margin-left: 23px;
+    margin-top: 0px;
+  }
+  
+  /* remove bullet points from list */
+  .nobullet, .nobullet li {
+    list-style-type: none;
+    padding-left: 0;
+}

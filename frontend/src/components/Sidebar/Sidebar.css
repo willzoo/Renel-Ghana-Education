@@ -67,21 +67,12 @@
   .sidebar-classes {
     overflow-y: auto;
     height: calc(100% - 90px);
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    /* -ms-overflow-style: none;  IE and Edge */
+    /* scrollbar-width: none;  Firefox */
     mask-image: linear-gradient(to bottom, transparent, black 2%, black 98%, transparent);
   }
 
  /* more preparation to hide scrollbar */
   .sidebar-classes::-webkit-scrollbar {
     display: none;
-  }
-
-  /* displayed text if there is an issue loading a list of classes/students */
-  .list-issue {
-    font-family: 'Open Sans', sans-serif;
-    color:#516669;
-    font-size: 15px;
-    margin-left: 23px;
-    margin-top: 0px;
   }
