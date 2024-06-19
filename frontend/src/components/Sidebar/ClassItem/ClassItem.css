@@ -6,14 +6,18 @@
     background-color: white;
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    transition: background-color 0.2s;
+    transition: 0.2s;
     display: flex;
     justify-content: space-between;
 }
 
 /* hover animation for sidebar class */
 .sidebar-class:hover {
-  background-color: #fff6e4;
+  background-color: #fcf7ec;
+}
+
+.sidebar-class.selected {
+  background-color: #fff0d6;
 }
 
 /* title text of individual class item */

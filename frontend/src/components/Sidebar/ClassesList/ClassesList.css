@@ -12,3 +12,45 @@
     list-style-type: none;
     padding-left: 0;
 }
+
+/* container for classes in sidebar */
+.sidebar-classes-container {
+  border-radius: 20px;
+  width:85%;
+  background-color:#eef5fa;
+  height: calc(100% - 480px);
+  margin: auto;
+  padding-top: 2px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* header text in sidebar container */
+.sidebar-classes-container h1 {
+  color:#138999;
+  font-weight: bolder;
+  font-size: 20px;
+  margin-left: 23px;
+  margin-bottom: 0px;
+}
+
+/* paragraph text in sidebar container */
+.sidebar-classes-container p {
+  color:#88a2a5;
+  font-size: 15px;
+  margin-left: 23px;
+  margin-top: 0px;
+}
+
+/* sidebar class list, with overflow */
+.sidebar-classes {
+  overflow-y: auto;
+  height: calc(100% - 90px);
+  /* -ms-overflow-style: none;  IE and Edge */
+  /* scrollbar-width: none;  Firefox */
+  mask-image: linear-gradient(to bottom, transparent, black 2%, black 98%, transparent);
+}
+
+/* more preparation to hide scrollbar */
+.sidebar-classes::-webkit-scrollbar {
+  display: none;
+}

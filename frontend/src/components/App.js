@@ -4,9 +4,8 @@ import Sidebar from './Sidebar/Sidebar';
 import Dashboard from './Dashboard/Dashboard';
 import Modals from './Modals/Modals'
 import { useEffect, useState, useContext } from 'react';
-import {CloseModal} from '../utils/functions'
+import {CloseModal, OpenModal} from '../utils/functions'
 import TeacherContext from '../TeacherContext';
-
 
 function App() {
     // export let RETURNING_STUDENT_ID = '';
@@ -15,6 +14,7 @@ function App() {
   const [classInfo, setClassInfo] = useState({
       "name": "Patrick Kallenbach",
       "email": "pkallenbach21@gmail.com",
+      "school_name": "PK Yonge DRS",
       'classes': [
           {
           "class_name": "Class 1",
@@ -94,23 +94,25 @@ function App() {
   //         });
   
   //         setSelectedClass(classInfo[0]);
-  //         // ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
 
   //         CloseModal('loading');
   //     })
   //     .catch(error => {
   //         console.error('There was a problem with the fetch operation:', error);
+
+  //         CloseModal('loading');
+  //         OpenModal('error');
   //     }, []);
   // })
 
   return (
+    // Teacher context allows for classInfo and selectedClass to be passed throughout the application
     <TeacherContext.Provider value={{'classInfo': {classInfo, setClassInfo}, 'selectedClass': {selectedClass, setSelectedClass}}}>
       <section>
-        {/* <!-- add light grey background --> */}
         <div className="background">
-          <Modals/>
-          <Sidebar/>
-          <Dashboard />
+          <Modals/> {/* add each modal to the page */}
+          <Sidebar/> {/* add sidebar content */}
+          <Dashboard /> {/* add dashboard content */}
         </div>
       </section>
     </TeacherContext.Provider>

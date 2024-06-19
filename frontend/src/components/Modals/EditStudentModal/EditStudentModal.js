@@ -54,15 +54,12 @@ function EditStudentModal(props) {
         //     if (studentIndex > -1) {
         //         selectedClass.students[studentIndex] = studentData;
         //         selectedClass.students[studentIndex]['_id'] = props.student._id;
-        //         // ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
         //     }
         // })
         // .catch(error => {
         //     console.error('There was a problem with the fetch operation:', error);
         // });
         CloseModal("edit-student");
-
-        // ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
     };
 
     // console.log("Edit student input called: " + props.student.name);

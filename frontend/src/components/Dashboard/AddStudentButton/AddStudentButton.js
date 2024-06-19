@@ -5,11 +5,11 @@ import { OpenModal } from '../../../utils/functions'
 
 function AddStudentButton(props) {
   return (
-    <div className="add-student-button" onClick={() => OpenModal(`${props.id}-student`)}>
+    <div className="add-student-button" onClick={() => OpenModal(`${props.info.id}-student`)}>
         <div className="icon">
-            <FontAwesomeIcon icon={props.icon}/>
+            <FontAwesomeIcon icon={props.info.icon}/>
         </div>
-        <p className="text">{props.text}</p>
+        <p className="text">{props.info.text}</p>
     </div>
   );
 }

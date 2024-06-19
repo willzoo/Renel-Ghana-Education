@@ -1,7 +1,7 @@
 import React from "react"
 import ModalBase from './components/ModalBase/ModalBase'
 import ClassAddModal from './ClassAddModal/ClassAddModal'
-import AddStudentModal from './AddStudentModal/AddStudentModal'
+import ReturningStudentModal from './ReturningStudentModal/ReturningStudentModal'
 import NewStudentModal from "./NewStudentModal/NewStudentModal"
 import EditStudentModal from "./EditStudentModal/EditStudentModal"
 import EditClassModal from './EditClassModal/EditClassModal'
@@ -14,11 +14,11 @@ const classAdd = {
     closeable: true,
 }
 
-const addStudent = {
-  id: "search-student",
+const returningStudent = {
+  id: "returning-student",
   title: "Add Student",
   text: "Please enter the student's ID to see if they are in our system.",
-  content: () => {return <AddStudentModal/>},
+  content: () => {return <ReturningStudentModal/>},
   closeable: true,
 }
 
@@ -54,12 +54,21 @@ const loading = {
   closeable: false,
 }
 
+const error = {
+  id: "error",
+  title: "Error",
+  text: "We could not load your class information. Please try again later.",
+  content: () => {return <section/>},
+  closeable: false,
+}
+
 function Modals() {
   return (
     <section>
-        {/* <ModalBase info={loading}/> */}
+        {/* <ModalBase info={loading}/>
+        <ModalBase info={error}/> */}
         <ModalBase info={classAdd}/>
-        <ModalBase info={addStudent}/>
+        <ModalBase info={returningStudent}/>
         <ModalBase info={newStudent}/>
         <ModalBase info={editStudent}/>
         <ModalBase info={editClass}/>
