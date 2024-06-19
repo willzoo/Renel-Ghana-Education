@@ -17,7 +17,6 @@ def create_school():
     try:
         data = request.get_json()
         name = data.get('name')
-        teachers = data.get('teachers', [])
         grade_levels = data.get('grade_levels', [])
 
         # Check for required fields
@@ -32,7 +31,6 @@ def create_school():
         school_data = {
             "name": name,
             "access_code": access_code,
-            "teachers": teachers,
             "grade_levels": grade_levels
         }
 
