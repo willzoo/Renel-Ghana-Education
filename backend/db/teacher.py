@@ -57,8 +57,15 @@ def get_teacher_classes(teacher_id):
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
 
+        # Debugging: Print teacher_id
+        print(f"Fetching details for teacher_id: {teacher_id}")
+
         # Fetch teacher details
         teacher = db.teachers.find_one({"_id": ObjectId(teacher_id)}, {"name": 1, "email": 1, "school_id": 1, "classes": 1})
+        
+        # Debugging: Print fetched teacher details
+        print(f"Fetched teacher details: {teacher}")
+
         if not teacher:
             return jsonify({"error": "Teacher not found"}), 404
 
@@ -69,6 +76,10 @@ def get_teacher_classes(teacher_id):
 
         # Fetch school name using school_id
         school = db.schools.find_one({"_id": ObjectId(school_id)}, {"name": 1})
+        
+        # Debugging: Print fetched school details
+        print(f"Fetched school details: {school}")
+
         if not school:
             return jsonify({"error": "School not found"}), 404
 
@@ -91,7 +102,7 @@ def get_teacher_classes(teacher_id):
             cls['teacher_id'] = str(cls['teacher_id'])
             cls['students'] = [str(student_id) for student_id in cls.get('students', [])]
 
-            # TODO: We query every single class for all of their students and this is very slow, in future only class route should get students
+            # Fetch student details (if necessary)
             student_ids = [ObjectId(student_id) for student_id in cls['students']]
             student_cursor = db.students.find({"_id": {"$in": student_ids}})
             students = []
@@ -105,6 +116,7 @@ def get_teacher_classes(teacher_id):
         return jsonify({"name": teacher_name, "email": teacher_email, "school_name": school_name, "classes": classes}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 
 # Route to patch a teacher with new info
