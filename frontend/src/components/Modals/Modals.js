@@ -65,8 +65,8 @@ const error = {
 function Modals() {
   return (
     <section>
-        {/* <ModalBase info={loading}/>
-        <ModalBase info={error}/> */}
+        <ModalBase info={loading}/>
+        <ModalBase info={error}/>
         <ModalBase info={classAdd}/>
         <ModalBase info={returningStudent}/>
         <ModalBase info={newStudent}/>

@@ -72,38 +72,38 @@ function App() {
 
   const [selectedClass, setSelectedClass] = useState(classInfo.classes[0]);
 
-  // useEffect(() => {
-  //   fetch(`http://127.0.0.1:8000/teachers/665da0b90c1d6c0c45724285/classes`, {
-  //     method: "GET",
-  //     headers: {
-  //         'Content-Type': 'application/json'
-  //     }
-  // })
-  //     .then(response => {
-  //         if (!response.ok) {
-  //             throw new Error('Network response was not ok');
-  //         }
-  //         return response.json();
-  //     })
-  //     .then(data => {
-  //         console.log('Data received:', data);
-  //         setClassInfo(data);
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/teachers/665da0b90c1d6c0c45724285/classes`, {
+      method: "GET",
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Data received:', data);
+          setClassInfo(data);
   
-  //         classInfo.sort((a, b) => {
-  //             return a.class_name.localeCompare(b.class_name);
-  //         });
+          classInfo.sort((a, b) => {
+              return a.class_name.localeCompare(b.class_name);
+          });
   
-  //         setSelectedClass(classInfo[0]);
+          setSelectedClass(classInfo[0]);
 
-  //         CloseModal('loading');
-  //     })
-  //     .catch(error => {
-  //         console.error('There was a problem with the fetch operation:', error);
+          CloseModal('loading');
+      })
+      .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
 
-  //         CloseModal('loading');
-  //         OpenModal('error');
-  //     }, []);
-  // })
+          CloseModal('loading');
+          OpenModal('error');
+      }, []);
+  })
 
   return (
     // Teacher context allows for classInfo and selectedClass to be passed throughout the application
