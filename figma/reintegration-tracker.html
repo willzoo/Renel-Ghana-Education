@@ -40,6 +40,8 @@
                 <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
                 <div style="height:50px"></div>
 
+                  <!-- Wrap everything in a single scrollable container -->
+            <div class="scrollable-sidebar-content">
                 <!-- Sidebar Year and Term Selector -->
                 <div>
                     <div class="dropdown-button-container" id="dropdownContainer">
@@ -67,15 +69,13 @@
                             <i class="fa fa-search"></i>
                             <input type="text" placeholder="Search School Name" oninput="handleSchoolSearch(event)" />
                         </div>
-                         <!-- Adding a scrollable area for the school list -->
-                         <div class="scrollable-school-list">
-                            <ul id="school-list" class="admin-dashboard-school-list">
+                        <!-- Adding a scrollable area for the school list -->
                         <ul id="school-list" class="admin-dashboard-school-list">
                             <!-- List of filtered schools will be rendered here -->
                         </ul>
                     </div>
                 </section>
-            
+            </div>
         </div>
         <!-- Schools List Section -->
         <div class="main">
