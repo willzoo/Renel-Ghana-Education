@@ -8,8 +8,6 @@ import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 import Checkbox from '../components/Checkbox/Checkbox'
 
-import {classInfo, selectedClass} from "../../../utils/global"
-
 let newStudentInfo = {
     studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
     studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id" },
@@ -37,20 +35,20 @@ function NewStudentModal() {
         let disabilityStatus = document.getElementById('disability-status').value;
         let additionalInfo = document.getElementById('additional-info').value;
 
-        let content = {
-            'name': studentName,
-            'guardian_name': guardianName,
-            'guardian_contact': guardianContact,
-            'dob': studentDOB,
-            "student_school_id": studentID,
-            'disabled': disabilityStatus,
-            'health_conditions': studentMedical,
-            'misc_info': additionalInfo,
-            'class_id': selectedClass._id,
-            'grade_level': "Primary 2",
-            'school_id': "nb9s",
-            'history': [],
-        };
+        // let content = {
+        //     'name': studentName,
+        //     'guardian_name': guardianName,
+        //     'guardian_contact': guardianContact,
+        //     'dob': studentDOB,
+        //     "student_school_id": studentID,
+        //     'disabled': disabilityStatus,
+        //     'health_conditions': studentMedical,
+        //     'misc_info': additionalInfo,
+        //     'class_id': selectedClass._id,
+        //     'grade_level': "Primary 2",
+        //     'school_id': "nb9s",
+        //     'history': [],
+        // };
 
         // selectedClass.students.push(content);
 
