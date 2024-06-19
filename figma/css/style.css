@@ -731,7 +731,7 @@ body, html {
 .school-item {
   background-color: #ffffff;
   border: 1px solid #DCE8F5;
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 10px;
   margin-bottom: 10px;
   cursor: pointer;
@@ -1311,11 +1311,11 @@ body, html {
   margin: 10px 0 0 0;
   line-height: 1.5;  /* Increase line height for better readability */
 }
-/* Scrollable area for school list */
-.scrollable-school-list {
-  max-height: 200px; /* Adjust the height as needed */
+/* Scrollable area for sidebar content */
+.scrollable-sidebar-content {
+  max-height: calc(100vh - 250px); /* Adjust the height as needed */
   overflow-y: auto;
-  margin-top: 10px;
+  padding: 10px;
 }
 
 .back-button {
