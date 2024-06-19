@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CloseModal } from '../../../utils/functions';
 import { OpenModal } from '../../../utils/functions';
 
@@ -10,16 +10,14 @@ import TextInput from '../components/TextInput/TextInput'
 
 import { classInfo, selectedClass } from '../../Sidebar/Sidebar';
 
-let searchStudentInfo = {
-    studentID: { title: "Student ID", placeholder: "Find Student", id: "search-student-id-request" },
+let returningStudentInfo = {
+    studentID: { title: "Student ID", placeholder: "Find Student", id: "returning-student-id-request" },
 }
 
-function AddStudentModal() {
+function ReturningStudentModal() {
+
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        CloseModal("search-student");
-        let id = document.getElementById("search-student-id-request").value;
         //Global variable to be used later with in add new student
         // RETURNING_STUDENT_ID = document.getElementById("returning-student-id-request").value;
         // console.log("returning student: " + RETURNING_STUDENT_ID);
@@ -30,20 +28,24 @@ function AddStudentModal() {
         //     OpenModal("new-student");
         // }
 
+        let id = document.getElementById("returning-student-id-request").value;
+
         if (id == "1234") {
+            CloseModal("returning-student");
+
             OpenModal("edit-student", id);
         }
         else {
-            OpenModal("new-student");
+            alert('The requested ID is not in our system. Please confirm the ID is correct or use the Add New Student tool.');
         }
 
     }
 
     return (
         <section>
-            <form id="search-student-form" onSubmit={handleSubmit}>
-                <section className="input-list" id="search-student-text-input">
-                    <TextInput info={searchStudentInfo.studentID}/>
+            <form id="returning-student-form" onSubmit={handleSubmit}>
+                <section className="input-list" id="returning-student-text-input">
+                    <TextInput info={returningStudentInfo.studentID}/>
                 </section>
                 <br /><br /><br /><br />
                 <Submit value="Search" />
@@ -52,4 +54,4 @@ function AddStudentModal() {
     );
 }
 
-export default AddStudentModal;
+export default ReturningStudentModal;

@@ -31,10 +31,21 @@ function ModalBase(props) {
         </div>
         );
     }
-    else {
+    else if (props.info.id == "loading") {
         return (
             <div className="modal-underlay blurred-modal-underlay" style={{display:'block'}} id={`${props.info.id}-modal-underlay`}>
                 <div className="modal displayed-modal" id={`${props.info.id}-modal`}>
+                    <div className="title">{props.info.title}</div>
+                    <div className="content" style={{marginTop: '-20px', marginBottom: '10px',}}>{props.info.text}</div>
+                </div>
+            </div>
+        )
+    }
+    
+    else if (props.info.id == "error") {
+        return (
+            <div className="modal-underlay" id={`${props.info.id}-modal-underlay`}>
+                <div className="modal" id={`${props.info.id}-modal`}>
                     <div className="title">{props.info.title}</div>
                     <div className="content" style={{marginTop: '-20px', marginBottom: '10px',}}>{props.info.text}</div>
                 </div>

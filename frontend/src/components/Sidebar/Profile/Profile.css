@@ -1,0 +1,21 @@
+
+
+/* profile text base */
+.profile {
+    text-align: center;
+}
+
+/* name subclass of profile */
+.profile .name {
+    font-size: 25px;
+    font-weight: bold;
+    color:#138999;
+    margin: 0px;
+}
+
+/* info subclass of profile */
+.profile .info {
+    font-size: 20px;
+    color:#144047;
+    margin: 0px;
+}

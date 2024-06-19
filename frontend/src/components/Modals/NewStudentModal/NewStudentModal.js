@@ -76,10 +76,7 @@ function NewStudentModal() {
         //         console.error('There was a problem with the fetch operation:', error);
         //     });
 
-        // ReactDOM.render(<AddStudents students={selectedClass.students} />, document.getElementById("students-root"));
-        // ReactDOM.render(<AddClasses classes={classInfo} />, document.getElementById("classes-root"));
-        // ReactDOM.render(<Indicator title="Enrolled Students" value={selectedClass.students.length} theme="num-students" icon="fa fa-graduation-cap" />, document.getElementById("num-students-indicator"));
-    }
+   }
 
     return (
         <section>
