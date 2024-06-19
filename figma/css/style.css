@@ -1412,3 +1412,84 @@ body, html {
   height: 100vh;
   flex-direction: column;
 }
+.upper-info-indicator {
+  width: 290px;
+  height: auto;
+  background-color: white;
+  border-radius: 18px;
+  box-shadow: 0px 0px 10px 5px rgb(0, 0, 0, 0.02);
+  transition: 0.1s;
+  padding: 10px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+ }
+ 
+ 
+ .upper-info-indicator .row {
+  display:flex;
+  justify-content: space-between;
+  width: 290px;
+  position:absolute;
+ }
+ 
+ 
+ .upper-info-indicator .label {
+  text-align: left;
+   font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  color:#484848;
+  margin: auto;
+  margin-top: 5px;
+  margin-left: 45px;
+  white-space: nowrap;
+ }
+ 
+ 
+ .upper-info-indicator .value {
+  text-align: right;
+   font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  color:#484848;
+  margin: auto;
+  margin-right: 5px;
+  margin-top: 3px;
+  white-space: nowrap;
+ }
+ 
+ 
+ .upper-info-icon-shape {
+  margin: auto;
+  width: 30px;
+  height:30px;
+  position: absolute;
+  z-index: 1;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 5px rgb(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center; /* Vertical alignment */
+  justify-content: center;
+ }
+ 
+ 
+ .upper-info-icon {
+  font-size: 16px;
+  z-index: 1;
+  color: white;
+}
+ 
+ .school-name-indicator {
+  background-color:#EC6B47;
+ }
+ 
+ 
+ .total-students-indicator {
+  background-color:#116CBD;
+ }
+ 
+ 
+ .term-year-indicator {
+  background-color:#E1251B;
+ }
+ 

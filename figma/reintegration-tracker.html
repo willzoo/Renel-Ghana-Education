@@ -80,10 +80,36 @@
         <!-- Schools List Section -->
         <div class="main">
             <div class="header-info">
-                <div class="upper-info">
-                    <section id="school-name-indicator">School Name: Loading...</section>
-                    <section id="total-students-indicator">Total Students: Loading...</section>
-                    <section id="term-year-indicator">Term & Year: Loading...</section>
+                <div class="upper-info-indicator">
+                    <section id="school-name-indicator" class="school-name-indicator">
+                        <div class="row">
+                            <div class="upper-info-icon-shape school-name-indicator">
+                                <svg width="21" height="17" viewBox="0 0 21 17" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.7369 0.505664C10.3994 0.280664 9.96191 0.280664 9.62441 0.505664L5.37754 3.33691H1.68066C0.852539 3.33691 0.180664 4.00879 0.180664 4.83691V14.8369C0.180664 15.665 0.852539 16.3369 1.68066 16.3369H8.18066V13.3369C8.18066 12.2338 9.07754 11.3369 10.1807 11.3369C11.2838 11.3369 12.1807 12.2338 12.1807 13.3369V16.3369H18.6807C19.5088 16.3369 20.1807 15.665 20.1807 14.8369V4.83691C20.1807 4.00879 19.5088 3.33691 18.6807 3.33691H14.9838L10.7369 0.505664ZM3.18066 6.33691H4.18066C4.45566 6.33691 4.68066 6.56191 4.68066 6.83691V8.83691C4.68066 9.11191 4.45566 9.33691 4.18066 9.33691H3.18066C2.90566 9.33691 2.68066 9.11191 2.68066 8.83691V6.83691C2.68066 6.56191 2.90566 6.33691 3.18066 6.33691ZM15.6807 6.83691C15.6807 6.56191 15.9057 6.33691 16.1807 6.33691H17.1807C17.4557 6.33691 17.6807 6.56191 17.6807 6.83691V8.83691C17.6807 9.11191 17.4557 9.33691 17.1807 9.33691H16.1807C15.9057 9.33691 15.6807 9.11191 15.6807 8.83691V6.83691ZM3.18066 10.3369H4.18066C4.45566 10.3369 4.68066 10.5619 4.68066 10.8369V12.8369C4.68066 13.1119 4.45566 13.3369 4.18066 13.3369H3.18066C2.90566 13.3369 2.68066 13.1119 2.68066 12.8369V10.8369C2.68066 10.5619 2.90566 10.3369 3.18066 10.3369ZM15.6807 10.8369C15.6807 10.5619 15.9057 10.3369 16.1807 10.3369H17.1807C17.4557 10.3369 17.6807 10.5619 17.6807 10.8369V12.8369C17.6807 13.1119 17.4557 13.3369 17.1807 13.3369H16.1807C15.9057 13.3369 15.6807 13.1119 15.6807 12.8369V10.8369ZM7.43066 5.83691C7.43066 5.10757 7.7204 4.4081 8.23612 3.89237C8.75185 3.37665 9.45132 3.08691 10.1807 3.08691C10.91 3.08691 11.6095 3.37665 12.1252 3.89237C12.6409 4.4081 12.9307 5.10757 12.9307 5.83691C12.9307 6.56626 12.6409 7.26573 12.1252 7.78146C11.6095 8.29718 10.91 8.58691 10.1807 8.58691C9.45132 8.58691 8.75185 8.29718 8.23612 7.78146C7.7204 7.26573 7.43066 6.56626 7.43066 5.83691ZM10.1807 4.33691C9.90566 4.33691 9.68066 4.56191 9.68066 4.83691V5.83691C9.68066 6.11191 9.90566 6.33691 10.1807 6.33691H11.1807C11.4557 6.33691 11.6807 6.11191 11.6807 5.83691C11.6807 5.56191 11.4557 5.33691 11.1807 5.33691H10.6807V4.83691C10.6807 4.56191 10.4557 4.33691 10.1807 4.33691Z" fill="white"/>
+                                </svg>
+                            </div>
+                            <p class="label">School Name:</p>
+                            <p class="value" id="school-name-value">Loading...</p>
+                        </div>
+                    </section>
+                    <section id="total-students-indicator" class="total-students-indicator">
+                        <div class="row">
+                            <div class="upper-info-icon-shape total-students-indicator">
+                                <i class="fa fa-users upper-info-icon"></i>
+                            </div>
+                            <p class="label">Total Students:</p>
+                            <p class="value" id="total-students-value">Loading...</p>
+                        </div>
+                    </section>
+                    <section id="term-year-indicator" class="term-year-indicator">
+                        <div class="row">
+                            <div class="upper-info-icon-shape term-year-indicator">
+                                <i class="fa fa-calendar upper-info-icon"></i>
+                            </div>
+                            <p class="label">Term & Year:</p>
+                            <p class="value" id="term-year-value">Loading...</p>
+                        </div>
+                    </section>
                 </div>
             </div>
             <div style="height:20px;"></div>
