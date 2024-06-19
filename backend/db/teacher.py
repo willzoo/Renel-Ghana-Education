@@ -57,14 +57,26 @@ def get_teacher_classes(teacher_id):
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
 
-        # Fetch teacher's class IDs
-        teacher = db.teachers.find_one({"_id": ObjectId(teacher_id)}, {"classes": 1})
+        # Fetch teacher details
+        teacher = db.teachers.find_one({"_id": ObjectId(teacher_id)}, {"name": 1, "email": 1, "school_id": 1, "classes": 1})
         if not teacher:
             return jsonify({"error": "Teacher not found"}), 404
 
+        # Extract details
+        teacher_name = teacher.get('name')
+        teacher_email = teacher.get('email')
+        school_id = teacher.get('school_id')
+
+        # Fetch school name using school_id
+        school = db.schools.find_one({"_id": ObjectId(school_id)}, {"name": 1})
+        if not school:
+            return jsonify({"error": "School not found"}), 404
+
+        school_name = school.get('name')
+
         class_ids = teacher.get('classes', [])
         if not class_ids:
-            return jsonify([]), 200
+            return jsonify({"name": teacher_name, "email": teacher_email, "school_name": school_name, "classes": []}), 200
         
         # Fetch class details
         classes = list(db.classes.find(
@@ -90,9 +102,10 @@ def get_teacher_classes(teacher_id):
                 students.append(student)            
             cls['students'] = students
 
-        return jsonify(classes), 200
+        return jsonify({"name": teacher_name, "email": teacher_email, "school_name": school_name, "classes": classes}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 # Route to patch a teacher with new info
 @teacher_bp.route('/teachers/<teacher_id>', methods=['PATCH'])
