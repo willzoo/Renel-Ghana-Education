@@ -1011,7 +1011,9 @@ body, html {
 }
 
 .edutracker-logo {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: center; /* Center logo horizontally */
+  width: 100%; /* Ensure it takes the full width of the sidebar */
 }
 
 .separator {
@@ -1336,12 +1338,17 @@ body, html {
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .feature-buttons {
   display: flex;
-  justify-content: center; /* Center the buttons */
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
+  cursor: pointer;
   gap: 20px;
+  text-align: center;
+  width: 80%;
+  flex: 1;
 }
 
 .feature {
@@ -1397,7 +1404,8 @@ body, html {
 .feature-description ul li {
   list-style-type: disc;
 }
-.main {
+
+.main-admin-dashboard{ 
   display: flex;
   justify-content: center;
   align-items: center;
