@@ -8,31 +8,32 @@ school_bp = Blueprint('school', __name__)
 
 def generate_unique_code(collection, field):
     while True:
-        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
+        code = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
         if not collection.find_one({field: code}):
             return code
-        
+
 @school_bp.route('/schools', methods=['POST'])
 def create_school():
     try:
         data = request.get_json()
         name = data.get('name')
-        teachers = data.get('teachers', [])
         grade_levels = data.get('grade_levels', [])
 
         # Check for required fields
         if not name:
             return jsonify({"error": "Missing required fields"}), 400
 
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        access_code = generate_unique_code(db.schools, "access_code")
+
         school_data = {
             "name": name,
-#            "access_code": access_code,
-            "teachers": teachers,
+            "access_code": access_code,
             "grade_levels": grade_levels
         }
 
-        mongo = current_app.extensions['pymongo']
-        db = mongo.cx.EduTracker
         result = db.schools.insert_one(school_data)
 
         # Get the _id of the newly created school
@@ -42,6 +43,30 @@ def create_school():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+#This patch route updates the school's name based off the school_id given
+@school_bp.route('/schools/<school_id>', methods=['PATCH'])
+def update_school_name(school_id):
+    try:
+        data = request.get_json()
+        new_name = data.get('name')
+
+        if not new_name:
+            return jsonify({"error": "New name is required"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        result = db.schools.update_one({"_id": ObjectId(school_id)}, {"$set": {"name": new_name}})
+
+        if result.matched_count == 0:
+            return jsonify({"error": "School not found"}), 404
+
+        return jsonify({"message": "School name updated successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 # New route to get info of all schools with teachers defined
 @school_bp.route('/schools/teachers', methods=['GET'])

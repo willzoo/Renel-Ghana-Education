@@ -40,6 +40,8 @@
                 <hr style="width: 75%; text-align:center; height: 2px; background-color:rgb(41, 41, 41)">
                 <div style="height:50px"></div>
 
+                  <!-- Wrap everything in a single scrollable container -->
+            <div class="scrollable-sidebar-content">
                 <!-- Sidebar Year and Term Selector -->
                 <div>
                     <div class="dropdown-button-container" id="dropdownContainer">
@@ -67,6 +69,7 @@
                             <i class="fa fa-search"></i>
                             <input type="text" placeholder="Search School Name" oninput="handleSchoolSearch(event)" />
                         </div>
+                        <!-- Adding a scrollable area for the school list -->
                         <ul id="school-list" class="admin-dashboard-school-list">
                             <!-- List of filtered schools will be rendered here -->
                         </ul>
@@ -91,8 +94,16 @@
                     <div id="students-root" class="students-list"></div>
                 </div>
             </div>
+             <!-- Back Button -->
+    <button onclick="goBack()" class="back-button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 8C16 5.87827 15.1571 3.84344 13.6569 2.34315C12.1566 0.842855 10.1217 0 8 0C5.87827 0 3.84344 0.842855 2.34315 2.34315C0.842855 3.84344 0 5.87827 0 8C0 10.1217 0.842855 12.1566 2.34315 13.6569C3.84344 15.1571 5.87827 16 8 16C10.1217 16 12.1566 15.1571 13.6569 13.6569C15.1571 12.1566 16 10.1217 16 8ZM6.79375 11.7781L3.67188 8.43125C3.5625 8.3125 3.5 8.15937 3.5 8C3.5 7.84063 3.5625 7.68437 3.67188 7.56875L6.79375 4.22188C6.925 4.08125 7.10937 4 7.30312 4C7.6875 4 8 4.3125 8 4.69688V6.5H11C11.5531 6.5 12 6.94687 12 7.5V8.5C12 9.05313 11.5531 9.5 11 9.5H8V11.3031C8 11.6875 7.6875 12 7.30312 12C7.10937 12 6.925 11.9187 6.79375 11.7781Z" fill="#144047"/>
+        </svg>
+        </button>
         </div>
-
+    </div>
+</div>
+</div>
         <!-- Modal structure for student profile -->
         <div id="student-profile-modal-underlay" class="reintegration-tracker modal-underlay" onClick="CloseModal('student-profile')">
             <div id="student-profile-modal" class="modal" onClick="event.stopPropagation()">
@@ -109,6 +120,7 @@
             </div>
         </div>
     </div>
+   
 
     <script type="text/babel">
         const schoolInfo = [
@@ -156,7 +168,10 @@
         function handleSchoolClick(schoolId, schoolName) {
             window.location.href = `reintegration-tracker.html?school_id=${schoolId}&school_name=${schoolName}&year=${selectedYear}`;
         }
-
+         // Added function to handle back button click
+         function goBack() {
+            window.location.href = 'reintegration-tracker.html';
+        }
         ReactDOM.render(<SchoolList schools={schoolInfo} />, document.getElementById("school-list"));
 
         const urlParams = new URLSearchParams(window.location.search);
