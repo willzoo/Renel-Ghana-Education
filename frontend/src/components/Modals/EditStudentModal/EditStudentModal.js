@@ -9,8 +9,6 @@ import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 import Checkbox from '../components/Checkbox/Checkbox'
 
-import {classInfo, selectedClass} from "../../../utils/global"
-
 let editStudentInfo = {
     studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name-edit" },
     studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id-edit" },

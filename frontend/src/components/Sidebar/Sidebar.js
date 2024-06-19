@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Sidebar.css';
 import ClassAddButton from './ClassAddButton/ClassAddButton';
 import ClassesList from './ClassesList/ClassesList'
+import TeacherContext from '../../TeacherContext';
 
-import { classInfo, selectedClass } from '../../utils/global';
+function Sidebar() {
+    const {classInfo, setClassInfo} = useContext(TeacherContext).classInfo;
 
-const Sidebar = () => {
   return (
     <section>
         <div className="sidebar">

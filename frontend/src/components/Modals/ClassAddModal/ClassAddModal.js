@@ -7,8 +7,6 @@ import Submit from '../components/Submit/Submit'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 
-import {classInfo, selectedClass} from "../../../utils/global"
-
 let addClassInfo = {
   className: { title: "Class Name", placeholder: "Enter a class name", id: "class-name" },
 };

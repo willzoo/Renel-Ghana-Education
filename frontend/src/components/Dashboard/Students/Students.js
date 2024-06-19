@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import './Students.css'
 import StudentsList from "./StudentsList/StudentsList";
 
-import { selectedClass } from "../../../utils/global";
+import TeacherContext from "../../../TeacherContext";
 
 function Students() {
+    const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
+
     return (
         <div className="student-section">
             <div className="students-list-container">

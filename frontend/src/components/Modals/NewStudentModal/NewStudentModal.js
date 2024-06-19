@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import { CloseModal } from '../../../utils/functions';
 
 import '../components/ModalBase/ModalBase.css'
@@ -8,7 +8,7 @@ import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 import Checkbox from '../components/Checkbox/Checkbox'
 
-import { selectedClass } from '../../../utils/global';
+import TeacherContext from '../../../TeacherContext';
 
 let newStudentInfo = {
     studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
@@ -22,6 +22,8 @@ let newStudentInfo = {
 }
 
 function NewStudentModal() {
+    const selectedClass = useContext(TeacherContext);
+    
     let handleNewStudentSubmit = (event) => {
         event.preventDefault();
         CloseModal("new-student");
