@@ -20,23 +20,23 @@ let addClassDropdown = [
 
 function ClassAddModal() {
   let handleSubmit = (event) => {
-      event.preventDefault();
-      CloseModal("class-add");
+    event.preventDefault();
+    CloseModal("class-add");
 
-      let className = document.getElementById('class-name').value;
-      let gradeLevel = document.getElementById('grade-level').value;
+    let className = document.getElementById('class-name').value;
+    let gradeLevel = document.getElementById('grade-level').value;
 
-      let content = {
-          "class_name": className,
-          "grade_level": gradeLevel,
-          "teacher_id": "665da0b90c1d6c0c45724285",
-          "school_id": "665da7c60c1d6c0c45724286",
-          "students": []
-      };
+    let content = {
+      "class_name": className,
+      "grade_level": gradeLevel,
+      "teacher_id": "665da0b90c1d6c0c45724285",
+      "school_id": "665da7c60c1d6c0c45724286",
+      "students": []
+    };
 
-      //classInfo.push(content);
+    //classInfo.push(content);
 
-      // selectedClass = content //classInfo.at(-1);
+    // selectedClass = content //classInfo.at(-1);
 
     //   classInfo.sort((a, b) => {
     //       return a.class_name.localeCompare(b.class_name);
@@ -62,20 +62,20 @@ function ClassAddModal() {
     //           console.error('There was a problem with the fetch operation:', error);
     //       });
 
-}
+  }
 
   return (
-      <section>
-          <form id="class-modal-form" onSubmit={handleSubmit}>
-              <section className="input-list" id="class-add-text-input">
-                  <TextInput info={addClassInfo.className} />
-                  <br />
-                  <Dropdown data={addClassDropdown} />
-                  <br /><br /><br /><br />
-              </section>
-              <Submit value="Create" />
-          </form>
-      </section>
+    <section>
+      <form id="class-modal-form" onSubmit={handleSubmit}>
+        <section className="input-list" id="class-add-text-input">
+          <TextInput info={addClassInfo.className} />
+          <br />
+          <Dropdown data={addClassDropdown} />
+          <br /><br /><br /><br />
+        </section>
+        <Submit value="Create" />
+      </form>
+    </section>
   );
 }
 

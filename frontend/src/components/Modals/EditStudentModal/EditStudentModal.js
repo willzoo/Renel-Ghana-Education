@@ -67,7 +67,7 @@ function EditStudentModal(props) {
         <section>
             <form id="edit-student-form" onSubmit={handleSubmit}>
                 <section className="input-list" id="edit-student-text-input">
-                    <br/>
+                    <br />
                     <TextInput info={editStudentInfo.studentName} />
                     <TextInput info={editStudentInfo.studentDOB} />
                     <TextInput info={editStudentInfo.studentID} />
@@ -77,7 +77,7 @@ function EditStudentModal(props) {
                     <br />
                     <Checkbox info={editStudentInfo.disabilityStatus} />
                     <TextInput info={editStudentInfo.additionalInfo} />
-                    <br/>
+                    <br />
                 </section>
                 <br /><br /><br /><br />
                 <Submit value="Save" />

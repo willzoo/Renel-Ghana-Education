@@ -5,7 +5,7 @@ import StudentItem from "./StudentItem/StudentItem";
 import TeacherContext from "../../../TeacherContext";
 
 function Students() {
-    const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
+    const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
 
     let items = [];
     if (selectedClass) {
@@ -23,10 +23,10 @@ function Students() {
                 <div id="students-root" className="students-list">
                     <ul className="nobullet">
                         {// if selectedClass is null, display error
-                        !selectedClass ? (<li><div className="list-issue">Please select a class to see associated students.</div></li>) :
-                        items.length == 0 ? // if there are no students in the student list
-                        (<li><div className="list-issue">There are no students that have been added to this class.</div></li>) :
-                        (items) // display class list if students
+                            !selectedClass ? (<li><div className="list-issue">Please select a class to see associated students.</div></li>) :
+                                items.length == 0 ? // if there are no students in the student list
+                                    (<li><div className="list-issue">There are no students that have been added to this class.</div></li>) :
+                                    (items) // display class list if students
                         }
                     </ul>
                 </div>

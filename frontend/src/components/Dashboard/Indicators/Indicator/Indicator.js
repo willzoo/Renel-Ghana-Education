@@ -8,7 +8,7 @@ function Indicator(props) {
             <div className="row">
                 <div>
                     <div className={`icon ${props.info.theme}`}>
-                        <FontAwesomeIcon icon={props.info.icon}/>
+                        <FontAwesomeIcon icon={props.info.icon} />
                     </div>
                     <p className="label">{props.info.title}</p>
                 </div>

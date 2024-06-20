@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import './ClassItem.css'
 
-import {OpenModal} from '../../../utils/functions'
+import { OpenModal } from '../../../utils/functions'
 import TeacherContext from '../../../TeacherContext';
 
 function ClassItem(props) {
-    const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
-    const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
+    const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
+    const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
 
     const handleEditClick = () => {
         OpenModal('class-edit');
     }
-    
+
     const handleSelect = () => {
         const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
         sidebarClassElements.forEach((element) => {

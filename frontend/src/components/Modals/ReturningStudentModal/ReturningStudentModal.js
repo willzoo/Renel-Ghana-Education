@@ -45,7 +45,7 @@ function ReturningStudentModal() {
         <section>
             <form id="returning-student-form" onSubmit={handleSubmit}>
                 <section className="input-list" id="returning-student-text-input">
-                    <TextInput info={returningStudentInfo.studentID}/>
+                    <TextInput info={returningStudentInfo.studentID} />
                 </section>
                 <br /><br /><br /><br />
                 <Submit value="Search" />

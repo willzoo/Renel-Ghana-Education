@@ -4,9 +4,9 @@ import './StudentItem.css'
 
 import { OpenModal } from "../../../../utils/functions";
 import TeacherContext from "../../../../TeacherContext";
-    
+
 function StudentItem(props) {
-    const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
+    const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
 
     const handleEdit = (event) => {
         console.log("Student item function called")

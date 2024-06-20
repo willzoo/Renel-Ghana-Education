@@ -20,33 +20,33 @@ let editClassDropdown = [
 
 function EditClassModal() {
   let handleSubmit = (event) => {
-      event.preventDefault();
-      CloseModal("class-edit");
+    event.preventDefault();
+    CloseModal("class-edit");
 
-      let className = document.getElementById('class-name').value;
-      let gradeLevel = document.getElementById('grade-level').value;
+    let className = document.getElementById('class-name').value;
+    let gradeLevel = document.getElementById('grade-level').value;
 
-      let content = {
-          "class_name": className,
-          "grade_level": gradeLevel,
-          "teacher_id": "665da0b90c1d6c0c45724285",
-          "school_id": "665da7c60c1d6c0c45724286",
-          "students": []
-      };
-    }
+    let content = {
+      "class_name": className,
+      "grade_level": gradeLevel,
+      "teacher_id": "665da0b90c1d6c0c45724285",
+      "school_id": "665da7c60c1d6c0c45724286",
+      "students": []
+    };
+  }
 
   return (
-      <section>
-          <form id="class-modal-form" onSubmit={handleSubmit}>
-              <section className="input-list" id="class-edit-text-input">
-                  <TextInput info={editClassInfo.className} />
-                  <br />
-                  <Dropdown data={editClassDropdown} />
-                  <br /><br /><br /><br />
-              </section>
-              <Submit value="Save" />
-          </form>
-      </section>
+    <section>
+      <form id="class-modal-form" onSubmit={handleSubmit}>
+        <section className="input-list" id="class-edit-text-input">
+          <TextInput info={editClassInfo.className} />
+          <br />
+          <Dropdown data={editClassDropdown} />
+          <br /><br /><br /><br />
+        </section>
+        <Submit value="Save" />
+      </form>
+    </section>
   );
 }
 

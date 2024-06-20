@@ -23,11 +23,11 @@ let newStudentInfo = {
 
 function NewStudentModal() {
     const selectedClass = useContext(TeacherContext);
-    
+
     let handleNewStudentSubmit = (event) => {
         event.preventDefault();
         CloseModal("new-student");
-        
+
         // console.log("returning student 2: " + RETURNING_STUDENT_ID);
 
         let studentName = document.getElementById('student-name').value;
@@ -76,7 +76,7 @@ function NewStudentModal() {
         //         console.error('There was a problem with the fetch operation:', error);
         //     });
 
-   }
+    }
 
     return (
         <section>
