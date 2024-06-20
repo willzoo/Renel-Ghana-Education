@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './ClassItem.css'
 
 import { OpenModal } from '../../../utils/functions'
@@ -9,10 +9,19 @@ function ClassItem(props) {
     const {classToEdit, setClassToEdit,} = useContext(TeacherContext).classToEdit;    
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
 
-    const handleEditClick = () => {
-        setClassToEdit(props.data);
+    const handleEditClick = (e) => {
+        e.stopPropagation();
+        handleSelect();
+
         OpenModal('class-edit');
     }
+
+    useEffect(() => { // update the edit form's input parameters every time selectedClass is changed
+        if (selectedClass && selectedClass.id === props.data.id) {
+            document.getElementById('class-name-edit').value = selectedClass.class_name;
+            document.getElementById('grade-level-edit').value = selectedClass.grade_level;
+        }
+    }, [selectedClass, props.data.id]);
 
     const handleSelect = () => {
         const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
