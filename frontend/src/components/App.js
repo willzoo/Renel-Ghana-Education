@@ -89,11 +89,11 @@ function App() {
           console.log('Data received:', data);
           setClassInfo(data);
   
-          classInfo.sort((a, b) => {
+          classInfo.classes.sort((a, b) => {
               return a.class_name.localeCompare(b.class_name);
           });
   
-          setSelectedClass(classInfo[0]);
+          setSelectedClass(classInfo.classes[0]);
 
           CloseModal('loading');
       })
@@ -102,8 +102,8 @@ function App() {
 
           CloseModal('loading');
           OpenModal('error');
-      }, []);
-  })
+      });
+  }, []);
 
   return (
     // Teacher context allows for classInfo and selectedClass to be passed throughout the application
