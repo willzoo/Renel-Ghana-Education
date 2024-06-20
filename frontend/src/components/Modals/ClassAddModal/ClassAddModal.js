@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { CloseModal } from '../../../utils/functions';
 
 import '../components/ModalBase/ModalBase.css'
@@ -6,9 +6,10 @@ import '../components/ModalBase/ModalBase.css'
 import Submit from '../components/Submit/Submit'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
+import TeacherContext from '../../../TeacherContext';
 
 let addClassInfo = {
-  className: { title: "Class Name", placeholder: "Enter a class name", id: "class-name" },
+  className: { title: "Class Name", placeholder: "Enter a class name (optional)", id: "class-name", required: false },
 };
 
 let addClassDropdown = [
@@ -19,6 +20,9 @@ let addClassDropdown = [
 ];
 
 function ClassAddModal() {
+  const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
+  const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
+
   let handleSubmit = (event) => {
     event.preventDefault();
     CloseModal("class-add");
@@ -27,40 +31,47 @@ function ClassAddModal() {
     let gradeLevel = document.getElementById('grade-level').value;
 
     let content = {
-      "class_name": className,
+      "class_name": className ? className : gradeLevel,
       "grade_level": gradeLevel,
       "teacher_id": "665da0b90c1d6c0c45724285",
       "school_id": "665da7c60c1d6c0c45724286",
       "students": []
     };
 
-    //classInfo.push(content);
+    let tempClasses = classInfo.classes;
+    tempClasses.push(content);
 
-    // selectedClass = content //classInfo.at(-1);
+    tempClasses.sort((a, b) => {
+      return a.class_name.localeCompare(b.class_name);
+    });
 
-    //   classInfo.sort((a, b) => {
-    //       return a.class_name.localeCompare(b.class_name);
-    //   });
+    // solution created by AI
+    setClassInfo((oldClassInfo) => ({
+      ...oldClassInfo,
+      classes: tempClasses,
+    }));
 
-    //   fetch('http://127.0.0.1:8000/classes', {
-    //       method: "POST",
-    //       headers: {
-    //           'Content-Type': 'application/json'
-    //       },
-    //       body: JSON.stringify(content)
-    //   })
-    //       .then(response => {
-    //           if (!response.ok) {
-    //               throw new Error('Network response was not ok');
-    //           }
-    //           return response.json();
-    //       })
-    //       .then(data => {
-    //           console.log('Data received:', data);
-    //       })
-    //       .catch(error => {
-    //           console.error('There was a problem with the fetch operation:', error);
-    //       });
+    setSelectedClass(content);
+
+    fetch('http://127.0.0.1:8000/classes', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(content)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Data received:', data);
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
 
   }
 

@@ -2,6 +2,8 @@ import React from 'react'
 import './TextInput.css'
 
 function TextInput(props) {
+    let isRequired = props.info.required !== false; // sets isRequired as false ONLY when explicitly requested
+
     return (
         <section className="modal-text-input">
             <p className="label">{props.info.title}</p>
@@ -11,7 +13,7 @@ function TextInput(props) {
                 title={props.info.title}
                 type="text"
                 id={props.info.id}
-                required
+                required={isRequired}
                 defaultValue={props.info.defaultValue} />
 
         </section>

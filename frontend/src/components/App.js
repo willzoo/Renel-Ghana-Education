@@ -12,9 +12,9 @@ function App() {
     // export var teacherID = "665da0b90c1d6c0c45724285";
 
     const [classInfo, setClassInfo] = useState({
-        "name": "Patrick Kallenbach",
-        "email": "pkallenbach21@gmail.com",
-        "school_name": "PK Yonge DRS",
+        "name": "Example Teacher",
+        "email": "example.teacher@renelglobal.org",
+        "school_name": "Example School",
         'classes': []
     });
 
@@ -37,12 +37,12 @@ function App() {
             })
             .then(data => {
                 console.log('Data received:', data);
-                setClassInfo(data);
 
-                classInfo.classes.sort((a, b) => {
+                data.classes.sort((a, b) => {
                     return a.class_name.localeCompare(b.class_name);
                 });
 
+                setClassInfo(data);
                 setSelectedClass(classInfo.classes[0]);
 
                 CloseModal('loading');
