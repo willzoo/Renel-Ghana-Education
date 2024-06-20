@@ -71,6 +71,8 @@ function App() {
   });
 
   const [selectedClass, setSelectedClass] = useState(classInfo.classes[0]);
+  
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/teachers/665da0b90c1d6c0c45724285/classes`, {
@@ -107,7 +109,9 @@ function App() {
 
   return (
     // Teacher context allows for classInfo and selectedClass to be passed throughout the application
-    <TeacherContext.Provider value={{'classInfo': {classInfo, setClassInfo}, 'selectedClass': {selectedClass, setSelectedClass}}}>
+    <TeacherContext.Provider value={{'classInfo': {classInfo, setClassInfo},
+                                     'selectedClass': {selectedClass, setSelectedClass}, 
+                                     'selectedStudent': {selectedStudent, setSelectedStudent}}}>
       <section>
         <div className="background">
           <Modals/> {/* add each modal to the page */}
