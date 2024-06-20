@@ -20,6 +20,8 @@ function App() {
 
   const [selectedClass, setSelectedClass] = useState(null);
 
+  const [classToEdit, setClassToEdit] = useState(null);
+
   const [selectedStudent, setSelectedStudent] = useState(null);
 
   useEffect(() => {
@@ -60,6 +62,7 @@ function App() {
     <TeacherContext.Provider value={{
       'classInfo': { classInfo, setClassInfo },
       'selectedClass': { selectedClass, setSelectedClass },
+      'classToEdit': { classToEdit, setClassToEdit },
       'selectedStudent': { selectedStudent, setSelectedStudent },
     }}>
       <section>

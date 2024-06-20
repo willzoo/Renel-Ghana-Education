@@ -6,9 +6,11 @@ import TeacherContext from '../../../TeacherContext';
 
 function ClassItem(props) {
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
+    const {classToEdit, setClassToEdit,} = useContext(TeacherContext).classToEdit;    
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
 
     const handleEditClick = () => {
+        setClassToEdit(props.data);
         OpenModal('class-edit');
     }
 
