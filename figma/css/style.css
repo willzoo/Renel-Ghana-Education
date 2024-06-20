@@ -1483,9 +1483,69 @@ body, html {
 .term-year-icon {
   background-color: #E1251B;
 }
+.legend-container {
+  width: 290px;
+  height: auto;
+  background-color: white; /* Ensure this is white */
+  border-radius: 18px;
+  box-shadow: 0px 0px 10px 5px rgb(0, 0, 0, 0.02);
+  transition: 0.1s;
+  padding: 10px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-.upper-info-icon {
-  font-size: 16px;
-  z-index: 1;
-  color: white;
+.legend-container h4 {
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.legend-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: space-between;
+}
+.legend-container p {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  display: flex;
+  align-items: left;
+  gap: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  justify-content: center;
+  padding: 3px 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+
+.descriptor.progressed {
+  background-color: #83f18d;
+}
+
+.descriptor.passed {
+  background-color: #fcf151;
+}
+
+.descriptor.dropped-out {
+  background-color: #f5554a;
+}
+
+.descriptor.repeating {
+  background-color: #ff9a00;
+}
+
+.descriptor.new {
+  background-color: #67dfff;
+}
+
+.descriptor.returning {
+  background-color: #a058c1;
 }
