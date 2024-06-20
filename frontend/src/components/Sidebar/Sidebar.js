@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import './Sidebar.css';
 import ClassAddButton from './ClassAddButton/ClassAddButton';
-import ClassesList from './ClassesList/ClassesList'
+import Classes from './Classes/Classes'
 import TeacherContext from '../../TeacherContext';
 import Profile from './Profile/Profile';
 
@@ -29,7 +29,7 @@ function Sidebar() {
 
             <ClassAddButton/>
             <div style={{height: '50px'}}></div> {/* set gap of 50 px */}
-            <ClassesList info={classInfo}/>
+            <Classes info={classInfo}/>
 
         </div>
     </section>
