@@ -12,9 +12,13 @@
     justify-content: space-between;
 }
 
-/* hover animation for list item */
+/* hover animation for sidebar class */
 .student-list-item:hover {
-  background-color: #fff0d2;
+  background-color: #fcf7ec;
+}
+
+.student-list-item.selected {
+  background-color: #fff0d6;
 }
 
 /* title text of individual class item */

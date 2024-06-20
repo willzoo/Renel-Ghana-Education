@@ -6,7 +6,7 @@ function StudentsList(props) {
 
     let items = [];
     for (let i = 0; i < props.info.students.length; i++) {
-        items.push((<StudentItem data={props.info.students[i]} />));
+        items.push((<StudentItem id={i} data={props.info.students[i]} />));
     }
 
     const classList = items;

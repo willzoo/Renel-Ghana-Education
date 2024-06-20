@@ -58,13 +58,13 @@ def get_teacher_classes(teacher_id):
         db = mongo.cx.EduTracker
 
         # Debugging: Print teacher_id
-        print(f"Fetching details for teacher_id: {teacher_id}")
+        # print(f"Fetching details for teacher_id: {teacher_id}")
 
         # Fetch teacher details
         teacher = db.teachers.find_one({"_id": ObjectId(teacher_id)}, {"name": 1, "email": 1, "school_id": 1, "classes": 1})
         
         # Debugging: Print fetched teacher details
-        print(f"Fetched teacher details: {teacher}")
+        # print(f"Fetched teacher details: {teacher}")
 
         if not teacher:
             return jsonify({"error": "Teacher not found"}), 404
@@ -78,7 +78,7 @@ def get_teacher_classes(teacher_id):
         school = db.schools.find_one({"_id": ObjectId(school_id)}, {"name": 1})
         
         # Debugging: Print fetched school details
-        print(f"Fetched school details: {school}")
+        # print(f"Fetched school details: {school}")
 
         if not school:
             return jsonify({"error": "School not found"}), 404
