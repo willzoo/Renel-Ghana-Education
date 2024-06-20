@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useContext, useState } from "react"
 import ModalBase from './components/ModalBase/ModalBase'
 import ClassAddModal from './ClassAddModal/ClassAddModal'
 import ReturningStudentModal from './ReturningStudentModal/ReturningStudentModal'
 import NewStudentModal from "./NewStudentModal/NewStudentModal"
 import EditStudentModal from "./EditStudentModal/EditStudentModal"
 import EditClassModal from './EditClassModal/EditClassModal'
+import TeacherContext from "../../TeacherContext"
 
 const classAdd = {
   id: "class-add",
@@ -63,6 +64,8 @@ const error = {
 }
 
 function Modals() {
+  const {isClassAddOpen, setClassAddOpen} = useContext(TeacherContext);
+
   return (
     <section>
       <ModalBase info={loading} />

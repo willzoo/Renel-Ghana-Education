@@ -29,7 +29,7 @@ function ClassItem(props) {
         <li>
             <div className="sidebar-class" id={props.id} onClick={handleSelect}>
                 <div>
-                    <p className="title">{props.data.class_name}</p>
+                    <p className="title">{props.data.class_name !== "" ? props.data.class_name : props.data.grade_level}</p>
                     <p className="body">{props.data.grade_level}</p>
                     <p className="body">Total Enrolled Students: {props.data.students.length}</p>
                 </div>

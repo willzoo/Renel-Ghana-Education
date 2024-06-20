@@ -31,7 +31,7 @@ function ClassAddModal() {
     let gradeLevel = document.getElementById('grade-level').value;
 
     let content = {
-      "class_name": className ? className : gradeLevel,
+      "class_name": className ? className : "",
       "grade_level": gradeLevel,
       "teacher_id": "665da0b90c1d6c0c45724285",
       "school_id": "665da7c60c1d6c0c45724286",
@@ -81,7 +81,7 @@ function ClassAddModal() {
         <section className="input-list" id="class-add-text-input">
           <TextInput info={addClassInfo.className} />
           <br />
-          <Dropdown data={addClassDropdown} />
+          <Dropdown info={addClassDropdown} />
           <br /><br /><br /><br />
         </section>
         <Submit value="Create" />
