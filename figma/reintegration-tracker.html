@@ -95,7 +95,9 @@
                     <section id="total-students-indicator">
                         <div class="row">
                             <div class="upper-info-icon-shape total-students-icon">
-                                <i class="fas fa-users upper-info-icon"></i>
+                                <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.75 2C3.75 1.17266 4.42266 0.5 5.25 0.5H13.5C14.3273 0.5 15 1.17266 15 2V8.75C15 9.57734 14.3273 10.25 13.5 10.25H7.89375C7.61719 9.65234 7.19297 9.13672 6.66562 8.75H9V8C9 7.58516 9.33516 7.25 9.75 7.25H11.25C11.6648 7.25 12 7.58516 12 8V8.75H13.5V2H5.25V3.15078C4.80937 2.89531 4.29609 2.75 3.75 2.75V2ZM3.75 3.5C4.04547 3.5 4.33806 3.5582 4.61104 3.67127C4.88402 3.78434 5.13206 3.95008 5.34099 4.15901C5.54992 4.36794 5.71566 4.61598 5.82873 4.88896C5.9418 5.16194 6 5.45453 6 5.75C6 6.04547 5.9418 6.33806 5.82873 6.61104C5.71566 6.88402 5.54992 7.13206 5.34099 7.34099C5.13206 7.54992 4.88402 7.71566 4.61104 7.82873C4.33806 7.9418 4.04547 8 3.75 8C3.45453 8 3.16194 7.9418 2.88896 7.82873C2.61598 7.71566 2.36794 7.54992 2.15901 7.34099C1.95008 7.13206 1.78434 6.88402 1.67127 6.61104C1.5582 6.33806 1.5 6.04547 1.5 5.75C1.5 5.45453 1.5582 5.16194 1.67127 4.88896C1.78434 4.61598 1.95008 4.36794 2.15901 4.15901C2.36794 3.95008 2.61598 3.78434 2.88896 3.67127C3.16194 3.5582 3.45453 3.5 3.75 3.5ZM3.12422 8.75H4.37344C6.10078 8.75 7.5 10.1492 7.5 11.8742C7.5 12.2188 7.22109 12.5 6.87422 12.5H0.625781C0.278906 12.5 0 12.2211 0 11.8742C0 10.1492 1.39922 8.75 3.12422 8.75Z" fill="white"/>
+                                    </svg>                                                                  
                             </div>
                             <p class="label">Total Students:</p>
                             <p class="value" id="total-students-value">Loading...</p>
@@ -104,12 +106,25 @@
                     <section id="term-year-indicator">
                         <div class="row">
                             <div class="upper-info-icon-shape term-year-icon">
-                                <i class="fas fa-calendar upper-info-icon"></i>
+                                <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 0C4.55313 0 5 0.446875 5 1V2H9V1C9 0.446875 9.44687 0 10 0C10.5531 0 11 0.446875 11 1V2H12.5C13.3281 2 14 2.67188 14 3.5V5H0V3.5C0 2.67188 0.671875 2 1.5 2H3V1C3 0.446875 3.44687 0 4 0ZM0 6H14V14.5C14 15.3281 13.3281 16 12.5 16H1.5C0.671875 16 0 15.3281 0 14.5V6ZM2.5 8C2.225 8 2 8.225 2 8.5V11.5C2 11.775 2.225 12 2.5 12H5.5C5.775 12 6 11.775 6 11.5V8.5C6 8.225 5.775 8 5.5 8H2.5Z" fill="white"/>
+                                    </svg>
                             </div>
                             <p class="label">Term & Year:</p>
                             <p class="value" id="term-year-value">Loading...</p>
                         </div>
                     </section>
+                </div>
+                <div class="legend-container">
+                    <h4>Enrollment Status Legend</h4>
+                    <div class="legend-columns">
+                        <p class="descriptor progressed">Progressed</p>
+                        <p class="descriptor passed">Passed to High School</p>
+                        <p class="descriptor dropped-out">Dropped Out</p>
+                        <p class="descriptor repeating">Repeating Grade Level</p>
+                        <p class="descriptor new">New Student</p>
+                        <p class="descriptor returning">Returning Student</p>
+                    </div>
                 </div>
             </div>
             <div style="height:20px;"></div>
