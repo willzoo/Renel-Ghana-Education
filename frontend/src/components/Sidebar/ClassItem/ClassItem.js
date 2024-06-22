@@ -5,12 +5,17 @@ import { OpenModal } from '../../../utils/functions'
 import TeacherContext from '../../../TeacherContext';
 
 function ClassItem(props) {
+
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
     const {classToEdit, setClassToEdit,} = useContext(TeacherContext).classToEdit;    
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
 
     const handleEditClick = (e) => {
         e.stopPropagation();
+
+        document.getElementById('class-name-edit').value = selectedClass.class_name != selectedClass.grade_level ? selectedClass.class_name : "";
+        document.getElementById('grade-level-edit').value = selectedClass.grade_level;
+
         handleSelect();
 
         OpenModal('class-edit');
@@ -18,12 +23,13 @@ function ClassItem(props) {
 
     useEffect(() => { // update the edit form's input parameters every time selectedClass is changed
         if (selectedClass && selectedClass.id === props.data.id) {
-            document.getElementById('class-name-edit').value = selectedClass.class_name;
+            document.getElementById('class-name-edit').value = selectedClass.class_name != selectedClass.grade_level ? selectedClass.class_name : "";
             document.getElementById('grade-level-edit').value = selectedClass.grade_level;
         }
-    }, [selectedClass, props.data.id]);
+    }, [selectedClass]);
 
     const handleSelect = () => {
+
         const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
         sidebarClassElements.forEach((element) => {
             element.classList.remove('selected');

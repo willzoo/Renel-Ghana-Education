@@ -31,7 +31,7 @@ function ClassAddModal() {
     let gradeLevel = document.getElementById('grade-level').value;
 
     let content = {
-      "class_name": className ? className : "",
+      "class_name": className ? className : gradeLevel,
       "grade_level": gradeLevel,
       "teacher_id": "665da0b90c1d6c0c45724285",
       "school_id": "665da7c60c1d6c0c45724286",

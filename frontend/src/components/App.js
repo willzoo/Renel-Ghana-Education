@@ -24,6 +24,8 @@ function App() {
 
   const [selectedStudent, setSelectedStudent] = useState(null);
 
+  let loaded = false;
+
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/teachers/665da0b90c1d6c0c45724285/classes`, {
       method: "GET",
@@ -40,14 +42,19 @@ function App() {
       .then(data => {
         console.log('Data received:', data);
 
-        data.classes.sort((a, b) => {
-          return a.class_name.localeCompare(b.class_name);
-        });
+        if (!loaded) {
 
-        setClassInfo(data);
-        setSelectedClass(classInfo.classes[0]);
+          data.classes.sort((a, b) => {
+            return a.class_name.localeCompare(b.class_name);
+          });
 
-        CloseModal('loading');
+          setClassInfo(data);
+          setSelectedClass(classInfo.classes[0]);
+
+          CloseModal('loading');
+          
+          loaded = true;
+        }
       })
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);

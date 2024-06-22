@@ -29,20 +29,64 @@ function EditClassModal() {
 
   let handleSubmit = (event) => {
     event.preventDefault();
+    CloseModal('class-edit');
 
-    const updatedClass = {
-      ...classToEdit,
-      class_name: document.getElementById('class-name-edit').value,
-      grade_level: document.getElementById('grade-level-edit').value
+    let className = document.getElementById('class-name-edit').value;
+    let gradeLevel = document.getElementById('grade-level-edit').value;
+
+    let content = {
+      "class_name": className ? className : gradeLevel,
+      "grade_level": gradeLevel,
+      "teacher_id": selectedClass.teacher_id,
+      "school_id": selectedClass.school_id,
+      "students": selectedClass.students,
     };
 
-    CloseModal("class-edit");
+    //@#)(@*&#)PLACEHOLDER@#)(@
 
-    setClassToEdit(updatedClass);
-    setClassInfo(prev => ({
-      ...prev,
-      classes: prev.classes.map(cls => cls === classToEdit ? updatedClass : cls)
+    let tempClasses = classInfo.classes;
+    let classToEdit = tempClasses.find(cls => 
+      cls.class_name === selectedClass.class_name && cls.grade_level === selectedClass.grade_level
+    );
+    
+    if (classToEdit) {
+      Object.assign(classToEdit, content);
+    }
+
+    tempClasses.sort((a, b) => {
+      return a.class_name.localeCompare(b.class_name);
+    });
+
+    // solution created by AI
+    setClassInfo((oldClassInfo) => ({
+      ...oldClassInfo,
+      classes: tempClasses,
     }));
+
+    setSelectedClass(content);
+
+    // FIXME - properly update class in database
+
+    // fetch('http://127.0.0.1:8000/classes', {
+    //   method: "POST",
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(content)
+    // })
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     console.log('Data received:', data);
+    //   })
+    //   .catch(error => {
+    //     console.error('There was a problem with the fetch operation:', error);
+    //   });
+
   }
 
   return (
