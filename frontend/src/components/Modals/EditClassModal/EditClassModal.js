@@ -3,7 +3,8 @@ import { CloseModal } from '../../../utils/functions';
 
 import '../components/ModalBase/ModalBase.css'
 
-import Submit from '../components/Submit/Submit'
+import Submit from '../components/Buttons/Submit'
+import Delete from '../components/Buttons/Delete'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 import TeacherContext from '../../../TeacherContext';
@@ -13,7 +14,7 @@ function EditClassModal() {
   const { classToEdit, setClassToEdit } = useContext(TeacherContext).classToEdit;
   const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
 
-  let editClassInfo = {
+  const editClassInfo = {
     className: {
       title: "Class Name",
       placeholder: "Enter a class name (optional)",
@@ -22,19 +23,27 @@ function EditClassModal() {
     },
   };
 
-  let editClassDropdown = [
+  const editClassDropdown = [
     ["Grade Level", "grade-level-edit"],
     ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
     ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
     ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
   ];
 
-  let handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    CloseModal('class-edit');
 
     let className = document.getElementById('class-name-edit').value;
     let gradeLevel = document.getElementById('grade-level-edit').value;
+    
+    if (classInfo.classes.some(cls =>
+      cls.class_name === className && cls.grade_level === gradeLevel
+    )) {
+      alert("You already have a class with this name. Please choose a unique name.");
+      return;
+    }
+
+    CloseModal('class-edit');
 
     let content = {
       "class_name": className ? className : gradeLevel,
@@ -88,6 +97,34 @@ function EditClassModal() {
 
 }
 
+const handleDelete = () => {
+  CloseModal('class-edit');
+  
+  let tempClasses = classInfo.classes.filter(cls => cls.class_name !== selectedClass.class_name && cls.grade_level !== selectedClass.grade_level);
+
+  // solution created by AI
+  setClassInfo((oldClassInfo) => ({
+    ...oldClassInfo,
+    classes: tempClasses,
+  }));
+
+  fetch(`http://127.0.0.1:8000/classes/${selectedClass.class_id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+  .then(response => response.json())
+  .then(data => {
+    // Handle the data returned from the server
+    console.log(data); // For demonstration purposes; adjust as needed
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+
+}
+
 return (
   <section>
     <form id="class-modal-form" onSubmit={handleSubmit}>
@@ -97,7 +134,12 @@ return (
         <Dropdown info={editClassDropdown} editValue={selectedClass ? selectedClass.grade_level : null} />
         <br /><br /><br /><br />
       </section>
-      <Submit value="Save" />
+      
+        <div className='modal-buttons-section'>
+          <div><Delete value="Delete" onClick={handleDelete}/></div>
+          <div style={{ display: 'inline-block', width: '20px' }}></div> {/* Gap between buttons */}
+          <div><Submit value="Save" /></div>
+        </div>
     </form>
   </section>
 );

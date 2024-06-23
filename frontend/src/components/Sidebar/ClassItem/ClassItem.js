@@ -50,7 +50,7 @@ function ClassItem(props) {
             onClick={handleSelect}>
                 <div>
                     <p className="title">{props.data.class_name !== "" ? props.data.class_name : props.data.grade_level}</p>
-                    <p className="body">{props.data.grade_level}</p>
+                    <p className="body">{props.data.class_name !== "" ? props.data.grade_level : ""}</p>
                     <p className="body">Total Enrolled Students: {props.data.students.length}</p>
                 </div>
                 <div className="edit-button">
