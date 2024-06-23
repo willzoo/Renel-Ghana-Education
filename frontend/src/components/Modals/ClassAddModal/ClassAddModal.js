@@ -31,8 +31,8 @@ function ClassAddModal() {
 
     className = className ? className : gradeLevel; // assign className only if it is defined, otherwise set it to grade level
 
-    if (classInfo.classes.some(cls =>
-      cls.class_name === className && cls.class_id !== selectedClass.class_id
+    if (classInfo.classes.find(cls =>
+      cls.class_name === className
     )) {
       alert("You already have a class with this name. Please choose a unique name.");
       return;
