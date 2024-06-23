@@ -13,23 +13,6 @@ function ClassesList(props) {
         classList.push((<ClassItem id={i} data={classInfo.classes[i]} />));
     }
 
-    // const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
-    // if (sidebarClassElements) {
-    //     sidebarClassElements.forEach((element) => {
-    //         element.classList.remove('selected');
-    //     });
-
-    //     const clickedElement = sidebarClassElements.find(cls =>
-    //         cls.class_name === selectedClass.class_name && cls.grade_level === selectedClass.grade_level
-    //     );
-    //     clickedElement.classList.add('selected');
-    // }
-
-    // if (selectedClass && selectedClass.id === props.data.id) {
-    //     document.getElementById('class-name-edit').value = selectedClass.class_name != selectedClass.grade_level ? selectedClass.class_name : "";
-    //     document.getElementById('grade-level-edit').value = selectedClass.grade_level;
-    // }
-
     return (
         <div className="sidebar-classes-container">
             {/* Section title */}
