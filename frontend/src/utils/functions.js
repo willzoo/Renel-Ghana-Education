@@ -41,8 +41,9 @@ export const CloseModal = async (id) => {
     modal.classList.remove("displayed-modal");
     await pause(200);
 
-    try {
+    try {document.getElementById(`${id}-text-input`).scrollTop = 0;} catch (e) {};
 
+    try {
         let textInputs = Array.from(modal.querySelector(`#${id}-text-input`).children);
 
         textInputs.forEach((item) => {

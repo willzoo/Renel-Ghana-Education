@@ -25,16 +25,27 @@ function ClassAddModal() {
 
   let handleSubmit = (event) => {
     event.preventDefault();
-    CloseModal("class-add");
 
     let className = document.getElementById('class-name').value;
     let gradeLevel = document.getElementById('grade-level').value;
 
+    className = className ? className : gradeLevel; // assign className only if it is defined, otherwise set it to grade level
+
+    if (classInfo.classes.find(cls =>
+      cls.class_name === className
+    )) {
+      alert("You already have a class with this name. Please choose a unique name.");
+      return;
+    }
+    
+    CloseModal("class-add");
+    
     let content = {
-      "class_name": className ? className : gradeLevel,
+      "class_name": className,
       "grade_level": gradeLevel,
       "teacher_id": "665da0b90c1d6c0c45724285",
       "school_id": "665da7c60c1d6c0c45724286",
+      "class_id": null,
       "students": []
     };
 
@@ -68,6 +79,14 @@ function ClassAddModal() {
       })
       .then(data => {
         console.log('Data received:', data);
+        tempClasses = classInfo.classes;
+        tempClasses.find(cls => cls.class_name === className).class_id = data.class_id;
+
+        setClassInfo((oldClassInfo) => ({
+          ...oldClassInfo,
+          classes: tempClasses,
+        }));
+
       })
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);

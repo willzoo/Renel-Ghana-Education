@@ -11,13 +11,14 @@ schools:
     "access_code": "4Digit",
     "year": "2023-2024", 
     "teachers": ["teacher_id1", "teacher_id2", ...],
-    "grade_levels": [
-        {
-        "grade": "5",
-        "classes": ["class_id1", "class_id2", ...]
-        },
-        ...
-    ]
+    //Actually, there is no need for this array because classes are stored in teachers
+    //"grade_levels": [
+    //    {
+    //    "grade": "5",
+    //    "classes": ["class_id1", "class_id2", ...]
+    //    },
+    //    ...
+    //]
     "past_years": [
         {
         "year": "2022-2023",

@@ -71,6 +71,9 @@ function EditClassModal() {
       ...oldClassInfo,
       classes: tempClasses,
     }));
+    
+    let sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
+    sidebarClassElements.find(cls => cls.dataset.classId === selectedClass.class_id).scrollIntoView();
 
     fetch(`http://127.0.0.1:8000/classes/${selectedClass.class_id}`, {
       method: "PUT",
@@ -87,7 +90,6 @@ function EditClassModal() {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-
   }
 
   const handleDelete = () => {
@@ -116,6 +118,7 @@ function EditClassModal() {
         console.error('Error fetching data:', error);
       });
 
+      try {document.getElementById('sidebar-classes').scrollTop = 0;} catch (e) {};
   }
 
   useEffect(() => {
