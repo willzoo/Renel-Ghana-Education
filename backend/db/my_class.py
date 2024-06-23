@@ -147,7 +147,7 @@ def update_class_students(class_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Delete a class (if needed)
+# Delete a class, and removes reference in school
 @class_bp.route('/classes/<class_id>', methods=['DELETE'])
 def delete_class(class_id):
     try:
