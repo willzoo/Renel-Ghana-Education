@@ -172,7 +172,7 @@ def delete_class(class_id):
         school_update_result = db.schools.update_one(
             {'_id': ObjectId(school_id),
              'grade_level': {
-                '$elem_match': { "grade_level": class_doc.grade_level }
+                '$elem_match': { "grade": class_doc.grade_level }
                 }
             }
             {'$pull': {'grade_level': {'classes': ObjectId(class_id)}}}
