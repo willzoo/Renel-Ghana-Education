@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ClassItem.css'
 
 import { OpenModal } from '../../../utils/functions'
 import TeacherContext from '../../../TeacherContext';
 
 function ClassItem(props) {
+
+    let [isEditButtonPressed, setEditButtonPressed] = useState(0);
 
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
     const {classToEdit, setClassToEdit,} = useContext(TeacherContext).classToEdit;    
@@ -13,9 +15,7 @@ function ClassItem(props) {
     const handleEditClick = (e) => {
         e.stopPropagation();
 
-        document.getElementById('class-name-edit').value = selectedClass.class_name != selectedClass.grade_level ? selectedClass.class_name : "";
-        document.getElementById('grade-level-edit').value = selectedClass.grade_level;
-
+        setEditButtonPressed(1 - isEditButtonPressed);
         handleSelect();
 
         OpenModal('class-edit');
@@ -26,7 +26,7 @@ function ClassItem(props) {
             document.getElementById('class-name-edit').value = selectedClass.class_name != selectedClass.grade_level ? selectedClass.class_name : "";
             document.getElementById('grade-level-edit').value = selectedClass.grade_level;
         }
-    }, [selectedClass]);
+    }, [selectedClass, isEditButtonPressed]);
 
     const handleSelect = () => {
 
