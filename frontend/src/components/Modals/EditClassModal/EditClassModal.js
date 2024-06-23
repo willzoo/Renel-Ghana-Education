@@ -72,41 +72,28 @@ function EditClassModal() {
       classes: tempClasses,
     }));
 
-    // const clickedElement = sidebarClassElements.find(cls => 
-    //   {alert(cls.class_id, selectedClass.class_id);
-    //     return cls.data.class_id === selectedClass.class_id}
-    // );
-    // clickedElement.classList.add('selected');
-
-
-    // FIXME - properly update class in database
-
-    // fetch('http://127.0.0.1:8000/classes', {
-    //   method: "POST",
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(content)
-    // })
-    //   .then(response => {
-    //     if (!response.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //     return response.json();
-    //   })
-    //   .then(data => {
-    //     console.log('Data received:', data);
-    //   })
-    //   .catch(error => {
-    //     console.error('There was a problem with the fetch operation:', error);
-    //   });
+    fetch(`http://127.0.0.1:8000/classes/${selectedClass.class_id}`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(content),
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the data returned from the server
+        console.log(data); // For demonstration purposes; adjust as needed
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
 
   }
 
   const handleDelete = () => {
     CloseModal('class-edit');
 
-    let tempClasses = classInfo.classes.filter(cls => cls.class_name !== selectedClass.class_name && cls.grade_level !== selectedClass.grade_level);
+    let tempClasses = classInfo.classes.filter(cls => cls.class_id !== selectedClass.class_id);
 
     // solution created by AI
     setClassInfo((oldClassInfo) => ({
@@ -136,7 +123,7 @@ function EditClassModal() {
 
     const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
     if (!sidebarClassElements) return;
-    
+
     sidebarClassElements.forEach((element) => {
       element.classList.remove('selected');
     });
