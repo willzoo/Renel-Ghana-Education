@@ -154,13 +154,13 @@ def delete_class(class_id):
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
         
-        # Find the class document to get the school_id
+        # Find the class document
         class_doc = db.classes.find_one({'_id': ObjectId(class_id)})
         
         if not class_doc:
             return jsonify({'error': 'Class not found'}), 404
         
-        school_id = class_doc['school_id']
+        teacher_id = class_doc['teacher_id']
         
         # Delete the class document from the classes collection
         class_delete_result = db.classes.delete_one({'_id': ObjectId(class_id)})
@@ -169,13 +169,9 @@ def delete_class(class_id):
             return jsonify({'error': 'Class not found'}), 404
         
         # Remove the class reference from the specific school document
-        school_update_result = db.schools.update_one(
-            {'_id': ObjectId(school_id),
-             'grade_level': {
-                '$elem_match': { "grade": class_doc.grade_level }
-                }
-            }
-            {'$pull': {'grade_level': {'classes': ObjectId(class_id)}}}
+        school_update_result = db.teachers.update_one(
+            {'_id': ObjectId(teacher_id)},
+            {'$pull': {'classes': ObjectId(class_id)}}
         )
 
         if school_update_result.modified_count == 0:
