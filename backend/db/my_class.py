@@ -153,20 +153,29 @@ def delete_class(class_id):
     try:
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
-        # Remove the class from the classes list in the grade_levels collection
-        grade_level_update_result = mongo.db.grade_levels.update_many(
-            {},
-            {'$pull': {'classes': ObjectId(class_id)}}
-        )
         
-        if grade_level_update_result.modified_count == 0:
-            return jsonify({'error': 'Class not found in any grade level'}), 404
-
-        # Delete the class document
-        class_delete_result = mongo.db.classes.delete_one({'_id': ObjectId(class_id)})
+        # Find the class document to get the school_id
+        class_doc = db.classes.find_one({'_id': ObjectId(class_id)})
+        
+        if not class_doc:
+            return jsonify({'error': 'Class not found'}), 404
+        
+        school_id = class_doc['school_id']
+        
+        # Delete the class document from the classes collection
+        class_delete_result = db.classes.delete_one({'_id': ObjectId(class_id)})
 
         if class_delete_result.deleted_count == 0:
             return jsonify({'error': 'Class not found'}), 404
+        
+        # Remove the class reference from the specific school document
+        school_update_result = db.schools.update_one(
+            {'_id': ObjectId(school_id)},
+            {'$pull': {'classes': ObjectId(class_id)}}
+        )
+
+        if school_update_result.modified_count == 0:
+            return jsonify({'error': 'Class reference not found in the school'}), 404
 
         return jsonify({'message': 'Class deleted successfully'}), 200
     
