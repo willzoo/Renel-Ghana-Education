@@ -4,7 +4,7 @@ import { OpenModal } from '../../../utils/functions';
 
 import '../components/ModalBase/ModalBase.css'
 
-import Submit from '../components/Submit/Submit'
+import Submit from '../components/Buttons/Submit'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 
@@ -48,7 +48,10 @@ function ReturningStudentModal() {
                     <TextInput info={returningStudentInfo.studentID} />
                 </section>
                 <br /><br /><br /><br />
-                <Submit value="Search" />
+                
+                <div className='modal-buttons-section'>
+                    <Submit value="Search" />
+                </div>
             </form>
         </section>
     );

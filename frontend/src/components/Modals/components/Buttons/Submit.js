@@ -1,9 +1,9 @@
 import React from 'react'
-import './Submit.css'
+import './Buttons.css'
 
 function Submit(props) {
     return (
-        <div className="modal-submit">
+        <div className="modal-button">
             <input type="submit" value={props.value} />
         </div>
     );

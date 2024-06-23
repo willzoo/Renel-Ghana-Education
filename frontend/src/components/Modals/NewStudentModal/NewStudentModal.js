@@ -3,7 +3,7 @@ import { CloseModal } from '../../../utils/functions';
 
 import '../components/ModalBase/ModalBase.css'
 
-import Submit from '../components/Submit/Submit'
+import Submit from '../components/Buttons/Submit'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 import Checkbox from '../components/Checkbox/Checkbox'
@@ -106,7 +106,10 @@ function NewStudentModal() {
                     <TextInput info={newStudentInfo.additionalInfo} />
                 </section>
                 <br /><br /><br /><br />
-                <Submit value="Add" />
+
+                <div className='modal-buttons-section'>
+                    <Submit value="Add" />
+                </div>
             </form>
         </section>
     );

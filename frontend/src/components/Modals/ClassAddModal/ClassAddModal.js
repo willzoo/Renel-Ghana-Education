@@ -3,7 +3,7 @@ import { CloseModal } from '../../../utils/functions';
 
 import '../components/ModalBase/ModalBase.css'
 
-import Submit from '../components/Submit/Submit'
+import Submit from '../components/Buttons/Submit'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 import TeacherContext from '../../../TeacherContext';
