@@ -170,8 +170,9 @@ def delete_class(class_id):
         
         # Remove the class reference from the specific school document
         school_update_result = db.schools.update_one(
-            {'_id': ObjectId(school_id)},
-            {'$pull': {'classes': ObjectId(class_id)}}
+            {'_id': ObjectId(school_id),
+             'grade_level': class_doc.grade_level},
+            {'$pull': {'grade_level': {'classes': ObjectId(class_id)}}}
         )
 
         if school_update_result.modified_count == 0:
