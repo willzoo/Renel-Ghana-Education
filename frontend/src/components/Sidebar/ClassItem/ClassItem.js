@@ -15,18 +15,18 @@ function ClassItem(props) {
     const handleEditClick = (e) => {
         e.stopPropagation();
 
-        setEditButtonPressed(1 - isEditButtonPressed);
+        setEditButtonPressed(1 - isEditButtonPressed); // flip between 1 and 0, just used to detect changes
         handleSelect();
 
         OpenModal('class-edit');
     }
 
-    useEffect(() => { // update the edit form's input parameters every time selectedClass is changed
+    useEffect(() => { // update the edit form's input parameters every time edit button is pressed
         if (selectedClass && selectedClass.id === props.data.id) {
             document.getElementById('class-name-edit').value = selectedClass.class_name != selectedClass.grade_level ? selectedClass.class_name : "";
             document.getElementById('grade-level-edit').value = selectedClass.grade_level;
         }
-    }, [selectedClass, isEditButtonPressed]);
+    }, [isEditButtonPressed]);
 
     const handleSelect = () => {
 
@@ -44,7 +44,10 @@ function ClassItem(props) {
 
     return (
         <li>
-            <div className="sidebar-class" id={props.id} onClick={handleSelect}>
+            <div className="sidebar-class" id={props.id}
+            // data-class-name={props.data.class_name}
+            // data-grade-level={props.data.grade_level}
+            onClick={handleSelect}>
                 <div>
                     <p className="title">{props.data.class_name !== "" ? props.data.class_name : props.data.grade_level}</p>
                     <p className="body">{props.data.grade_level}</p>

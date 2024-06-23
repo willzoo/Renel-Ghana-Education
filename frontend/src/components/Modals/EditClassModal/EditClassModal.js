@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { CloseModal } from '../../../utils/functions';
 
 import '../components/ModalBase/ModalBase.css'
@@ -9,15 +9,17 @@ import TextInput from '../components/TextInput/TextInput'
 import TeacherContext from '../../../TeacherContext';
 
 function EditClassModal() {
-  const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
-  const {classToEdit, setClassToEdit} = useContext(TeacherContext).classToEdit;
-  const {classInfo, setClassInfo} = useContext(TeacherContext).classInfo;
+  const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
+  const { classToEdit, setClassToEdit } = useContext(TeacherContext).classToEdit;
+  const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
 
   let editClassInfo = {
-    className: { title: "Class Name",
-                  placeholder: "Enter a class name (optional)",
-                  id: "class-name-edit",
-                  required: false},
+    className: {
+      title: "Class Name",
+      placeholder: "Enter a class name (optional)",
+      id: "class-name-edit",
+      required: false
+    },
   };
 
   let editClassDropdown = [
@@ -42,13 +44,11 @@ function EditClassModal() {
       "students": selectedClass.students,
     };
 
-    //@#)(@*&#)PLACEHOLDER@#)(@
-
     let tempClasses = classInfo.classes;
-    let classToEdit = tempClasses.find(cls => 
+    let classToEdit = tempClasses.find(cls =>
       cls.class_name === selectedClass.class_name && cls.grade_level === selectedClass.grade_level
     );
-    
+
     if (classToEdit) {
       Object.assign(classToEdit, content);
     }
@@ -62,46 +62,45 @@ function EditClassModal() {
       ...oldClassInfo,
       classes: tempClasses,
     }));
+    
 
-    setSelectedClass(content);
+  // FIXME - properly update class in database
 
-    // FIXME - properly update class in database
+  // fetch('http://127.0.0.1:8000/classes', {
+  //   method: "POST",
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify(content)
+  // })
+  //   .then(response => {
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+  //     return response.json();
+  //   })
+  //   .then(data => {
+  //     console.log('Data received:', data);
+  //   })
+  //   .catch(error => {
+  //     console.error('There was a problem with the fetch operation:', error);
+  //   });
 
-    // fetch('http://127.0.0.1:8000/classes', {
-    //   method: "POST",
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(content)
-    // })
-    //   .then(response => {
-    //     if (!response.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //     return response.json();
-    //   })
-    //   .then(data => {
-    //     console.log('Data received:', data);
-    //   })
-    //   .catch(error => {
-    //     console.error('There was a problem with the fetch operation:', error);
-    //   });
+}
 
-  }
-
-  return (
-    <section>
-      <form id="class-modal-form" onSubmit={handleSubmit}>
-        <section className="input-list" id="class-edit-text-input">
-          <TextInput info={editClassInfo.className} editValue={selectedClass ? selectedClass.class_name : null} />
-          <br />
-          <Dropdown info={editClassDropdown} editValue={selectedClass ? selectedClass.grade_level : null}/>
-          <br /><br /><br /><br />
-        </section>
-        <Submit value="Save" />
-      </form>
-    </section>
-  );
+return (
+  <section>
+    <form id="class-modal-form" onSubmit={handleSubmit}>
+      <section className="input-list" id="class-edit-text-input">
+        <TextInput info={editClassInfo.className} editValue={selectedClass ? selectedClass.class_name : null} />
+        <br />
+        <Dropdown info={editClassDropdown} editValue={selectedClass ? selectedClass.grade_level : null} />
+        <br /><br /><br /><br />
+      </section>
+      <Submit value="Save" />
+    </form>
+  </section>
+);
 }
 
 export default EditClassModal;

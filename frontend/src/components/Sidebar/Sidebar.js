@@ -29,7 +29,7 @@ function Sidebar() {
 
         <ClassAddButton />
         <div style={{ height: '50px' }}></div> {/* set gap of 50 px */}
-        <Classes info={classInfo} />
+        <Classes />
 
       </div>
     </section>
