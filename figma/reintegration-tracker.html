@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reintegration Tracker - EduTracker</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reintegration-tracker.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -163,359 +164,359 @@
     </div>
    
 
-    <script type="text/babel">
-        const schoolInfo = [
-            { _id: 'school-001', school_name: 'Accra Primary School' },
-            { _id: 'school-002', school_name: 'University Basic School, Legon' },
-            { _id: 'school-003', school_name: 'Greater Accra Region Primary School' },
-            { _id: 'school-004', school_name: 'Kwame Nkrumah Primary School' }
-        ];
+<script type="text/babel">
+const schoolInfo = [
+    { _id: 'school-001', school_name: 'Accra Primary School' },
+    { _id: 'school-002', school_name: 'University Basic School, Legon' },
+    { _id: 'school-003', school_name: 'Greater Accra Region Primary School' },
+    { _id: 'school-004', school_name: 'Kwame Nkrumah Primary School' }
+];
 
-        let selectedYear = '2024'; // Default year
+let selectedYear = '2024'; // Default year
 
-        function toggleDropdown() {
-            const dropdownContent = document.getElementById('dropdownContent');
-            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-        }
+function toggleDropdown() {
+    const dropdownContent = document.getElementById('dropdownContent');
+    dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+}
 
-        function selectYear(year) {
-            selectedYear = year;
-            const dropdownButton = document.querySelector('.dropdown-button');
-            dropdownButton.innerHTML = `${year} <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L5 5L9 1"></path></svg>`;
-            toggleDropdown();
-            updateSchoolInfo();
-        }
+function selectYear(year) {
+    selectedYear = year;
+    const dropdownButton = document.querySelector('.dropdown-button');
+    dropdownButton.innerHTML = `${year} <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1L5 5L9 1"></path></svg>`;
+    toggleDropdown();
+    updateSchoolInfo();
+}
 
-        function handleSchoolSearch(event) {
-            const searchQuery = event.target.value.toLowerCase();
-            const filteredSchools = schoolInfo.filter(school => school.school_name.toLowerCase().includes(searchQuery));
-            ReactDOM.render(<SchoolList schools={filteredSchools} />, document.getElementById("school-list"));
-        }
+function handleSchoolSearch(event) {
+    const searchQuery = event.target.value.toLowerCase();
+    const filteredSchools = schoolInfo.filter(school => school.school_name.toLowerCase().includes(searchQuery));
+    ReactDOM.render(<SchoolList schools={filteredSchools} />, document.getElementById("school-list"));
+}
 
-        function SchoolList(props) {
-            return (
-                <ul>
-                    {props.schools.map(school => (
-                        <li key={school._id} onClick={() => handleSchoolClick(school._id, school.school_name)}>
-                            <div>{school.school_name}</div>
-                            <div>{school._id}</div>
-                            <i className="fa fa-external-link"></i>
-                        </li>
-                    ))}
-                </ul>
-            );
-        }
+function SchoolList(props) {
+    return (
+        <ul>
+            {props.schools.map(school => (
+                <li key={school._id} onClick={() => handleSchoolClick(school._id, school.school_name)}>
+                    <div>{school.school_name}</div>
+                    <div>{school._id}</div>
+                    <i className="fa fa-external-link"></i>
+                </li>
+            ))}
+        </ul>
+    );
+}
 
-        function handleSchoolClick(schoolId, schoolName) {
-            window.location.href = `reintegration-tracker.html?school_id=${schoolId}&school_name=${schoolName}&year=${selectedYear}`;
-        }
-         // Added function to handle back button click
-         function goBack() {
-            window.location.href = 'reintegration-tracker.html';
-        }
-        ReactDOM.render(<SchoolList schools={schoolInfo} />, document.getElementById("school-list"));
+function handleSchoolClick(schoolId, schoolName) {
+    window.location.href = `reintegration-tracker.html?school_id=${schoolId}&school_name=${schoolName}&year=${selectedYear}`;
+}
+    // Added function to handle back button click
+    function goBack() {
+    window.location.href = 'reintegration-tracker.html';
+}
+ReactDOM.render(<SchoolList schools={schoolInfo} />, document.getElementById("school-list"));
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const schoolId = urlParams.get('school_id');
-        const schoolName = urlParams.get('school_name');
-        selectedYear = urlParams.get('year') || selectedYear;
+const urlParams = new URLSearchParams(window.location.search);
+const schoolId = urlParams.get('school_id');
+const schoolName = urlParams.get('school_name');
+selectedYear = urlParams.get('year') || selectedYear;
 
-        const studentCache = {};
+const studentCache = {};
 
-        async function fetchSchoolInfo(schoolId) {
-            // Replace this with actual API call to fetch school info
-            // const response = await fetch(`/api/schools/${schoolId}`);
-            // const data = await response.json();
+async function fetchSchoolInfo(schoolId) {
+    // Replace this with actual API call to fetch school info
+    // const response = await fetch(`/api/schools/${schoolId}`);
+    // const data = await response.json();
 
-            // Simulated data
-            return {
-                _id: schoolId,
-                school_name: schoolName,
-                total_students: 123, // This should be fetched dynamically
-                grades: [
-                    { level: 'Kindergarten 1' },
-                    { level: 'Kindergarten 2' },
-                    { level: 'Primary 1' },
-                    { level: 'Primary 2' },
-                    { level: 'Primary 3' },
-                    { level: 'Primary 4' },
-                    { level: 'Primary 5' },
-                    { level: 'Primary 6' },
-                ]
-            };
-        }
+    // Simulated data
+    return {
+        _id: schoolId,
+        school_name: schoolName,
+        total_students: 123, // This should be fetched dynamically
+        grades: [
+            { level: 'Kindergarten 1' },
+            { level: 'Kindergarten 2' },
+            { level: 'Primary 1' },
+            { level: 'Primary 2' },
+            { level: 'Primary 3' },
+            { level: 'Primary 4' },
+            { level: 'Primary 5' },
+            { level: 'Primary 6' },
+        ]
+    };
+}
 
-        async function updateSchoolInfo() {
-            const schoolInfo = await fetchSchoolInfo(schoolId);
-            const termYearIndicator = `Viewing: Term 1, ${selectedYear}`;
+async function updateSchoolInfo() {
+    const schoolInfo = await fetchSchoolInfo(schoolId);
+    const termYearIndicator = `Viewing: Term 1, ${selectedYear}`;
 
-            ReactDOM.render(
-                <div>
-                    <p className="info-label">School:</p>
-                    <p className="info-value">{schoolInfo.school_name}</p>
-                </div>,
-                document.getElementById("school-name-indicator")
-            );
+    ReactDOM.render(
+        <div>
+            <p className="info-label">School:</p>
+            <p className="info-value">{schoolInfo.school_name}</p>
+        </div>,
+        document.getElementById("school-name-indicator")
+    );
 
-            ReactDOM.render(
-                <div>
-                    <p className="info-label">Total Students:</p>
-                    <p className="info-value">{schoolInfo.total_students}</p>
-                </div>,
-                document.getElementById("total-students-indicator")
-            );
+    ReactDOM.render(
+        <div>
+            <p className="info-label">Total Students:</p>
+            <p className="info-value">{schoolInfo.total_students}</p>
+        </div>,
+        document.getElementById("total-students-indicator")
+    );
 
-            ReactDOM.render(
-                <div>
-                    <p className="info-label">Term & Year:</p>
-                    <p className="info-value">{termYearIndicator}</p>
-                </div>,
-                document.getElementById("term-year-indicator")
-            );
+    ReactDOM.render(
+        <div>
+            <p className="info-label">Term & Year:</p>
+            <p className="info-value">{termYearIndicator}</p>
+        </div>,
+        document.getElementById("term-year-indicator")
+    );
 
-            fetchGradesForYear(selectedYear);
-        }
+    fetchGradesForYear(selectedYear);
+}
 
-        function GradeItem(props) {
-            const handleGradeClick = async () => {
-                const gradeLevel = props.data.level;
-                await fetchStudentsForGrade(props.schoolId, gradeLevel);
-                document.getElementById("selected-grade-title").innerText = gradeLevel;
-                document.getElementById("selected-grade-subtitle").innerText = `Students in ${gradeLevel}`;
-            };
+function GradeItem(props) {
+    const handleGradeClick = async () => {
+        const gradeLevel = props.data.level;
+        await fetchStudentsForGrade(props.schoolId, gradeLevel);
+        document.getElementById("selected-grade-title").innerText = gradeLevel;
+        document.getElementById("selected-grade-subtitle").innerText = `Students in ${gradeLevel}`;
+    };
 
-            return (
-                <div className="school-item" onClick={handleGradeClick}>
-                    <p className="school-name">{props.data.level}</p>
-                    <p className="school-info">Total enrolled students</p>
-                    <p className="school-view-list">View student list by grade</p>
-                </div>
-            );
-        }
+    return (
+        <div className="school-item" onClick={handleGradeClick}>
+            <p className="school-name">{props.data.level}</p>
+            <p className="school-info">Total enrolled students</p>
+            <p className="school-view-list">View student list by grade</p>
+        </div>
+    );
+}
 
-        function AddGrades(props) {
-            let items = [];
-            for (let i = 0; i < props.grades.length; i++) {
-                items.push(<GradeItem data={props.grades[i]} schoolId={props.schoolId} />);
-            }
+function AddGrades(props) {
+    let items = [];
+    for (let i = 0; i < props.grades.length; i++) {
+        items.push(<GradeItem data={props.grades[i]} schoolId={props.schoolId} />);
+    }
 
-            return (
-                <section>
-                    <div className="grades-list">
-                        {items.length > 0 ? items : <p className="grades-subtitle">No grades available.</p>}
-                    </div>
-                </section>
-            );
-        }
+    return (
+        <section>
+            <div className="grades-list">
+                {items.length > 0 ? items : <p className="grades-subtitle">No grades available.</p>}
+            </div>
+        </section>
+    );
+}
 
-        async function fetchGradesForYear(year) {
-            const schoolInfo = await fetchSchoolInfo(schoolId);
-            ReactDOM.render(<AddGrades grades={schoolInfo.grades} schoolId={schoolId} />, document.getElementById("grades-root"));
-        }
+async function fetchGradesForYear(year) {
+    const schoolInfo = await fetchSchoolInfo(schoolId);
+    ReactDOM.render(<AddGrades grades={schoolInfo.grades} schoolId={schoolId} />, document.getElementById("grades-root"));
+}
 
-        function getStudentColor(status) {
-            switch (status) {
-                case 'progressed':
-                    return '#83f18d';
-                case 'passed':
-                    return '#fcf151';
-                case 'dropped':
-                    return '#f5554a';
-                case 'repeating':
-                    return '#ff9a00';
-                case 'new':
-                    return '#67dfff';
-                case 'returning':
-                    return '#a058c1';
-                default:
-                    return '#FFFFFF';
-            }
-        }
+function getStudentColor(status) {
+    switch (status) {
+        case 'progressed':
+            return '#83f18d';
+        case 'passed':
+            return '#fcf151';
+        case 'dropped':
+            return '#f5554a';
+        case 'repeating':
+            return '#ff9a00';
+        case 'new':
+            return '#67dfff';
+        case 'returning':
+            return '#a058c1';
+        default:
+            return '#FFFFFF';
+    }
+}
 
-        function StudentItem(props) {
-            const handleStudentClick = () => {
-                displayStudentProfile(props.data);
-            };
+function StudentItem(props) {
+    const handleStudentClick = () => {
+        displayStudentProfile(props.data);
+    };
 
-            return (
-                <tr onClick={handleStudentClick} style={{ cursor: 'pointer', backgroundColor: getStudentColor(props.data.status) }}>
-                    <td>{props.data.first_name} {props.data.last_name}</td>
-                    <td>{props.data.student_id}</td>
-                    <td>{props.data.dob}</td>
-                    <td>{props.data.age}</td>
-                    <td>{props.data.teacher}</td>
+    return (
+        <tr onClick={handleStudentClick} style={{ cursor: 'pointer', backgroundColor: getStudentColor(props.data.status) }}>
+            <td>{props.data.first_name} {props.data.last_name}</td>
+            <td>{props.data.student_id}</td>
+            <td>{props.data.dob}</td>
+            <td>{props.data.age}</td>
+            <td>{props.data.teacher}</td>
+        </tr>
+    );
+}
+
+function AddStudents(props) {
+    let items = [];
+    for (let i = 0; i < props.students.length; i++) {
+        items.push(<StudentItem data={props.students[i]} key={props.students[i].student_id} />);
+    }
+
+    return (
+        <table className="student-list-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Student ID</th>
+                    <th>Date of Birth</th>
+                    <th>Age</th>
+                    <th>Teacher</th>
                 </tr>
-            );
-        }
+            </thead>
+            <tbody>
+                {items.length > 0 ? items : <tr><td colSpan="5">There are no students in this grade.</td></tr>}
+            </tbody>
+        </table>
+    );
+}
 
-        function AddStudents(props) {
-            let items = [];
-            for (let i = 0; i < props.students.length; i++) {
-                items.push(<StudentItem data={props.students[i]} key={props.students[i].student_id} />);
-            }
+async function fetchStudentsForGrade(schoolId, gradeLevel) {
+    const cacheKey = `${schoolId}-${gradeLevel}-${selectedYear}`;
+    if (studentCache[cacheKey]) {
+        ReactDOM.render(<AddStudents students={studentCache[cacheKey]} />, document.getElementById("students-root"));
+        return;
+    }
 
-            return (
-                <table className="student-list-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Student ID</th>
-                            <th>Date of Birth</th>
-                            <th>Age</th>
-                            <th>Teacher</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items.length > 0 ? items : <tr><td colSpan="5">There are no students in this grade.</td></tr>}
-                    </tbody>
-                </table>
-            );
-        }
+    // Replace this with actual API call to fetch students for the selected grade
+    // const response = await fetch(`/api/students?school_id=${schoolId}&grade_level=${gradeLevel}&year=${selectedYear}`);
+    // const students = await response.json();
 
-        async function fetchStudentsForGrade(schoolId, gradeLevel) {
-            const cacheKey = `${schoolId}-${gradeLevel}-${selectedYear}`;
-            if (studentCache[cacheKey]) {
-                ReactDOM.render(<AddStudents students={studentCache[cacheKey]} />, document.getElementById("students-root"));
-                return;
-            }
-
-            // Replace this with actual API call to fetch students for the selected grade
-            // const response = await fetch(`/api/students?school_id=${schoolId}&grade_level=${gradeLevel}&year=${selectedYear}`);
-            // const students = await response.json();
-
-            // Simulated data
-            const students = [];
-            const statuses = ['progressed', 'passed', 'dropped', 'repeating', 'new', 'returning'];
-            for (let i = 1; i <= 60; i++) {
-                const status = statuses[Math.floor(Math.random() * statuses.length)];
-                students.push({
-                    first_name: `Student${i}`,
-                    last_name: `LastName${i}`,
-                    student_id: `ID${i}`,
-                    dob: '2006-01-01',
-                    age: 18,
-                    teacher: `Teacher${i % 5 + 1}`,
-                    status
-                });
-            }
-
-            studentCache[cacheKey] = students;
-            ReactDOM.render(<AddStudents students={students} />, document.getElementById("students-root"));
-        }
-
-        function OpenModal(id) {
-            const underlay = document.getElementById(`${id}-modal-underlay`);
-            underlay.classList.add("blurred-modal-underlay");
-
-            const modal = underlay.querySelector(`#${id}-modal`);
-            modal.classList.add("displayed-modal");
-
-            underlay.style.display = "flex";
-        }
-
-        function CloseModal(id) {
-            const underlay = document.getElementById(`${id}-modal-underlay`);
-            underlay.classList.remove("blurred-modal-underlay");
-
-            const modal = underlay.querySelector(`#${id}-modal`);
-            modal.classList.remove("displayed-modal");
-
-            setTimeout(() => {
-                underlay.style.display = "none";
-            }, 200);
-        }
-
-        const TextInput = (props) => {
-            const inputStyle = { backgroundColor: props.color };
-
-            return (
-                <section className="modal-text-input">
-                    <p className="modal-text-label">{props.title}</p>
-                    <input
-                        placeholder={props.placeholder}
-                        title={props.title}
-                        type="text"
-                        id={props.id}
-                        required
-                        defaultValue={props.value}
-                        className="static-width"
-                        style={inputStyle}
-                    />
-                </section>
-            );
-        }
-
-        const SubmitButton = (props) => {
-            return (
-                <div className="modal-submit">
-                    <input type="submit" value={props.value} />
-                </div>
-            );
-        }
-
-        function StudentProfile(props) {
-            const statusColor = getStudentColor(props.student.status);
-            return (
-                <section>
-                    <form id="student-profile-form" onSubmit={(e) => handleProfileSubmit(e, props.student.student_id)}>
-                        <div className="input-group">
-                            <TextInput title="First Name" placeholder="Enter first name" id="student-first-name" value={props.student.first_name} color={statusColor} />
-                            <TextInput title="Last Name" placeholder="Enter last name" id="student-last-name" value={props.student.last_name} color={statusColor} />
-                        </div>
-                        <div className="input-group">
-                            <TextInput title="Student ID" placeholder="Enter student ID" id="student-id" value={props.student.student_id} />
-                            <TextInput title="Date of Birth" placeholder="Enter date of birth" id="student-dob" value={props.student.dob} />
-                        </div>
-                        <div className="input-group">
-                            <TextInput title="Age" placeholder="Enter age" id="student-age" value={props.student.age} />
-                            <TextInput title="Teacher" placeholder="Enter teacher name" id="student-teacher" value={props.student.teacher} />
-                        </div>
-                        <div className="input-group">
-                            <TextInput title="Parent Contact" placeholder="Enter parent contact" id="student-parent-contact" value={props.student.parent_contact} />
-                            <TextInput title="Medical Conditions" placeholder="Enter medical conditions" id="student-health" value={props.student.health_conditions} />
-                        </div>
-                        <div className="checkbox-group">
-                            <label htmlFor="disability-status">Disability Status</label>
-                            <input type="checkbox" id="disability-status" name="disability-status" defaultChecked={props.student.disabled} />
-                        </div>
-                        <TextInput title="Additional Information" placeholder="Enter additional information" id="student-misc" value={props.student.misc_info} />
-                        <div className="status-indicator" style={{ backgroundColor: statusColor }}>
-                            <p className="status-title">{props.student.status}</p>
-                        </div>
-                    </form>
-                </section>
-            );
-        }
-
-        function handleProfileSubmit(event, studentID) {
-            event.preventDefault();
-            CloseModal('student-profile');
-
-            const updatedProfile = {
-                first_name: document.getElementById('student-first-name').value,
-                last_name: document.getElementById('student-last-name').value,
-                student_id: document.getElementById('student-id').value,
-                dob: document.getElementById('student-dob').value,
-                age: document.getElementById('student-age').value,
-                teacher: document.getElementById('student-teacher').value,
-                parent_contact: document.getElementById('student-parent-contact').value,
-                disabled: document.getElementById('disability-status').checked,
-                health_conditions: document.getElementById('student-health').value,
-                misc_info: document.getElementById('student-misc').value,
-            };
-
-            console.log('Updated profile for student:', studentID, updatedProfile);
-            // Add fetch or AJAX request here to update the student profile in the backend
-        }
-
-        function displayStudentProfile(student) {
-            ReactDOM.render(<StudentProfile student={student} />, document.getElementById("student-profile-modal-root"));
-            OpenModal("student-profile");
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            await updateSchoolInfo();
+    // Simulated data
+    const students = [];
+    const statuses = ['progressed', 'passed', 'dropped', 'repeating', 'new', 'returning'];
+    for (let i = 1; i <= 60; i++) {
+        const status = statuses[Math.floor(Math.random() * statuses.length)];
+        students.push({
+            first_name: `Student${i}`,
+            last_name: `LastName${i}`,
+            student_id: `ID${i}`,
+            dob: '2006-01-01',
+            age: 18,
+            teacher: `Teacher${i % 5 + 1}`,
+            status
         });
-    </script>
+    }
+
+    studentCache[cacheKey] = students;
+    ReactDOM.render(<AddStudents students={students} />, document.getElementById("students-root"));
+}
+
+function OpenModal(id) {
+    const underlay = document.getElementById(`${id}-modal-underlay`);
+    underlay.classList.add("blurred-modal-underlay");
+
+    const modal = underlay.querySelector(`#${id}-modal`);
+    modal.classList.add("displayed-modal");
+
+    underlay.style.display = "flex";
+}
+
+function CloseModal(id) {
+    const underlay = document.getElementById(`${id}-modal-underlay`);
+    underlay.classList.remove("blurred-modal-underlay");
+
+    const modal = underlay.querySelector(`#${id}-modal`);
+    modal.classList.remove("displayed-modal");
+
+    setTimeout(() => {
+        underlay.style.display = "none";
+    }, 200);
+}
+
+const TextInput = (props) => {
+    const inputStyle = { backgroundColor: props.color };
+
+    return (
+        <section className="modal-text-input">
+            <p className="modal-text-label">{props.title}</p>
+            <input
+                placeholder={props.placeholder}
+                title={props.title}
+                type="text"
+                id={props.id}
+                required
+                defaultValue={props.value}
+                className="static-width"
+                style={inputStyle}
+            />
+        </section>
+    );
+}
+
+const SubmitButton = (props) => {
+    return (
+        <div className="modal-submit">
+            <input type="submit" value={props.value} />
+        </div>
+    );
+}
+
+function StudentProfile(props) {
+    const statusColor = getStudentColor(props.student.status);
+    return (
+        <section>
+            <form id="student-profile-form" onSubmit={(e) => handleProfileSubmit(e, props.student.student_id)}>
+                <div className="input-group">
+                    <TextInput title="First Name" placeholder="Enter first name" id="student-first-name" value={props.student.first_name} color={statusColor} />
+                    <TextInput title="Last Name" placeholder="Enter last name" id="student-last-name" value={props.student.last_name} color={statusColor} />
+                </div>
+                <div className="input-group">
+                    <TextInput title="Student ID" placeholder="Enter student ID" id="student-id" value={props.student.student_id} />
+                    <TextInput title="Date of Birth" placeholder="Enter date of birth" id="student-dob" value={props.student.dob} />
+                </div>
+                <div className="input-group">
+                    <TextInput title="Age" placeholder="Enter age" id="student-age" value={props.student.age} />
+                    <TextInput title="Teacher" placeholder="Enter teacher name" id="student-teacher" value={props.student.teacher} />
+                </div>
+                <div className="input-group">
+                    <TextInput title="Parent Contact" placeholder="Enter parent contact" id="student-parent-contact" value={props.student.parent_contact} />
+                    <TextInput title="Medical Conditions" placeholder="Enter medical conditions" id="student-health" value={props.student.health_conditions} />
+                </div>
+                <div className="checkbox-group">
+                    <label htmlFor="disability-status">Disability Status</label>
+                    <input type="checkbox" id="disability-status" name="disability-status" defaultChecked={props.student.disabled} />
+                </div>
+                <TextInput title="Additional Information" placeholder="Enter additional information" id="student-misc" value={props.student.misc_info} />
+                <div className="status-indicator" style={{ backgroundColor: statusColor }}>
+                    <p className="status-title">{props.student.status}</p>
+                </div>
+            </form>
+        </section>
+    );
+}
+
+function handleProfileSubmit(event, studentID) {
+    event.preventDefault();
+    CloseModal('student-profile');
+
+    const updatedProfile = {
+        first_name: document.getElementById('student-first-name').value,
+        last_name: document.getElementById('student-last-name').value,
+        student_id: document.getElementById('student-id').value,
+        dob: document.getElementById('student-dob').value,
+        age: document.getElementById('student-age').value,
+        teacher: document.getElementById('student-teacher').value,
+        parent_contact: document.getElementById('student-parent-contact').value,
+        disabled: document.getElementById('disability-status').checked,
+        health_conditions: document.getElementById('student-health').value,
+        misc_info: document.getElementById('student-misc').value,
+    };
+
+    console.log('Updated profile for student:', studentID, updatedProfile);
+    // Add fetch or AJAX request here to update the student profile in the backend
+}
+
+function displayStudentProfile(student) {
+    ReactDOM.render(<StudentProfile student={student} />, document.getElementById("student-profile-modal-root"));
+    OpenModal("student-profile");
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await updateSchoolInfo();
+});
+</script>
 </body>
 </html>
