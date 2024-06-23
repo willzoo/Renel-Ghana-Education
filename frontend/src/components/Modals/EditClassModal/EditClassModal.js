@@ -132,7 +132,11 @@ function EditClassModal() {
   }
 
   useEffect(() => {
+    if (!selectedClass) return;
+
     const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
+    if (!sidebarClassElements) return;
+    
     sidebarClassElements.forEach((element) => {
       element.classList.remove('selected');
     });
@@ -140,6 +144,8 @@ function EditClassModal() {
     const selectedElement = sidebarClassElements.find((element) =>
       element.dataset.classId === selectedClass.class_id
     );
+
+    if (!selectedElement) return;
     selectedElement.classList.add('selected');
   }, [classInfo])
 
