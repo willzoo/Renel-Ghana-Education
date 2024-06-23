@@ -93,7 +93,7 @@ function EditClassModal() {
   const handleDelete = () => {
     CloseModal('class-edit');
 
-    let tempClasses = classInfo.classes.filter(cls => cls.class_name !== selectedClass.class_name && cls.grade_level !== selectedClass.grade_level);
+    let tempClasses = classInfo.classes.filter(cls => cls.class_id !== selectedClass.class_id);
 
     // solution created by AI
     setClassInfo((oldClassInfo) => ({
