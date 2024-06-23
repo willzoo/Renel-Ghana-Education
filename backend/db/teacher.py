@@ -113,7 +113,7 @@ def get_teacher_classes(teacher_id):
                 students.append(student)            
             cls['students'] = students
 
-        return jsonify({"name": teacher_name, "email": teacher_email, "school_name": school_name, "classes": classes}), 200
+        return jsonify({"name": teacher_name, "email": teacher_email, "school_name": school_name, "school_id": school_id, "classes": classes}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

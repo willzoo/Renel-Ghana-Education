@@ -16,13 +16,15 @@ let newStudentInfo = {
     studentDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "student-dob" },
     guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name" },
     guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact" },
-    studentMedical: { title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical" },
+    studentMedical: { title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical", required: false  },
     disabilityStatus: { title: "Disability Status", id: "disability-status" },
-    additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info" },
+    additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info", required: false },
 }
 
 function NewStudentModal() {
-    const selectedClass = useContext(TeacherContext);
+    const {classInfo, setClassInfo} = useContext(TeacherContext).classInfo;
+    const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
+    const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
 
     let handleNewStudentSubmit = (event) => {
         event.preventDefault();
@@ -31,7 +33,7 @@ function NewStudentModal() {
         // console.log("returning student 2: " + RETURNING_STUDENT_ID);
 
         let studentName = document.getElementById('student-name').value;
-        let studentID = "1234";//RETURNING_STUDENT_ID;
+        let studentID = document.getElementById('student-id').value;
         let studentDOB = document.getElementById('student-dob').value;
         let guardianName = document.getElementById('guardian-name').value;
         let guardianContact = document.getElementById('guardian-contact').value;
@@ -50,11 +52,22 @@ function NewStudentModal() {
             'misc_info': additionalInfo,
             'class_id': selectedClass._id,
             'grade_level': selectedClass.grade_level,
-            'school_id': "nb9s",
+            'school_id': classInfo.school_id,
             'history': [],
         };
 
-        selectedClass.students.push(content);
+        let tempStudents = selectedClass.students;
+        tempStudents.push(content);
+
+        tempStudents.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+        });
+
+        // solution created by AI
+        setSelectedClass((oldStudentInfo) => ({
+        ...oldStudentInfo,
+        students: tempStudents,
+        }));
 
         // fetch('http://127.0.0.1:8000/students', {
         //     method: "POST",
@@ -83,6 +96,7 @@ function NewStudentModal() {
             <form id="new-student-form" onSubmit={handleNewStudentSubmit}>
                 <section className="input-list" id="new-student-text-input">
                     <TextInput info={newStudentInfo.studentName} />
+                    <TextInput info={newStudentInfo.studentID} />
                     <TextInput info={newStudentInfo.studentDOB} />
                     <TextInput info={newStudentInfo.guardianName} />
                     <TextInput info={newStudentInfo.guardianContact} />

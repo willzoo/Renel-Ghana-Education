@@ -15,6 +15,7 @@ function App() {
     "name": "Example Teacher",
     "email": "example.teacher@renelglobal.org",
     "school_name": "Example School",
+    "school_id": "1234567890",
     'classes': []
   });
 
