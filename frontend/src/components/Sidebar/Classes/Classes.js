@@ -6,6 +6,7 @@ import TeacherContext from "../../../TeacherContext";
 function ClassesList(props) {
     const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
     const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
+    const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
 
     let classList = [];
     for (let i = 0; i < classInfo.classes.length; i++) {
@@ -13,8 +14,22 @@ function ClassesList(props) {
         classList.push((<ClassItem id={i} data={classInfo.classes[i]} />));
     }
 
+    const deselectAll = () => {
+        if (!selectedClass) return;
+    
+        const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
+        if (!sidebarClassElements) return;
+    
+        sidebarClassElements.forEach((element) => {
+          element.classList.remove('selected');
+        });
+        
+        setSelectedClass(null);
+        setSelectedStudent(null);
+    }
+
     return (
-        <div className="sidebar-classes-container">
+        <div className="sidebar-classes-container" onClick={deselectAll}>
             {/* Section title */}
             <h1>Classes</h1>
             <p>Select a class to view students</p>

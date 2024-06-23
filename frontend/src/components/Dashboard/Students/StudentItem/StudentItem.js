@@ -34,7 +34,7 @@ function StudentItem(props) {
                 <div>
                     <p className="title">{props.data.name}</p>
                     <p className="body">Student ID: {props.data.student_school_id}</p>
-                    <p className="body">Disability: {props.data.disabled ? ('No') : ('Yes')}</p>
+                    <p className="body">Disability: {props.data.disabled ? ('Yes') : ('No')}</p>
                 </div>
                 <div>
                     <p className="title">Parent Contact Information</p>
