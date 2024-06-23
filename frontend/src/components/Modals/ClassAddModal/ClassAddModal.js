@@ -84,7 +84,10 @@ function ClassAddModal() {
           <Dropdown info={addClassDropdown} />
           <br /><br /><br /><br />
         </section>
-        <Submit value="Create" />
+
+        <div className='modal-buttons-section'>
+          <Submit value="Create" />
+        </div>
       </form>
     </section>
   );
