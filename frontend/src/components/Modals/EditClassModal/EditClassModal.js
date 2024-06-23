@@ -35,9 +35,9 @@ function EditClassModal() {
 
     let className = document.getElementById('class-name-edit').value;
     let gradeLevel = document.getElementById('grade-level-edit').value;
-    
+
     if (classInfo.classes.some(cls =>
-      cls.class_name === className && cls.grade_level === gradeLevel
+      cls.class_name === selectedClass.class_name && cls.class_id !== selectedClass.class_id
     )) {
       alert("You already have a class with this name. Please choose a unique name.");
       return;
@@ -55,7 +55,7 @@ function EditClassModal() {
 
     let tempClasses = classInfo.classes;
     let classToEdit = tempClasses.find(cls =>
-      cls.class_name === selectedClass.class_name && cls.grade_level === selectedClass.grade_level
+      cls.class_id === selectedClass.class_id
     );
 
     if (classToEdit) {
@@ -71,78 +71,102 @@ function EditClassModal() {
       ...oldClassInfo,
       classes: tempClasses,
     }));
-    
 
-  // FIXME - properly update class in database
+    // const clickedElement = sidebarClassElements.find(cls => 
+    //   {alert(cls.class_id, selectedClass.class_id);
+    //     return cls.data.class_id === selectedClass.class_id}
+    // );
+    // clickedElement.classList.add('selected');
 
-  // fetch('http://127.0.0.1:8000/classes', {
-  //   method: "POST",
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify(content)
-  // })
-  //   .then(response => {
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-  //     return response.json();
-  //   })
-  //   .then(data => {
-  //     console.log('Data received:', data);
-  //   })
-  //   .catch(error => {
-  //     console.error('There was a problem with the fetch operation:', error);
-  //   });
 
-}
+    // FIXME - properly update class in database
 
-const handleDelete = () => {
-  CloseModal('class-edit');
-  
-  let tempClasses = classInfo.classes.filter(cls => cls.class_name !== selectedClass.class_name && cls.grade_level !== selectedClass.grade_level);
+    // fetch('http://127.0.0.1:8000/classes', {
+    //   method: "POST",
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(content)
+    // })
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     console.log('Data received:', data);
+    //   })
+    //   .catch(error => {
+    //     console.error('There was a problem with the fetch operation:', error);
+    //   });
 
-  // solution created by AI
-  setClassInfo((oldClassInfo) => ({
-    ...oldClassInfo,
-    classes: tempClasses,
-  }));
+  }
 
-  fetch(`http://127.0.0.1:8000/classes/${selectedClass.class_id}`, {
+  const handleDelete = () => {
+    CloseModal('class-edit');
+
+    let tempClasses = classInfo.classes.filter(cls => cls.class_name !== selectedClass.class_name && cls.grade_level !== selectedClass.grade_level);
+
+    // solution created by AI
+    setClassInfo((oldClassInfo) => ({
+      ...oldClassInfo,
+      classes: tempClasses,
+    }));
+
+    fetch(`http://127.0.0.1:8000/classes/${selectedClass.class_id}`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json'
       },
     })
-  .then(response => response.json())
-  .then(data => {
-    // Handle the data returned from the server
-    console.log(data); // For demonstration purposes; adjust as needed
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
+      .then(response => response.json())
+      .then(data => {
+        // Handle the data returned from the server
+        console.log(data); // For demonstration purposes; adjust as needed
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
 
-}
+  }
 
-return (
-  <section>
-    <form id="class-modal-form" onSubmit={handleSubmit}>
-      <section className="input-list" id="class-edit-text-input">
-        <TextInput info={editClassInfo.className} editValue={selectedClass ? selectedClass.class_name : null} />
-        <br />
-        <Dropdown info={editClassDropdown} editValue={selectedClass ? selectedClass.grade_level : null} />
-        <br /><br /><br /><br />
-      </section>
-      
+  useEffect(() => {
+    if (!selectedClass) return;
+
+    const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
+    if (!sidebarClassElements) return;
+    
+    sidebarClassElements.forEach((element) => {
+      element.classList.remove('selected');
+    });
+
+    const selectedElement = sidebarClassElements.find((element) =>
+      element.dataset.classId === selectedClass.class_id
+    );
+
+    if (!selectedElement) return;
+    selectedElement.classList.add('selected');
+  }, [classInfo])
+
+  return (
+    <section>
+      <form id="class-modal-form" onSubmit={handleSubmit}>
+        <section className="input-list" id="class-edit-text-input">
+          <TextInput info={editClassInfo.className} editValue={selectedClass ? selectedClass.class_name : null} />
+          <br />
+          <Dropdown info={editClassDropdown} editValue={selectedClass ? selectedClass.grade_level : null} />
+          <br /><br /><br /><br />
+        </section>
+
         <div className='modal-buttons-section'>
-          <div><Delete value="Delete" onClick={handleDelete}/></div>
+          <div><Delete value="Delete" onClick={handleDelete} /></div>
           <div style={{ display: 'inline-block', width: '20px' }}></div> {/* Gap between buttons */}
           <div><Submit value="Save" /></div>
         </div>
-    </form>
-  </section>
-);
+      </form>
+    </section>
+  );
 }
 
 export default EditClassModal;

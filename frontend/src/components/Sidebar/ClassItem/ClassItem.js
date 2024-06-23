@@ -9,7 +9,7 @@ function ClassItem(props) {
     let [isEditButtonPressed, setEditButtonPressed] = useState(0);
 
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
-    const {classToEdit, setClassToEdit,} = useContext(TeacherContext).classToEdit;    
+    const { classToEdit, setClassToEdit, } = useContext(TeacherContext).classToEdit;
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
 
     const handleEditClick = (e) => {
@@ -45,9 +45,9 @@ function ClassItem(props) {
     return (
         <li>
             <div className="sidebar-class" id={props.id}
-            // data-class-name={props.data.class_name}
-            // data-grade-level={props.data.grade_level}
-            onClick={handleSelect}>
+                data-class-id={props.data.class_id}
+                data-class-name={props.data.name}
+                onClick={handleSelect}>
                 <div>
                     <p className="title">{props.data.class_name !== "" ? props.data.class_name : props.data.grade_level}</p>
                     <p className="body">{props.data.class_name !== "" ? props.data.grade_level : ""}</p>
