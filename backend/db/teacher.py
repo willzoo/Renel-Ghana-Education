@@ -173,7 +173,7 @@ def login_teacher():
 
 #Used for Teacher Registration
 @teacher_bp.route('/teachers/registration', methods=['PATCH'])
-def login_teacher():
+def register_teacher():
     try:
         data = request.get_json()
         email = data.get('email')
@@ -199,9 +199,10 @@ def login_teacher():
         # Check if the provided access code matches the stored access code
         if access_code == school['access_code']:
             # Update the teacher's password
+            hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
             db.teachers.update_one(
                 {"_id": ObjectId(teacher['_id'])},
-                {"$set": {"password": new_password}}
+                {"$set": {"password": hashed_password}}
             )
             return jsonify({"message": "Registration successful", "teacher_id": str(teacher['_id'])}), 200
         else:

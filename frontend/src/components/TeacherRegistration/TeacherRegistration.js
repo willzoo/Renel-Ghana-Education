@@ -55,7 +55,7 @@ function TeacherRegistration() {
                     </div>
                     <div className={styles.title}>Teacher Registration</div>
                 </div>
-                <form onSubmit={handleRegister}>
+                <form>
                     <div className={styles.inputField}>
                         <div className={styles.icon}></div>
                         <div className={styles.divider}></div>
@@ -97,7 +97,7 @@ function TeacherRegistration() {
                     </div>
                     <div className={styles.ctas}>
                         <button type="submit" className={styles.button}>
-                            <div className={styles.label}>Register</div>
+                            <div className={styles.label} onSubmit={handleRegister}>Register</div>
                         </button>
                     </div>
                 </form>
