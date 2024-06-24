@@ -235,7 +235,7 @@ def remove_student_from_class(class_id, student_id):
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
         # Remove class_id from the student document
-        student_update_result = mongo.db.students.update_one(
+        student_update_result = db.students.update_one(
             {'_id': ObjectId(student_id)},
             {'$unset': {'class_id': ""}}
         )
@@ -244,7 +244,7 @@ def remove_student_from_class(class_id, student_id):
             return jsonify({'error': 'Student not found or already removed from class'}), 404
         
         # Remove student from the class's student list
-        class_update_result = mongo.db.classes.update_one(
+        class_update_result = db.classes.update_one(
             {'_id': ObjectId(class_id)},
             {'$pull': {'students': ObjectId(student_id)}}
         )
