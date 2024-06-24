@@ -1,9 +1,12 @@
 // import './App.css';
 // import {classInfo, selectedClass, teacherID} from '../utils/global'
 
-import { Routes, Route } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom';
 import TeacherDashboard from './TeacherDashboard';
 import TeacherLogin from './TeacherLogin/TeacherLogin';
+import Reintegration from './Reintegration/Reintegration'; // Corrected the path
+import AdminDashboard from './AdminDashboard'; // Corrected the path
+
 
 function App() {
 
@@ -13,6 +16,8 @@ function App() {
        <Routes>
           <Route path="/TeacherLogin/" element= {<TeacherLogin />} />
           <Route path="/" element= {<TeacherDashboard />} />
+          <Route path="/reintegration" element={<Reintegration />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />  {/* Add the new route */}
        </Routes>
     </>
     
