@@ -1,14 +1,72 @@
 /* figma/css/admin-dashboard.module.css */
 
-.button-container {
+/* General styles for body and background */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background: #949494; /* Fallback background color */
+  }
+  
+  .background {
+    background-color: #e7e8e9;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: -2px;
+    left: -2px;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    height: 100%;
+    width: 360px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-top-right-radius: 40px;
+    background-color: #DCE8F5;
+    box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.15);
+  }
+  
+  .edutracker-logo {
     display: flex;
     justify-content: center;
+  }
+  
+  /* Main content styles */
+  .main-admin-dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 360px; /* Adjust to align with sidebar */
+    height: 100vh;
+    background-color: #e7e8e9; /* Ensure background color matches */
+  }
+  
+  .feature-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* Button container styles */
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 50px;
-}
-
-.admin-dashboard-button {
+  }
+  
+  /* Button styles specific to admin-dashboard */
+  .admin-dashboard-button {
     padding: 15px 30px;
-    margin: 0 10px;
+    margin: 20px; /* Add some margin for spacing */
     font-size: 16px;
     cursor: pointer;
     border: none;
@@ -17,8 +75,37 @@
     color: white;
     text-transform: uppercase;
     text-decoration: none;
-}
-
-.admin-dashboard-button:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .admin-dashboard-button:hover {
     background-color: #0056b3;
-}
+  }
+  
+  /* Feature button styles */
+  .feature-button {
+    padding: 15px 30px;
+    margin: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .feature-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .feature-description {
+    max-width: 400px;
+    text-align: left;
+  }
+  
