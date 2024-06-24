@@ -4,6 +4,7 @@
 import { Routes, Route } from 'react-router-dom'
 import TeacherDashboard from './TeacherDashboard';
 import TeacherLogin from './TeacherLogin/TeacherLogin';
+import TeacherRegistration from './TeacherRegistration/TeacherRegistration';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
     <>
        <Routes>
           <Route path="/TeacherLogin" element= {<TeacherLogin />} />
+          <Route path="/TeacherRegistration" element= {<TeacherRegistration />} />
           <Route path="/TeacherDashboard" element= {<TeacherDashboard />} />
        </Routes>
     </>

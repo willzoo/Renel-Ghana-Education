@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import styles from './TeacherLogin.module.css';
+import styles from './TeacherRegistration.module.css';
 
-function TeacherLogin() {
+function TeacherRegistration() {
     const [email, setEmail] = useState('');
+    const [schoolCode, setSchoolCode] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async (event) => {
+    const handleRegister = async (event) => {
         event.preventDefault();
 
         let content = {
             'email': email,
+            'access_code': schoolCode,
             'password': password
         }
 
-        fetch(`http://127.0.0.1:8000/teachers/login`, {
+        fetch(`http://127.0.0.1:8000/teachers/registration`, {
             method: "PATCH",
             headers: {
             'Content-Type': 'application/json'
@@ -42,51 +44,68 @@ function TeacherLogin() {
     return (
         <>
             <div className={styles.background}></div>
-            <div className={styles.loginContainer}>
+            <div className={styles.registrationContainer}>
                 <div className={styles.header}>
                     <div className={styles.edutrackerLogoIcon}>
                         <svg width="92" height="82" viewBox="0 0 92 82" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M46 82C53.8941 82 61.4649 78.8671 67.0468 73.2905C72.6288 67.7138 75.7647 60.1503 75.7647 52.2637C75.7647 44.3772 72.6288 36.8137 67.0468 31.237C61.4649 25.6604 53.8941 22.5275 46 22.5275C38.1059 22.5275 30.5351 25.6604 24.9532 31.237C19.3712 36.8137 16.2353 44.3772 16.2353 52.2637C16.2353 60.1503 19.3712 67.7138 24.9532 73.2905C30.5351 78.8671 38.1059 82 46 82ZM51.8948 60.2902L35.1173 66.7369C32.8617 67.6081 30.6409 65.3895 31.513 63.1361L37.9659 46.3746C38.3495 45.3872 39.1169 44.6206 40.1052 44.2373L56.8827 37.7905C59.1383 36.9194 61.3591 39.138 60.487 41.3914L54.0341 58.1529C53.6621 59.1402 52.8831 59.9069 51.8948 60.2902ZM49.7206 52.2637C49.7206 51.2779 49.3286 50.3325 48.6309 49.6354C47.9331 48.9383 46.9868 48.5467 46 48.5467C45.0132 48.5467 44.0669 48.9383 43.3691 49.6354C42.6714 50.3325 42.2794 51.2779 42.2794 52.2637C42.2794 53.2496 42.6714 54.195 43.3691 54.8921C44.0669 55.5891 45.0132 55.9808 46 55.9808C46.9868 55.9808 47.9331 55.5891 48.6309 54.8921C49.3286 54.195 49.7206 53.2496 49.7206 52.2637Z" fill="#28585F"/>
-                            <path fillRule="evenodd" clipRule="evenodd" d="M45.9999 81.4168C62.1162 81.4168 75.181 68.3645 75.181 52.2636C75.181 36.1628 62.1162 23.1104 45.9999 23.1104C29.8836 23.1104 16.8188 36.1628 16.8188 52.2636C16.8188 68.3645 29.8836 81.4168 45.9999 81.4168Z" fill="#144047" fillOpacity="0.5"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M45.9999 81.4168C62.1162 81.4168 75.181 68.3645 75.181 52.2636C75.181 36.1628 62.1162 23.1104 45.9999 23.1104C29.8836 23.1104 16.8188 36.1628 16.8188 52.2636C16.8188 68.3645 29.8836 81.4168 45.9999 81.4168Z" fill="#144047" fill-opacity="0.5"/>
                             <path d="M45.9989 0C47.1632 0 48.3132 0.202706 49.4057 0.593643L89.7266 15.261C91.0922 15.7677 91.9978 17.0709 91.9978 18.5333C91.9978 19.9957 91.0922 21.2988 89.7266 21.8055L81.4037 24.8317C83.7611 28.5673 85.098 32.9834 85.098 37.6312V41.6998C85.098 45.8119 86.6504 50.0543 88.3035 53.3989C89.2379 55.2812 90.3016 57.1345 91.5378 58.8431C91.9978 59.4657 92.1272 60.2765 91.8684 61.015C91.6097 61.7534 91.0059 62.3036 90.2585 62.4918L81.0587 64.8085C80.4549 64.9677 79.8081 64.8519 79.2762 64.5189C78.7444 64.1859 78.3706 63.6357 78.2556 63.0131C77.0194 56.816 77.6375 51.256 78.5575 47.2743C79.0175 45.2182 79.6356 43.1188 80.4981 41.1931V37.6312C80.4981 33.2585 79.0318 29.132 76.4875 25.8307C74.6332 23.5865 72.2326 21.7766 69.4152 20.6617L46.847 11.7281C45.6683 11.2647 44.3314 11.8439 43.8715 13.0312C43.4115 14.2185 43.9864 15.565 45.1652 16.0284L67.7334 24.962C69.5158 25.6715 71.0827 26.7574 72.362 28.0895L49.4201 36.4294C48.3276 36.8204 47.1776 37.0231 46.0133 37.0231C44.8489 37.0231 43.6989 36.8204 42.6065 36.4294L2.2712 21.8055C0.905605 21.3132 0 19.9957 0 18.5333C0 17.0709 0.905605 15.7677 2.2712 15.261L42.5921 0.593643C43.6846 0.202706 44.8346 0 45.9989 0Z" fill="#144047"/>
                         </svg>
                     </div>
-                    <div className={styles.title}>Teacher Login</div>
+                    <div className={styles.title}>Teacher Registration</div>
                 </div>
-                {error && <div className={styles.error}>{error}</div>}
-                <form onSubmit={handleLogin}>
+                <form onSubmit={handleRegister}>
                     <div className={styles.inputField}>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Email"
+                        <div className={styles.icon}></div>
+                        <div className={styles.divider}></div>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Email" 
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required 
+                        />
+                    </div>
+                    <div className={styles.inputField}>
+                        <div className={styles.icon}></div>
+                        <div className={styles.divider}></div>
+                        <input 
+                            type="text" 
+                            id="school_code" 
+                            name="school_code" 
+                            placeholder="School Code" 
+                            value={schoolCode}
+                            onChange={(e) => setSchoolCode(e.target.value)}
                             required
                         />
                     </div>
                     <div className={styles.inputField}>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Password"
+                        <div className={styles.icon}></div>
+                        <div className={styles.divider}></div>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Password" 
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            required
+                            required 
                         />
                     </div>
                     <div className={styles.ctas}>
                         <button type="submit" className={styles.button}>
-                            <div className={styles.label}>Login</div>
+                            <div className={styles.label}>Register</div>
                         </button>
                     </div>
                 </form>
-                <a href="/TeacherRegistration">Don't have an account? Register here</a>
             </div>
         </>
     );
 }
 
-export default TeacherLogin;
+export default TeacherRegistration;
+
+
