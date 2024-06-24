@@ -105,13 +105,9 @@ def update_class(class_id):
     data = request.get_json()
     update_data = {key: value for key, value in data.items() if value is not None}
 
-    # Convert ObjectId fields
-    if 'school_id' in update_data:
-        update_data['school_id'] = ObjectId(update_data['school_id'])
-    if 'teacher_id' in update_data:
-        update_data['teacher_id'] = ObjectId(update_data['teacher_id'])
+    #Do not update the students list
     if 'students' in update_data:
-        update_data['students'] = [ObjectId(student) for student in update_data['students']]
+        del update_data['students']
 
     try:
         mongo = current_app.extensions['pymongo']
