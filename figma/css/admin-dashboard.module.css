@@ -48,18 +48,21 @@ body, html {
   
   .feature-buttons {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Change to row for horizontal alignment */
     align-items: center;
     justify-content: center;
+    gap: 30px; /* Add gap between buttons */
     width: 100%;
+    padding: 20px;
   }
   
   /* Button container styles */
   .button-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Change to row for horizontal alignment */
     align-items: center;
     justify-content: center;
+    gap: 30px; /* Add gap between buttons */
     margin-top: 50px;
   }
   
@@ -107,5 +110,4 @@ body, html {
   .feature-description {
     max-width: 400px;
     text-align: left;
-  }
-  
+  }  
