@@ -1,0 +1,13 @@
+import React from 'react';
+
+const AdminDashboard = () => {
+  return (
+    <div>
+      <h1>Admin Dashboard</h1>
+      <p>Welcome to the admin dashboard. Here you can manage all the administrative tasks.</p>
+      {/* Add more content here as needed */}
+    </div>
+  );
+};
+
+export default AdminDashboard;

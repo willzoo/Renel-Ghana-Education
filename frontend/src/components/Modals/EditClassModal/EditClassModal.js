@@ -15,12 +15,7 @@ function EditClassModal() {
   const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
 
   const editClassInfo = {
-    className: {
-      title: "Class Name",
-      placeholder: "Enter a class name (optional)",
-      id: "class-name-edit",
-      required: false
-    },
+    className: { title: "Class Name (optional)", placeholder: "Enter a class name", id: "class-name-edit", required: false },
   };
 
   const editClassDropdown = [
