@@ -35,6 +35,7 @@ function TeacherLogin() {
             navigate('/TeacherDashboard');
         })
         .catch(error => {
+            alert("Error, please try again");
             console.error('There was a problem with the fetch operation:', error);
         });
     };
