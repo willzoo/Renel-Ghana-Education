@@ -190,6 +190,8 @@ def register_teacher():
         teacher = db.teachers.find_one({"email": email})
         if not teacher:
             return jsonify({"error": "Teacher not found"}), 404
+        if teacher['password'] != '':
+            return jsonify({"error": "Teacher already registered"}), 404
         
         # Find the school by _id
         school = db.schools.find_one({"_id": ObjectId(teacher['school_id'])})

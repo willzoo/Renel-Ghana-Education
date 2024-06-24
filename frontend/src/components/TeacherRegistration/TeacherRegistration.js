@@ -37,6 +37,7 @@ function TeacherRegistration() {
             navigate('/TeacherDashboard');
         })
         .catch(error => {
+            alert("Error, please try again");
             console.error('There was a problem with the fetch operation:', error);
         });
     };
@@ -55,7 +56,7 @@ function TeacherRegistration() {
                     </div>
                     <div className={styles.title}>Teacher Registration</div>
                 </div>
-                <form>
+                <form onSubmit={handleRegister}>
                     <div className={styles.inputField}>
                         <div className={styles.icon}></div>
                         <div className={styles.divider}></div>
@@ -97,7 +98,7 @@ function TeacherRegistration() {
                     </div>
                     <div className={styles.ctas}>
                         <button type="submit" className={styles.button}>
-                            <div className={styles.label} onSubmit={handleRegister}>Register</div>
+                            <div className={styles.label}>Register</div>
                         </button>
                     </div>
                 </form>
