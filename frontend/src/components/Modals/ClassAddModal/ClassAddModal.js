@@ -37,15 +37,15 @@ function ClassAddModal() {
       alert("You already have a class with this name. Please choose a unique name.");
       return;
     }
-    
+
     CloseModal("class-add");
-    
+
     let content = {
       "class_name": className,
       "grade_level": gradeLevel,
       "teacher_id": "665da0b90c1d6c0c45724285",
       "school_id": "665da7c60c1d6c0c45724286",
-      "class_id": null,
+      "_id": null,
       "students": []
     };
 
@@ -80,7 +80,7 @@ function ClassAddModal() {
       .then(data => {
         console.log('Data received:', data);
         tempClasses = classInfo.classes;
-        tempClasses.find(cls => cls.class_name === className).class_id = data.class_id;
+        tempClasses.find(cls => cls.class_name === className)._id = data.class_id;
 
         setClassInfo((oldClassInfo) => ({
           ...oldClassInfo,

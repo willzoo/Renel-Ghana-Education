@@ -1,0 +1,5 @@
+.edutracker-logo {
+    display: flex;
+    padding: 20px;
+    justify-content: left; /* Center logo horizontally */
+  }

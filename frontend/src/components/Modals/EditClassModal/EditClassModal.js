@@ -37,7 +37,7 @@ function EditClassModal() {
     let gradeLevel = document.getElementById('grade-level-edit').value;
 
     if (classInfo.classes.some(cls =>
-      cls.class_name === selectedClass.class_name && cls.class_id !== selectedClass.class_id
+      cls.class_name === selectedClass.class_name && cls._id !== selectedClass._id
     )) {
       alert("You already have a class with this name. Please choose a unique name.");
       return;
@@ -55,7 +55,7 @@ function EditClassModal() {
 
     let tempClasses = classInfo.classes;
     let classToEdit = tempClasses.find(cls =>
-      cls.class_id === selectedClass.class_id
+      cls._id === selectedClass._id
     );
 
     if (classToEdit) {
@@ -71,11 +71,11 @@ function EditClassModal() {
       ...oldClassInfo,
       classes: tempClasses,
     }));
-    
-    let sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
-    sidebarClassElements.find(cls => cls.dataset.classId === selectedClass.class_id).scrollIntoView();
 
-    fetch(`http://127.0.0.1:8000/classes/${selectedClass.class_id}`, {
+    let sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
+    sidebarClassElements.find(cls => cls.dataset.classId === selectedClass._id).scrollIntoView();
+
+    fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json'
@@ -93,32 +93,34 @@ function EditClassModal() {
   }
 
   const handleDelete = () => {
-    CloseModal('class-edit');
+    if (window.confirm("Are you sure you want to delete this class?")) {
+      CloseModal('class-edit');
 
-    let tempClasses = classInfo.classes.filter(cls => cls.class_id !== selectedClass.class_id);
+      let tempClasses = classInfo.classes.filter(cls => cls._id !== selectedClass._id);
 
-    // solution created by AI
-    setClassInfo((oldClassInfo) => ({
-      ...oldClassInfo,
-      classes: tempClasses,
-    }));
+      // solution created by AI
+      setClassInfo((oldClassInfo) => ({
+        ...oldClassInfo,
+        classes: tempClasses,
+      }));
 
-    fetch(`http://127.0.0.1:8000/classes/${selectedClass.class_id}`, {
-      method: "DELETE",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the data returned from the server
-        console.log(data); // For demonstration purposes; adjust as needed
+      fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}`, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json'
+        },
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          // Handle the data returned from the server
+          console.log(data); // For demonstration purposes; adjust as needed
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
 
-      try {document.getElementById('sidebar-classes').scrollTop = 0;} catch (e) {};
+      try { document.getElementById('sidebar-classes').scrollTop = 0; } catch (e) { };
+    }
   }
 
   useEffect(() => {
@@ -132,7 +134,7 @@ function EditClassModal() {
     });
 
     const selectedElement = sidebarClassElements.find((element) =>
-      element.dataset.classId === selectedClass.class_id
+      element.dataset.classId === selectedClass._id
     );
 
     if (!selectedElement) return;
