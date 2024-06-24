@@ -36,8 +36,7 @@ def create_class():
 
         return jsonify({"message": "Class created successfully", "class_id": class_id}), 201
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    
+        return jsonify({"error": str(e)}), 500    
 # Function to add a new class to a teacher's list of classes
 def add_teacher_class(teacher_id, class_id):
     try:
@@ -147,20 +146,20 @@ def update_class_students(class_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Delete a class, and removes reference in school
+# Delete a class, and removes reference in teacher
 @class_bp.route('/classes/<class_id>', methods=['DELETE'])
 def delete_class(class_id):
     try:
         mongo = current_app.extensions['pymongo']
         db = mongo.cx.EduTracker
         
-        # Find the class document to get the school_id
+        # Find the class document to get the teacher id
         class_doc = db.classes.find_one({'_id': ObjectId(class_id)})
         
         if not class_doc:
             return jsonify({'error': 'Class not found'}), 404
         
-        school_id = class_doc['school_id']
+        teacher_id = class_doc['teacher_id']
         
         # Delete the class document from the classes collection
         class_delete_result = db.classes.delete_one({'_id': ObjectId(class_id)})
@@ -168,17 +167,13 @@ def delete_class(class_id):
         if class_delete_result.deleted_count == 0:
             return jsonify({'error': 'Class not found'}), 404
         
-        # Remove the class reference from the specific school document
-        school_update_result = db.schools.update_one(
-            {'_id': ObjectId(school_id),
-             'grade_level': {
-                '$elem_match': { "grade": class_doc.grade_level }
-                }
-            },
-            {'$pull': {'grade_level': {'classes': ObjectId(class_id)}}}
+        # Remove the class reference from the teacher
+        teacher_update_result = db.teachers.update_one(
+            {'_id': ObjectId(teacher_id)},
+            {'$pull': {'classes': ObjectId(class_id)}}
         )
 
-        if school_update_result.modified_count == 0:
+        if teacher_update_result.modified_count == 0:
             return jsonify({'error': 'Class reference not found in the school'}), 404
 
         return jsonify({'message': 'Class deleted successfully'}), 200
