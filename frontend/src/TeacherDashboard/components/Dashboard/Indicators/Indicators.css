@@ -1,0 +1,63 @@
+/* indicator color schemes */
+.grade-level {
+    background-color:#EC6B47;
+  }
+
+  .num-students {
+    background-color:#116CBD;
+  }
+  
+  .term-number {
+    background-color:#E1251B;
+  }
+
+  /* indicator row, for inficator spacing */
+  .indicator .row {
+    display:flex;
+    justify-content: space-between;
+    width: 290px;
+    position:absolute;
+  }
+
+  /* indicator label */
+  .indicator .label {
+    text-align: left;
+    
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color:#484848;
+    margin: auto;
+    margin-top: 5px;
+    margin-left: 45px;
+    white-space: nowrap;
+  }
+
+  /* indicator value */
+  .indicator .value {
+    text-align: right;
+    
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    color:#484848;
+    margin: auto;
+    margin-right: 5px;
+    margin-top: 3px;
+    white-space: nowrap;
+  }
+  
+/* icon styling */
+  .indicator .icon {
+    margin: auto;
+    width: 30px;
+    height:30px;
+    position: absolute;
+    z-index: 1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center; /* Vertical alignment */
+    justify-content: center;
+
+    /* styling for text */
+    font-size: 16;
+    color: white;
+  }
