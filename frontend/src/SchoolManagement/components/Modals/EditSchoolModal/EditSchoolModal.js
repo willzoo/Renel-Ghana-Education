@@ -7,71 +7,57 @@ import Submit from '../components/Buttons/Submit'
 import Delete from '../components/Buttons/Delete'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
-import TeacherContext from '../../../../TeacherContext';
+import AdminContext from '../../../../AdminContext';
 
-function EditClassModal() {
-  const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
-  const { classToEdit, setClassToEdit } = useContext(TeacherContext).classToEdit;
-  const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
+function EditSchoolModal() {
+  const { selectedSchool, setSelectedSchool } = useContext(AdminContext).selectedSchool;
+  const { schoolToEdit, setSchoolToEdit } = useContext(AdminContext).schoolToEdit;
+  const { schoolInfo, setSchoolInfo } = useContext(AdminContext).schoolInfo;
 
-  const editClassInfo = {
-    className: { title: "Class Name (optional)", placeholder: "Enter a class name", id: "class-name-edit", required: false },
+  const editSchoolInfo = {
+    schoolName: { title: "School Name", placeholder: "Enter a school name", id: "school-name-edit" },
   };
-
-  const editClassDropdown = [
-    ["Grade Level", "grade-level-edit"],
-    ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
-    ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
-    ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
-  ];
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    let className = document.getElementById('class-name-edit').value;
-    let gradeLevel = document.getElementById('grade-level-edit').value;
+    let schoolName = document.getElementById('school-name-edit').value;
 
-    if (classInfo.classes.some(cls =>
-      cls.class_name === selectedClass.class_name && cls._id !== selectedClass._id
+    if (schoolInfo.some(school =>
+      school.name === selectedSchool.name && school._id !== selectedSchool._id
     )) {
-      alert("You already have a class with this name. Please choose a unique name.");
+      alert("You already have a school with this name. Please choose a unique name.");
       return;
     }
 
-    CloseModal('class-edit');
+    CloseModal('school-edit');
 
     let content = {
-      "class_name": className ? className : gradeLevel,
-      "grade_level": gradeLevel,
-      "teacher_id": selectedClass.teacher_id,
-      "school_id": selectedClass.school_id,
-      "students": selectedClass.students,
+      "name": schoolName
     };
 
-    let tempClasses = classInfo.classes;
-    let classToEdit = tempClasses.find(cls =>
-      cls._id === selectedClass._id
+    let tempSchools = schoolInfo;
+    let schoolToEdit = tempSchools.find(school =>
+      school._id === selectedSchool._id
     );
 
-    if (classToEdit) {
-      Object.assign(classToEdit, content);
+    if (schoolToEdit) {
+      Object.assign(schoolToEdit, content);
     }
 
-    tempClasses.sort((a, b) => {
-      return a.class_name.localeCompare(b.class_name);
+    tempSchools.sort((a, b) => {
+      return a.name.localeCompare(b.name);
     });
 
+    // TODO: Ensure that this is working because I think its not
     // solution created by AI
-    setClassInfo((oldClassInfo) => ({
-      ...oldClassInfo,
-      classes: tempClasses,
-    }));
+    setSchoolInfo(tempSchools);
 
-    let sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
-    sidebarClassElements.find(cls => cls.dataset.classId === selectedClass._id).scrollIntoView();
+    let sidebarSchoolElements = Array.from(document.getElementsByClassName('sidebar-school'));
+    sidebarSchoolElements.find(school => school.dataset.schoolId === selectedSchool._id).scrollIntoView();
 
-    fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}`, {
-      method: "PUT",
+    fetch(`http://127.0.0.1:8000/schools/${selectedSchool._id}`, {
+      method: "PATCH",
       headers: {
         'Content-Type': 'application/json'
       },
@@ -88,61 +74,58 @@ function EditClassModal() {
   }
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this class?")) {
-      CloseModal('class-edit');
+    if (window.confirm("Are you sure you want to delete this school?")) {
+      CloseModal('school-edit');
 
-      let tempClasses = classInfo.classes.filter(cls => cls._id !== selectedClass._id);
+      let tempSchools = schoolInfo.filter(school => school._id !== selectedSchool._id);
 
+      //TODO: Also check if this works
       // solution created by AI
-      setClassInfo((oldClassInfo) => ({
-        ...oldClassInfo,
-        classes: tempClasses,
-      }));
+      setSchoolInfo(tempSchools);
 
-      fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}`, {
-        method: "DELETE",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          // Handle the data returned from the server
-          console.log(data); // For demonstration purposes; adjust as needed
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
+      //TODO: Add school deletion method
+      // fetch(`http://127.0.0.1:8000/scbools/${selectedSchool._id}`, {
+      //   method: "DELETE",
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      // })
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     // Handle the data returned from the server
+      //     console.log(data); // For demonstration purposes; adjust as needed
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching data:', error);
+      //   });
 
       try { document.getElementById('sidebar-classes').scrollTop = 0; } catch (e) { };
     }
   }
 
   useEffect(() => {
-    if (!selectedClass) return;
+    if (!selectedSchool) return;
 
-    const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
-    if (!sidebarClassElements) return;
+    const sidebarSchoolElements = Array.from(document.getElementsByClassName('sidebar-school'));
+    if (!sidebarSchoolElements) return;
 
-    sidebarClassElements.forEach((element) => {
+    sidebarSchoolElements.forEach((element) => {
       element.classList.remove('selected');
     });
 
-    const selectedElement = sidebarClassElements.find((element) =>
-      element.dataset.classId === selectedClass._id
+    const selectedElement = sidebarSchoolElements.find((element) =>
+      element.dataset.classId === selectedSchool._id
     );
 
     if (!selectedElement) return;
     selectedElement.classList.add('selected');
-  }, [classInfo])
+  }, [schoolInfo])
 
   return (
     <section>
-      <form id="class-modal-form" onSubmit={handleSubmit}>
-        <section className="input-list" id="class-edit-text-input">
-          <TextInput info={editClassInfo.className} editValue={selectedClass ? selectedClass.class_name : null} />
-          <br />
-          <Dropdown info={editClassDropdown} editValue={selectedClass ? selectedClass.grade_level : null} />
+      <form id="school-modal-form" onSubmit={handleSubmit}>
+        <section className="input-list" id="school-edit-text-input">
+          <TextInput info={editSchoolInfo.schoolName} editValue={selectedSchool ? selectedSchool.name : null} />
           <br /><br /><br /><br />
         </section>
 
@@ -156,4 +139,4 @@ function EditClassModal() {
   );
 }
 
-export default EditClassModal;
+export default EditSchoolModal;

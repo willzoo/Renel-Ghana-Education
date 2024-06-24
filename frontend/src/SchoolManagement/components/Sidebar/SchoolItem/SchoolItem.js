@@ -1,57 +1,55 @@
 import React, { useContext, useEffect, useState } from 'react';
-import './ClassItem.css'
+import './SchoolItem.css'
 
 import { OpenModal } from '../../../../utils/functions'
-import TeacherContext from '../../../../TeacherContext';
+import AdminContext from '../../../../AdminContext';
 
-function ClassItem(props) {
+function SchoolItem(props) {
 
     let [isEditButtonPressed, setEditButtonPressed] = useState(0);
 
-    const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
-    const { classToEdit, setClassToEdit, } = useContext(TeacherContext).classToEdit;
-    const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
+    const { selectedSchool, setSelectedSchool } = useContext(AdminContext).selectedSchool;
+    const { schoolToEdit, setSchoolToEdit, } = useContext(AdminContext).schoolToEdit;
+    const { selectedTeacher, setSelectedTeacher } = useContext(AdminContext).selectedTeacher;
 
     const handleEdit = (event) => {
 
         setEditButtonPressed(1 - isEditButtonPressed); // flip between 1 and 0, just used to detect changes
         handleSelect(event);
 
-        OpenModal('class-edit');
+        OpenModal('school-edit');
     }
 
     useEffect(() => { // update the edit form's input parameters every time edit button is pressed
-        if (selectedClass && selectedClass.id === props.data.id) {
-            document.getElementById('class-name-edit').value = selectedClass.class_name != selectedClass.grade_level ? selectedClass.class_name : "";
-            document.getElementById('grade-level-edit').value = selectedClass.grade_level;
+        if (selectedSchool && selectedSchool.id === props.data.id) {
+            document.getElementById('school-name-edit').value = selectedSchool.name;
         }
     }, [isEditButtonPressed]);
 
     const handleSelect = (event) => {
         event.stopPropagation();
 
-        const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
-        sidebarClassElements.forEach((element) => {
+        const sidebarSchoolElements = Array.from(document.getElementsByClassName('sidebar-school'));
+        sidebarSchoolElements.forEach((element) => {
             element.classList.remove('selected');
         });
 
-        const clickedElement = sidebarClassElements[props.id];
+        const clickedElement = sidebarSchoolElements[props.id];
         clickedElement.classList.add('selected');
 
-        setSelectedClass(props.data);
-        setSelectedStudent(null);
+        setSelectedSchool(props.data);
+        setSelectedTeacher(null);
     };
 
     return (
         <li>
-            <div className="sidebar-class" id={props.id}
-                data-class-id={props.data._id}
-                data-class-name={props.data.name}
+            <div className="sidebar-school" id={props.id}
+                data-school-id={props.data._id}
+                data-school-name={props.data.name}
                 onClick={handleSelect}>
                 <div>
-                    <p className="title">{props.data.class_name}</p>
-                    <p className="body">{props.data.class_name !== props.data.grade_level ? props.data.grade_level : " "}</p>
-                    <p className="body">Total Enrolled Students: {props.data.students.length}</p>
+                    <p className="title">{props.data.name}</p>
+                    <p className="body">Total Teachers: {props.data.teachers.length}</p>
                 </div>
                 <div className="edit-button">
                     <p onClick={handleEdit}>Edit</p>
@@ -61,4 +59,4 @@ function ClassItem(props) {
     );
 }
 
-export default ClassItem;
+export default SchoolItem;

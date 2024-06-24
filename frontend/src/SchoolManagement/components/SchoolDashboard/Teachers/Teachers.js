@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-//import './Students.css'
+import './Teachers.css'
 import TeacherItem from "./TeacherItem/TeacherItem";
 
 import AdminContext from "../../../../AdminContext";

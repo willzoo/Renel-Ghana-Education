@@ -6,65 +6,48 @@ import '../components/ModalBase/ModalBase.css'
 import Submit from '../components/Buttons/Submit'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
-import TeacherContext from '../../../../TeacherContext';
+import AdminContext from '../../../../AdminContext';
 
-function ClassAddModal() {
-  const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
-  const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
+function SchoolAddModal() {
+  const { schoolInfo, setSchoolInfo } = useContext(AdminContext).schoolInfo;
+  const { selectedSchool, setSelectedSchools } = useContext(AdminContext).selectedSchool;
   
-  let addClassInfo = {
-    className: { title: "Class Name (optional)", placeholder: "Enter a class name", id: "class-name", required: false },
+  let addSchoolInfo = {
+    schoolName: { title: "School Name", placeholder: "Enter a school name", id: "school-name" },
   };
-
-  let addClassDropdown = [
-    ["Grade Level", "grade-level"],
-    ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
-    ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
-    ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
-  ];
 
   let handleSubmit = (event) => {
     event.preventDefault();
 
-    let className = document.getElementById('class-name').value;
-    let gradeLevel = document.getElementById('grade-level').value;
+    let schoolName = document.getElementById('school-name').value;
 
-    className = className ? className : gradeLevel; // assign className only if it is defined, otherwise set it to grade level
-
-    if (classInfo.classes.find(cls =>
-      cls.class_name === className
+    if (schoolInfo.find(school =>
+      school.name === schoolName
     )) {
-      alert("You already have a class with this name. Please choose a unique name.");
+      alert("You already have a school with this name. Please choose a unique name.");
       return;
     }
 
-    CloseModal("class-add");
-
+    CloseModal("school-add");
+    
+    // Make new school name and add it to 
     let content = {
-      "class_name": className,
-      "grade_level": gradeLevel,
-      "teacher_id": "665da0b90c1d6c0c45724285",
-      "school_id": "665da7c60c1d6c0c45724286",
-      "_id": null,
-      "students": []
+      "name": schoolName
     };
 
-    let tempClasses = classInfo.classes;
-    tempClasses.push(content);
+    let tempSchools = schoolInfo;
+    tempSchools.push(content);
 
-    tempClasses.sort((a, b) => {
-      return a.class_name.localeCompare(b.class_name);
+    tempSchools.sort((a, b) => {
+      return a.name.localeCompare(b.name);
     });
 
     // solution created by AI
-    setClassInfo((oldClassInfo) => ({
-      ...oldClassInfo,
-      classes: tempClasses,
-    }));
+    setSchoolInfo(tempSchools);
 
-    setSelectedClass(content);
+    setSelectedSchool(content);
 
-    fetch('http://127.0.0.1:8000/classes', {
+    fetch('http://127.0.0.1:8000/schools', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
@@ -79,13 +62,10 @@ function ClassAddModal() {
       })
       .then(data => {
         console.log('Data received:', data);
-        tempClasses = classInfo.classes;
-        tempClasses.find(cls => cls.class_name === className)._id = data.class_id;
+        tempSchools = schoolInfo;
+        tempSchools.find(school => school.name === schoolName)._id = data._id;
 
-        setClassInfo((oldClassInfo) => ({
-          ...oldClassInfo,
-          classes: tempClasses,
-        }));
+        setSchoolsInfo(tempSchools);
 
       })
       .catch(error => {
@@ -98,9 +78,7 @@ function ClassAddModal() {
     <section>
       <form id="class-modal-form" onSubmit={handleSubmit}>
         <section className="input-list" id="class-add-text-input">
-          <TextInput info={addClassInfo.className} />
-          <br />
-          <Dropdown info={addClassDropdown} />
+          <TextInput info={addSchoolInfo.schoolName} />
           <br /><br /><br /><br />
         </section>
 
@@ -112,4 +90,4 @@ function ClassAddModal() {
   );
 }
 
-export default ClassAddModal;
+export default SchoolAddModal;

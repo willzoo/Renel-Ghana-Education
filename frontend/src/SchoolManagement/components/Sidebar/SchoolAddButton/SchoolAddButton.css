@@ -1,5 +1,5 @@
-/* button to add a new class */
-.create-class-button {
+/* button to add a new school */
+.create-school-button {
     font-size: 15px;
     text-align: center;
     color: white;
@@ -16,7 +16,7 @@
 }
 
 /* hover animation for button */
-.create-class-button:hover {
+.create-school-button:hover {
     background-color: #457B9D;
     width: 78%;
 }

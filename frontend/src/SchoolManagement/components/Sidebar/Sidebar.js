@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import './Sidebar.css';
-import ClassAddButton from './SchoolAddButton/SchoolAddButton';
-import Classes from './Schools/Classes'
-import TeacherContext from '../../../TeacherContext';
-import Profile from './Profile/Profile';
+import SchoolAddButton from './SchoolAddButton/SchoolAddButton';
+import Schools from './Schools/Schools'
+import AdminContext from '../../../AdminContext';
+//import Profile from './Profile/Profile';
 
 function Sidebar() {
-  const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
+  const { schoolInfo, setSchoolInfo } = useContext(AdminContext).schoolInfo;
 
   return (
     <section>
@@ -27,9 +27,9 @@ function Sidebar() {
 
         <div style={{ height: '50px' }}></div> {/* set gap of 50 px */}
 
-        <ClassAddButton />
+        <SchoolAddButton />
         <div style={{ height: '50px' }}></div> {/* set gap of 50 px */}
-        <Classes />
+        <Schools />
 
       </div>
     </section>

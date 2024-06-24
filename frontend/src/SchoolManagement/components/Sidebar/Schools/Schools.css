@@ -1,4 +1,4 @@
-/* displayed text if there is an issue loading a list of classes/students */
+/* displayed text if there is an issue loading a list of schools/students */
   .list-issue {
     font-family: 'Open Sans', sans-serif;
     color:#516669;
@@ -13,8 +13,8 @@
     padding-left: 0;
 }
 
-/* container for classes in sidebar */
-.sidebar-classes-container {
+/* container for schools in sidebar */
+.sidebar-schools-container {
   border-radius: 20px;
   width:85%;
   background-color:#eef5fa;
@@ -25,7 +25,7 @@
 }
 
 /* header text in sidebar container */
-.sidebar-classes-container h1 {
+.sidebar-schools-container h1 {
   color:#138999;
   font-weight: bolder;
   font-size: 20px;
@@ -34,15 +34,15 @@
 }
 
 /* paragraph text in sidebar container */
-.sidebar-classes-container p {
+.sidebar-schools-container p {
   color:#88a2a5;
   font-size: 15px;
   margin-left: 23px;
   margin-top: 0px;
 }
 
-/* sidebar class list, with overflow */
-.sidebar-classes {
+/* sidebar school list, with overflow */
+.sidebar-schools {
   overflow-y: auto;
   height: calc(100% - 90px);
   /* -ms-overflow-style: none;  IE and Edge */
@@ -51,6 +51,6 @@
 }
 
 /* more preparation to hide scrollbar */
-.sidebar-classes::-webkit-scrollbar {
+.sidebar-schools::-webkit-scrollbar {
   display: none;
 }
