@@ -10,6 +10,7 @@ import Date from '../components/TextInput/Date'
 import Checkbox from '../components/Checkbox/Checkbox'
 
 import TeacherContext from '../../../TeacherContext';
+import Radio_Button from '../components/Checkbox/Radio_Button';
 
 let newStudentInfo = {
     studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
@@ -17,9 +18,9 @@ let newStudentInfo = {
     studentDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "student-dob" },
     guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name" },
     guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact" },
-    studentMedical: { title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical", required: false  },
+    studentMedical: { title: "Student Medical Information (optional)", placeholder: "What disability? If none, any other medical info?", id: "student-medical", required: false  },
     disabilityStatus: { title: "Disability Status", id: "disability-status" },
-    additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info", required: false },
+    additionalInfo: { title: "Additional Information (optional)", placeholder: "Any additional information about the student?", id: "additional-info", required: false },
 }
 
 function NewStudentModal() {
@@ -39,7 +40,7 @@ function NewStudentModal() {
         let guardianName = document.getElementById('guardian-name').value;
         let guardianContact = document.getElementById('guardian-contact').value;
         let studentMedical = document.getElementById('student-medical').value;
-        let disabilityStatus = document.getElementById('disability-status').value;
+        //let disabilityStatus = document.getElementById('disability-status').value;
         let additionalInfo = document.getElementById('additional-info').value;
 
         let content = {
@@ -48,7 +49,7 @@ function NewStudentModal() {
             'guardian_contact': guardianContact,
             'dob': studentDOB,
             "student_school_id": studentID,
-            'disabled': disabilityStatus,
+            'disabled': false,
             'health_conditions': studentMedical,
             'misc_info': additionalInfo,
             'class_id': selectedClass._id,
@@ -101,9 +102,9 @@ function NewStudentModal() {
                     <Date info={newStudentInfo.studentDOB} />
                     <TextInput info={newStudentInfo.guardianName} />
                     <TextInput info={newStudentInfo.guardianContact} />
-                    <TextInput info={newStudentInfo.studentMedical} />
                     <br />
-                    <Checkbox info={newStudentInfo.disabilityStatus} />
+                    <Radio_Button info={newStudentInfo.disabilityStatus} />
+                    <TextInput info={newStudentInfo.studentMedical} />
                     <TextInput info={newStudentInfo.additionalInfo} />
                 </section>
                 <br /><br /><br /><br />
