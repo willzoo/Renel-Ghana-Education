@@ -8,20 +8,20 @@ import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 import TeacherContext from '../../../TeacherContext';
 
-let addClassInfo = {
-  className: { title: "Class Name", placeholder: "Enter a class name (optional)", id: "class-name", required: false },
-};
-
-let addClassDropdown = [
-  ["Grade Level", "grade-level"],
-  ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
-  ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
-  ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
-];
-
 function ClassAddModal() {
   const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
   const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
+  
+  let addClassInfo = {
+    className: { title: "Class Name (optional)", placeholder: "Enter a class name", id: "class-name", required: false },
+  };
+
+  let addClassDropdown = [
+    ["Grade Level", "grade-level"],
+    ["Kindergarten", "Kindergarten 1", "Kindergarten 2"],
+    ["Primary", "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6"],
+    ["Junior High", "Junior High 1", "Junior High 2", "Junior High 3"],
+  ];
 
   let handleSubmit = (event) => {
     event.preventDefault();

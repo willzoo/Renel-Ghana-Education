@@ -10,6 +10,7 @@ import TextInput from '../components/TextInput/TextInput'
 import Checkbox from '../components/Checkbox/Checkbox'
 import TeacherContext from '../../../TeacherContext';
 import Delete from '../components/Buttons/Delete';
+import RadioButton from '../components/Checkbox/RadioButton';
 
 function EditStudentModal(props) {
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
@@ -22,9 +23,9 @@ function EditStudentModal(props) {
         studentDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "student-dob-edit" },
         guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name-edit" },
         guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact-edit" },
-        studentMedical: { title: "Student Medical Information", placeholder: "Any known allergies? Other valuable information?", id: "student-medical-edit", required:false,},
-        disabilityStatus: { title: "Disability Status", id: "disability-status-edit" },
-        additionalInfo: { title: "Additional Information", placeholder: "Any additional information about the student?", id: "additional-info-edit", required:false},
+        studentMedical: { title: "Student Medical Information (optional)", placeholder: "Any known allergies? Other valuable information?", id: "student-medical-edit", required:false,},
+        disabilityStatus: { title: "Does the student have a disability?", id: "disability-status-edit" },
+        additionalInfo: { title: "Additional Information (optional)", placeholder: "Any additional information about the student?", id: "additional-info-edit", required:false},
     }
 
     const handleSubmit = (event) => {
@@ -36,7 +37,7 @@ function EditStudentModal(props) {
         let guardianName = document.getElementById('guardian-name-edit').value;
         let guardianContact = document.getElementById('guardian-contact-edit').value;
         let studentMedical = document.getElementById('student-medical-edit').value;
-        let disabilityStatus = document.getElementById('disability-status-edit').value;
+        let disabilityStatus = document.getElementById('disability-status-edit-true').checked;
         let additionalInfo = document.getElementById('additional-info-edit').value;
 
         if (selectedClass.students.some(std =>
@@ -170,10 +171,9 @@ function EditStudentModal(props) {
                     <TextInput info={editStudentInfo.studentID} />
                     <TextInput info={editStudentInfo.studentDOB} />
                     <TextInput info={editStudentInfo.guardianName} />
-                    <TextInput info={editStudentInfo.guardianContact} />
+                    <TextInput info={editStudentInfo.guardianContact}/>
+                    <RadioButton info={editStudentInfo.disabilityStatus} />
                     <TextInput info={editStudentInfo.studentMedical} />
-                    <br />
-                    <Checkbox info={editStudentInfo.disabilityStatus} />
                     <TextInput info={editStudentInfo.additionalInfo} />
                     <br />
                 </section>

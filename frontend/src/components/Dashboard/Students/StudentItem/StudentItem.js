@@ -28,7 +28,7 @@ function StudentItem(props) {
             document.getElementById('guardian-name-edit').value = selectedStudent.guardian_name;
             document.getElementById('guardian-contact-edit').value = selectedStudent.guardian_contact;
             document.getElementById('student-medical-edit').value = selectedStudent.health_conditions;
-            document.getElementById('disability-status-edit').value = selectedStudent.disabled;
+            document.getElementById('disability-status-edit-true').checked = selectedStudent.disabled;
             document.getElementById('additional-info-edit').value = selectedStudent.misc_info;
         }
     }, [isEditButtonPressed]);
