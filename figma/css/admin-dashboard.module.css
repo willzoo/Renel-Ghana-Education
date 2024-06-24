@@ -1,0 +1,24 @@
+/* figma/css/admin-dashboard.module.css */
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.admin-dashboard-button {
+    padding: 15px 30px;
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.admin-dashboard-button:hover {
+    background-color: #0056b3;
+}
