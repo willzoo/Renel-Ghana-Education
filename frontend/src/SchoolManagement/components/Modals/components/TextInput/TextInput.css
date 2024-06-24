@@ -1,0 +1,47 @@
+/* Base text input */
+  .modal-text-input input[type="text"] {
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #09393f;
+    background-color: #f2f4f5;
+    font-size: 16px;
+    width: 400px;
+    height: 40px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: #c2d2da;
+    transition: 0.1s;
+  }
+
+  /* text input style on hover */
+  .modal-text-input input[type="text"]:hover {
+    background-color: #f5f6f8;
+    box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.05);
+    width: 410px;
+    padding-left: 15px;
+  }
+  
+
+  /* text input style on select */
+  .modal-text-input input[type="text"]:focus {
+    background-color: #f7f9fa;
+    border-color: #9eb5c2 !important;
+    border: 2px solid;
+    outline: none;
+    width: 410px;
+    padding-left: 15px;
+  }
+
+  /* text input label styling */
+  .modal-text-input .label {
+    color:#70878a;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 5px;
+  }
+
+  .modal-text-input {
+    text-align: center;
+  }

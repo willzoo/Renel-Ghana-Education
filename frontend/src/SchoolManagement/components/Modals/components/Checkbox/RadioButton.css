@@ -1,0 +1,26 @@
+/* styling for radio button */
+.modal-text-input input[type="radio"] {
+    color: #09393f;
+    background-color: #f2f4f5;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: #c2d2da !important;
+    transition: 0.1s;
+    margin-right: 8px;
+}
+
+.modal-text-input label {
+    color:#5a6e71;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    margin-right: 16px;
+}
+
+.modal-text-input p {
+    color:#70878a;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 8px;
+}
