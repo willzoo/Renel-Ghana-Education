@@ -40,7 +40,7 @@ function NewStudentModal() {
         let guardianName = document.getElementById('guardian-name').value;
         let guardianContact = document.getElementById('guardian-contact').value;
         let studentMedical = document.getElementById('student-medical').value;
-        let disabilityStatus = document.getElementById('disability-status').value;
+        //let disabilityStatus = document.getElementById('disability-status').value;
         let additionalInfo = document.getElementById('additional-info').value;
 
         let content = {
@@ -49,7 +49,7 @@ function NewStudentModal() {
             'guardian_contact': guardianContact,
             'dob': studentDOB,
             "student_school_id": studentID,
-            'disabled': disabilityStatus,
+            'disabled': false,
             'health_conditions': studentMedical,
             'misc_info': additionalInfo,
             'class_id': selectedClass._id,
@@ -104,7 +104,7 @@ function NewStudentModal() {
                     <TextInput info={newStudentInfo.guardianContact} />
                     <TextInput info={newStudentInfo.studentMedical} />
                     <br />
-                    <Checkbox info={newStudentInfo.disabilityStatus} />
+                    <Radio_Button info={newStudentInfo.disabilityStatus} />
                     <TextInput info={newStudentInfo.additionalInfo} />
                 </section>
                 <br /><br /><br /><br />
