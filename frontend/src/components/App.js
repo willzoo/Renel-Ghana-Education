@@ -16,9 +16,8 @@ function App() {
     <>
        <Routes>
           <Route path="/TeacherLogin/" element= {<TeacherLogin />} />
-          <Route path="/" element= {<TeacherDashboard />} />
-          <Route path="/reintegration" element={<Reintegration />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />  {/* Add the new route */}
+          <Route path="/Reintegration" element={<Reintegration />} />
+          <Route path="/AdminDashboard" element={<AdminDashboard />} />  {/* Add the new route */}
           <Route path="/TeacherLogin" element= {<TeacherLogin />} />
           <Route path="/TeacherRegistration" element= {<TeacherRegistration />} />
           <Route path="/TeacherDashboard" element= {<TeacherDashboard />} />
