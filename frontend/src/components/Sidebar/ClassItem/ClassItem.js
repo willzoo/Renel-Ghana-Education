@@ -12,10 +12,10 @@ function ClassItem(props) {
     const { classToEdit, setClassToEdit, } = useContext(TeacherContext).classToEdit;
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
 
-    const handleEditClick = (e) => {
+    const handleEdit = (event) => {
 
         setEditButtonPressed(1 - isEditButtonPressed); // flip between 1 and 0, just used to detect changes
-        handleSelect(e);
+        handleSelect(event);
 
         OpenModal('class-edit');
     }
@@ -27,8 +27,8 @@ function ClassItem(props) {
         }
     }, [isEditButtonPressed]);
 
-    const handleSelect = (e) => {
-        e.stopPropagation();
+    const handleSelect = (event) => {
+        event.stopPropagation();
 
         const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
         sidebarClassElements.forEach((element) => {
@@ -45,7 +45,7 @@ function ClassItem(props) {
     return (
         <li>
             <div className="sidebar-class" id={props.id}
-                data-class-id={props.data.class_id}
+                data-class-id={props.data._id}
                 data-class-name={props.data.name}
                 onClick={handleSelect}>
                 <div>
@@ -54,7 +54,7 @@ function ClassItem(props) {
                     <p className="body">Total Enrolled Students: {props.data.students.length}</p>
                 </div>
                 <div className="edit-button">
-                    <p onClick={handleEditClick}>Edit</p>
+                    <p onClick={handleEdit}>Edit</p>
                 </div>
             </div>
         </li>

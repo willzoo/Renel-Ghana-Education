@@ -49,6 +49,12 @@ function App() {
             return a.class_name.localeCompare(b.class_name);
           });
 
+          data.classes.forEach(element => {
+            element.students.sort((a, b) => {
+              return a.name.localeCompare(b.name);
+            });
+          });
+
           setClassInfo(data);
           setSelectedClass(classInfo.classes[0]);
 
