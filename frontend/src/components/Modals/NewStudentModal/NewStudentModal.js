@@ -104,7 +104,7 @@ function NewStudentModal() {
                     <TextInput info={newStudentInfo.guardianContact} />
                     <TextInput info={newStudentInfo.studentMedical} />
                     <br />
-                    <Radio_Button info={newStudentInfo.disabilityStatus} />
+                    <Checkbox info={newStudentInfo.disabilityStatus} />
                     <TextInput info={newStudentInfo.additionalInfo} />
                 </section>
                 <br /><br /><br /><br />
