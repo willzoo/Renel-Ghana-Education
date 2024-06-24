@@ -11,8 +11,8 @@ function App() {
     // Routing between all different pages of the app
     <>
        <Routes>
-          <Route path="/TeacherLogin/" element= {<TeacherLogin />} />
-          <Route path="/" element= {<TeacherDashboard />} />
+          <Route path="/TeacherLogin" element= {<TeacherLogin />} />
+          <Route path="/TeacherDashboard" element= {<TeacherDashboard />} />
        </Routes>
     </>
     

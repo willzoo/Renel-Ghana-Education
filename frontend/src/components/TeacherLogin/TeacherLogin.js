@@ -12,19 +12,31 @@ function TeacherLogin() {
     const handleLogin = async (event) => {
         event.preventDefault();
 
-        try {
-            const response = await axios.post('/teachers/login', { email, password });
-            if (response.status === 200) {
-                localStorage.setItem('teacher_id', response.data.teacher_id);
-                navigate.push('/TeacherDashboard');
-            }
-        } catch (error) {
-            if (error.response) {
-                setError(error.response.data.error);
-            } else {
-                setError('An error occurred. Please try again.');
-            }
+        let content = {
+            'email': email,
+            'password': password
         }
+
+        fetch(`http://127.0.0.1:8000/teachers/login`, {
+            method: "PATCH",
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(content)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+                return response.json();
+        })
+        .then(data => {
+            localStorage.setItem('teacher_id', data.teacher_id);
+            navigate('/TeacherDashboard');
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
     };
 
     return (
