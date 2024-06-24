@@ -3,3 +3,5 @@ __pycache__
 certificate.py
 .DS_Store
 services/grade_level_migration.log
+echo "config.env" >> .gitignore
+
