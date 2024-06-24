@@ -41,3 +41,7 @@
     font-family: 'Open Sans', sans-serif;
     margin-bottom: 5px;
   }
+
+  .modal-text-input {
+    text-align: center;
+  }

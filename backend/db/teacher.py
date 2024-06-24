@@ -100,7 +100,6 @@ def get_teacher_classes(teacher_id):
             cls['_id'] = str(cls['_id'])
             cls['school_id'] = str(cls['school_id'])
             cls['teacher_id'] = str(cls['teacher_id'])
-            cls['class_id'] = str(cls['_id'])
             cls['students'] = [str(student_id) for student_id in cls.get('students', [])]
 
             # Fetch student details (if necessary)
@@ -201,7 +200,7 @@ def update_teacher_password(teacher_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@teacher_bp.route('/teachers/login', methods=['GET'])
+@teacher_bp.route('/teachers/login', methods=['PATCH'])
 def login_teacher():
     try:
         data = request.get_json()

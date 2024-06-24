@@ -12,6 +12,7 @@ import { Routes, Route } from 'react-router-dom'
 function TeacherDashboard() {
   // export let RETURNING_STUDENT_ID = '';
   // export var teacherID = "665da0b90c1d6c0c45724285";
+  let teacher_id = localStorage['teacher_id'];
 
   const [classInfo, setClassInfo] = useState({
     "name": "Example Teacher",
@@ -30,7 +31,7 @@ function TeacherDashboard() {
   let loaded = false;
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/teachers/665da0b90c1d6c0c45724285/classes`, {
+    fetch(`http://127.0.0.1:8000/teachers/${teacher_id}/classes`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'

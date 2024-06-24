@@ -30,7 +30,6 @@ function NewStudentModal() {
 
     let handleNewStudentSubmit = (event) => {
         event.preventDefault();
-        CloseModal("new-student");
 
         // console.log("returning student 2: " + RETURNING_STUDENT_ID);
 
@@ -42,6 +41,13 @@ function NewStudentModal() {
         let studentMedical = document.getElementById('student-medical').value;
         //let disabilityStatus = document.getElementById('disability-status').value;
         let additionalInfo = document.getElementById('additional-info').value;
+
+        if (selectedClass.students.some(std =>
+            std.student_school_id === studentID
+        )) {
+            alert("You already have a student with this ID. Please choose a unique ID.");
+            return;
+        }
 
         let content = {
             'name': studentName,
@@ -57,6 +63,8 @@ function NewStudentModal() {
             'school_id': classInfo.school_id,
             'history': [],
         };
+        
+        CloseModal("new-student");
 
         let tempStudents = selectedClass.students;
         tempStudents.push(content);
@@ -86,6 +94,14 @@ function NewStudentModal() {
             })
             .then(data => {
                 console.log('Data received:', data);
+
+                tempStudents = selectedClass.students;
+                tempStudents.find(std => std.name === studentName && std.dob === studentDOB && std.guardian_contact === guardianContact)._id = data.student_id;
+                
+                setSelectedClass((oldSelectedClass) => ({
+                  ...oldSelectedClass,
+                  students: tempStudents,
+                }));
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);

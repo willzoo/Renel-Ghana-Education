@@ -8,12 +8,6 @@ function ClassesList(props) {
     const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
     const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
 
-    let classList = [];
-    for (let i = 0; i < classInfo.classes.length; i++) {
-        // add each classItem to items list with data set by each class info
-        classList.push((<ClassItem id={i} data={classInfo.classes[i]} />));
-    }
-
     const deselectAll = () => {
         if (!selectedClass) return;
     
@@ -26,6 +20,12 @@ function ClassesList(props) {
         
         setSelectedClass(null);
         setSelectedStudent(null);
+    }
+
+    let classList = [];
+    for (let i = 0; i < classInfo.classes.length; i++) {
+        // add each classItem to items list with data set by each class info
+        classList.push((<ClassItem id={i} data={classInfo.classes[i]} />));
     }
 
     return (
