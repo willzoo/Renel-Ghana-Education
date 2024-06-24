@@ -7,14 +7,14 @@ import TeacherContext from "../../../../TeacherContext";
 
 function StudentItem(props) {
     let [isEditButtonPressed, setEditButtonPressed] = useState(0);
-    
+
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
     const { classToEdit, setClassToEdit, } = useContext(TeacherContext).classToEdit;
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
 
     const handleEdit = (event) => {
         setEditButtonPressed(1 - isEditButtonPressed); // flip between 1 and 0, just used to detect changes
-        
+
         handleSelect(event);
 
         OpenModal("edit-student");
@@ -53,16 +53,16 @@ function StudentItem(props) {
                 data-student-id={props.data._id}
                 data-name={props.data.name}
                 onClick={handleSelect}>
-                <div>
-                    <p className="title">{props.data.name}</p>
-                    <p className="body">Student ID: {props.data.student_school_id}</p>
-                    <p className="body">Disability: {props.data.disabled ? ('Yes') : ('No')}</p>
-                </div>
-                <div>
-                    <p className="title">Parent Contact Information</p>
-                    <p className="body">{props.data.guardian_name}</p>
-                    <p className="body">{props.data.guardian_contact}</p>
-                </div>
+                    <div style={{width: '200px', display: "inline-block"}}>
+                        <p className="title">{props.data.name}</p>
+                        <p className="body">Student ID: {props.data.student_school_id}</p>
+                        <p className="body">Disability: {props.data.disabled ? ('Yes') : ('No')}</p>
+                    </div>
+                    <div style={{width: "300px", display: "inline-block"}}>
+                        <p className="title">Parent Contact Information</p>
+                        <p className="body">{props.data.guardian_name}</p>
+                        <p className="body">{props.data.guardian_contact}</p>
+                    </div>
                 <div className="edit-button">
                     <p onClick={handleEdit}>Edit</p>
                 </div>
