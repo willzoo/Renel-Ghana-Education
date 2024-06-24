@@ -89,25 +89,40 @@ body, html {
   
   /* Feature button styles */
   .feature-button {
-    padding: 15px 30px;
-    margin: 20px;
+    padding: 15px 30px; /* Padding for better spacing inside buttons */
+    margin: 20px; /* Add some margin for spacing */
+    margin-right: 10px; /* Space between icon and text */
     font-size: 16px;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
-    background-color: #007bff;
+    border-radius: 8px; /* Changed border-radius to 8px */
+    background-color: #144047; /* Changed button color to #144047 */
     color: white;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s;
   }
   
   .feature-button:hover {
-    background-color: #0056b3;
+    background-color: #138999;
   }
   
   .feature-description {
     max-width: 400px;
     text-align: left;
   }  
+
+/* Card-like container */
+.dashboard-card {
+    background-color: #f0f4f8; /* Light blue background */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1000px;
+  }
+  .button-text {
+    margin-left: 5px; /* Space between text and button border */
+  }
