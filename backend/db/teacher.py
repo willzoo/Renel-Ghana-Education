@@ -116,35 +116,6 @@ def get_teacher_classes(teacher_id):
         return jsonify({"name": teacher_name, "email": teacher_email, "school_name": school_name, "school_id": school_id, "classes": classes}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
-
-# Route to patch a teacher with new info
-@teacher_bp.route('/teachers/<teacher_id>', methods=['PATCH'])
-def update_teacher(teacher_id):
-    try:
-        data = request.get_json()
-
-        # Filter out keys with None values
-        update_data = {key: value for key, value in data.items() if value is not None}
-
-        # Check if there is any data to update
-        if not update_data:
-            return jsonify({"error": "No fields to update"}), 400
-
-        mongo = current_app.extensions['pymongo']
-        db = mongo.cx.EduTracker
-
-        # Update the teacher document
-        result = db.teachers.update_one({"_id": ObjectId(teacher_id)}, {"$set": update_data})
-
-        if result.matched_count == 0:
-            return jsonify({"error": "Teacher not found"}), 404
-
-        return jsonify({"message": "Teacher updated successfully"}), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
     
 # Route to patch (add) a new class to a teacher's list of classes
 @teacher_bp.route('/teachers/<teacher_id>/classes', methods=['PATCH'])
@@ -172,6 +143,108 @@ def add_teacher_class(teacher_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#Used for Teacher Login
+@teacher_bp.route('/teachers/login', methods=['PATCH'])
+def login_teacher():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        if not email or not password:
+            return jsonify({"error": "Missing email or password"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Find the teacher by email
+        teacher = db.teachers.find_one({"email": email})
+
+        if not teacher:
+            return jsonify({"error": "Teacher not found"}), 404
+
+        # Check if the provided password matches the stored hashed password
+        if bcrypt.checkpw(password.encode('utf-8'), teacher['password']):
+            return jsonify({"message": "Login successful", "teacher_id": str(teacher['_id'])}), 200
+        else:
+            return jsonify({"error": "Invalid credentials"}), 401
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+#Used for Teacher Registration
+@teacher_bp.route('/teachers/registration', methods=['PATCH'])
+def login_teacher():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        access_code = data.get('access_code')
+        new_password = data.get('password')
+
+        if not email or not access_code or not new_password:
+            return jsonify({"error": "Missing email or password"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Find the teacher by email
+        teacher = db.teachers.find_one({"email": email})
+        if not teacher:
+            return jsonify({"error": "Teacher not found"}), 404
+        
+        # Find the school by _id
+        school = db.schools.find_one({"_id": ObjectId(teacher['school_id'])})
+        if not school:
+            return jsonify({"error": "School not found"}), 404
+
+        # Check if the provided access code matches the stored access code
+        if access_code == school['access_code']:
+            # Update the teacher's password
+            db.teachers.update_one(
+                {"_id": ObjectId(teacher['_id'])},
+                {"$set": {"password": new_password}}
+            )
+            return jsonify({"message": "Registration successful", "teacher_id": str(teacher['_id'])}), 200
+        else:
+            return jsonify({"error": "Invalid credentials"}), 401
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+
+
+
+# --- UNUSED Routes --- 
+
+# Route to patch a teacher with new info - UNUSED -
+@teacher_bp.route('/teachers/<teacher_id>', methods=['PATCH'])
+def update_teacher(teacher_id):
+    try:
+        data = request.get_json()
+
+        # Filter out keys with None values
+        update_data = {key: value for key, value in data.items() if value is not None}
+
+        # Check if there is any data to update
+        if not update_data:
+            return jsonify({"error": "No fields to update"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Update the teacher document
+        result = db.teachers.update_one({"_id": ObjectId(teacher_id)}, {"$set": update_data})
+
+        if result.matched_count == 0:
+            return jsonify({"error": "Teacher not found"}), 404
+
+        return jsonify({"message": "Teacher updated successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+#Route to patch a teacher's password - UNUSED - 
 @teacher_bp.route('/teachers/<teacher_id>/password', methods=['PATCH'])
 def update_teacher_password(teacher_id):
     try:
@@ -199,31 +272,3 @@ def update_teacher_password(teacher_id):
         return jsonify({"message": "Password updated successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-@teacher_bp.route('/teachers/login', methods=['GET'])
-def login_teacher():
-    try:
-        data = request.get_json()
-        email = data.get('email')
-        password = data.get('password')
-
-        if not email or not password:
-            return jsonify({"error": "Missing email or password"}), 400
-
-        mongo = current_app.extensions['pymongo']
-        db = mongo.cx.EduTracker
-
-        # Find the teacher by email
-        teacher = db.teachers.find_one({"email": email})
-
-        if not teacher:
-            return jsonify({"error": "Teacher not found"}), 404
-
-        # Check if the provided password matches the stored hashed password
-        if bcrypt.checkpw(password.encode('utf-8'), teacher['password']):
-            return jsonify({"message": "Login successful", "teacher_id": str(teacher['_id'])}), 200
-        else:
-            return jsonify({"error": "Invalid credentials"}), 401
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-

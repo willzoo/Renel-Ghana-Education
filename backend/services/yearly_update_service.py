@@ -2,6 +2,7 @@ from flask import Flask, current_app
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from datetime import datetime
+from bson.objectid import ObjectId
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
 import logging
@@ -19,6 +20,7 @@ def move_grade_levels_for_all_schools(current_year, new_year):
     school_collection = db.schools
     student_collection = db.students
     teacher_collection = db.teachers
+    class_collection = db.classes
 
     # Iterate over all schools
     for school in school_collection.find():
@@ -53,46 +55,54 @@ def move_grade_levels_for_all_schools(current_year, new_year):
                 }
             )
 
-
             logging.info(f"Moved grade levels for year {current_year} to past years and created new grade levels list for {new_year} for school ID {school_id}")
 
-            # Update all students where class_id is not empty
-            student_collection.update_many(
-                {
-                    "class_id": {"$ne": ""},
-                    "year": current_year
-                },
-                [
-                    {
-                        "$set": {
-                            "history": {
-                                "$concatArrays": [
-                                    "$history",
-                                    [
-                                        {
-                                            "year": current_year,
-                                            "class_id": "$class_id",
-                                            "grade_level": "$grade_level",
-                                            "school_id": "$school_id",
-                                            "health_conditions": "$health_conditions",
-                                            "misc_info": "$misc_info"
-                                        }
-                                    ]
-                                ]
+            # Iterate over all teachers in the school
+            for teacher in teacher_collection.find({"school_id": school_id}):
+                teacher_id = teacher["_id"]
+
+                # Iterate over all classes taught by the teacher
+                for class_id in teacher.get("classes", []):
+                    class_id = ObjectId(class_id)
+                    _class = class_collection.find_one({"_id": class_id})
+
+                    if _class:
+                        # Update all students in the class
+                        student_collection.update_many(
+                            {
+                                "class_id": class_id,
+                                "year": current_year
                             },
-                            "class_id": "",
-                            "grade_level": "",
-                        }
-                    }
-                ]
-            )
+                            [
+                                {
+                                    "$set": {
+                                        "history": {
+                                            "$concatArrays": [
+                                                "$history",
+                                                [
+                                                    {
+                                                        "year": current_year,
+                                                        "class_id": "$class_id",
+                                                        "grade_level": "$grade_level",
+                                                        "school_id": "$school_id",
+                                                        "health_conditions": "$health_conditions",
+                                                        "misc_info": "$misc_info"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        "class_id": "",
+                                        "grade_level": "",
+                                    }
+                                }
+                            ]
+                        )
 
-            logging.info(f"Updated students with current info moved to history for year {current_year}")
+                        logging.info(f"Updated students in class ID {class_id} with current info moved to history for year {current_year}")
 
-
-            # Update teachers
+            # Update teachers to clear their current classes
             teacher_collection.update_many(
-                {},
+                {"school_id": school_id},
                 {
                     "$set": {"classes": []}
                 }
@@ -104,7 +114,6 @@ def move_grade_levels_for_all_schools(current_year, new_year):
 
     logging.info("Completed moving grade levels for all schools.")
 
-
 def calculate_school_years():
     today = datetime.today()
     current_year_start = today.year - 1 if today.month < 8 else today.year
@@ -113,9 +122,7 @@ def calculate_school_years():
     return current_year, new_year
 
 def schedule_yearly_task():
-    school_id = "your_school_id"  # Replace with the actual school ID
     current_year, new_year = calculate_school_years()
-
     move_grade_levels_for_all_schools(current_year, new_year)
 
 if __name__ == "__main__":
@@ -124,7 +131,9 @@ if __name__ == "__main__":
     command = input()
 
     if command == "Update":
-        move_grade_levels_for_all_schools("2023-2024", "2024-2025")
+        current_year, new_year = calculate_school_years()
+        move_grade_levels_for_all_schools(current_year, new_year)
+
 
 
     # print(current_app['MONGO_URI'])

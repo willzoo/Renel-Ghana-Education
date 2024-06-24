@@ -49,7 +49,11 @@ export const CloseModal = async (id) => {
         textInputs.forEach((item) => {
             try {
                 Array.from(item.children).forEach((input => {
-                    input.value = "";
+                    if (input.type === "radio" && input.value === 'false') {
+                        input.checked = true; // Set the radio button to "No"
+                    } else {
+                        input.value = "";
+                    }
                 }));
             } catch (e) { };
         });

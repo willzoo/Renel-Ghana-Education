@@ -12,14 +12,15 @@
 }
 
 .modal-text-input label {
+    color:#5a6e71;
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
     margin-right: 16px;
 }
 
 .modal-text-input p {
+    color:#70878a;
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
-    color: #09393f;
     margin-bottom: 8px;
 }
