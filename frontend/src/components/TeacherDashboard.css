@@ -16,7 +16,7 @@ body, html {
   background: url('../img/image-3-renel.jpg');
   filter: blur(2.5px);
 } */
- 
+
 
 .background {
   background-color: #e7e8e9;
@@ -48,16 +48,13 @@ body, html {
     padding: 10px;
 }
 
+
+
+
+
+
 /* ???? Think the following css classes are breaking teacher login
 
-
-
-
-  .modal-text-input {
-    text-align: center;
-  }
-
-  
 
   
   .text-input input[type="email"], input[type="password"] {
