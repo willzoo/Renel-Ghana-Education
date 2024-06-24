@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
 
-
 transfer_bp = Blueprint('transfer', __name__)
 
 # Create a transfer
