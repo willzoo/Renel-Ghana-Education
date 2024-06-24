@@ -8,6 +8,10 @@ function AddStudentButton(props) {
   const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
 
   const handleClick = () => {
+    if (props.info.id === "transfer") {
+      alert("Sorry, this tool has not been completed yet.");
+      return;
+    }
     if (selectedClass) {
       OpenModal(`${props.info.id}-student`);
     }
