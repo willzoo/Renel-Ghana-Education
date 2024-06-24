@@ -10,6 +10,7 @@ import Date from '../components/TextInput/Date'
 import Checkbox from '../components/Checkbox/Checkbox'
 
 import TeacherContext from '../../../TeacherContext';
+import Radio_Button from '../components/Checkbox/Radio_Button';
 
 let newStudentInfo = {
     studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
@@ -103,7 +104,7 @@ function NewStudentModal() {
                     <TextInput info={newStudentInfo.guardianContact} />
                     <TextInput info={newStudentInfo.studentMedical} />
                     <br />
-                    <Checkbox info={newStudentInfo.disabilityStatus} />
+                    <Radio_Button info={newStudentInfo.disabilityStatus} />
                     <TextInput info={newStudentInfo.additionalInfo} />
                 </section>
                 <br /><br /><br /><br />
