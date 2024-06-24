@@ -229,7 +229,7 @@ def add_student():
     return jsonify({"status": "new", "student": new_student})
 
 # Remove a student from the class's student list as well as removes the student's class_id
-@class_bp.route('/classes/<class_id>/students/<student_id>', methods=['PATCH'])
+@class_bp.route('/classes/<class_id>/<student_id>', methods=['PATCH'])
 def remove_student_from_class(class_id, student_id):
     try:
         mongo = current_app.extensions['pymongo']
