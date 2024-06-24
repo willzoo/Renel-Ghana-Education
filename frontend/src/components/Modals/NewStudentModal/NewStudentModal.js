@@ -6,6 +6,7 @@ import '../components/ModalBase/ModalBase.css'
 import Submit from '../components/Buttons/Submit'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
+import Date from '../components/TextInput/Date'
 import Checkbox from '../components/Checkbox/Checkbox'
 
 import TeacherContext from '../../../TeacherContext';
@@ -97,7 +98,7 @@ function NewStudentModal() {
                 <section className="input-list" id="new-student-text-input">
                     <TextInput info={newStudentInfo.studentName} />
                     <TextInput info={newStudentInfo.studentID} />
-                    <TextInput info={newStudentInfo.studentDOB} />
+                    <Date info={newStudentInfo.studentDOB} />
                     <TextInput info={newStudentInfo.guardianName} />
                     <TextInput info={newStudentInfo.guardianContact} />
                     <TextInput info={newStudentInfo.studentMedical} />

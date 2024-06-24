@@ -69,8 +69,8 @@ function EditStudentModal(props) {
                 <section className="input-list" id="edit-student-text-input">
                     <br />
                     <TextInput info={editStudentInfo.studentName} />
-                    <TextInput info={editStudentInfo.studentDOB} />
                     <TextInput info={editStudentInfo.studentID} />
+                    <TextInput info={editStudentInfo.studentDOB} />
                     <TextInput info={editStudentInfo.guardianName} />
                     <TextInput info={editStudentInfo.guardianContact} />
                     <TextInput info={editStudentInfo.studentMedical} />
