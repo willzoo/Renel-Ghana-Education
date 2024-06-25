@@ -99,6 +99,8 @@ function EditClassModal() {
         classes: tempClasses,
       }));
 
+      setSelectedClass(null);
+
       fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}`, {
         method: "DELETE",
         headers: {

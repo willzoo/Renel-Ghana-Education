@@ -23,9 +23,9 @@ function EditStudentModal(props) {
         studentDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "student-dob-edit" },
         guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name-edit" },
         guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact-edit" },
-        studentMedical: { title: "Student Medical Information (optional)", placeholder: "Any known allergies? Other valuable information?", id: "student-medical-edit", required:false,},
+        studentMedical: { title: "Student Medical Information (optional)", placeholder: "Any known allergies? Other valuable information?", id: "student-medical-edit", required: false, },
         disabilityStatus: { title: "Does the student have a disability?", id: "disability-status-edit" },
-        additionalInfo: { title: "Additional Information (optional)", placeholder: "Any additional information about the student?", id: "additional-info-edit", required:false},
+        additionalInfo: { title: "Additional Information (optional)", placeholder: "Any additional information about the student?", id: "additional-info-edit", required: false },
     }
 
     const handleSubmit = (event) => {
@@ -69,22 +69,22 @@ function EditStudentModal(props) {
             std._id === selectedStudent._id
         );
 
-          if (studentToEdit) {
+        if (studentToEdit) {
             Object.assign(studentToEdit, content);
-          }
+        }
 
-          tempStudents.sort((a, b) => {
+        tempStudents.sort((a, b) => {
             return a.name.localeCompare(b.name);
-          });
+        });
 
-          // solution created by AI
-          setSelectedClass((oldSelectedClass) => ({
+        // solution created by AI
+        setSelectedClass((oldSelectedClass) => ({
             ...oldSelectedClass,
             students: tempStudents,
-          }));
+        }));
 
-          let studentListElements = Array.from(document.getElementsByClassName('student-list-item'));
-          studentListElements.find(std => std.dataset.studentId === selectedStudent._id).scrollIntoView();
+        let studentListElements = Array.from(document.getElementsByClassName('student-list-item'));
+        studentListElements.find(std => std.dataset.studentId === selectedStudent._id).scrollIntoView();
 
         fetch(`http://127.0.0.1:8000/students/${selectedStudent._id}`, {
             method: 'PATCH',
@@ -93,23 +93,23 @@ function EditStudentModal(props) {
             },
             body: JSON.stringify(content)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Student information updated:', data);
-            const studentIndex = selectedClass.students.findIndex(student => student._id === selectedStudent._id);
-            if (studentIndex > -1) {
-                selectedClass.students[studentIndex] = content;
-                selectedClass.students[studentIndex]['_id'] = selectedStudent._id;
-            }
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Student information updated:', data);
+                const studentIndex = selectedClass.students.findIndex(student => student._id === selectedStudent._id);
+                if (studentIndex > -1) {
+                    selectedClass.students[studentIndex] = content;
+                    selectedClass.students[studentIndex]['_id'] = selectedStudent._id;
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
     };
 
     const handleDelete = () => {
@@ -118,28 +118,29 @@ function EditStudentModal(props) {
 
             let tempStudents = selectedClass.students.filter(std => std._id !== selectedStudent._id);
 
-            // solution created by AI
             setSelectedClass((oldSelectedClass) => ({
-              ...oldSelectedClass,
-              students: tempStudents,
+                ...oldSelectedClass,
+                students: tempStudents,
             }));
 
             fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}/${selectedStudent._id}`, {
-              method: "PATCH",
-              headers: {
-                'Content-Type': 'application/json'
-              },
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
             })
-              .then(response => response.json())
-              .then(data => {
-                // Handle the data returned from the server
-                console.log(data); // For demonstration purposes; adjust as needed
-              })
-              .catch(error => {
-                console.error('Error fetching data:', error);
-              });
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the data returned from the server
+                    console.log(data); // For demonstration purposes; adjust as needed
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
 
-              try {document.getElementById('students-list').scrollTop = 0;} catch (e) {};
+            try { document.getElementById('students-list').scrollTop = 0; } catch (e) { };
+
+            setSelectedStudent(null);
         }
     }
 
@@ -150,11 +151,11 @@ function EditStudentModal(props) {
         if (!studentListElements) return;
 
         studentListElements.forEach((element) => {
-        element.classList.remove('selected');
+            element.classList.remove('selected');
         });
 
         const selectedElement = studentListElements.find((element) =>
-        element.dataset.studentId === selectedClass.student_school_id
+            element.dataset.studentId === selectedClass.student_school_id
         );
 
         if (!selectedElement) return;
@@ -171,7 +172,7 @@ function EditStudentModal(props) {
                     <TextInput info={editStudentInfo.studentID} />
                     <TextInput info={editStudentInfo.studentDOB} />
                     <TextInput info={editStudentInfo.guardianName} />
-                    <TextInput info={editStudentInfo.guardianContact}/>
+                    <TextInput info={editStudentInfo.guardianContact} />
                     <RadioButton info={editStudentInfo.disabilityStatus} />
                     <TextInput info={editStudentInfo.studentMedical} />
                     <TextInput info={editStudentInfo.additionalInfo} />

@@ -8,7 +8,7 @@ const LandingPage = () => {
 
   return (
     <div>
-      <div className="background-image"></div>
+      <div className="landing-page-background-image"></div>
       {/* <img src="../../img/image-3-renel.jpeg"></img> */}
       <div className="content">
         <div className="welcome">
