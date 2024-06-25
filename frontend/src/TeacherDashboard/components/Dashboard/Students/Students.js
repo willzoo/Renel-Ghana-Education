@@ -9,13 +9,14 @@ function Students() { // container for student items
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
     const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
 
-    const deselectAll = () => { // if backdrop is selected    
-        const studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list items
-        if (!studentListElements) return; // student list items must exist
-    
-        studentListElements.forEach((element) => {
-          element.classList.remove('selected'); // remove the selected class from each student item
-        });
+    const deselectAll = () => { // if backdrop is selected  
+        try {  
+            const studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list items
+        
+            studentListElements.forEach((element) => {
+            element.classList.remove('selected'); // remove the selected class from each student item
+            });
+        } catch (e) {};
         
         setSelectedStudent(null); // set selectedStudent to none
     }
@@ -36,9 +37,9 @@ function Students() { // container for student items
                 <div id="students-root" className="students-list"> {/* create students list so it is scrollable */}
                     <ul className="nobullet">
                         {// if selectedClass is null, display error
-                            !selectedClass ? (<li><div className="list-issue">Please select a class to see associated students.</div></li>) :
+                            !selectedClass ? (<li key="error"><div className="list-issue">Please select a class to see associated students.</div></li>) :
                                 studentsList.length == 0 ? // if there are no students in the student list
-                                    (<li><div className="list-issue">There are no students that have been added to this class.</div></li>) :
+                                    (<li key="error"><div className="list-issue">There are no students that have been added to this class.</div></li>) :
                                     (studentsList) // display class list if students
                         }
                     </ul>

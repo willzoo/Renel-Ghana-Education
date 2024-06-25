@@ -57,10 +57,10 @@ function ClassAddModal() { // modal displayed for adding class to teacher dashba
       return a.class_name.localeCompare(b.class_name);
     });
 
-    setClassInfo((oldClassInfo) => ({ // set class info with new classes
-      ...oldClassInfo,
-      classes: tempClasses,
-    }));
+    setClassInfo((oldClassInfo) => { // set class info with new classes
+        oldClassInfo.classes = tempClasses;
+        return oldClassInfo;
+      });
 
     setSelectedClass(content); // set selected class to content
 
@@ -82,10 +82,10 @@ function ClassAddModal() { // modal displayed for adding class to teacher dashba
         tempClasses = classInfo.classes;
         tempClasses.find(cls => cls.class_name === className)._id = data.class_id; // find class with corresponding class name, and add id to it
 
-        setClassInfo((oldClassInfo) => ({ // update class info with new class information
-          ...oldClassInfo,
-          classes: tempClasses,
-        }));
+        setClassInfo((oldClassInfo) => { // update class info with new class information
+            oldClassInfo.classes = tempClasses;
+            return oldClassInfo;
+          });
 
       })
       .catch(error => {

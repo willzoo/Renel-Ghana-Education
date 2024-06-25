@@ -38,9 +38,9 @@ function Teachers() {
                 <div id="teachers-root" className="teachers-list">
                     <ul className="nobullet">
                         {// if selectedSchool is null, display error
-                            !selectedSchool ? (<li><div className="list-issue">Please select a school to see associated teachers.</div></li>) :
+                            !selectedSchool ? (<li key="error"><div className="list-issue">Please select a school to see associated teachers.</div></li>) :
                                 teachersList.length == 0 ? // if there are no teachers in the teacher list
-                                    (<li><div className="list-issue">There are no teachers that have been added to this class.</div></li>) :
+                                    (<li key="error"><div className="list-issue">There are no teachers that have been added to this class.</div></li>) :
                                     (teachersList) // display class list if students
                         }
                     </ul>

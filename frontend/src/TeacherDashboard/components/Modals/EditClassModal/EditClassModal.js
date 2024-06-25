@@ -64,10 +64,10 @@ function EditClassModal() { // class edit modal
       return a.class_name.localeCompare(b.class_name); // sort classes by name alphabetically
     });
 
-    setClassInfo((oldClassInfo) => ({ // update classInfo
-      ...oldClassInfo,
-      classes: tempClasses,
-    }));
+    setClassInfo((oldClassInfo) => { // update classInfo
+      oldClassInfo.classes = tempClasses;
+      return oldClassInfo;
+    });
 
     let sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class')); // get all sidebar classes
     sidebarClassElements.find(cls => cls.dataset.classId === selectedClass._id).scrollIntoView(); // bring selected class into view
@@ -93,13 +93,13 @@ function EditClassModal() { // class edit modal
     if (window.confirm("Are you sure you want to delete this class?")) { // confirmation for class deletion
       CloseModal('class-edit'); // close modal if confirmed
 
-      let tempClasses = classInfo.classes.filter(cls => cls._id !== selectedClass._id);
       // assign tempClasses to all classes without the requested deletion
+      let tempClasses = classInfo.classes.filter(cls => cls._id !== selectedClass._id);
 
-      setClassInfo((oldClassInfo) => ({ // update classInfo
-        ...oldClassInfo,
-        classes: tempClasses,
-      }));
+      setClassInfo((oldClassInfo) => {
+        oldClassInfo.classes = tempClasses;
+        return oldClassInfo;
+      });
 
       setSelectedClass(null); // forget selected student
 
@@ -124,21 +124,19 @@ function EditClassModal() { // class edit modal
   }
 
   useEffect(() => { // select correct class after editing, run whenever classInfo is updated
-    if (!selectedClass) return; // if no class is selected, quit
+    try {
+      const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class')); // get all sidebar classes
 
-    const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class')); // get all sidebar classes
-    if (!sidebarClassElements) return; // quit if classes dont exist
+      sidebarClassElements.forEach((element) => {
+        element.classList.remove('selected'); // remove selected class from all classes
+      });
 
-    sidebarClassElements.forEach((element) => {
-      element.classList.remove('selected'); // remove selected class from all classes
-    });
+      const selectedElement = sidebarClassElements.find((element) =>
+        element.dataset.classId === selectedClass._id // find class with corresponding id
+      );
 
-    const selectedElement = sidebarClassElements.find((element) =>
-      element.dataset.classId === selectedClass._id // find class with corresponding id
-    );
-
-    if (!selectedElement) return; // quit if no class has that ID
-    selectedElement.classList.add('selected'); // add selected class to new selected element
+      selectedElement.classList.add('selected'); // add selected class to new selected element
+    } catch (e) { };
   }, [classInfo]) // dependencies, update whenever classInfo changes
 
   return (

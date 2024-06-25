@@ -48,7 +48,7 @@ function StudentItem(props) {
     }
 
     return (
-        <li>
+        <li key={props.data._id}>
             <div className="student-list-item" id={props.id}
                 data-student-id={props.data._id}
                 data-name={props.data.name}

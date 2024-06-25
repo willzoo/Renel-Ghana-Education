@@ -3,7 +3,7 @@ import ClassItem from '../ClassItem/ClassItem'
 import './Classes.css'
 import TeacherContext from "../../../../TeacherContext";
 
-function ClassesList(props) { // container for classes
+function Classes() { // container for classes
     const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
     const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
     const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
@@ -31,13 +31,12 @@ function ClassesList(props) { // container for classes
             {/* Section title */}
             <h1>Classes</h1>
             <p>Select a class to view students</p>
-
             {/* Display list of classes */}
             <div id="classes-root" className="sidebar-classes">
                 <section>
                     <ul className="nobullet"> {/* Display list with no bullet points */}
                         {classList.length === 0 ? /* if class list is empty, display list-issue, otherwise display classes */
-                            (<li><div className="list-issue">There are no classes associated with this teacher.</div></li>) :
+                            (<li key="error"><div className="list-issue">There are no classes associated with this teacher.</div></li>) :
                             (classList)
                         }
                     </ul>
@@ -47,4 +46,4 @@ function ClassesList(props) { // container for classes
     )
 }
 
-export default ClassesList;
+export default Classes;

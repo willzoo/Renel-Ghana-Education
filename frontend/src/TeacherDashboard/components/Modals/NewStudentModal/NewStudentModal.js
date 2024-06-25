@@ -72,10 +72,18 @@ function NewStudentModal() { // add new student to database
         return a.name.localeCompare(b.name); // sort students
         });
 
-        setSelectedClass((oldStudentInfo) => ({ // update selected class with new student info
-        ...oldStudentInfo,
-        students: tempStudents,
-        }));
+        setSelectedClass((oldSelectedClass) => ({
+            ...oldSelectedClass,
+            students: tempStudents,
+        }))
+
+        let tempClasses = classInfo.classes;
+        Object.assign(tempClasses.find(cls => cls._id === selectedClass._id), selectedClass);
+        
+        setClassInfo((oldClassInfo) => { // update selectedClass
+            oldClassInfo.classes = tempClasses;
+            return oldClassInfo
+        });
 
         fetch('http://127.0.0.1:8000/students', { // run fetch call to add new student
             method: "POST",
@@ -98,10 +106,19 @@ function NewStudentModal() { // add new student to database
                 tempStudents = selectedClass.students;
                 tempStudents.find(std => std.name === studentName && std.dob === studentDOB && std.guardian_contact === guardianContact)._id = data.student_id;
                 
-                setSelectedClass((oldSelectedClass) => ({ // update selectedClass
-                  ...oldSelectedClass,
-                  students: tempStudents,
-                }));
+                setSelectedClass((oldSelectedClass) => { // update selectedClass
+                    oldSelectedClass.students = tempStudents;
+                    return oldSelectedClass
+                });
+
+                let tempClasses = classInfo.classes;
+                Object.assign(tempClasses.find(cls => cls._id === selectedClass._id), selectedClass);
+
+                setClassInfo((oldClassInfo) => { // update selectedClass
+                    oldClassInfo.classes = tempClasses;
+                    return oldClassInfo
+                });
+        
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
