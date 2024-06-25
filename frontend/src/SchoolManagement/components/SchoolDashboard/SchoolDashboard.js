@@ -6,7 +6,6 @@ import { faPlus, faArrowRight, faArrowDown } from '@fortawesome/free-solid-svg-i
 
 
 import './SchoolDashboard.css'
-import Logo from './Logo/Logo';
 
 function SchoolDashboard(props) {
     let buttons = {
@@ -16,7 +15,6 @@ function SchoolDashboard(props) {
     return (<section>
         <div className="main">
             <div className="header-info">
-                <Logo />
             </div>
             <div style={{ height: '20px' }}></div>
 
