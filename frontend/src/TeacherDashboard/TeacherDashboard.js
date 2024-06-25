@@ -53,7 +53,6 @@ function TeacherDashboard() {
           });
 
           setClassInfo(data);
-          setSelectedClass(classInfo.classes[0]);
 
           CloseModal('loading');
           

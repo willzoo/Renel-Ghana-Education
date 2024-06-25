@@ -38,9 +38,9 @@ function Students() {
                 <div id="students-root" className="students-list">
                     <ul className="nobullet">
                         {// if selectedClass is null, display error
-                            !selectedClass ? (<li><div className="list-issue">Please select a class to see associated students.</div></li>) :
+                            !selectedClass ? (<li key="error"><div className="list-issue">Please select a class to see associated students.</div></li>) :
                                 studentsList.length == 0 ? // if there are no students in the student list
-                                    (<li><div className="list-issue">There are no students that have been added to this class.</div></li>) :
+                                    (<li key="error"><div className="list-issue">There are no students that have been added to this class.</div></li>) :
                                     (studentsList) // display class list if students
                         }
                     </ul>

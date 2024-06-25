@@ -78,10 +78,18 @@ function EditStudentModal(props) { // modal for editing student content
             return a.name.localeCompare(b.name); // sort students array alphabetically
         });
 
-        setSelectedClass((oldSelectedClass) => ({ // update selectedClass
-            ...oldSelectedClass,
-            students: tempStudents,
-        }));
+        setSelectedClass((oldSelectedClass) => { // update selectedClass
+            oldSelectedClass.students = tempStudents;
+            return oldSelectedClass
+        });
+
+        let tempClasses = classInfo.classes;
+        Object.assign(tempClasses.find(cls => cls._id === selectedClass._id), selectedClass);
+        
+        setClassInfo((oldClassInfo) => { // update selectedClass
+            oldClassInfo.classes = tempClasses;
+            return oldClassInfo
+        });
 
         let studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list items
         studentListElements.find(std => std.dataset.studentId === selectedStudent._id).scrollIntoView(); // scroll edited student into view
@@ -118,10 +126,18 @@ function EditStudentModal(props) { // modal for editing student content
 
             let tempStudents = selectedClass.students.filter(std => std._id !== selectedStudent._id); // get list of students without selected student
 
-            setSelectedClass((oldSelectedClass) => ({ // remove student from selected class
-                ...oldSelectedClass,
-                students: tempStudents,
-            }));
+            setSelectedClass((oldSelectedClass) => { // remove student from selected class
+                oldSelectedClass.students = tempStudents;
+                return oldSelectedClass;
+            });
+            
+            let tempClasses = classInfo.classes;
+            Object.assign(tempClasses.find(cls => cls._id === selectedClass._id), selectedClass);
+            
+            setClassInfo((oldClassInfo) => { // update selectedClass
+                oldClassInfo.classes = tempClasses;
+                return oldClassInfo;
+            });
 
             fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}/${selectedStudent._id}`, { // update class to remove student from class
                 method: "PATCH",

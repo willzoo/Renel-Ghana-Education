@@ -39,7 +39,7 @@ function SchoolsList(props) {
                 <section>
                     <ul className="nobullet"> {/* Display list with no bullet points */}
                         {schoolList.length === 0 ? /* if school list is empty, display list-issue, otherwise display schools */
-                            (<li><div className="list-issue">There are no schools in the database.</div></li>) :
+                            (<li key="error"><div className="list-issue">There are no schools in the database.</div></li>) :
                             (schoolList)
                         }
                     </ul>
