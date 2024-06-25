@@ -32,7 +32,8 @@ function SchoolAddModal() {
     
     // Make new school name and add it to 
     let content = {
-      "name": schoolName
+      "name": schoolName,
+      "teachers": [],
     };
 
     let tempSchools = schoolInfo;
