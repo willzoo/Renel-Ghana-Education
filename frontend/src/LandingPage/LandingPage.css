@@ -9,7 +9,7 @@ body, html {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: url('figma/css/path/image-3-renel.jpeg') no-repeat center center fixed; 
+    background: url('../../img/image-3-renel.jpeg') no-repeat center center fixed; 
     background-size: cover;
     filter: blur(2.5px);
     z-index: -1;
