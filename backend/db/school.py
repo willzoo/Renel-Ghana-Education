@@ -184,3 +184,20 @@ def get_school_grades_and_students(school_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#Route to delete a school #TODO: Find way to remove orphaned teacher class and student objects
+@school_bp.route('/schools/<school_id>', methods=['DELETE'])
+def delete_school(school_id):
+    try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Delete the school from the schools collection
+        result = db.schools.delete_one({"_id": ObjectId(school_id)})
+
+        if result.deleted_count == 0:
+            return jsonify({"error": "School not found or already deleted"}), 402
+
+        return jsonify({"message": "School deleted successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
