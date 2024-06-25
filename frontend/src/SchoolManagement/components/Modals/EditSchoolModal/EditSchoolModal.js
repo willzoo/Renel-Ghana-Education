@@ -74,7 +74,7 @@ function EditSchoolModal() {
   }
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this school?")) {
+    if (window.confirm("Are you sure you want to delete this school? If this school has any teachers they will persist in the database but become inaccessible.")) {
       CloseModal('school-edit');
 
       let tempSchools = schoolInfo.filter(school => school._id !== selectedSchool._id);
@@ -83,21 +83,20 @@ function EditSchoolModal() {
       // solution created by AI
       setSchoolInfo(tempSchools);
 
-      //TODO: Add school deletion method
-      // fetch(`http://127.0.0.1:8000/scbools/${selectedSchool._id}`, {
-      //   method: "DELETE",
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      // })
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     // Handle the data returned from the server
-      //     console.log(data); // For demonstration purposes; adjust as needed
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching data:', error);
-      //   });
+      fetch(`http://127.0.0.1:8000/schools/${selectedSchool._id}`, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the data returned from the server
+          console.log(data); // For demonstration purposes; adjust as needed
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
 
       try { document.getElementById('sidebar-classes').scrollTop = 0; } catch (e) { };
     }
