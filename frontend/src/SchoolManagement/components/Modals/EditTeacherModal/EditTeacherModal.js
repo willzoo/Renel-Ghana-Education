@@ -5,88 +5,57 @@ import { OpenModal } from '../../../../utils/functions';
 import '../components/ModalBase/ModalBase.css'
 
 import Submit from '../components/Buttons/Submit'
-import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
-import Checkbox from '../components/Checkbox/Checkbox'
-import TeacherContext from '../../../../TeacherContext';
+import AdminContext from '../../../../AdminContext';
 import Delete from '../components/Buttons/Delete';
 import RadioButton from '../components/Checkbox/RadioButton';
 
-function EditStudentModal(props) {
-    const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
-    const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
-    const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
+function EditTeacherModal(props) {
+    const { selectedTeacher, setSelectedTeacher } = useContext(AdminContext).selectedTeacher;
+    const { selectedSchool, setSelectedSchool } = useContext(AdminContext).selectedSchool;
+    const { schoolInfo, setSchoolInfo } = useContext(AdminContext).schoolInfo;
 
-    let editStudentInfo = {
-        studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name-edit" },
-        studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id-edit" },
-        studentDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "student-dob-edit" },
-        guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name-edit" },
-        guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact-edit" },
-        studentMedical: { title: "Student Medical Information (optional)", placeholder: "Any known allergies? Other valuable information?", id: "student-medical-edit", required:false,},
-        disabilityStatus: { title: "Does the student have a disability?", id: "disability-status-edit" },
-        additionalInfo: { title: "Additional Information (optional)", placeholder: "Any additional information about the student?", id: "additional-info-edit", required:false},
+    let editTeacherInfo = {
+        teacherName: { title: "Teacher Name", placeholder: "Please enter teacher name", id: "teacher-name-edit" },
+        teacherEmail: { title: "Teacher Email", placeholder: "Please enter teacher email", id: "teacher-email-edit" },
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        let studentName = document.getElementById('student-name-edit').value;
-        let studentID = document.getElementById('student-id-edit').value;
-        let studentDOB = document.getElementById('student-dob-edit').value;
-        let guardianName = document.getElementById('guardian-name-edit').value;
-        let guardianContact = document.getElementById('guardian-contact-edit').value;
-        let studentMedical = document.getElementById('student-medical-edit').value;
-        let disabilityStatus = document.getElementById('disability-status-edit-true').checked;
-        let additionalInfo = document.getElementById('additional-info-edit').value;
-
-        if (selectedClass.students.some(std =>
-            std.student_school_id === studentID && std._id !== selectedStudent._id
-        )) {
-            alert("You already have a student with this ID. Please choose a unique ID.");
-            return;
-        }
+        let teacherName = document.getElementById('teacher-name-edit').value;
+        let teacherEmail = document.getElementById('teacher-email-edit').value;
 
         let content = {
-            'name': studentName,
-            'guardian_name': guardianName,
-            'guardian_contact': guardianContact,
-            'dob': studentDOB,
-            "student_school_id": studentID,
-            'disabled': disabilityStatus,
-            'health_conditions': studentMedical ? studentMedical : "None",
-            'misc_info': additionalInfo ? additionalInfo : "None",
-            'class_id': selectedClass._id,
-            'grade_level': selectedClass.grade_level,
-            'school_id': classInfo.school_id,
-            'history': [],
+            'name': teacherName,
+            'email': teacherEmail
         };
 
-        CloseModal("edit-student");
+        CloseModal("edit-teacher");
 
-        let tempStudents = selectedClass.students;
-        let studentToEdit = tempStudents.find(std =>
-            std._id === selectedStudent._id
+        let tempTeachers = selectedSchool.teachers;
+        let teacherToEdit = tempTeachers.find(tchr =>
+            tchr._id === selectedTeacher._id
         );
 
-          if (studentToEdit) {
-            Object.assign(studentToEdit, content);
+          if (teacherToEdit) {
+            Object.assign(teacherToEdit, content);
           }
 
-          tempStudents.sort((a, b) => {
+          tempTeachers.sort((a, b) => {
             return a.name.localeCompare(b.name);
           });
 
           // solution created by AI
-          setSelectedClass((oldSelectedClass) => ({
-            ...oldSelectedClass,
-            students: tempStudents,
+          setSelectedSchool((oldSelectedSchool) => ({
+            ...oldSelectedSchool,
+            teachers: tempTeachers,
           }));
 
-          let studentListElements = Array.from(document.getElementsByClassName('student-list-item'));
-          studentListElements.find(std => std.dataset.studentId === selectedStudent._id).scrollIntoView();
+          let teacherListElements = Array.from(document.getElementsByClassName('teacher-list-item'));
+          teacherListElements.find(tchr => tchr.dataset.teacherId === selectedTeacher._id).scrollIntoView();
 
-        fetch(`http://127.0.0.1:8000/students/${selectedStudent._id}`, {
+        fetch(`http://127.0.0.1:8000/teachers/${selectedTeacher._id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -100,11 +69,11 @@ function EditStudentModal(props) {
             return response.json();
         })
         .then(data => {
-            console.log('Student information updated:', data);
-            const studentIndex = selectedClass.students.findIndex(student => student._id === selectedStudent._id);
-            if (studentIndex > -1) {
-                selectedClass.students[studentIndex] = content;
-                selectedClass.students[studentIndex]['_id'] = selectedStudent._id;
+            console.log('Teacher information updated:', data);
+            const teacherIndex = selectedSchool.teachers.findIndex(teacher => teacher._id === selectedTeacher._id);
+            if (teacherIndex > -1) {
+                selectedSchool.teachers[teacherIndex] = content;
+                selectedSchool.teachers[teacherIndex]['_id'] = selectedTeacher._id;
             }
         })
         .catch(error => {
@@ -113,19 +82,19 @@ function EditStudentModal(props) {
     };
 
     const handleDelete = () => {
-        if (window.confirm("Are you sure you want to delete this student? Their information can be recovered from our system.")) {
-            CloseModal("edit-student");
+        if (window.confirm("Are you sure you want to delete this teacher? Their classes and students will be deleted as well, and their information cannot be recovered.")) {
+            CloseModal("edit-teacher");
 
-            let tempStudents = selectedClass.students.filter(std => std._id !== selectedStudent._id);
+            let tempTeachers = selectedSchool.teachers.filter(tchr => tchr._id !== selectedTeacher._id);
 
             // solution created by AI
-            setSelectedClass((oldSelectedClass) => ({
-              ...oldSelectedClass,
-              students: tempStudents,
+            setSelectedSchool((oldSelectedSchool) => ({
+              ...oldSelectedSchool,
+              teachers: tempTeachers,
             }));
 
-            fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}/${selectedStudent._id}`, {
-              method: "PATCH",
+            fetch(`http://127.0.0.1:8000/teachers/${selectedTeacher._id}`, {
+              method: "DELETE",
               headers: {
                 'Content-Type': 'application/json'
               },
@@ -139,42 +108,36 @@ function EditStudentModal(props) {
                 console.error('Error fetching data:', error);
               });
 
-              try {document.getElementById('students-list').scrollTop = 0;} catch (e) {};
+              try {document.getElementById('teachers-list').scrollTop = 0;} catch (e) {};
         }
     }
 
     useEffect(() => {
-        if (!selectedStudent) return;
+        if (!selectedTeacher) return;
 
-        const studentListElements = Array.from(document.getElementsByClassName('student-list-item'));
-        if (!studentListElements) return;
+        const teacherListElements = Array.from(document.getElementsByClassName('teacher-list-item'));
+        if (!teacherListElements) return;
 
-        studentListElements.forEach((element) => {
+        teacherListElements.forEach((element) => {
         element.classList.remove('selected');
         });
 
-        const selectedElement = studentListElements.find((element) =>
-        element.dataset.studentId === selectedClass.student_school_id
+        const selectedElement = teacherListElements.find((element) =>
+        element.dataset.teacherId === selectedTeacher._id
         );
 
         if (!selectedElement) return;
         selectedElement.classList.add('selected');
-    }, [classInfo])
+    }, [schoolInfo])
 
     // console.log("Edit student input called: " + props.student.name);
     return (
         <section>
-            <form id="edit-student-form" onSubmit={handleSubmit}>
-                <section className="input-list" id="edit-student-text-input">
+            <form id="edit-teacher-form" onSubmit={handleSubmit}>
+                <section className="input-list" id="edit-teacher-text-input">
                     <br />
-                    <TextInput info={editStudentInfo.studentName} />
-                    <TextInput info={editStudentInfo.studentID} />
-                    <TextInput info={editStudentInfo.studentDOB} />
-                    <TextInput info={editStudentInfo.guardianName} />
-                    <TextInput info={editStudentInfo.guardianContact}/>
-                    <RadioButton info={editStudentInfo.disabilityStatus} />
-                    <TextInput info={editStudentInfo.studentMedical} />
-                    <TextInput info={editStudentInfo.additionalInfo} />
+                    <TextInput info={editTeacherInfo.teacherName} />
+                    <TextInput info={editTeacherInfo.teacherEmail} />
                     <br />
                 </section>
                 <br /><br /><br /><br />
@@ -188,4 +151,4 @@ function EditStudentModal(props) {
     );
 }
 
-export default EditStudentModal;
+export default EditTeacherModal;

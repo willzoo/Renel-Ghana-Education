@@ -9,7 +9,7 @@ function AddTeacherButton(props) {
 
   const handleClick = () => {
     if (selectedSchool) {
-      OpenModal(`${props.info.id}-school`);
+      OpenModal(`${props.info.id}-teacher`);
     }
     else {
       alert("Please select a school first.");
