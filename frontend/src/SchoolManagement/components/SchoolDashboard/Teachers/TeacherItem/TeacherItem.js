@@ -10,14 +10,14 @@ function TeacherItem(props) {
 
     const { selectedSchool, setSelectedSchool } = useContext(AdminContext).selectedSchool;
     const { schoolToEdit, setSchoolToEdit, } = useContext(AdminContext).schoolToEdit;
-    const { selectedTeacher, setSelectedTeacher } = useContext(AdminContext).setSelectedTeacher;
+    const { selectedTeacher, setSelectedTeacher } = useContext(AdminContext).selectedTeacher;
 
     const handleEdit = (event) => {
         setEditButtonPressed(1 - isEditButtonPressed); // flip between 1 and 0, just used to detect changes
 
         handleSelect(event);
 
-        OpenModal("edit-teacher");
+        //OpenModal("edit-teacher");
     }
 
     useEffect(() => { // update the edit form's input parameters every time edit button is pressed

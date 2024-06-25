@@ -25,7 +25,7 @@ function ClassesList(props) {
     let classList = [];
     for (let i = 0; i < classInfo.classes.length; i++) {
         // add each classItem to items list with data set by each class info
-        classList.push((<ClassItem id={i} data={classInfo.classes[i]} />));
+        classList.push((<ClassItem id={i} />));
     }
 
     return (

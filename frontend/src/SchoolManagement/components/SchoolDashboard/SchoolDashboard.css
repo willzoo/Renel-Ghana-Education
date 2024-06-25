@@ -29,8 +29,8 @@
     justify-content: space-between;
   }
 
-/* upper section for add student buttons */
-.add-student-section {
+/* upper section for add teacher buttons */
+.add-teacher-section {
     height: 60px;
     display:flex;
     justify-content:center;

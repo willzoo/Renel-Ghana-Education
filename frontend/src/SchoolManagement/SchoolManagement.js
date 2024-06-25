@@ -1,8 +1,8 @@
 import '../TeacherDashboard/TeacherDashboard.css';
 // import {classInfo, selectedClass, teacherID} from '../utils/global'
-// import Sidebar from './components/Sidebar/Sidebar';
+import Sidebar from './components/Sidebar/Sidebar';
 import SchoolDashboard from './components/SchoolDashboard/SchoolDashboard';
-// import Modals from './components/Modals/Modals'
+import Modals from './components/Modals/Modals'
 import { useEffect, useState, useContext } from 'react';
 import { CloseModal, OpenModal } from '../utils/functions'
 import AdminContext from '../AdminContext';
@@ -46,7 +46,7 @@ function SchoolManagement() {
           });
 
           setSchoolInfo(data);
-          setSelectedSchool(schoolInfo.schools[0]);
+          setSelectedSchool(schoolInfo[0]);
 
           CloseModal('loading');
           
@@ -71,8 +71,8 @@ function SchoolManagement() {
     }}>
       <section>
         <div className="background">
-          {/* <Modals />
-          <Sidebar />  */}
+          <Modals />
+          <Sidebar /> 
           <SchoolDashboard /> {/* add dashboard content */}
         </div>
       </section>

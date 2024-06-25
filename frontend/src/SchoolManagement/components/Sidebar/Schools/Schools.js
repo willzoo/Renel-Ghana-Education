@@ -1,46 +1,46 @@
 import React, { useContext, useEffect } from "react";
-import ClassItem from '../SchoolItem/SchoolItem'
-import './Classes.css'
-import TeacherContext from "../../../../TeacherContext";
+import SchoolItem from '../SchoolItem/SchoolItem'
+import './Schools.css'
+import AdminContext from "../../../../AdminContext";
 
-function ClassesList(props) {
-    const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
-    const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
-    const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
+function SchoolsList(props) {
+    const { schoolInfo, setSchoolInfo } = useContext(AdminContext).schoolInfo;
+    const {selectedSchool, setSelectedSchool} = useContext(AdminContext).selectedSchool;
+    const {selectedTeacher, setSelectedTeacher} = useContext(AdminContext).selectedTeacher;
 
     const deselectAll = () => {
-        if (!selectedClass) return;
+        if (!selectedSchool) return;
     
-        const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
-        if (!sidebarClassElements) return;
+        const sidebarSchoolElements = Array.from(document.getElementsByClassName('sidebar-school'));
+        if (!sidebarSchoolElements) return;
     
-        sidebarClassElements.forEach((element) => {
+        sidebarSchoolElements.forEach((element) => {
           element.classList.remove('selected');
         });
         
-        setSelectedClass(null);
-        setSelectedStudent(null);
+        setSelectedSchool(null);
+        setSelectedTeacher(null);
     }
 
-    let classList = [];
-    for (let i = 0; i < classInfo.classes.length; i++) {
-        // add each classItem to items list with data set by each class info
-        classList.push((<ClassItem id={i} data={classInfo.classes[i]} />));
+    let schoolList = [];
+    for (let i = 0; i < schoolInfo.length; i++) {
+        // add each schoolItem to items list with data set by each class info
+        schoolList.push((<SchoolItem id={i} data={schoolInfo[i]} />));
     }
 
     return (
-        <div className="sidebar-classes-container" onClick={deselectAll}>
+        <div className="sidebar-schools-container" onClick={deselectAll}>
             {/* Section title */}
-            <h1>Classes</h1>
-            <p>Select a class to view students</p>
+            <h1>Schools</h1>
+            <p>Select a school to view students</p>
 
-            {/* Display list of classes */}
-            <div id="classes-root" className="sidebar-classes">
+            {/* Display list of schools */}
+            <div id="schools-root" className="sidebar-schools">
                 <section>
                     <ul className="nobullet"> {/* Display list with no bullet points */}
-                        {classList.length === 0 ? /* if class list is empty, display list-issue, otherwise display classes */
-                            (<li><div className="list-issue">There are no classes associated with this teacher.</div></li>) :
-                            (classList)
+                        {schoolList.length === 0 ? /* if school list is empty, display list-issue, otherwise display schools */
+                            (<li><div className="list-issue">There are no schools in the database.</div></li>) :
+                            (schoolList)
                         }
                     </ul>
                 </section>
@@ -49,4 +49,4 @@ function ClassesList(props) {
     )
 }
 
-export default ClassesList;
+export default SchoolsList;
