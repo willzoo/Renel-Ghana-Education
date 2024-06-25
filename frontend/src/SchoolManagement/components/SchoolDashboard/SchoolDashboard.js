@@ -14,9 +14,9 @@ function SchoolDashboard(props) {
 
     return (<section>
         <div className="main">
-            <div className="header-info">
-            </div>
-            <div style={{ height: '20px' }}></div>
+            {/* <div className="header-info">
+            </div> */}
+            <div style={{ height: '100px' }}></div>
 
             {/* add teacher buttons */}
             <div className="add-teacher-section">
