@@ -10,7 +10,7 @@ import AdminContext from '../../../../AdminContext';
 
 function SchoolAddModal() {
   const { schoolInfo, setSchoolInfo } = useContext(AdminContext).schoolInfo;
-  const { selectedSchool, setSelectedSchools } = useContext(AdminContext).selectedSchool;
+  const { selectedSchool, setSelectedSchool } = useContext(AdminContext).selectedSchool;
   
   let addSchoolInfo = {
     schoolName: { title: "School Name", placeholder: "Enter a school name", id: "school-name" },
@@ -65,7 +65,7 @@ function SchoolAddModal() {
         tempSchools = schoolInfo;
         tempSchools.find(school => school.name === schoolName)._id = data._id;
 
-        setSchoolsInfo(tempSchools);
+        setSchoolInfo(tempSchools);
 
       })
       .catch(error => {
@@ -76,8 +76,8 @@ function SchoolAddModal() {
 
   return (
     <section>
-      <form id="class-modal-form" onSubmit={handleSubmit}>
-        <section className="input-list" id="class-add-text-input">
+      <form id="school-modal-form" onSubmit={handleSubmit}>
+        <section className="input-list" id="school-add-text-input">
           <TextInput info={addSchoolInfo.schoolName} />
           <br /><br /><br /><br />
         </section>

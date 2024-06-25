@@ -1,34 +1,34 @@
 import React, { useContext, useState } from "react"
 import ModalBase from './components/ModalBase/ModalBase'
-// import SchoolAddModal from './SchoolAddModal/SchoolAddModal'
-// import NewTeacherModal from "./NewTeacherModal/NewTeacherModal"
-// import EditTeacherModal from "./EditTeacherModal/EditTeacherModal"
+import SchoolAddModal from './SchoolAddModal/SchoolAddModal'
+import NewTeacherModal from "./NewTeacherModal/NewTeacherModal"
+import EditTeacherModal from "./EditTeacherModal/EditTeacherModal"
 import EditSchoolModal from './EditSchoolModal/EditSchoolModal'
 import AdminContext from "../../../AdminContext"
 
-// const schoolAdd = {
-//   id: "school-add",
-//   title: "Create New School",
-//   text: "Fill out the following fields to add a new school.",
-//   content: () => { return (<SchoolAddModal />) },
-//   closeable: true,
-// }
+const schoolAdd = {
+  id: "school-add",
+  title: "Create New School",
+  text: "Fill out the following fields to add a new school.",
+  content: () => { return (<SchoolAddModal />) },
+  closeable: true,
+}
 
-// const newTeacher = {
-//   id: "new-teacher",
-//   title: "Add Teacher",
-//   text: "Enter the teacher's information in the fields below.",
-//   content: () => { return <NewTeacherModal /> },
-//   closeable: true,
-// }
+const newTeacher = {
+  id: "new-teacher",
+  title: "Add Teacher",
+  text: "Enter the teacher's information in the fields below.",
+  content: () => { return <NewTeacherModal /> },
+  closeable: true,
+}
 
-// const editTeacher = {
-//   id: "edit-teacher",
-//   title: "Edit Teacher",
-//   text: "Use these fields to modify your teacher's information.",
-//   content: () => { return <EditTeacherModal /> },
-//   closeable: true,
-// }
+const editTeacher = {
+  id: "edit-teacher",
+  title: "Edit Teacher",
+  text: "Use these fields to modify your teacher's information.",
+  content: () => { return <EditTeacherModal /> },
+  closeable: true,
+}
 
 const editSchool = {
   id: "school-edit",
@@ -41,7 +41,7 @@ const editSchool = {
 const loading = {
   id: "loading",
   title: "Loading...",
-  text: "Please wait while we load your class information.",
+  text: "Please wait while we load your school information.",
   content: () => { return <section /> },
   closeable: false,
 }
@@ -49,7 +49,7 @@ const loading = {
 const error = {
   id: "error",
   title: "Error",
-  text: "We could not load your class information. Please try again later.",
+  text: "We could not load your school information. Please try again later.",
   content: () => { return <section /> },
   closeable: false,
 }
@@ -61,9 +61,9 @@ function Modals() {
     <section>
       <ModalBase info={loading} />
       <ModalBase info={error} />
-      {/* <ModalBase info={schoolAdd} />
+      <ModalBase info={schoolAdd} />
       <ModalBase info={newTeacher} />
-      <ModalBase info={editTeacher} /> */}
+      <ModalBase info={editTeacher} />
       <ModalBase info={editSchool} />
     </section>
   );

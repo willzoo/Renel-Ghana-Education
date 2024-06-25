@@ -17,7 +17,7 @@ function TeacherItem(props) {
 
         handleSelect(event);
 
-        //OpenModal("edit-teacher");
+        OpenModal("edit-teacher");
     }
 
     useEffect(() => { // update the edit form's input parameters every time edit button is pressed

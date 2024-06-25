@@ -4,6 +4,7 @@ import SchoolAddButton from './SchoolAddButton/SchoolAddButton';
 import Schools from './Schools/Schools'
 import AdminContext from '../../../AdminContext';
 //import Profile from './Profile/Profile';
+import Logo from './Logo/Logo';
 
 function Sidebar() {
   const { schoolInfo, setSchoolInfo } = useContext(AdminContext).schoolInfo;
@@ -13,7 +14,7 @@ function Sidebar() {
       <div className="sidebar">
         <div style={{ height: '100px' }}></div> {/* set gap of 100 px */}
 
-        {/* <Profile /> change to edutracker logo*/}
+        <Logo />
 
         <div style={{ height: '50px' }}></div> {/* set gap of 50 px */}
 

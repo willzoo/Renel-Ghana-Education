@@ -45,7 +45,7 @@ def create_teacher():
         )
         print(result2)
 
-        return jsonify({"message": "Teacher created successfully"}), 201
+        return jsonify({"message": "Teacher created successfully","_id": str(teacher_id)}), 201
 
     except Exception as e:
         return jsonify({"error": str(e)}),
@@ -213,6 +213,40 @@ def register_teacher():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#Route to delete a teacher
+@teacher_bp.route('/teachers/<teacher_id>', methods=['DELETE'])
+def delete_teacher(teacher_id):
+    try:
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+        
+        # Find the teacher to get the school_id
+        teacher = db.teachers.find_one({"_id": ObjectId(teacher_id)})
+        
+        if not teacher:
+            return jsonify({"error": "Teacher not found"}), 404
+
+        school_id = teacher.get('school_id')
+
+        # Delete the teacher from the teachers collection
+        result = db.teachers.delete_one({"_id": ObjectId(teacher_id)})
+
+        if result.deleted_count == 0:
+            return jsonify({"error": "Failed to delete teacher"}), 500
+
+        # Remove the teacher from the school's teacher list
+        result2 = db.schools.update_one(
+            {"_id": ObjectId(school_id)},
+            {"$pull": {"teachers": ObjectId(teacher_id)}}
+        )
+
+        if result2.modified_count == 0:
+            return jsonify({"error": "Failed to update school's teacher list"}), 500
+
+        return jsonify({"message": "Teacher deleted successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 
