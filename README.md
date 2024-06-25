@@ -58,9 +58,24 @@ EduTracker is an attendance tracking system developed for the Renel Ghana Founda
 - Complete graduation checklist, transfer student menu, admin dashboard capabilities, and reintegration tracker.
 - Host the React frontend on WordPress or AWS.
 - Host the backend server on AWS.
+---
 
-Renel Ghana 1: Education  
-Scrum Master: William Zhu
-Product Manager: Rebecca Weinstein, 
-Backend Developer: Luis Ferrer
-Frontend Developer: Patrick Kallenbach
+## Project Team
+
+**Renel Ghana 1: Education**
+
+**CIS4930 Special Topics in CISE: Software Engineering and UX Design**  
+**Ghana Study Abroad Summer A 2024**
+
+- **Scrum Master:** William Zhu
+- **Product Manager:** Rebecca Weinstein
+- **Backend Developer:** Luis Ferrer
+- **Frontend Developer:** Patrick Kallenbach
+
+## Acknowledgements
+
+**Professor Sanethia Thomas, PhD**  
+Sanethia Thomas, PhD University of Florida, Computer & Information Science & Engineering
+
+**Teaching Assistant Mouray Hutchinson**  
+Mouray Hutchinson, Pursuing B.A in African American Studies & B.S Computer Science, University of Florida
