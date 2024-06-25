@@ -3,33 +3,31 @@ import ClassItem from '../ClassItem/ClassItem'
 import './Classes.css'
 import TeacherContext from "../../../../TeacherContext";
 
-function ClassesList(props) {
+function ClassesList(props) { // container for classes
     const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
     const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
     const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
 
-    const deselectAll = () => {
-        if (!selectedClass) return;
-    
-        const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class'));
-        if (!sidebarClassElements) return;
-    
-        sidebarClassElements.forEach((element) => {
-          element.classList.remove('selected');
-        });
+    const deselectAll = () => { // deleselct all classes when the background is clicked
+        try {
+            const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class')); //  get all sidebar classes
         
-        setSelectedClass(null);
-        setSelectedStudent(null);
+            sidebarClassElements.forEach((element) => {
+              element.classList.remove('selected'); // remove selected class from all sidebar class items
+            });
+            
+            setSelectedClass(null); // deselect class
+            setSelectedStudent(null); // deselect student
+        } catch (e) {};
     }
 
-    let classList = [];
+    let classList = []; // initialize blank class list
     for (let i = 0; i < classInfo.classes.length; i++) {
-        // add each classItem to items list with data set by each class info
-        classList.push((<ClassItem id={i} />));
+        classList.push((<ClassItem id={i} data={classInfo.classes[i]}/>)); // add new class item to list
     }
 
     return (
-        <div className="sidebar-classes-container" onClick={deselectAll}>
+        <div className="sidebar-classes-container" onClick={deselectAll}> {/* deselect all classes when backdrop is selected */}
             {/* Section title */}
             <h1>Classes</h1>
             <p>Select a class to view students</p>

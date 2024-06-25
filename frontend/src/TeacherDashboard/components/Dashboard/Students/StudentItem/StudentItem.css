@@ -12,16 +12,17 @@
     justify-content: space-between;
 }
 
-/* hover animation for sidebar class */
+/* hover animation for student */
 .student-list-item:hover {
   background-color: #fcf7ec;
 }
 
+/* selected animation for student list item */
 .student-list-item.selected {
   background-color: #fff0d6;
 }
 
-/* title text of individual class item */
+/* title text of individual student item */
 .student-list-item .title {
     font-family: 'Open Sans', sans-serif;
     color:#356887;
@@ -33,7 +34,7 @@
     margin-top: -3px;
 }
 
-/* body text of class item */
+/* body text of student item */
 .student-list-item .body {
     font-family: 'Open Sans', sans-serif;
     color:#457B9D;
@@ -43,7 +44,7 @@
     margin: 0px;
 }
 
-/* sidebar class edit button */
+/* student edit button */
 .edit-button {
     vertical-align: middle;
     position: relative;

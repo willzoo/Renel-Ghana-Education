@@ -16,6 +16,7 @@
   background-color: #fcf7ec;
 }
 
+/* selected class styling */
 .sidebar-class.selected {
   background-color: #fff0d6;
 }

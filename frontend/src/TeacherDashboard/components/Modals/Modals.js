@@ -7,6 +7,7 @@ import EditStudentModal from "./EditStudentModal/EditStudentModal"
 import EditClassModal from './EditClassModal/EditClassModal'
 import TeacherContext from "../../../TeacherContext"
 
+// vvv base information is initialized in Modals.js to keep all in one place
 const classAdd = {
   id: "class-add",
   title: "Create New Class",
@@ -51,7 +52,7 @@ const loading = {
   id: "loading",
   title: "Loading...",
   text: "Please wait while we load your class information.",
-  content: () => { return <section /> },
+  content: () => { return <section /> }, // loading does not have any content
   closeable: false,
 }
 
@@ -59,15 +60,15 @@ const error = {
   id: "error",
   title: "Error",
   text: "We could not load your class information. Please try again later.",
-  content: () => { return <section /> },
+  content: () => { return <section /> }, // error does not have any content
   closeable: false,
 }
 
 function Modals() {
-  const {isClassAddOpen, setClassAddOpen} = useContext(TeacherContext);
 
   return (
     <section>
+      {/* add each modal to the page */}
       <ModalBase info={loading} />
       <ModalBase info={error} />
       <ModalBase info={classAdd} />

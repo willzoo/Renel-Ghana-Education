@@ -3,6 +3,7 @@
     text-align: center;
   }
 
+  /* container for modal buttons, for proper distribution on bottom of modal */
   .modal-buttons-section {
     text-align: center;
     position: fixed;
@@ -45,7 +46,7 @@
     width: 100px;
   }
   
-  /* submit button and general button styling */
+  /* delete button styling, with custom colors */
   .modal-delete input[type="button"] {
     color: #e7dada;
     font-size: 16px;

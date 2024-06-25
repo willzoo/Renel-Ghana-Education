@@ -2,10 +2,10 @@ import React from 'react'
 import './ModalBase.css'
 import { CloseModal } from '../../../../../utils/functions'
 
-function ModalBase(props) {
-    const content = props.info.content();
+function ModalBase(props) { // base for all modals, general construction that is built upon by other modal js files
+    const content = props.info.content(); // initialize "content" function, which is just component function
 
-    const closeModal = () => {
+    const closeModal = () => { // function reference to close modal
         CloseModal(props.info.id);
     };
 
@@ -13,25 +13,26 @@ function ModalBase(props) {
         e.stopPropagation(); // This will prevent the click from reaching the underlay
     };
 
-    if (props.info.closeable) {
+    // three different kinds of modals, closable, then custom loading and error modals
+    if (props.info.closeable) { // if general closeable modal
         return (
-            <div className="modal-underlay" id={`${props.info.id}-modal-underlay`} onClick={closeModal}>
-                <div className="modal" id={`${props.info.id}-modal`} onClick={stopModalClick}>
+            <div className="modal-underlay" id={`${props.info.id}-modal-underlay`} onClick={closeModal}> {/* add modal underlay */}
+                <div className="modal" id={`${props.info.id}-modal`} onClick={stopModalClick}> {/* add modal base */}
                     <div>
-                        <span className="title">{props.info.title}</span>
-                        <span className="close" title="Cancel" onClick={closeModal}>&times;</span>
+                        <span className="title">{props.info.title}</span> {/* modal title */}
+                        <span className="close" title="Cancel" onClick={closeModal}>&times;</span> {/* modal close button */}
                         <br />
-                        <span className="content">{props.info.text}</span>
+                        <span className="content">{props.info.text}</span> {/* modal content */}
                     </div>
-                    <div id={`${props.info.id}-modal-root`}>
-                        {content}
+                    <div id={`${props.info.id}-modal-root`}> {/* base for modal text input */}
+                        {content} {/* run "content" function, which loads other modal js files */}
                     </div>
 
                 </div>
             </div>
         );
     }
-    else if (props.info.id == "loading") {
+    else if (props.info.id == "loading") { // if modal is loading screen
         return (
             <div className="modal-underlay blurred-modal-underlay" style={{ display: 'block' }} id={`${props.info.id}-modal-underlay`}>
                 <div className="modal displayed-modal" id={`${props.info.id}-modal`}>
@@ -42,7 +43,7 @@ function ModalBase(props) {
         )
     }
 
-    else if (props.info.id == "error") {
+    else if (props.info.id == "error") { // if modal is error
         return (
             <div className="modal-underlay" id={`${props.info.id}-modal-underlay`}>
                 <div className="modal" id={`${props.info.id}-modal`}>

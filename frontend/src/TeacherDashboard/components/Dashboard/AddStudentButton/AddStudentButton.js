@@ -7,26 +7,26 @@ import TeacherContext from '../../../../TeacherContext';
 function AddStudentButton(props) {
   const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
 
-  const handleClick = () => {
-    if (props.info.id === "transfer") {
+  const handleClick = () => { // when button is clicked
+    if (props.info.id === "transfer") { // TODO: add transfer student modal
       alert("Sorry, this tool has not been completed yet.");
       return;
     }
-    if (selectedClass) {
+    if (selectedClass) { // if class exists, open the corresponding modal
       OpenModal(`${props.info.id}-student`);
     }
-    else {
+    else { // otherwise, warn user
       alert("Please select a class first.");
     }
   }
 
 
   return (
-    <div className="add-student-button" onClick={handleClick}>
-      <div className="icon">
+    <div className="add-student-button" onClick={handleClick}> {/* add button division */}
+      <div className="icon"> {/* Add icon container with icon inside */}
         <FontAwesomeIcon icon={props.info.icon} />
       </div>
-      <p className="text">{props.info.text}</p>
+      <p className="text">{props.info.text}</p> {/* Add button text */}
     </div>
   );
 }

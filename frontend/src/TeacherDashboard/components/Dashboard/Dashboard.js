@@ -9,8 +9,8 @@ import { faPlus, faArrowRight, faArrowDown } from '@fortawesome/free-solid-svg-i
 import './Dashboard.css'
 import Logo from './Logo/Logo';
 
-function Dashboard(props) {
-    let buttons = {
+function Dashboard(props) { // main dashboard page
+    let buttons = { // define add student buttons
         newStudent: { id: "new", text: "Add New Student", icon: faPlus },
         returningStudent: { id: "returning", text: "Add Returning Student", icon: faArrowDown },
         transferStudent: { id: "transfer", text: "Add Transfer Student", icon: faArrowRight },
@@ -18,12 +18,11 @@ function Dashboard(props) {
 
     return (<section>
         <div className="main">
-            <div className="header-info">
-                {/* <div>EduTracker Logo will eventually go here :)</div> */}
-                <Logo />
-                <Indicators />
+            <div className="header-info"> {/* define header boundaries */}
+                <Logo /> {/* add logo in top left corner */}
+                <Indicators /> {/* add indicators in top right corner */}
             </div>
-            <div style={{ height: '20px' }}></div>
+            <div style={{ height: '20px' }}></div> {/* division between header and buttons */}
 
             {/* add student buttons */}
             <div className="add-student-section">
@@ -35,7 +34,7 @@ function Dashboard(props) {
             </div>
 
 
-            <Students />
+            <Students /> {/* add students list to main screen */}
 
         </div>
     </section>

@@ -5,7 +5,7 @@ import Classes from './Classes/Classes'
 import TeacherContext from '../../../TeacherContext';
 import Profile from './Profile/Profile';
 
-function Sidebar() {
+function Sidebar() { // create sidebar content
   const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
 
   return (
@@ -13,7 +13,7 @@ function Sidebar() {
       <div className="sidebar">
         <div style={{ height: '100px' }}></div> {/* set gap of 100 px */}
 
-        <Profile /> {/* <!-- add profile info --> */}
+        <Profile /> {/* add profile info */}
 
         <div style={{ height: '50px' }}></div> {/* set gap of 50 px */}
 
@@ -27,9 +27,9 @@ function Sidebar() {
 
         <div style={{ height: '50px' }}></div> {/* set gap of 50 px */}
 
-        <ClassAddButton />
+        <ClassAddButton /> {/* add classAddButton above classes */}
         <div style={{ height: '50px' }}></div> {/* set gap of 50 px */}
-        <Classes />
+        <Classes /> {/* display sidebar classes */}
 
       </div>
     </section>
