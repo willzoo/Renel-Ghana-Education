@@ -1,3 +1,4 @@
+/* animations for underlay */
 @keyframes underlay-in {
     from {background-color: rgb(0, 0, 0, 0);
           backdrop-filter: blur(0px)}
@@ -12,6 +13,7 @@
             backdrop-filter: blur(0px)}
   }
 
+  /* base styling for underlay */
   .modal-underlay {
     width:100%;
     height:100%;
@@ -26,11 +28,13 @@
     animation-fill-mode: forwards;
   }
 
+  /* styling for open underlay, blurring content below */
   .blurred-modal-underlay {
     animation: underlay-in 0.2s ease-in-out;
     animation-fill-mode: forwards;
   }
 
+  /* animations for modal */
 @keyframes modal-in {
     from {opacity: 0; backdrop-filter: blur(6px);}
     to {opacity: 1; backdrop-filter: blur(0px);}
@@ -41,6 +45,7 @@
     to {opacity: 0; backdrop-filter: blur(6px);}
   }
 
+  /* base styling for modal */
   .modal {
     width: 600px;
     max-height: calc(100% - 150px);
@@ -59,11 +64,13 @@
     animation-fill-mode: forwards;
   }
 
+  /* styling for open modal */
   .displayed-modal {
     animation: modal-in 0.1s;
     animation-fill-mode: forwards;
   }
 
+  /* modal title styling */
   .modal .title {
     font-family: 'Open Sans', sans-serif;
     color:#09393f;
@@ -75,6 +82,7 @@
     margin-bottom: 20px;
   }
 
+  /* modal text content styling */
   .modal .content {
     font-family: 'Open Sans', sans-serif;
     text-align: center;
@@ -86,6 +94,7 @@
     font-size: 16px;
   }
 
+  /* modal close button styling */
   .modal .close {
     color:#9fa5a6;
     font-size: 30px;
@@ -97,10 +106,12 @@
     transition: 0.1s;
   }
 
+  /* hvoer animation for close button */
   .modal .close:hover {
     color:#1d2424
   }
 
+  /* styling for text inputs, allowing for overflow of menus */
   .input-list {
     padding: 20px;
     padding-bottom: 40px;

@@ -12,12 +12,12 @@ import TeacherContext from '../../../../TeacherContext';
 import Delete from '../components/Buttons/Delete';
 import RadioButton from '../components/Checkbox/RadioButton';
 
-function EditStudentModal(props) {
+function EditStudentModal(props) { // modal for editing student content
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
     const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
 
-    let editStudentInfo = {
+    let editStudentInfo = { // initialization for all student questions
         studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name-edit" },
         studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id-edit" },
         studentDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "student-dob-edit" },
@@ -28,9 +28,10 @@ function EditStudentModal(props) {
         additionalInfo: { title: "Additional Information (optional)", placeholder: "Any additional information about the student?", id: "additional-info-edit", required: false },
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = (event) => { // run on submit
+        event.preventDefault(); // dont refresh page
 
+        // get all values from modal
         let studentName = document.getElementById('student-name-edit').value;
         let studentID = document.getElementById('student-id-edit').value;
         let studentDOB = document.getElementById('student-dob-edit').value;
@@ -41,13 +42,15 @@ function EditStudentModal(props) {
         let additionalInfo = document.getElementById('additional-info-edit').value;
 
         if (selectedClass.students.some(std =>
-            std.student_school_id === studentID && std._id !== selectedStudent._id
+            std.student_school_id === studentID && std._id !== selectedStudent._id // if student with same school id but different system id exists
         )) {
-            alert("You already have a student with this ID. Please choose a unique ID.");
+            alert("You already have a student with this ID. Please choose a unique ID."); // show error
             return;
         }
 
-        let content = {
+        CloseModal("edit-student");
+
+        let content = { // initialize content
             'name': studentName,
             'guardian_name': guardianName,
             'guardian_contact': guardianContact,
@@ -62,31 +65,28 @@ function EditStudentModal(props) {
             'history': [],
         };
 
-        CloseModal("edit-student");
-
         let tempStudents = selectedClass.students;
         let studentToEdit = tempStudents.find(std =>
-            std._id === selectedStudent._id
+            std._id === selectedStudent._id // find corresponding student to edit
         );
 
         if (studentToEdit) {
-            Object.assign(studentToEdit, content);
+            Object.assign(studentToEdit, content); // update values
         }
 
         tempStudents.sort((a, b) => {
-            return a.name.localeCompare(b.name);
+            return a.name.localeCompare(b.name); // sort students array alphabetically
         });
 
-        // solution created by AI
-        setSelectedClass((oldSelectedClass) => ({
+        setSelectedClass((oldSelectedClass) => ({ // update selectedClass
             ...oldSelectedClass,
             students: tempStudents,
         }));
 
-        let studentListElements = Array.from(document.getElementsByClassName('student-list-item'));
-        studentListElements.find(std => std.dataset.studentId === selectedStudent._id).scrollIntoView();
+        let studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list items
+        studentListElements.find(std => std.dataset.studentId === selectedStudent._id).scrollIntoView(); // scroll edited student into view
 
-        fetch(`http://127.0.0.1:8000/students/${selectedStudent._id}`, {
+        fetch(`http://127.0.0.1:8000/students/${selectedStudent._id}`, { // update fetch call
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -112,18 +112,18 @@ function EditStudentModal(props) {
             });
     };
 
-    const handleDelete = () => {
-        if (window.confirm("Are you sure you want to delete this student? Their information can be recovered from our system.")) {
-            CloseModal("edit-student");
+    const handleDelete = () => { // run when delete button is clicked
+        if (window.confirm("Are you sure you want to delete this student? Their information can be recovered from our system.")) { // confirmation window
+            CloseModal("edit-student"); // clsoe modal if confirmed
 
-            let tempStudents = selectedClass.students.filter(std => std._id !== selectedStudent._id);
+            let tempStudents = selectedClass.students.filter(std => std._id !== selectedStudent._id); // get list of students without selected student
 
-            setSelectedClass((oldSelectedClass) => ({
+            setSelectedClass((oldSelectedClass) => ({ // remove student from selected class
                 ...oldSelectedClass,
                 students: tempStudents,
             }));
 
-            fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}/${selectedStudent._id}`, {
+            fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}/${selectedStudent._id}`, { // update class to remove student from class
                 method: "PATCH",
                 headers: {
                     'Content-Type': 'application/json'
@@ -144,30 +144,27 @@ function EditStudentModal(props) {
         }
     }
 
-    useEffect(() => {
-        if (!selectedStudent) return;
+    useEffect(() => { // select proper student, update whenever classInfo changes
+        try {
+            const studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list itmes
 
-        const studentListElements = Array.from(document.getElementsByClassName('student-list-item'));
-        if (!studentListElements) return;
+            studentListElements.forEach((element) => {
+                element.classList.remove('selected'); // remove selected class from all
+            });
 
-        studentListElements.forEach((element) => {
-            element.classList.remove('selected');
-        });
+            const selectedElement = studentListElements.find((element) =>
+                element.dataset.studentId === selectedClass._id // find student with proper id
+            );
 
-        const selectedElement = studentListElements.find((element) =>
-            element.dataset.studentId === selectedClass.student_school_id
-        );
+            selectedElement.classList.add('selected'); // select that student
+    } catch (e) {};
+    }, [classInfo]) // update whenever classInfo updates
 
-        if (!selectedElement) return;
-        selectedElement.classList.add('selected');
-    }, [classInfo])
-
-    // console.log("Edit student input called: " + props.student.name);
     return (
         <section>
-            <form id="edit-student-form" onSubmit={handleSubmit}>
+            <form id="edit-student-form" onSubmit={handleSubmit}> {/* run handleSubmit when form is submitted */}
                 <section className="input-list" id="edit-student-text-input">
-                    <br />
+                    <br /> {/* add all text inputs, and radio button for disability status */}
                     <TextInput info={editStudentInfo.studentName} />
                     <TextInput info={editStudentInfo.studentID} />
                     <TextInput info={editStudentInfo.studentDOB} />
@@ -180,9 +177,9 @@ function EditStudentModal(props) {
                 </section>
                 <br /><br /><br /><br />
                 <div className='modal-buttons-section'>
-                    <Delete value="Delete" onClick={handleDelete} />
+                    <Delete value="Delete" onClick={handleDelete} /> {/* add delete button */}
                     <div style={{ display: 'inline-block', width: '20px' }}></div> {/* Gap between buttons */}
-                    <Submit value="Save" />
+                    <Submit value="Save" /> {/* add submit button */}
                 </div>
             </form>
         </section>

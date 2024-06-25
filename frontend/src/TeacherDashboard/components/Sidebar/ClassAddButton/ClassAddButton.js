@@ -6,8 +6,8 @@ import { OpenModal } from '../../../../utils/functions'
 
 function ClassAddButton() {
   return (
-    <div className="create-class-button" onClick={() => OpenModal('class-add')}>
-      <FontAwesomeIcon icon={faPlus} /> &nbsp; Create New Class
+    <div className="create-class-button" onClick={() => OpenModal('class-add')}> {/* open class modal when clicked */}
+      <FontAwesomeIcon icon={faPlus} /> &nbsp; Create New Class {/* add plus icon and text */}
     </div>
   );
 }
