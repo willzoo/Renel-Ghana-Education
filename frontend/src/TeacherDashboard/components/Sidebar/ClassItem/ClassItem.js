@@ -12,6 +12,7 @@ function ClassItem({data, id}) { // individual class item element
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
     const { classToEdit, setClassToEdit, } = useContext(TeacherContext).classToEdit;
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
+    const { updateSelection, setUpdateSelection } = useContext(TeacherContext).updateSelection;
     const { isModalWaiting, setModalWaiting } = useContext(TeacherContext).modalWaiting;
 
     const handleEdit = (event) => { // run when edit button is clicked
@@ -37,33 +38,9 @@ function ClassItem({data, id}) { // individual class item element
         setSelectedStudent(null); // select no students
     };
 
-    function findDifferences(a, b) {
-        const maxLength = Math.max(a.length, b.length);
-        let diff = '';
-    
-        for (let i = 0; i < maxLength; i++) {
-            if (a[i] !== b[i]) {
-                diff += `(${a[i] || ''} vs ${b[i] || ''})\n`;
-            }
-        }
-    
-        return diff;
-    }
-    
-    // const string1 = 'this is an example';
-    // const string2 = 'this is an examp';
-    // const highlightedDiff = findDifferences(string1, string2);
-    
-    // // Show the differences in an alert
-    // alert(`Differences:\n${highlightedDiff}`);
-    
-
     useEffect(() => { // select correct class after editing, run whenever classInfo is updated
         try {
             const selectedElement = document.getElementById(data._id);
-
-            const highlightedDiff = findDifferences(data._id, selectedClass._id);
-            alert(highlightedDiff);
 
             if (data._id === selectedClass._id) {
                 selectedElement.classList.add('selected');
@@ -74,7 +51,7 @@ function ClassItem({data, id}) { // individual class item element
 
             selectedElement.scrollIntoView();
         } catch (e) { };
-    }, [selectedClass, classInfo]) // dependencies, update whenever classInfo changes
+    }, [selectedClass, selectedClass?.class_name]) // dependencies, update whenever classInfo changes
 
     return (
         <li key={data._id}>

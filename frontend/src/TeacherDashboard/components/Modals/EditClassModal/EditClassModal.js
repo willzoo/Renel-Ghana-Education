@@ -15,6 +15,7 @@ function EditClassModal() { // class edit modal
   const { classToEdit, setClassToEdit } = useContext(TeacherContext).classToEdit;
   const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
   const { isModalWaiting, setModalWaiting } = useContext(TeacherContext).modalWaiting;
+  const { updateSelection, setUpdateSelection } = useContext(TeacherContext).updateSelection;
 
   const editClassInfo = { // base text input values
     className: { title: "Class Name (optional)", placeholder: "Enter a class name", id: "class-name-edit", required: false },
@@ -73,7 +74,6 @@ function EditClassModal() { // class edit modal
         CloseModal('class-edit'); // close modal
 
         setModalWaiting(false);
-        setSelectedClass(content);
       })
       .catch(error => {
         console.error('Error fetching data:', error);

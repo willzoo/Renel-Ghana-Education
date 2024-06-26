@@ -30,6 +30,8 @@ function TeacherDashboard() {
 
   const [isModalWaiting, setModalWaiting] = useState(false);
 
+  const [updateSelection, setUpdateSelection] = useState(0);
+
   let loaded = false;
 
   useEffect(() => {
@@ -76,6 +78,7 @@ function TeacherDashboard() {
       'selectedClass': { selectedClass, setSelectedClass },
       'classToEdit': { classToEdit, setClassToEdit },
       'selectedStudent': { selectedStudent, setSelectedStudent },
+      'updateSelection': { updateSelection, setUpdateSelection },
       'modalWaiting': { isModalWaiting, setModalWaiting },
     }}>
       <section>
