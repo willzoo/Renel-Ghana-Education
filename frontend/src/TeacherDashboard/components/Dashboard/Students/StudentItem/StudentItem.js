@@ -36,15 +36,6 @@ function StudentItem({data}) { // individual item in student list, container for
     const handleSelect = (event) => { // when class is selected or edited
         event.stopPropagation(); // prevent container from being clicked, allows for separate click functionality of container
 
-        // add "selected" class to clicked student item
-        // const studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list itmes
-        // studentListElements.forEach((element) => {
-        //     element.classList.remove('selected'); // remove the selected class from all students
-        // });
-
-        // const clickedElement = studentListElements[id]; // get this student from the list of students
-        // clickedElement.classList.add('selected'); // add selected class to student
-
         setSelectedStudent(data); // set global selectedStudent variable
     }
     

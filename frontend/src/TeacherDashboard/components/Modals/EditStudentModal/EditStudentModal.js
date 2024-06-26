@@ -139,22 +139,6 @@ function EditStudentModal(props) { // modal for editing student content
         }
     }
 
-    useEffect(() => { // select proper student, update whenever classInfo changes
-        try {
-            const studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list itmes
-
-            studentListElements.forEach((element) => {
-                element.classList.remove('selected'); // remove selected class from all
-            });
-
-            const selectedElement = studentListElements.find((element) =>
-                element.dataset.studentId === selectedClass._id // find student with proper id
-            );
-
-            selectedElement.classList.add('selected'); // select that student
-    } catch (e) {};
-    }, [classInfo]) // update whenever classInfo updates
-
     return (
         <section>
             <form id="edit-student-form" onSubmit={handleSubmit}> {/* run handleSubmit when form is submitted */}
