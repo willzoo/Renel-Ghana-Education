@@ -17,7 +17,6 @@ function App() {
     <>
        <Routes>
        {/* <Route path="/" element={<LandingPage />} /> */}
-          <Route path="/TeacherLogin/" element= {<TeacherLogin />} />
           <Route path="/Reintegration" element={<Reintegration />} />
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/SchoolManagement" element={<SchoolManagement />} />
