@@ -10,15 +10,6 @@ function Students() {
     const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
 
     const deselectAll = () => {
-        if (!selectedStudent) return;
-    
-        const studentListElements = Array.from(document.getElementsByClassName('student-list-item'));
-        if (!studentListElements) return;
-    
-        studentListElements.forEach((element) => {
-          element.classList.remove('selected');
-        });
-        
         setSelectedStudent(null);
     }
 

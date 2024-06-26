@@ -4,7 +4,7 @@ import './ClassItem.css'
 import { OpenModal } from '../../../../utils/functions'
 import TeacherContext from '../../../../TeacherContext';
 
-function ClassItem({data, id}) { // individual class item element
+function ClassItem({data}) { // individual class item element
 
     let [isEditButtonPressed, setEditButtonPressed] = useState(0); // update variable whenever edit button is pressed, used to update modal
 
@@ -39,19 +39,17 @@ function ClassItem({data, id}) { // individual class item element
     };
 
     useEffect(() => { // select correct class after editing, run whenever classInfo is updated
-        try {
-            const selectedElement = document.getElementById(data._id);
+        const selectedElement = document.getElementById(data._id);
 
-            if (data._id === selectedClass._id) {
-                selectedElement.classList.add('selected');
-            }
-            else {
-                selectedElement.classList.remove('selected');
-            }
+        if (data._id === selectedClass?._id) {
+            selectedElement.classList.add('selected');
+        }
+        else {
+            selectedElement.classList.remove('selected');
+        }
 
-            selectedElement.scrollIntoView();
-        } catch (e) { };
-    }, [selectedClass, selectedClass?.class_name]) // dependencies, update whenever classInfo changes
+        selectedElement.scrollIntoView();
+    }, [selectedClass, selectedClass?.class_name]) // dependencies, update whenever selectedClass changes, or when its name changes
 
     return (
         <li key={data._id}>

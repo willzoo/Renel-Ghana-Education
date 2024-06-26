@@ -82,12 +82,7 @@ function EditStudentModal(props) { // modal for editing student content
             })
             .then(data => {
                 console.log('Student information updated:', data);
-                const studentIndex = selectedClass.students.findIndex(student => student._id === selectedStudent._id);
-                if (studentIndex > -1) {
-                    selectedClass.students[studentIndex] = content;
-                    selectedClass.students[studentIndex]['_id'] = selectedStudent._id;
-                }
-
+                
                 Object.assign(selectedClass.students.find(std => std._id === selectedStudent._id), content); // update values
 
                 selectedClass.students.sort((a, b) => {
@@ -95,9 +90,6 @@ function EditStudentModal(props) { // modal for editing student content
                 });
 
                 Object.assign(classInfo.classes.find(cls => cls._id === selectedClass._id), selectedClass);
-
-                let studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list items
-                studentListElements.find(std => std.dataset.studentId === selectedStudent._id).scrollIntoView(); // scroll edited student into view
                 
                 CloseModal("edit-student");
 
@@ -131,8 +123,9 @@ function EditStudentModal(props) { // modal for editing student content
                     selectedClass.students = selectedClass.students.filter(std => std._id !== selectedStudent._id);
                     
                     Object.assign(classInfo.classes.find(cls => cls._id === selectedClass._id), selectedClass);
-                    
+
                     CloseModal("edit-student"); // clsoe modal if confirmed
+                    setSelectedStudent(null);
                     setModalWaiting(false);
                 })
                 .catch(error => {
@@ -143,8 +136,6 @@ function EditStudentModal(props) { // modal for editing student content
                 });
 
             try { document.getElementById('students-list').scrollTop = 0; } catch (e) { };
-
-            setSelectedStudent(null);
         }
     }
 

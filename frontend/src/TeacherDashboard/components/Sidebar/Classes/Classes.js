@@ -9,16 +9,8 @@ function Classes() { // container for classes
     const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
 
     const deselectAll = () => { // deleselct all classes when the background is clicked
-        try {
-            const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class')); //  get all sidebar classes
-        
-            sidebarClassElements.forEach((element) => {
-              element.classList.remove('selected'); // remove selected class from all sidebar class items
-            });
-            
-            setSelectedClass(null); // deselect class
-            setSelectedStudent(null); // deselect student
-        } catch (e) {};
+        setSelectedClass(null); // deselect class
+        setSelectedStudent(null); // deselect student
     }
 
     let classList = []; // initialize blank class list

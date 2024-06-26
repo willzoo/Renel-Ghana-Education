@@ -9,15 +9,7 @@ function Students() { // container for student items
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
     const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
 
-    const deselectAll = () => { // if backdrop is selected  
-        try {  
-            const studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list items
-        
-            studentListElements.forEach((element) => {
-            element.classList.remove('selected'); // remove the selected class from each student item
-            });
-        } catch (e) {};
-        
+    const deselectAll = () => { // if backdrop is selected         
         setSelectedStudent(null); // set selectedStudent to none
     }
 

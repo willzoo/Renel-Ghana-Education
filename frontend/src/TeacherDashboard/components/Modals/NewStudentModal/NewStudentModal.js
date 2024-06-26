@@ -94,6 +94,8 @@ function NewStudentModal() { // add new student to database
                 Object.assign(classInfo.classes.find(cls => cls._id === selectedClass._id), selectedClass);
                 
                 CloseModal("new-student");
+                
+                setSelectedStudent(content);
                 setModalWaiting(false);
         
             })
