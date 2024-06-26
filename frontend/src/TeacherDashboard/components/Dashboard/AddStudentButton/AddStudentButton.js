@@ -8,7 +8,7 @@ function AddStudentButton(props) {
   const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
 
   const handleClick = () => { // when button is clicked
-    if (props.info.id === "transfer") { // TODO: add transfer student modal
+    if (props.info.id === "transfer" || props.info.id === 'returning') { // TODO: add transfer student modal
       alert("Sorry, this tool has not been completed yet.");
       return;
     }

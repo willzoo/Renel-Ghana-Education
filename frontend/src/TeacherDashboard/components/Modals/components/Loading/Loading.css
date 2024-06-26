@@ -1,0 +1,27 @@
+/* https://stackoverflow.com/questions/16771225/css3-rotate-animation */
+
+.loading {
+    -webkit-animation:spin 1s linear infinite;
+    -moz-animation:spin 1s linear infinite;
+    animation:spin 1s linear infinite;
+}
+
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+    } 
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%
+}

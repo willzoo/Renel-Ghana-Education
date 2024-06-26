@@ -4,7 +4,7 @@ import './ClassItem.css'
 import { OpenModal } from '../../../../utils/functions'
 import TeacherContext from '../../../../TeacherContext';
 
-function ClassItem(props) { // individual class item element
+function ClassItem({data, id}) { // individual class item element
 
     let [isEditButtonPressed, setEditButtonPressed] = useState(0); // update variable whenever edit button is pressed, used to update modal
 
@@ -12,6 +12,7 @@ function ClassItem(props) { // individual class item element
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
     const { classToEdit, setClassToEdit, } = useContext(TeacherContext).classToEdit;
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
+    const { isModalWaiting, setModalWaiting } = useContext(TeacherContext).modalWaiting;
 
     const handleEdit = (event) => { // run when edit button is clicked
 
@@ -22,7 +23,7 @@ function ClassItem(props) { // individual class item element
     }
 
     useEffect(() => { // update the edit form's input parameters every time edit button is pressed
-        if (selectedClass && selectedClass.id === props.data.id) {
+        if (selectedClass && selectedClass.id === data.id) {
             // if class name is the same as grade level, open as blank
             document.getElementById('class-name-edit').value = selectedClass.class_name != selectedClass.grade_level ? selectedClass.class_name : "";
             document.getElementById('grade-level-edit').value = selectedClass.grade_level;
@@ -32,29 +33,60 @@ function ClassItem(props) { // individual class item element
     const handleSelect = (event) => { // run when class is selected
         event.stopPropagation(); // stop container from being selected
 
-        const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class')); // get all sidebar classes
-        sidebarClassElements.forEach((element) => {
-            element.classList.remove('selected'); // remove selected class from all
-        });
-
-        const clickedElement = sidebarClassElements[props.id]; // get this class item
-        clickedElement.classList.add('selected'); // select this class
-
-        setSelectedClass(props.data); // set selected class to this class
+        setSelectedClass(data); // set selected class to this class
         setSelectedStudent(null); // select no students
     };
 
+    function findDifferences(a, b) {
+        const maxLength = Math.max(a.length, b.length);
+        let diff = '';
+    
+        for (let i = 0; i < maxLength; i++) {
+            if (a[i] !== b[i]) {
+                diff += `(${a[i] || ''} vs ${b[i] || ''})\n`;
+            }
+        }
+    
+        return diff;
+    }
+    
+    // const string1 = 'this is an example';
+    // const string2 = 'this is an examp';
+    // const highlightedDiff = findDifferences(string1, string2);
+    
+    // // Show the differences in an alert
+    // alert(`Differences:\n${highlightedDiff}`);
+    
+
+    useEffect(() => { // select correct class after editing, run whenever classInfo is updated
+        try {
+            const selectedElement = document.getElementById(data._id);
+
+            const highlightedDiff = findDifferences(data._id, selectedClass._id);
+            alert(highlightedDiff);
+
+            if (data._id === selectedClass._id) {
+                selectedElement.classList.add('selected');
+            }
+            else {
+                selectedElement.classList.remove('selected');
+            }
+
+            selectedElement.scrollIntoView();
+        } catch (e) { };
+    }, [selectedClass, classInfo]) // dependencies, update whenever classInfo changes
+
     return (
-        <li key={props.data._id}>
-            <div className="sidebar-class" id={props.id}
-                data-class-id={props.data._id}
-                data-class-name={props.data.name}
+        <li key={data._id}>
+            <div className="sidebar-class" id={data._id}
+                data-class-id={data._id}
+                data-class-name={data.name}
                 onClick={handleSelect}> {/* create class item and run handleSelect when selected */}
                 <div>
-                    <p className="title">{props.data.class_name}</p> {/* add class name */}
+                    <p className="title">{data.class_name}</p> {/* add class name */}
                     {/* if class name was set as grade level, do not show grade level */}
-                    <p className="body">{props.data.class_name !== props.data.grade_level ? props.data.grade_level : " "}</p>
-                    <p className="body">Total Enrolled Students: {props.data.students.length}</p>
+                    <p className="body">{data.class_name !== data.grade_level ? data.grade_level : " "}</p>
+                    <p className="body">Total Enrolled Students: {data.students.length}</p>
                 </div>
                 <div className="edit-button">
                     <p onClick={handleEdit}>Edit</p> {/* add edit button */}

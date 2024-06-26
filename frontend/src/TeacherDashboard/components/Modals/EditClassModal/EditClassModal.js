@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { CloseModal } from '../../../../utils/functions';
+import { CloseModal, OpenModal } from '../../../../utils/functions';
 
 import '../components/ModalBase/ModalBase.css'
 
@@ -8,11 +8,13 @@ import Delete from '../components/Buttons/Delete'
 import Dropdown from '../components/Dropdown/Dropdown'
 import TextInput from '../components/TextInput/TextInput'
 import TeacherContext from '../../../../TeacherContext';
+import Loading from '../components/Loading/Loading';
 
 function EditClassModal() { // class edit modal
   const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
   const { classToEdit, setClassToEdit } = useContext(TeacherContext).classToEdit;
   const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
+  const { isModalWaiting, setModalWaiting } = useContext(TeacherContext).modalWaiting;
 
   const editClassInfo = { // base text input values
     className: { title: "Class Name (optional)", placeholder: "Enter a class name", id: "class-name-edit", required: false },
@@ -41,7 +43,7 @@ function EditClassModal() { // class edit modal
       return;
     }
 
-    CloseModal('class-edit'); // close modal
+    setModalWaiting(true);
 
     let content = { // assign content
       "class_name": className ? className : gradeLevel,
@@ -50,27 +52,6 @@ function EditClassModal() { // class edit modal
       "school_id": selectedClass.school_id,
       "students": selectedClass.students,
     };
-
-    let tempClasses = classInfo.classes;
-    let classToEdit = tempClasses.find(cls =>
-      cls._id === selectedClass._id
-    );
-
-    if (classToEdit) {
-      Object.assign(classToEdit, content); // modify class information
-    }
-
-    tempClasses.sort((a, b) => {
-      return a.class_name.localeCompare(b.class_name); // sort classes by name alphabetically
-    });
-
-    setClassInfo((oldClassInfo) => { // update classInfo
-      oldClassInfo.classes = tempClasses;
-      return oldClassInfo;
-    });
-
-    let sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class')); // get all sidebar classes
-    sidebarClassElements.find(cls => cls.dataset.classId === selectedClass._id).scrollIntoView(); // bring selected class into view
 
     fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}`, { // fetch call to modify the selected class
       method: "PUT",
@@ -83,6 +64,16 @@ function EditClassModal() { // class edit modal
       .then(data => {
         // Handle the data returned from the server
         console.log(data); // For demonstration purposes; adjust as needed
+
+        Object.assign(classInfo.classes.find(cls => cls._id === selectedClass._id), content);
+
+        classInfo.classes.sort((a, b) => {
+          return a.class_name.localeCompare(b.class_name); // sort classes by name alphabetically
+        });
+        CloseModal('class-edit'); // close modal
+
+        setModalWaiting(false);
+        setSelectedClass(content);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -91,17 +82,7 @@ function EditClassModal() { // class edit modal
 
   const handleDelete = () => { // functionality for class deletion
     if (window.confirm("Are you sure you want to delete this class?")) { // confirmation for class deletion
-      CloseModal('class-edit'); // close modal if confirmed
-
-      // assign tempClasses to all classes without the requested deletion
-      let tempClasses = classInfo.classes.filter(cls => cls._id !== selectedClass._id);
-
-      setClassInfo((oldClassInfo) => {
-        oldClassInfo.classes = tempClasses;
-        return oldClassInfo;
-      });
-
-      setSelectedClass(null); // forget selected student
+      setModalWaiting(true);
 
       fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}`, { // delete selected class
         method: "DELETE",
@@ -112,32 +93,25 @@ function EditClassModal() { // class edit modal
         .then(response => response.json())
         .then(data => {
           // Handle the data returned from the server
-          console.log(data); // For demonstration purposes; adjust as needed
+          CloseModal('class-edit'); // close modal if confirmed
+          
+          classInfo.classes = classInfo.classes.filter(cls => cls._id !== selectedClass._id);
+
+          setSelectedClass(null); // forget selected student
+
+          setModalWaiting(false);
         })
         .catch(error => {
           console.error('Error fetching data:', error);
+          CloseModal('class-edit'); // close modal if confirmed
+          OpenModal('error'); // close modal if confirmed
+          setModalWaiting(false);
         });
 
       try { document.getElementById('sidebar-classes').scrollTop = 0; } catch (e) { };
       // if sidebar-classes exists, scroll to top (try/catch required for initialization)
     }
   }
-
-  useEffect(() => { // select correct class after editing, run whenever classInfo is updated
-    try {
-      const sidebarClassElements = Array.from(document.getElementsByClassName('sidebar-class')); // get all sidebar classes
-
-      sidebarClassElements.forEach((element) => {
-        element.classList.remove('selected'); // remove selected class from all classes
-      });
-
-      const selectedElement = sidebarClassElements.find((element) =>
-        element.dataset.classId === selectedClass._id // find class with corresponding id
-      );
-
-      selectedElement.classList.add('selected'); // add selected class to new selected element
-    } catch (e) { };
-  }, [classInfo]) // dependencies, update whenever classInfo changes
 
   return (
     <section>
@@ -150,9 +124,13 @@ function EditClassModal() { // class edit modal
         </section>
 
         <div className='modal-buttons-section'> {/* formatting for lower modal buttons */}
-          <div><Delete value="Delete" onClick={handleDelete} /></div> {/* delete button */}
-          <div style={{ display: 'inline-block', width: '20px' }}></div> {/* Gap between buttons */}
-          <div><Submit value="Save" /></div> {/* save button */}
+          {isModalWaiting ?
+          (<div style={{height: '40px'}} ><Loading/></div>) :
+          (<>
+            <div><Delete value="Delete" onClick={handleDelete} /></div>
+            <div style={{ display: 'inline-block', width: '20px' }}></div>
+            <div><Submit value="Save" /></div>
+          </>)}
         </div>
       </form>
     </section>

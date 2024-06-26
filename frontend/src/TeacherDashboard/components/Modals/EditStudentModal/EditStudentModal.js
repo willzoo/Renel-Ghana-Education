@@ -11,11 +11,13 @@ import Checkbox from '../components/Checkbox/Checkbox'
 import TeacherContext from '../../../../TeacherContext';
 import Delete from '../components/Buttons/Delete';
 import RadioButton from '../components/Checkbox/RadioButton';
+import Loading from '../components/Loading/Loading';
 
 function EditStudentModal(props) { // modal for editing student content
     const { selectedStudent, setSelectedStudent } = useContext(TeacherContext).selectedStudent;
     const { selectedClass, setSelectedClass } = useContext(TeacherContext).selectedClass;
     const { classInfo, setClassInfo } = useContext(TeacherContext).classInfo;
+    const { isModalWaiting, setModalWaiting } = useContext(TeacherContext).modalWaiting;
 
     let editStudentInfo = { // initialization for all student questions
         studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name-edit" },
@@ -48,7 +50,7 @@ function EditStudentModal(props) { // modal for editing student content
             return;
         }
 
-        CloseModal("edit-student");
+        setModalWaiting(true);
 
         let content = { // initialize content
             'name': studentName,
@@ -64,35 +66,6 @@ function EditStudentModal(props) { // modal for editing student content
             'school_id': classInfo.school_id,
             'history': [],
         };
-
-        let tempStudents = selectedClass.students;
-        let studentToEdit = tempStudents.find(std =>
-            std._id === selectedStudent._id // find corresponding student to edit
-        );
-
-        if (studentToEdit) {
-            Object.assign(studentToEdit, content); // update values
-        }
-
-        tempStudents.sort((a, b) => {
-            return a.name.localeCompare(b.name); // sort students array alphabetically
-        });
-
-        setSelectedClass((oldSelectedClass) => { // update selectedClass
-            oldSelectedClass.students = tempStudents;
-            return oldSelectedClass
-        });
-
-        let tempClasses = classInfo.classes;
-        Object.assign(tempClasses.find(cls => cls._id === selectedClass._id), selectedClass);
-        
-        setClassInfo((oldClassInfo) => { // update selectedClass
-            oldClassInfo.classes = tempClasses;
-            return oldClassInfo
-        });
-
-        let studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list items
-        studentListElements.find(std => std.dataset.studentId === selectedStudent._id).scrollIntoView(); // scroll edited student into view
 
         fetch(`http://127.0.0.1:8000/students/${selectedStudent._id}`, { // update fetch call
             method: 'PATCH',
@@ -114,30 +87,34 @@ function EditStudentModal(props) { // modal for editing student content
                     selectedClass.students[studentIndex] = content;
                     selectedClass.students[studentIndex]['_id'] = selectedStudent._id;
                 }
+
+                Object.assign(selectedClass.students.find(std => std._id === selectedStudent._id), content); // update values
+
+                selectedClass.students.sort((a, b) => {
+                    return a.name.localeCompare(b.name); // sort students array alphabetically
+                });
+
+                Object.assign(classInfo.classes.find(cls => cls._id === selectedClass._id), selectedClass);
+
+                let studentListElements = Array.from(document.getElementsByClassName('student-list-item')); // get all student list items
+                studentListElements.find(std => std.dataset.studentId === selectedStudent._id).scrollIntoView(); // scroll edited student into view
+                
+                CloseModal("edit-student");
+
+                setModalWaiting(false);
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
+                
+                CloseModal("edit-student");
+                OpenModal('error');
+                setModalWaiting(false);
             });
     };
 
     const handleDelete = () => { // run when delete button is clicked
         if (window.confirm("Are you sure you want to delete this student? Their information can be recovered from our system.")) { // confirmation window
-            CloseModal("edit-student"); // clsoe modal if confirmed
-
-            let tempStudents = selectedClass.students.filter(std => std._id !== selectedStudent._id); // get list of students without selected student
-
-            setSelectedClass((oldSelectedClass) => { // remove student from selected class
-                oldSelectedClass.students = tempStudents;
-                return oldSelectedClass;
-            });
-            
-            let tempClasses = classInfo.classes;
-            Object.assign(tempClasses.find(cls => cls._id === selectedClass._id), selectedClass);
-            
-            setClassInfo((oldClassInfo) => { // update selectedClass
-                oldClassInfo.classes = tempClasses;
-                return oldClassInfo;
-            });
+            setModalWaiting(true);
 
             fetch(`http://127.0.0.1:8000/classes/${selectedClass._id}/${selectedStudent._id}`, { // update class to remove student from class
                 method: "PATCH",
@@ -149,9 +126,20 @@ function EditStudentModal(props) { // modal for editing student content
                 .then(data => {
                     // Handle the data returned from the server
                     console.log(data); // For demonstration purposes; adjust as needed
+                    
+                    // get list of students without selected student
+                    selectedClass.students = selectedClass.students.filter(std => std._id !== selectedStudent._id);
+                    
+                    Object.assign(classInfo.classes.find(cls => cls._id === selectedClass._id), selectedClass);
+                    
+                    CloseModal("edit-student"); // clsoe modal if confirmed
+                    setModalWaiting(false);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
+                    CloseModal("edit-student"); // clsoe modal if confirmed
+                    OpenModal('error');
+                    setModalWaiting(false);
                 });
 
             try { document.getElementById('students-list').scrollTop = 0; } catch (e) { };
@@ -192,10 +180,13 @@ function EditStudentModal(props) { // modal for editing student content
                     <br />
                 </section>
                 <br /><br /><br /><br />
-                <div className='modal-buttons-section'>
-                    <Delete value="Delete" onClick={handleDelete} /> {/* add delete button */}
-                    <div style={{ display: 'inline-block', width: '20px' }}></div> {/* Gap between buttons */}
-                    <Submit value="Save" /> {/* add submit button */}
+                <div className='modal-buttons-section'>{isModalWaiting ?
+                    (<div style={{height: '40px'}} ><Loading/></div>) :
+                    (<>
+                        <div><Delete value="Delete" onClick={handleDelete} /></div>
+                        <div style={{ display: 'inline-block', width: '20px' }}></div>
+                        <div><Submit value="Save" /></div>
+                    </>)} 
                 </div>
             </form>
         </section>
