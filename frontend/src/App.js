@@ -7,7 +7,7 @@ import TeacherLogin from './TeacherLogin/TeacherLogin';
 import Reintegration from './Reintegration/Reintegration'; // Corrected the path
 import AdminDashboard from './AdminDashboard/AdminDashboard'; // Corrected the path
 import SchoolManagement from './SchoolManagement/SchoolManagement';
-// import LandingPage from './LandingPage/LandingPage'; // Import the LandingPage component
+import LandingPage from './LandingPage/LandingPage'; // Import the LandingPage component
 import TeacherRegistration from './TeacherRegistration/TeacherRegistration';
 
 function App() {
@@ -16,7 +16,8 @@ function App() {
     // Routing between all different pages of the app
     <>
        <Routes>
-       {/* <Route path="/" element={<LandingPage />} /> */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/TeacherLogin" element= {<TeacherLogin />} />
           <Route path="/Reintegration" element={<Reintegration />} />
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/SchoolManagement" element={<SchoolManagement />} />

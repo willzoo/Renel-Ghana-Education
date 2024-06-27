@@ -5,7 +5,35 @@ import bcrypt
 
 admin_bp = Blueprint('admin', __name__)
 
-# Create an admin
+# Log in to admin account
+@admin_bp.route('/admins/login', methods=['PATCH'])
+def login_teacher():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        if not email or not password:
+            return jsonify({"error": "Missing email or password"}), 400
+
+        mongo = current_app.extensions['pymongo']
+        db = mongo.cx.EduTracker
+
+        # Find the admin by email
+        admin = db.admin.find_one({"email": email})
+
+        if not admin:
+            return jsonify({"error": "Admin not found"}), 404
+
+        # Check if the provided password matches the stored hashed password
+        if bcrypt.checkpw(password.encode('utf-8'), admin['password']):
+            return jsonify({"message": "Login successful", "_id": str(admin['_id'])}), 200
+        else:
+            return jsonify({"error": "Invalid credentials"}), 401
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Create an admin # -- UNUSED --
 @admin_bp.route('/admins', methods=['POST'])
 def create_admin():
     data = request.get_json()
@@ -25,7 +53,7 @@ def create_admin():
 
     return jsonify({"_id": str(admin_id), "email": email}), 201
 
-# Read an admin
+# Read an admin # -- UNUSED --
 @admin_bp.route('/admins/<admin_id>', methods=['GET'])
 def read_admin(admin_id):
     mongo = current_app.extensions["pymongo"]
@@ -37,7 +65,7 @@ def read_admin(admin_id):
     else:
         return jsonify({"error": "Admin not found"}), 404
 
-# Update an admin
+# Update an admin # -- UNUSED --
 @admin_bp.route('/admins/<admin_id>', methods=['PUT'])
 def update_admin(admin_id):
     data = request.get_json()
@@ -59,7 +87,7 @@ def update_admin(admin_id):
     else:
         return jsonify({"error": "Admin not found"}), 404
 
-# Delete an admin
+# Delete an admin # -- UNUSED --
 @admin_bp.route('/admins/<admin_id>', methods=['DELETE'])
 def delete_admin(admin_id):
     mongo = current_app.extensions['pymongo']
@@ -71,7 +99,7 @@ def delete_admin(admin_id):
     else:
         return jsonify({"error": "Admin not found"}), 404
 
-# Route that creates multiple teacher accounts with an email list
+# Route that creates multiple teacher accounts with an email list # -- UNUSED --
 @admin_bp.route('/admins/create_accounts', methods=['POST'])
 def create_multiple_accounts():
     try:
