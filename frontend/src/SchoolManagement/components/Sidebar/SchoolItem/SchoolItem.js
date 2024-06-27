@@ -42,7 +42,7 @@ function SchoolItem(props) {
     };
 
     return (
-        <li>
+        <li key={props.data._id}>
             <div className="sidebar-school" id={props.id}
                 data-school-id={props.data._id}
                 data-school-name={props.data.name}

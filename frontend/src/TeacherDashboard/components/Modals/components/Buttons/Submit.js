@@ -1,5 +1,6 @@
 import React from 'react'
 import './Buttons.css'
+import Loading from '../Loading/Loading';
 
 function Submit(props) { // submit button
     return (

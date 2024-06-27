@@ -10,6 +10,7 @@
     transition: background-color 0.2s;
     display:flex;
     justify-content: space-between;
+    /* scroll-margin-top: calc(50%); */
 }
 
 /* hover animation for student */

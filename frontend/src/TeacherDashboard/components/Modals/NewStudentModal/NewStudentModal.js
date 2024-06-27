@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react'
-import { CloseModal } from '../../../../utils/functions';
+import { CloseModal, OpenModal } from '../../../../utils/functions';
 
 import '../components/ModalBase/ModalBase.css'
 
@@ -11,11 +11,13 @@ import Checkbox from '../components/Checkbox/Checkbox'
 
 import TeacherContext from '../../../../TeacherContext';
 import RadioButton from '../components/Checkbox/RadioButton';
+import Loading from '../components/Loading/Loading';
 
 function NewStudentModal() { // add new student to database
     const {classInfo, setClassInfo} = useContext(TeacherContext).classInfo;
     const {selectedClass, setSelectedClass} = useContext(TeacherContext).selectedClass;
     const {selectedStudent, setSelectedStudent} = useContext(TeacherContext).selectedStudent;
+    const {isModalWaiting, setModalWaiting} = useContext(TeacherContext).modalWaiting;
 
     let newStudentInfo = { // initialize text input questions
         studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
@@ -28,7 +30,7 @@ function NewStudentModal() { // add new student to database
         additionalInfo: { title: "Additional Information (optional)", placeholder: "Any additional information about the student?", id: "additional-info", required: false },
     }
 
-    let handleNewStudentSubmit = (event) => { // on submit
+    let handleSubmit = (event) => { // on submit
         event.preventDefault(); // dont refresh page
 
         // get all values from modal
@@ -47,8 +49,8 @@ function NewStudentModal() { // add new student to database
             alert("You already have a student with this ID. Please choose a unique ID.");
             return;
         }
-        
-        CloseModal("new-student");
+
+        setModalWaiting(true);
 
         let content = { // intialize submitted content
             'name': studentName,
@@ -64,18 +66,6 @@ function NewStudentModal() { // add new student to database
             'school_id': classInfo.school_id,
             'history': [],
         };
-
-        let tempStudents = selectedClass.students; // get students
-        tempStudents.push(content); // add new student
-
-        tempStudents.sort((a, b) => {
-        return a.name.localeCompare(b.name); // sort students
-        });
-
-        setSelectedClass((oldStudentInfo) => ({ // update selected class with new student info
-        ...oldStudentInfo,
-        students: tempStudents,
-        }));
 
         fetch('http://127.0.0.1:8000/students', { // run fetch call to add new student
             method: "POST",
@@ -93,25 +83,34 @@ function NewStudentModal() { // add new student to database
             .then(data => {
                 console.log('Data received:', data);
 
-                // on successful fetch call, find student with corresponding info in tempStudents and add returned database id
+                content._id = data.student_id;
 
-                tempStudents = selectedClass.students;
-                tempStudents.find(std => std.name === studentName && std.dob === studentDOB && std.guardian_contact === guardianContact)._id = data.student_id;
+                selectedClass.students.push(content); // add new student
+
+                selectedClass.students.sort((a, b) => {
+                    return a.name.localeCompare(b.name); // sort students
+                });
+
+                Object.assign(classInfo.classes.find(cls => cls._id === selectedClass._id), selectedClass);
                 
-                setSelectedClass((oldSelectedClass) => ({ // update selectedClass
-                  ...oldSelectedClass,
-                  students: tempStudents,
-                }));
+                CloseModal("new-student");
+                
+                setSelectedStudent(content);
+                setModalWaiting(false);
+        
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
+                CloseModal("new-student"); // clsoe modal if confirmed
+                OpenModal('error');
+                setModalWaiting(false);
             });
 
     }
 
     return (
         <section>
-            <form id="new-student-form" onSubmit={handleNewStudentSubmit}> {/* run handleNewStudentSubmit on run */}
+            <form id="new-student-form" onSubmit={handleSubmit}> {/* run handleNewStudentSubmit on run */}
                 <section className="input-list" id="new-student-text-input">
                     {/* add student information inputs */}
                     <TextInput info={newStudentInfo.studentName} />
@@ -126,7 +125,10 @@ function NewStudentModal() { // add new student to database
                 <br /><br /><br /><br />
 
                 <div className='modal-buttons-section'>
-                    <Submit value="Add" /> {/* add submit button */}
+                    {isModalWaiting ?
+                    (<div style={{height: '40px'}} ><Loading/></div>) :
+                    (<Submit value="Create" />) /* add submit button */
+                    }
                 </div>
             </form>
         </section>

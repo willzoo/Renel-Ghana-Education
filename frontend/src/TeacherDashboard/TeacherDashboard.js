@@ -28,6 +28,10 @@ function TeacherDashboard() {
 
   const [selectedStudent, setSelectedStudent] = useState(null);
 
+  const [isModalWaiting, setModalWaiting] = useState(false);
+
+  const [updateSelection, setUpdateSelection] = useState(0);
+
   let loaded = false;
 
   useEffect(() => {
@@ -52,8 +56,13 @@ function TeacherDashboard() {
             return a.class_name.localeCompare(b.class_name);
           });
 
+          data.classes.forEach(element => {
+            element.students.sort((a, b) => {
+              return a.name.localeCompare(b.name);
+            });
+          });
+
           setClassInfo(data);
-          setSelectedClass(classInfo.classes[0]);
 
           CloseModal('loading');
           
@@ -75,6 +84,8 @@ function TeacherDashboard() {
       'selectedClass': { selectedClass, setSelectedClass },
       'classToEdit': { classToEdit, setClassToEdit },
       'selectedStudent': { selectedStudent, setSelectedStudent },
+      'updateSelection': { updateSelection, setUpdateSelection },
+      'modalWaiting': { isModalWaiting, setModalWaiting },
     }}>
       <section>
         <div className="background">

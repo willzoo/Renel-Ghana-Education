@@ -65,10 +65,10 @@ function NewTeacherModal() {
                 tempTeachers = selectedSchool.teachers;
                 tempTeachers.find(tchr => tchr.email === teacherEmail && tchr.name === teacherName)._id = data._id; //TODO: Make sure data uses _id
                 
-                setSelectedSchool((oldSelectedSchool) => ({
-                  ...oldSelectedSchool,
-                  teachers: tempTeachers,
-                }));
+                setSelectedSchool((oldSelectedSchool) => {
+                    oldSelectedSchool.teachers = tempTeachers;
+                    return oldSelectedSchool;
+                  });
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);

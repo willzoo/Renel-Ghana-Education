@@ -47,10 +47,10 @@ function EditTeacherModal(props) {
           });
 
           // solution created by AI
-          setSelectedSchool((oldSelectedSchool) => ({
-            ...oldSelectedSchool,
-            teachers: tempTeachers,
-          }));
+          setSelectedSchool((oldSelectedSchool) => {
+            oldSelectedSchool.teachers = tempTeachers;
+            return oldSelectedSchool;
+          });
 
           let teacherListElements = Array.from(document.getElementsByClassName('teacher-list-item'));
           teacherListElements.find(tchr => tchr.dataset.teacherId === selectedTeacher._id).scrollIntoView();
@@ -88,10 +88,10 @@ function EditTeacherModal(props) {
             let tempTeachers = selectedSchool.teachers.filter(tchr => tchr._id !== selectedTeacher._id);
 
             // solution created by AI
-            setSelectedSchool((oldSelectedSchool) => ({
-              ...oldSelectedSchool,
-              teachers: tempTeachers,
-            }));
+            setSelectedSchool((oldSelectedSchool) => {
+                oldSelectedSchool.teachers = tempTeachers;
+                return oldSelectedSchool;
+              });
 
             fetch(`http://127.0.0.1:8000/teachers/${selectedTeacher._id}`, {
               method: "DELETE",

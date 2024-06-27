@@ -5,8 +5,8 @@
 
   /* container for modal buttons, for proper distribution on bottom of modal */
   .modal-buttons-section {
-    text-align: center;
-    position: fixed;
+    /* text-align: center;
+    position: fixed; */
     width: calc(100% - 40px);
     bottom: 40px;
     margin: auto;
