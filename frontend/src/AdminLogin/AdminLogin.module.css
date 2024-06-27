@@ -1,0 +1,149 @@
+/* TeacherLogin.module.css */
+
+/* General Styles */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Background */
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f9;
+    z-index: -1;
+}
+
+/* Login Container */
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 0px 90px;
+    gap: 50px;
+    width: 620px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 20px;
+    width: 620px;
+    height: auto;
+}
+.edutrackerLogoIcon {
+    position: absolute;
+    top: 40px; /* Adjust based on your layout */
+    right: 40px; /* Changed from left to right */
+    width: 92px;
+    height: 82px;
+    border-radius: 12px; /* Optional: Add some border radius */
+}
+
+.header .title {
+    font-weight: 700;
+    font-size: 67px;
+    line-height: 130%;
+    letter-spacing: -0.025em;
+    color: #144047;
+}
+
+/* Input Field */
+.inputField {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 20px;
+    gap: 12px;
+    width: 620px;
+    height: 60px;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.inputField .icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 20px;
+    height: 20px;
+}
+
+.inputField .divider {
+    width: 1px;
+    height: 20px;
+    background: #DBE3FF;
+}
+
+.inputField input {
+    width: 100%;
+    height: 24px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: #2D2D2D;
+    border: none;
+    outline: none;
+}
+
+/* CTAs */
+.ctas {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 18px;
+    width: 155px;
+    height: 60px;
+}
+
+.ctas .button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 50px;
+    gap: 8px;
+    width: 155px;
+    height: 60px;
+    background: #138999;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.ctas .button .label {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.registrationContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 0px 90px;
+    gap: 20px; /* Adjusted gap for better spacing */
+    width: 620px;
+    margin: 0 auto;
+}
