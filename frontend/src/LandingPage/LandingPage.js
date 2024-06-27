@@ -9,7 +9,7 @@ const LandingPage = () => {
   return (
     <div>
       <div className="landing-page-background-image"></div>
-      {/* <img src="../../img/image-3-renel.jpeg"></img> */}
+      <img src="https://cdn.discordapp.com/attachments/1244622794831036480/1255856170715840542/image-3-renel.jpeg?ex=667ea6b3&is=667d5533&hm=e03876af8e2d45c11508f44a22238abc28f5927e48ae5b88996732c14b7df84b&"></img>
       <div className="content">
         <div className="welcome">
           <div className="logo">
