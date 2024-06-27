@@ -11,22 +11,23 @@ function Date(props) { // custom text input for date value, autoformat date
 
             <input
                 placeholder={props.info.placeholder} // add placeholder text
-                title={props.info.title}
+                title={"DD-MM-YYYY"}
                 type="text"
                 id={props.info.id}
                 required={isRequired}
                 defaultValue={editValue}
-                maxLength={10} // Set the maximum length to 10 characters
+                maxLength={10}
+                pattern="\d{2}-\d{2}-\d{4}"
 
                 onKeyDown={e => { // when key is pressed
                     const keyCode = e.which || e.keyCode; // get keycode
                     let inputValue = e.target.value; // get input value
-                    if (keyCode < 48 || keyCode > 57) { // if key is not a digit
+                    if (keyCode !== 8 && keyCode !== 9 && keyCode < 48 || keyCode > 57) { // if key is not a digit
                         e.preventDefault();
                     }
                     if (keyCode === 8) { // if keycode is backspace
                         // e.preventDefault();
-                        if (inputValue[inputValue.length - 1] === '/') {
+                        if (inputValue[inputValue.length - 1] === '-') {
                             inputValue = inputValue.slice(0, -2); // if last digit is a slash, remove last two characters
                         }
                         else {
@@ -40,8 +41,8 @@ function Date(props) { // custom text input for date value, autoformat date
                     let inputValue = e.target.value;
 
                     if (inputValue.length === 2 || inputValue.length === 5) { // if input is at certain lengths for date format
-                        if (inputValue[inputValue.length - 1] !== '/') { // if last character is not a slash
-                            inputValue += '/'; // add a slash
+                        if (inputValue[inputValue.length - 1] !== '-') { // if last character is not a slash
+                            inputValue += '-'; // add a slash
                           }
                       e.target.value = inputValue;
                     }

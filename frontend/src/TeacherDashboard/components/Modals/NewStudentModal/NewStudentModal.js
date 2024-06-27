@@ -22,7 +22,7 @@ function NewStudentModal() { // add new student to database
     let newStudentInfo = { // initialize text input questions
         studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name" },
         studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id" },
-        studentDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "student-dob" },
+        studentDOB: { title: "Date of Birth", placeholder: "Format: DD-MM-YYYY", id: "student-dob" },
         guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name" },
         guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact" },
         studentMedical: { title: "Student Medical Information (optional)", placeholder: "What disability? If none, any other medical info?", id: "student-medical", required: false  },

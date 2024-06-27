@@ -22,7 +22,7 @@ function EditStudentModal(props) { // modal for editing student content
     let editStudentInfo = { // initialization for all student questions
         studentName: { title: "Student Name", placeholder: "Please enter student name", id: "student-name-edit" },
         studentID: { title: "Student ID", placeholder: "Please enter student ID", id: "student-id-edit" },
-        studentDOB: { title: "Date of Birth", placeholder: "Format: DD/MM/YYYY", id: "student-dob-edit" },
+        studentDOB: { title: "Date of Birth", placeholder: "Format: DD-MM-YYYY", id: "student-dob-edit" },
         guardianName: { title: "Parent/Guardian Name", placeholder: "Enter name of Parent/Guardian", id: "guardian-name-edit" },
         guardianContact: { title: "Parent/Guardian Contact", placeholder: "Enter contact of Parent/Guardian", id: "guardian-contact-edit" },
         studentMedical: { title: "Student Medical Information (optional)", placeholder: "Any known allergies? Other valuable information?", id: "student-medical-edit", required: false, },
