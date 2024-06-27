@@ -31,8 +31,8 @@ function AdminLogin() {
                 return response.json();
         })
         .then(data => {
-            localStorage.setItem('teacher_id', data.teacher_id);
-            navigate('/TeacherDashboard');
+            localStorage.setItem('admin_secret', data.admin_);
+            navigate('/AdminDashboard');
         })
         .catch(error => {
             alert("Error, please try again");
